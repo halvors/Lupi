@@ -1,0 +1,3 @@
+TODO:
+- Remove dead wolves from SelectedWolfManager and WolfManager.
+- Fix the crash issue with the database.

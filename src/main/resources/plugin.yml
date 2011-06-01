@@ -1,0 +1,10 @@
+name: WolfControl
+main: com.halvors.WolfControl.WolfControl
+version: 0.1
+author: halvors
+database: true
+
+commands:
+    wolf:
+        description:
+        usage:
