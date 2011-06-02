@@ -27,12 +27,12 @@ import com.avaje.ebean.validation.NotEmpty;
 import com.avaje.ebean.validation.NotNull;
 
 @Entity()
-@Table(name = "wc_wolf")
+@Table(name = "wolf_wolf")
 public class WolfTable {
 	@Id
     private int id;
 	@NotNull
-	private int entityid;
+	private int entityId;
 	@NotEmpty
     private String name;
 	@NotEmpty
@@ -49,11 +49,11 @@ public class WolfTable {
     }
     
     public int getEntityId() {
-    	return entityid;
+    	return entityId;
     }
     
-    public void setEntityId(final int entityid) {
-    	this.entityid = entityid;
+    public void setEntityId(final int entityId) {
+    	this.entityId = entityId;
     }
     
     public String getName() {

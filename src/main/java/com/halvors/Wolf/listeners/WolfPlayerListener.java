@@ -100,13 +100,13 @@ public class WolfPlayerListener extends PlayerListener {
 					if (item != 0) {
 						if (player.getItemInHand().getTypeId() == item) {
 							if (wolf.isTamed()) {
-								/*
 								if (!wolfManager.hasWolf(wolf.getEntityId())) {
 									wolfManager.addWolf(wolf);
 									
 									player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
+								} else {
+									player.sendMessage(ChatColor.GREEN + "This is " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()) + ChatColor.GREEN + ".");
 								}
-								*/
 									
 								selectedWolfManager.addSelectedWolf(player.getName(), wolf);
 								
