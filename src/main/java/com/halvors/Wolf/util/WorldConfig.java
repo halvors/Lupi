@@ -1,20 +1,20 @@
 /*
  * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
  *
- * This file is part of WolfControl.
+ * This file is part of Wolf.
  *
- * WolfControl is free software: you can redistribute it and/or modify
+ * Wolf is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * WolfControl is distributed in the hope that it will be useful,
+ * Wolf is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with WolfControl.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.halvors.Wolf.util;
@@ -41,16 +41,11 @@ public class WorldConfig {
     public int item;
     
     public boolean wolfEnable;
+    public int wolfLimit;
     public boolean wolfRespawn;
     public boolean wolfPeaceful;
     /* Configuration data end */
 
-    /**
-     * Construct the object.
-     *
-     * @param plugin
-     * @param worldName
-     */
     public WorldConfig(final Wolf plugin, final String worldName) {
     	this.plugin = plugin;
     	this.worldName = worldName;
@@ -75,6 +70,7 @@ public class WorldConfig {
         item = config.getInt("item", item);
         
         wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
+        wolfLimit = config.getInt("wolf.limit", wolfLimit);
         wolfRespawn = config.getBoolean("wolf.respawn", wolfRespawn);
         wolfPeaceful = config.getBoolean("wolf.peaceful", wolfPeaceful);
     }

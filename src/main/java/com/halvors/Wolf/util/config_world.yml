@@ -1,4 +1,4 @@
-# WolfControl's configuration file.
+# Wolf's configuration file.
 #
 # This is the a per-world configuration file. It only affects one
 # corresponding world.
@@ -6,7 +6,7 @@
 item: 352 # Item for select wolf
 
 wolf:
-    enable: true # Prevent wolves from spawn
+    enable: true # Allow wolves to spawn
     respawn: true # Respawn tamed wolves
     peaceful: false # Wolves are peaceful.
     limit: 0 # 0 to disable.
