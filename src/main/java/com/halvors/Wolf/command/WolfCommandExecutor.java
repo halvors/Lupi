@@ -22,6 +22,7 @@ package com.halvors.Wolf.command;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -218,7 +219,10 @@ public class WolfCommandExecutor implements CommandExecutor {
 		
 		if (!wolfTables.isEmpty()) {
 			for (WolfTable wolfTable : wolfTables) {
-				player.sendMessage(ChatColor.YELLOW + "Name: " + ChatColor.WHITE + wolfTable.getName());
+				Wolf wolf = wolfManager.getWolf(wolfTable.getEntityId());
+				Location pos = wolf.getLocation();
+				
+				player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " (" + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ() + ")");
 			}
 		} else {
 			player.sendMessage(ChatColor.RED + "You have no wolves.");
@@ -232,7 +236,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 		
 		if (!wolfTables.isEmpty()) {
 			for (WolfTable wolfTable : wolfTables) {
-				player.sendMessage(ChatColor.YELLOW + "Name: " + ChatColor.WHITE + wolfTable.getName() + ChatColor.YELLOW + " Owner: " + ChatColor.WHITE + wolfTable.getOwner());
+				player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " - " + wolfTable.getOwner());
 			}
 		} else {
 			player.sendMessage(ChatColor.RED + "There is no tame wolves.");

@@ -131,15 +131,12 @@ public class WolfEntityListener extends EntityListener {
 		if (entity instanceof Wolf) {
 			Wolf wolf = (Wolf) entity;
 			
-			if (wolf.isTamed()) {
+			if (wolfManager.hasWolf(wolf.getEntityId()) && wolf.isTamed()) {
 				wolfManager.removeWolf(wolf.getEntityId());
 			}
-			
-			// TODO: Remove dead wolves.
 		}
 	}
 	
-	/*
 	@Override
 	public void onEntityTame(EntityTameEvent event) {
 		if (!event.isCancelled()) {
@@ -157,13 +154,16 @@ public class WolfEntityListener extends EntityListener {
 					return;
 				}
 				
-				wolfManager.addWolf(wolf);
-				
-				player.sendMessage(ChatColor.GREEN + "You're wolf is now tame. Type /name <name> for give your new wolf a name.");
+				if (!wolfManager.hasWolf(wolf.getEntityId())) {
+					wolfManager.addWolf(wolf);
+					
+					player.sendMessage(ChatColor.GREEN + "You're wolf is now tame. Type /name <name> for give your new wolf a name.");
+				} else {
+					// TODO: Maybe add error message here, but wolf shouldn't be in database already here...
+				}
 			}
 		}
 	}
-	*/
 	
 	@Override
 	public void onEntityTarget(EntityTargetEvent event) {
