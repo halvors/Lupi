@@ -44,7 +44,7 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
 public class WolfManager {
 	private final com.halvors.Wolf.Wolf plugin;
 	
-	private final EbeanServer database;
+	private final EbeanServer database; // TODO: Use this instead of plugin.getDatabase().
 	private final HashMap<Integer, TileEntityVirtualChest> inventory;
 	
 	public WolfManager(final com.halvors.Wolf.Wolf plugin) {
