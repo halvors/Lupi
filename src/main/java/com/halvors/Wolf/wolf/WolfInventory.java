@@ -6,7 +6,7 @@ package com.halvors.Wolf.wolf;
  * @author halvors
  */
 public class WolfInventory {
-	public WolfInventory() {
-		
-	}
+    public WolfInventory() {
+        
+    }
 }

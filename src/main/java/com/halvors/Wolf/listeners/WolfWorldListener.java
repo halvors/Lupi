@@ -20,11 +20,17 @@
 
 package com.halvors.Wolf.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldSaveEvent;
+
 import com.halvors.Wolf.wolf.WolfManager;
 import com.halvors.Wolf.wolf.WolfTable;
 
@@ -34,70 +40,66 @@ import com.halvors.Wolf.wolf.WolfTable;
  * @author speeddemon92
  */
 public class WolfWorldListener extends WorldListener{
-//	private final com.halvors.Wolf.Wolf plugin;
-	
-	private final WolfManager wolfManager;
-	
-	public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
-//		this.plugin = plugin;
-		this.wolfManager = plugin.getWolfManager();
-	}
-	
-	public void onWorldLoad() {
-		
-	}
-	
-	public void onWorldSave() {
-		
-	}
-	
-	@Override
-	public void onChunkLoad(ChunkLoadEvent event) {
-		Entity entity[] = event.getChunk().getEntities();
-		for (Entity e : entity)
-		{
-			if (e instanceof Wolf)
-			{
-				Wolf wolf = (Wolf) e;
-				
-				if (wolf.isTamed())
-				{
-					WolfTable wt = null;
-					wt = wolfManager.getWolf(wolf.getLocation());
-					
-					if (wt != null)
-					{
-						wt.setEntityId(wolf.getEntityId());
-						wolfManager.updateWolf(wt);
-					}
-				}
-			}
-		}
-	}
+//    private final com.halvors.Wolf.Wolf plugin;
+    
+    private final WolfManager wolfManager;
+    
+    public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
+//        this.plugin = plugin;
+        this.wolfManager = plugin.getWolfManager();
+    }
+    
+    @Override
+    public void onWorldLoad(WorldLoadEvent event) {
+        // TODO: Call load wolf inventory code here.
+    }
+    
+    @Override
+    public void onWorldSave(WorldSaveEvent event) {
+        // TODO: Call save wolf inventory code here.
+    }
+    
+    @Override
+    public void onChunkLoad(ChunkLoadEvent event) {
+        Entity[] entities = event.getChunk().getEntities();
+        
+        for (Entity entity : entities) {
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                if (wolf.isTamed()) {
+                    WolfTable wt = null;
+                    wt = wolfManager.getWolf(wolf.getLocation());
+                    
+                    if (wt != null) {
+                        wt.setEntityId(wolf.getEntityId());
+                        wolfManager.updateWolf(wt);
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	public void onChunkUnload(ChunkUnloadEvent event) {
-		Entity entity[] = event.getChunk().getEntities();
-		for (Entity e : entity)
-		{
-			if (e instanceof Wolf)
-			{
-				Wolf wolf = (Wolf) e;
-				
-				if (wolf.isTamed())
-				{
-					WolfTable wt = null;
-					wt = wolfManager.getWolfTable(wolf.getEntityId());
-					
-					if (wt != null)
-					{
-						wt.setLocationX(wolf.getLocation().getX());
-						wt.setLocationY(wolf.getLocation().getY());
-						wt.setLocationZ(wolf.getLocation().getZ());
-						wolfManager.updateWolf(wt);
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        Entity[] entities = event.getChunk().getEntities();
+        
+        for (Entity entity : entities) {
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                if (wolf.isTamed()) {
+                    WolfTable wt = null;
+                    wt = wolfManager.getWolfTable(wolf.getEntityId());
+                    
+                    if (wt != null) {
+                        wt.setLocationX(wolf.getLocation().getX());
+                        wt.setLocationY(wolf.getLocation().getY());
+                        wt.setLocationZ(wolf.getLocation().getZ());
+                        wolfManager.updateWolf(wt);
+                    }
+                }
+            }
+        }
+    }
 }
