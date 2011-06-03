@@ -42,7 +42,15 @@ public class WolfWorldListener extends WorldListener{
 //		this.plugin = plugin;
 		this.wolfManager = plugin.getWolfManager();
 	}
-
+	
+	public void onWorldLoad() {
+		
+	}
+	
+	public void onWorldSave() {
+		
+	}
+	
 	@Override
 	public void onChunkLoad(ChunkLoadEvent event) {
 		Entity entity[] = event.getChunk().getEntities();

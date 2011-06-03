@@ -29,7 +29,7 @@ import net.minecraft.server.TileEntityChest;
  * @author halvors
  */
 public class TileEntityVirtualChest extends TileEntityChest {
-	public boolean a_(EntityHuman entityhuman) {
-		return true;
-	}
+    public boolean a_(EntityHuman entityhuman) {
+        return true;
+    }
 }
