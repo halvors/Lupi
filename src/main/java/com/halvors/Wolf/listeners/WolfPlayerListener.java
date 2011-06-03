@@ -25,6 +25,7 @@ import net.minecraft.server.PathPoint;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
@@ -65,18 +66,16 @@ public class WolfPlayerListener extends PlayerListener {
         Player player = event.getPlayer();
 
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(player.getName())) {
-            if (plugin.hasPermissions(player, "WolfControl.target")) {        
-            	if (event.getItem().getTypeId() == 1) {
+            if (plugin.hasPermissions(player, "Wolf.target")) {        
+            	if (event.getItem().getType() == Material.BONE) {
                 	Location pos = player.getTargetBlock(null, 120).getLocation();
                     
-                	if ((action == Action.LEFT_CLICK_BLOCK) || (action == Action.LEFT_CLICK_AIR)) {
+                	if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) {
                 		PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
                 		EntityWolf wolf = ((CraftWolf) selectedWolfManager.getSelectedWolf(player.getName())).getHandle();
                 		wolf.a(new PathEntity(pathPoint));
                 		
                 		player.sendMessage(ChatColor.GREEN + "Wolf target set.");
-                    } else if ((action == Action.RIGHT_CLICK_BLOCK) || (action == Action.RIGHT_CLICK_AIR)) {
-                    	
                     }
                 }
             }
@@ -94,7 +93,7 @@ public class WolfPlayerListener extends PlayerListener {
 			if (entity instanceof Wolf) {
 				Wolf wolf = (Wolf) entity;
 				
-				if (plugin.hasPermissions(player, "WolfControl.select")) {
+				if (plugin.hasPermissions(player, "Wolf.select")) {
 					int item = worldConfig.item;
 					
 					if (item != 0) {

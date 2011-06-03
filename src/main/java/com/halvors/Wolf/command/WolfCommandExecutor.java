@@ -63,7 +63,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 			WorldConfig worldConfig = configManager.getWorldConfig(world);
 			
 			if (args.length == 0) {
-				if (plugin.hasPermissions(player, "WolfControl.list")) {
+				if (plugin.hasPermissions(player, "Wolf.list")) {
 					showWolves(player);
 					
 					return true;
@@ -72,19 +72,19 @@ public class WolfCommandExecutor implements CommandExecutor {
 				String subCommand = args[0];
 			
 				if (subCommand.equalsIgnoreCase("help")) {
-					if (plugin.hasPermissions(player, "WolfControl.help")) {
+					if (plugin.hasPermissions(player, "Wolf.help")) {
 						showHelp(player, label);
 						
 						return true;
 					}
 				} else if (subCommand.equalsIgnoreCase("list")) {
-					if (plugin.hasPermissions(player, "WolfControl.list")) {
+					if (plugin.hasPermissions(player, "Wolf.list")) {
 						showList(player);
 						
 						return true;
 					}
 				} else if (subCommand.equalsIgnoreCase("call")) {
-					if (plugin.hasPermissions(player, "WolfControl.call")) {
+					if (plugin.hasPermissions(player, "Wolf.call")) {
 						if (args.length == 1) {
 							String name = args[1];
 							
@@ -99,7 +99,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 						return true;
 					}
 				} else if (subCommand.equalsIgnoreCase("stop")) {
-					if (plugin.hasPermissions(player, "WolfControl.stop")) {
+					if (plugin.hasPermissions(player, "Wolf.stop")) {
 						if (args.length >= 1) {
 							String name = args[1];
 							
@@ -115,8 +115,22 @@ public class WolfCommandExecutor implements CommandExecutor {
 					
 						return true;
 					}
+				} else if (subCommand.equalsIgnoreCase("target")){
+					if (plugin.hasPermissions(player, "Wolf.target")) {
+						if (args.length == 2) {
+							Player target = plugin.getServer().getPlayer(args[1]);
+							
+							if (target != null) {
+								
+							} else {
+								player.sendMessage(ChatColor.RED + "Target doesn't exist.");
+							}
+						}
+						
+						return true;
+					}
 				} else if (subCommand.equalsIgnoreCase("name")) {
-					if (plugin.hasPermissions(player, "WolfControl.name")) {
+					if (plugin.hasPermissions(player, "Wolf.name")) {
 						String name = player.getName();
 						
 						if (selectedWolfManager.hasSelectedWolf(name)) {
@@ -147,7 +161,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 						return true;
 					}
 				} else if (subCommand.equalsIgnoreCase("release")) {
-					if (plugin.hasPermissions(player, "WolfControl.release")) {
+					if (plugin.hasPermissions(player, "Wolf.release")) {
 						String name = player.getName();
 						
 						if (args.length <= 1) {
@@ -174,7 +188,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 						return true;
 					}
 				} else if (subCommand.equalsIgnoreCase("item")) {
-					if (plugin.hasPermissions(player, "WolfControl.item")) {
+					if (plugin.hasPermissions(player, "Wolf.item")) {
 						int item = worldConfig.item;
 						
 						if (item != 0) {
@@ -185,7 +199,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 						return true;
 					}
 				} else {
-					if (plugin.hasPermissions(player, "WolfControl.help")) {
+					if (plugin.hasPermissions(player, "Wolf.help")) {
 						showHelp(player, label);
 						
 						return true;
@@ -234,31 +248,31 @@ public class WolfCommandExecutor implements CommandExecutor {
 		player.sendMessage(ChatColor.GREEN + plugin.name + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.version + ChatColor.GREEN + ")");
 		player.sendMessage(ChatColor.RED + "[]" + ChatColor.WHITE + " Required, " + ChatColor.GREEN + "<>" + ChatColor.WHITE + " Optional.");
 
-		if (plugin.hasPermissions(player, "WolfControl.help")) {
+		if (plugin.hasPermissions(player, "Wolf.help")) {
 			player.sendMessage(command + "help" + ChatColor.YELLOW + " - Show help.");
 		}
 		
-		if (plugin.hasPermissions(player, "WolfControl.list")) {
+		if (plugin.hasPermissions(player, "Wolf.list")) {
 			player.sendMessage(command + "list" + ChatColor.YELLOW + " - Show a list of all wolves.");
 		}
 		
-		if (plugin.hasPermissions(player, "WolfControl.stop")) {
+		if (plugin.hasPermissions(player, "Wolf.stop")) {
 			player.sendMessage(command + "stop " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Show a list of all wolves.");
 		}
 		
-		if (plugin.hasPermissions(player, "WolfControl.call")) {
+		if (plugin.hasPermissions(player, "Wolf.call")) {
 			player.sendMessage(command + "call " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Show a list of all wolves.");
 		}
 		
-		if (plugin.hasPermissions(player, "WolfControl.name")) {
+		if (plugin.hasPermissions(player, "Wolf.name")) {
 			player.sendMessage(command + "name " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Show or name your wolf.");
 		}
 		
-		if (plugin.hasPermissions(player, "WolfControl.release")) {
+		if (plugin.hasPermissions(player, "Wolf.release")) {
 			player.sendMessage(command + "release " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Release your wolf.");
 		}
 		
-		if (plugin.hasPermissions(player, "WolfControl.item")) {
+		if (plugin.hasPermissions(player, "Wolf.item")) {
 			player.sendMessage(command + "item" + ChatColor.YELLOW + " - Give you the wolf item.");
 		}
 	}
