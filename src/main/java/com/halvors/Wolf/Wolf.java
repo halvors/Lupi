@@ -19,7 +19,6 @@
 
 package com.halvors.Wolf;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,12 +37,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.halvors.Wolf.command.WolfCommandExecutor;
 import com.halvors.Wolf.listeners.WolfEntityListener;
 import com.halvors.Wolf.listeners.WolfPlayerListener;
+import com.halvors.Wolf.listeners.WolfWorldListener;
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfManager;
 import com.halvors.Wolf.wolf.WolfTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
+
 
 public class Wolf extends JavaPlugin {
 	public String name;
@@ -60,6 +61,7 @@ public class Wolf extends JavaPlugin {
 	
 	private final WolfEntityListener entityListener = new WolfEntityListener(this);
 	private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
+	private final WolfWorldListener worldListener = new WolfWorldListener(this);
 	
     public static PermissionHandler Permissions;
     
@@ -86,6 +88,9 @@ public class Wolf extends JavaPlugin {
 		
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
+        
+        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
         
 		// Register our commands
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));

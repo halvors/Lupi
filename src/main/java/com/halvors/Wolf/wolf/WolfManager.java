@@ -33,7 +33,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
-import com.avaje.ebean.EbeanServer;
+//import com.avaje.ebean.EbeanServer;
 import com.halvors.Wolf.chest.TileEntityVirtualChest;
 
 /**
@@ -44,12 +44,12 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
 public class WolfManager {
 	private final com.halvors.Wolf.Wolf plugin;
 	
-	private final EbeanServer database; // TODO: Use this instead of plugin.getDatabase().
+	//private final EbeanServer database; // TODO: Use this instead of plugin.getDatabase().
 	private final HashMap<Integer, TileEntityVirtualChest> inventory;
 	
 	public WolfManager(final com.halvors.Wolf.Wolf plugin) {
 		this.plugin = plugin;
-		this.database = plugin.getDatabase();
+		//this.database = plugin.getDatabase();
 		this.inventory = new HashMap<Integer, TileEntityVirtualChest>();
 	}
 	
@@ -183,6 +183,22 @@ public class WolfManager {
 		return getWolf(getEntityId(name));
 	}
 	
+	/**
+	 * Get wolf by location
+	 * 
+	 * @param location
+	 * @return WolfTable
+	 */
+	public WolfTable getWolf(final Location location) {
+		WolfTable wolfTable = plugin.getDatabase().find(WolfTable.class).where().eq("locationX", location.getX())
+			.eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
+		if (wolfTable != null)
+		{
+			return wolfTable;
+		}
+		return null;
+	}
+		
 	/**
 	 * Get all players wolves
 	 * 
@@ -381,7 +397,7 @@ public class WolfManager {
 	 * @param wolf
 	 */
 	public void releaseWolf(final Wolf wolf) {
-		WolfTable wolfTable = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", wolf.getEntityId()).findUnique();
+		//WolfTable wolfTable = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", wolf.getEntityId()).findUnique();
 		
 		if (hasWolf(wolf.getEntityId())) {
 			removeWolf(wolf.getEntityId());
@@ -402,7 +418,7 @@ public class WolfManager {
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
-            String s = "";
+           
             
             do {
                 String s1;
@@ -423,5 +439,10 @@ public class WolfManager {
         }
         
         return name;
+	}
+
+	public void updateWolf(final WolfTable wolfTable) {
+		plugin.getDatabase().update(wolfTable);
+		
 	}
 }

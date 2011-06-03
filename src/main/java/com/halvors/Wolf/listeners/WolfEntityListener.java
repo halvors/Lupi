@@ -64,7 +64,7 @@ public class WolfEntityListener extends EntityListener {
 			WorldConfig worldConfig = configManager.getWorldConfig(world);
 			
 			if (entity instanceof Wolf) {
-				Wolf wolf = (Wolf) entity;
+				//Wolf wolf = (Wolf) entity;
 				
 				if (!worldConfig.wolfEnable) {
 					event.setCancelled(true);
@@ -174,10 +174,10 @@ public class WolfEntityListener extends EntityListener {
 			WorldConfig worldConfig = configManager.getWorldConfig(world);
 		
 			if (entity instanceof Wolf) {
-				Wolf wolf = (Wolf) entity;
+				//Wolf wolf = (Wolf) entity;
 				
 				if (target instanceof Player) {
-					Player player = (Player) target;
+					//Player player = (Player) target;
 				
 					if (worldConfig.wolfPeaceful) {
 						event.setCancelled(true);
