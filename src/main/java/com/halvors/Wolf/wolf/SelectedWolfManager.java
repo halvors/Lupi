@@ -29,12 +29,12 @@ import org.bukkit.entity.Wolf;
  * @author halvors
  */
 public class SelectedWolfManager {
-	private final com.halvors.Wolf.Wolf plugin;
+	//private final com.halvors.Wolf.Wolf plugin;
 	
 	private final HashMap<String, Wolf> selectedWolf = new HashMap<String, Wolf>();
 	
 	public SelectedWolfManager(final com.halvors.Wolf.Wolf plugin) {
-		this.plugin = plugin;
+		//this.plugin = plugin;
 	}
 	
 	/**
