@@ -1,2 +1,3 @@
 TODO:
 - Prevent a player from name 2 wolves same name. Separate players should be able to use same names.
+- Add command so owner of a wolf can add peace players that wolf not attack.
