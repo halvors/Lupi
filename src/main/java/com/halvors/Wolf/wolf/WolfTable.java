@@ -37,6 +37,12 @@ public class WolfTable {
     private String name;
 	@NotEmpty
     private String owner;
+	@NotNull
+	private double locationX;
+	@NotNull
+	private double locationY;
+	@NotNull
+	private double locationZ;
 	@NotEmpty
     private String world;
     
@@ -70,6 +76,30 @@ public class WolfTable {
 
     public void setOwner(final String owner) {
         this.owner = owner;
+    }
+    
+    public double getLocationX() {
+    	return locationX;
+    }
+    
+    public void setLocationX(final double locationX) {
+    	this.locationX = locationX;
+    }
+    
+    public double getLocationY() {
+    	return locationY;
+    }
+    
+    public void setLocationY(final double locationY) {
+    	this.locationY = locationY;
+    }
+    
+    public double getLocationZ() {
+    	return locationZ;
+    }
+    
+    public void setLocationZ(final double locationZ) {
+    	this.locationZ = locationZ;
     }
     
     public String getWorld() {

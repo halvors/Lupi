@@ -36,7 +36,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.halvors.Wolf.command.WolfCommandExecutor;
-import com.halvors.Wolf.listeners.WolfBlockListener;
 import com.halvors.Wolf.listeners.WolfEntityListener;
 import com.halvors.Wolf.listeners.WolfPlayerListener;
 import com.halvors.Wolf.util.ConfigManager;
@@ -59,7 +58,6 @@ public class Wolf extends JavaPlugin {
 	private final WolfManager wolfManager = new WolfManager(this);
 	private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
 	
-	private final WolfBlockListener blockListener = new WolfBlockListener(this);
 	private final WolfEntityListener entityListener = new WolfEntityListener(this);
 	private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
 	
@@ -79,9 +77,7 @@ public class Wolf extends JavaPlugin {
         // Load Configuration
         configManager.load();
         
-        // Register our events Type.  
-        pm.registerEvent(Event.Type.SIGN_CHANGE, blockListener, Event.Priority.Normal, this);
-        
+        // Register our events Type.          
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);

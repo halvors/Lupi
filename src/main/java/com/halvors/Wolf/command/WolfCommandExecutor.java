@@ -193,8 +193,6 @@ public class WolfCommandExecutor implements CommandExecutor {
 						if (item != 0) {
 							player.getInventory().addItem(new ItemStack(item, 1));
 							player.sendMessage(ChatColor.GREEN + "You got the wolf item.");
-						} else {
-							player.sendMessage(ChatColor.RED + "Error: Item not set in configuration file!");
 						}
 						
 						return true;

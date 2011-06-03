@@ -93,7 +93,7 @@ public class WolfEntityListener extends EntityListener {
 							if (player == attacker) {
 								Material item = player.getItemInHand().getType();
 								
-								if (item == Material.DIRT) {
+								if (item == Material.BONE) {
 									if (plugin.hasPermissions(player, "WolfControl.info")) {
 										int health = wolf.getHealth();
 										int maxHealth = 20;
@@ -137,6 +137,7 @@ public class WolfEntityListener extends EntityListener {
 		}
 	}
 	
+	/*
 	@Override
 	public void onEntityTame(EntityTameEvent event) {
 		if (!event.isCancelled()) {
@@ -164,6 +165,7 @@ public class WolfEntityListener extends EntityListener {
 			}
 		}
 	}
+	*/
 	
 	@Override
 	public void onEntityTarget(EntityTargetEvent event) {
