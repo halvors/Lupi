@@ -93,7 +93,6 @@ public class Wolf extends JavaPlugin {
         log(Level.INFO, "version " + version + " is enabled!");
         
         setupPermissions();
-        setupDatabaseFile();
         setupDatabase();
     }
     
@@ -112,18 +111,6 @@ public class Wolf extends JavaPlugin {
             	Permissions = ((Permissions) permissions).getHandler();
             } else {
             	log(Level.INFO, "Permission system not detected, defaulting to OP");
-            }
-        }
-    }
-    
-    private void setupDatabaseFile(){
-        File file = new File("ebean.properties");
-        if (!file.exists()){
-            try {
-                file.createNewFile();
-            } catch (Exception e) {
-            	e.printStackTrace();
-                log(Level.INFO, "Failed to create ebean.properties file.");
             }
         }
     }
