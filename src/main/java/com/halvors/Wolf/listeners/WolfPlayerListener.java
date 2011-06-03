@@ -67,17 +67,17 @@ public class WolfPlayerListener extends PlayerListener {
         Player player = event.getPlayer();
         
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(player.getName())) {
-            if (plugin.hasPermissions(player, "Wolf.target")) {
-            	Location pos = player.getTargetBlock(null, 120).getLocation();
+            Location pos = player.getTargetBlock(null, 120).getLocation();
             	
-            	if (event.getItem().getType() == Material.BONE) {
-                	if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) {
-                		PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
-                		EntityWolf wolf = ((CraftWolf) selectedWolfManager.getSelectedWolf(player.getName())).getHandle();
-                		wolf.a(new PathEntity(pathPoint));
+            if (event.getItem().getType() == Material.SADDLE) {
+            	if (plugin.hasPermissions(player, "Wolf.target")) {
+            		if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) {
+            			PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
+            			EntityWolf wolf = ((CraftWolf) selectedWolfManager.getSelectedWolf(player.getName())).getHandle();
+            			wolf.a(new PathEntity(pathPoint));
                 		
-                		player.sendMessage(ChatColor.GREEN + "Wolf target set.");
-                    }
+            			player.sendMessage(ChatColor.GREEN + "Wolf target set.");
+            		}
                 }
             }
         }

@@ -45,16 +45,18 @@ public class WolfWorldListener extends WorldListener{
 
 	@Override
 	public void onChunkLoad(ChunkLoadEvent event) {
-		Entity cEntity[] = event.getChunk().getEntities();
-		for (Entity entity : cEntity)
+		Entity entity[] = event.getChunk().getEntities();
+		for (Entity e : entity)
 		{
-			if (entity instanceof Wolf)
+			if (e instanceof Wolf)
 			{
-				Wolf wolf = (Wolf)entity;
+				Wolf wolf = (Wolf) e;
+				
 				if (wolf.isTamed())
 				{
 					WolfTable wt = null;
 					wt = wolfManager.getWolf(wolf.getLocation());
+					
 					if (wt != null)
 					{
 						wt.setEntityId(wolf.getEntityId());
@@ -67,16 +69,18 @@ public class WolfWorldListener extends WorldListener{
 
 	@Override
 	public void onChunkUnload(ChunkUnloadEvent event) {
-		Entity cEntity[] = event.getChunk().getEntities();
-		for (Entity entity : cEntity)
+		Entity entity[] = event.getChunk().getEntities();
+		for (Entity e : entity)
 		{
-			if (entity instanceof Wolf)
+			if (e instanceof Wolf)
 			{
-				Wolf wolf = (Wolf)entity;
+				Wolf wolf = (Wolf) e;
+				
 				if (wolf.isTamed())
 				{
 					WolfTable wt = null;
 					wt = wolfManager.getWolfTable(wolf.getEntityId());
+					
 					if (wt != null)
 					{
 						wt.setLocationX(wolf.getLocation().getX());
