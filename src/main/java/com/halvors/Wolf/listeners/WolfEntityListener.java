@@ -94,7 +94,7 @@ public class WolfEntityListener extends EntityListener {
 							if (player == attacker) {
 								Material item = player.getItemInHand().getType();
 								
-								if (item == Material.BONE) {
+								if (item == Material.BONE) { // TODO: Fix big that wolf take damage after restart.
 									if (plugin.hasPermissions(player, "WolfControl.info")) {
 										String name = wolfManager.getName(wolf.getEntityId());
 										int health = wolf.getHealth();
@@ -132,7 +132,7 @@ public class WolfEntityListener extends EntityListener {
 		if (entity instanceof Wolf) {
 			Wolf wolf = (Wolf) entity;
 			
-			if (wolfManager.hasWolf(wolf.getEntityId()) && wolf.isTamed()) {
+			if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
 				wolfManager.removeWolf(wolf.getEntityId());
 			}
 		}
@@ -160,8 +160,6 @@ public class WolfEntityListener extends EntityListener {
 					wolfManager.addWolf(wolf);
 					
 					player.sendMessage(ChatColor.GREEN + "You're wolf is now tame. Type /name <name> for give your new wolf a name.");
-				} else {
-					// TODO: Maybe add error message here, but wolf shouldn't be in database already here...
 				}
 			}
 		}

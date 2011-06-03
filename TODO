@@ -1,2 +1,6 @@
 TODO:
-- Prevent a player from name 2 wolves same name. Separate players should be able to use same names.
+- Get The Bukkit Team to implement this pull request in CraftBukkit: https://github.com/Bukkit/CraftBukkit/pull/315
+- Implement wolf inventory.
+- Make sure wolfManager works correctly with the new system for saving multiply wolves based on theirs location.
+- Implement admin commands?
+- halvors: Finish setname and name commands.

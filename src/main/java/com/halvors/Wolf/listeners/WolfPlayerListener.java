@@ -96,7 +96,7 @@ public class WolfPlayerListener extends PlayerListener {
 				
 				if (player.getItemInHand().getTypeId() == worldConfig.item) {
 					if (plugin.hasPermissions(player, "Wolf.select")) {
-						if (wolf.isTamed()) {
+						if (wolf.isTamed() && wolf.getOwner() == player) {
 							if (!wolfManager.hasWolf(wolf.getEntityId())) {
 								wolfManager.addWolf(wolf);
 								
@@ -106,8 +106,6 @@ public class WolfPlayerListener extends PlayerListener {
 							selectedWolfManager.addSelectedWolf(player.getName(), wolf);
 							
 							player.sendMessage(ChatColor.GREEN + "Wolf selected.");
-						} else {
-							player.sendMessage(ChatColor.RED + "This wolf is wild.");
 						}
 					}
 				}

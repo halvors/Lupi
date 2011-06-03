@@ -116,6 +116,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 					
 						return true;
 					}
+				/*
 				} else if (subCommand.equalsIgnoreCase("target")){
 					if (plugin.hasPermissions(player, "Wolf.target")) {
 						if (args.length == 2) {
@@ -130,6 +131,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 						
 						return true;
 					}
+				*/
 				} else if (subCommand.equalsIgnoreCase("name")) {
 					if (plugin.hasPermissions(player, "Wolf.name")) {
 						String name = player.getName();
@@ -161,11 +163,45 @@ public class WolfCommandExecutor implements CommandExecutor {
 						
 						return true;
 					}
+				/*
+				} else if (subCommand.equalsIgnoreCase("setname")) {
+					if (plugin.hasPermissions(player, "Wolf.setname")) {
+						if (args.length <= 1) {
+							String name = args[1];
+							
+							if (selectedWolfManager.hasSelectedWolf(player.getName())) {
+								Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
+							} else {
+								
+							}
+						} else {
+							String name = args[2];
+						}
+						
+						return true;
+					}
+				*/
+				} else if (subCommand.equalsIgnoreCase("give")) { // TODO: Add error messages here.
+					if (plugin.hasPermissions(player, "Wolf.give")) {
+						if (args.length >= 2) {
+							Wolf wolf = (Wolf) wolfManager.getWolf(args[1]);
+							Player receiver = plugin.getServer().getPlayer(args[2]);
+							String name = wolfManager.getName(wolf.getEntityId());
+							
+							wolf.setOwner(receiver);
+							wolf.teleport(receiver);
+							
+							player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " is now given to " + ChatColor.YELLOW + receiver.getName());
+							receiver.sendMessage(ChatColor.GREEN + "You have got the wolf " + ChatColor.YELLOW + name + ChatColor.GREEN + " from " + ChatColor.YELLOW + player.getName());
+						}
+						
+						return true;
+					}
 				} else if (subCommand.equalsIgnoreCase("release")) {
 					if (plugin.hasPermissions(player, "Wolf.release")) {
 						String name = player.getName();
 						
-						if (args.length <= 1) {
+						if (args.length == 1) {
 							if (selectedWolfManager.hasSelectedWolf(name)) {
 								wolfManager.releaseWolf(selectedWolfManager.getSelectedWolf(name));
 								

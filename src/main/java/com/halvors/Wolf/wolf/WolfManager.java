@@ -195,7 +195,7 @@ public class WolfManager {
 	 * @param location
 	 * @return WolfTable
 	 */
-	public WolfTable getWolf(final Location location) {
+	public WolfTable getWolf(final Location location) { // TODO: Shouldn't this return Wolf? And not WolfTable?
 		WolfTable wolfTable = plugin.getDatabase().find(WolfTable.class).where().eq("locationX", location.getX())
 			.eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
 		
@@ -322,7 +322,7 @@ public class WolfManager {
 	}
 	
 	/**
-	 * Get wolf's inventory
+	 * Get wolf's inventory by entityId
 	 * 
 	 * @param entityId
 	 * @return
@@ -333,6 +333,10 @@ public class WolfManager {
 		}
 		
 		return inventory.get(entityId);
+	}
+	
+	public TileEntityVirtualChest getInventory(final String name) {
+		return getInventory(getEntityId(name));
 	}
 	
 	/** 
