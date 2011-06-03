@@ -107,7 +107,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 								Wolf wolf = (Wolf) wolfManager.getWolf(name);
 								wolf.teleport(player);
 								
-								player.sendMessage(ChatColor.GREEN + "Your wolf is comming.");
+								player.sendMessage(ChatColor.GREEN + "Your wolf has stopped the attack.");
 							}
 						} else {
 							player.sendMessage(ChatColor.RED + "No wolf specified");
@@ -117,49 +117,35 @@ public class WolfCommandExecutor implements CommandExecutor {
 					}
 				} else if (subCommand.equalsIgnoreCase("name")) {
 					if (plugin.hasPermissions(player, "WolfControl.name")) {
-						Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(player.getName());
-						String name = args[1];
-						
-//						if (!wolfManager.hasWolf(name)) {
-							wolfManager.addWolf(wolf, name);
-							
-							player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
-//						} else {
-//							player.sendMessage(ChatColor.RED + "Wolf exists.");
-//						}
-						
-						return true;
-					}
-									
-				/*
-				} else if (subCommand.equalsIgnoreCase("name")) {
-					if (plugin.hasPermissions(player, "WolfControl.name")) {
 						String name = player.getName();
 						
-						if (args.length == 2) {
-							if (selectedWolfManager.hasSelectedWolf(name)) {
-								Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
-								
-								if (wolf.isTamed()) {
-									String wolfName = args[1];
-									WolfTable wolfTable = database.find(WolfTable.class).where().ieq("owner", name).findUnique();
+						if (selectedWolfManager.hasSelectedWolf(name)) {
+							Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
+							int entityId = wolf.getEntityId();
+							
+							if (args.length <= 1) {
+								if (wolfManager.hasWolf(entityId)) {
+									player.sendMessage(ChatColor.GREEN + "Wolf's name is: " + ChatColor.YELLOW + wolfManager.getName(entityId));
+								} else {
+									// TODO: Some error message here.
+								}
+							} else {
+								String wolfName = args[1];
 
-									if (wolfTable != null) {
-										wolfTable.setName(wolfName);
-									}
+								if (wolfManager.hasWolf(wolf.getEntityId())) {
+									WolfTable wolfTable = wolfManager.getWolfTable(wolf.getEntityId());
 									
-									database.save(wolfTable);
+									wolfTable.setName(wolfName);
 									
-									player.sendMessage(ChatColor.GREEN + "Your wolf was successfully named '" + wolfName + "'.");
+									player.sendMessage(ChatColor.GREEN + "Your wolf was successfully named: " + ChatColor.YELLOW + wolfName);
+								} else {
+									// TODO: Some error message here.
 								}
 							}
-						} else {
-							player.sendMessage(ChatColor.RED + "No name specified.");
 						}
-					
+						
 						return true;
 					}
-				*/
 				} else if (subCommand.equalsIgnoreCase("release")) {
 					if (plugin.hasPermissions(player, "WolfControl.release")) {
 						String name = player.getName();
@@ -175,10 +161,11 @@ public class WolfCommandExecutor implements CommandExecutor {
 						} else {
 							String wolfName = args[2];
 							
-							if (wolfManager.hasWolf(wolfName) && wolfManager.getOwner(wolfName).getName() == player.getName()) {
-								wolfManager.releaseWolf(wolfManager.getWolf(wolfName));
+							if (wolfManager.hasWolf(wolfName) && wolfManager.getOwner(wolfName).getName() == name) {
+								Wolf wolf = (Wolf) wolfManager.getWolf(wolfName);
+								wolfManager.releaseWolf(wolf);
 								
-								player.sendMessage(ChatColor.GREEN + "Your wolf has been released.");
+								player.sendMessage(ChatColor.YELLOW + wolfName + ChatColor.GREEN + " has been released.");
 							} else {
 								player.sendMessage(ChatColor.RED + "Wolf does not exists.");
 							}

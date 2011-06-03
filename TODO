@@ -1,3 +1,2 @@
 TODO:
-- Remove dead wolves from SelectedWolfManager and WolfManager.
-- Fix the crash issue with the database.
+- Prevent a player from name 2 wolves same name. Separate players should be able to use same names.

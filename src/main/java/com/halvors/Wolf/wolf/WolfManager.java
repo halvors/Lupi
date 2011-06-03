@@ -54,13 +54,23 @@ public class WolfManager {
 	}
 	
 	/**
-	 * Get a WolfTable
+	 * Get WolfTable
 	 * 
 	 * @param name
 	 * @return WolfTable
 	 */
 	public WolfTable getWolfTable(final int entityId) {
 		return plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
+	}
+	
+	/**
+	 * Get WolfTable by name
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public WolfTable getWolfTable(final String name) {
+		return getWolfTable(getEntityId(name));
 	}
 	
 	/**
