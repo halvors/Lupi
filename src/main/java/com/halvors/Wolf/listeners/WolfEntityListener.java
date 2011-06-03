@@ -100,7 +100,6 @@ public class WolfEntityListener extends EntityListener {
 										
 										player.sendMessage(ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()) + ChatColor.GREEN + " health is " + Integer.toString(health) + "/" + maxHealth + ".");
 										
-//										wolf.setSitting(true);
 										event.setCancelled(true);
 										
 										return;
@@ -110,7 +109,6 @@ public class WolfEntityListener extends EntityListener {
 						            	EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
 						            	entityPlayer.a(wolfManager.getInventory(wolf.getEntityId()));
 						            	
-//						            	wolf.setSitting(true);
 						            	event.setCancelled(true);
 						            	
 						            	return;
