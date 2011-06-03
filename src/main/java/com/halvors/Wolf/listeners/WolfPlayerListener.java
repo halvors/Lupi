@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -100,15 +101,13 @@ public class WolfPlayerListener extends PlayerListener {
 								wolfManager.addWolf(wolf);
 								
 								player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
-							} else {
-								player.sendMessage(ChatColor.GREEN + "This is " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()) + ChatColor.GREEN + ".");
 							}
-										
+							
 							selectedWolfManager.addSelectedWolf(player.getName(), wolf);
-								
+							
 							player.sendMessage(ChatColor.GREEN + "Wolf selected.");
 						} else {
-							// TODO: Add something here.
+							player.sendMessage(ChatColor.RED + "This wolf is wild.");
 						}
 					}
 				}

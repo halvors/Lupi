@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -19,11 +20,7 @@
 
 package com.halvors.Wolf.listeners;
 
-import org.bukkit.Material;
-//import org.bukkit.block.Sign;
-//import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockListener;
-import org.bukkit.event.block.SignChangeEvent;
 
 //import com.halvors.Wolf.util.ConfigManager;
 
@@ -33,25 +30,12 @@ import org.bukkit.event.block.SignChangeEvent;
  * @author halvors
  */
 public class WolfBlockListener extends BlockListener {
-	//private final com.halvors.Wolf.Wolf plugin;
+//	private final com.halvors.Wolf.Wolf plugin;
 	
-	//private final ConfigManager configManager;
+//	private final ConfigManager configManager;
 	
 	public WolfBlockListener(final com.halvors.Wolf.Wolf plugin) {
-	//	this.plugin = plugin;
-	//	this.configManager = plugin.getConfigManager();
-	}
-	
-	@Override
-	public void onSignChange(SignChangeEvent event) {
-		if (!event.isCancelled()) {
-			//Player player = event.getPlayer();
-			Material type = event.getBlock().getType();
-			
-			if (type == Material.SIGN || type == Material.WALL_SIGN || type == Material.SIGN_POST) {
-				//Sign sign = (Sign)event.getBlock();
-				//String[] text = event.getLines();
-			}
-		}
+//		this.plugin = plugin;
+//		this.configManager = plugin.getConfigManager();
 	}
 }

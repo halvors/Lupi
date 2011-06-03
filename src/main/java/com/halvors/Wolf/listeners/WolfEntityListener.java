@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -64,7 +65,7 @@ public class WolfEntityListener extends EntityListener {
 			WorldConfig worldConfig = configManager.getWorldConfig(world);
 			
 			if (entity instanceof Wolf) {
-				//Wolf wolf = (Wolf) entity;
+//				Wolf wolf = (Wolf) entity;
 				
 				if (!worldConfig.wolfEnable) {
 					event.setCancelled(true);
@@ -95,10 +96,12 @@ public class WolfEntityListener extends EntityListener {
 								
 								if (item == Material.BONE) {
 									if (plugin.hasPermissions(player, "WolfControl.info")) {
+										String name = wolfManager.getName(wolf.getEntityId());
 										int health = wolf.getHealth();
 										int maxHealth = 20;
 										
-										player.sendMessage(ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()) + ChatColor.GREEN + " health is " + Integer.toString(health) + "/" + maxHealth + ".");
+										player.sendMessage("Name: " + ChatColor.YELLOW + name);
+										player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + maxHealth);
 										
 										event.setCancelled(true);
 										
@@ -174,10 +177,10 @@ public class WolfEntityListener extends EntityListener {
 			WorldConfig worldConfig = configManager.getWorldConfig(world);
 		
 			if (entity instanceof Wolf) {
-				//Wolf wolf = (Wolf) entity;
+//				Wolf wolf = (Wolf) entity;
 				
 				if (target instanceof Player) {
-					//Player player = (Player) target;
+//					Player player = (Player) target;
 				
 					if (worldConfig.wolfPeaceful) {
 						event.setCancelled(true);
