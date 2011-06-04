@@ -57,7 +57,7 @@ public class WolfInventoryManager {
      * @param entityId
      */
     public void addWolfInventory(final int entityId) {
-        if (!wolfInventorys.containsKey(entityId)) {
+    	if (!wolfInventorys.containsKey(entityId)) {
             wolfInventorys.put(entityId, new WolfInventory());
         }
     }

@@ -37,9 +37,9 @@ public class WolfTable {
     private int entityId;
     private String name;
     private String owner;
-    private double locationX;
-    private double locationY;
-    private double locationZ;
+    private int locationX;
+    private int locationY;
+    private int locationZ;
     private String world;
     
     public int getId() {
@@ -74,27 +74,27 @@ public class WolfTable {
         this.owner = owner;
     }
     
-    public double getLocationX() {
+    public int getLocationX() {
         return locationX;
     }
     
-    public void setLocationX(final double locationX) {
+    public void setLocationX(final int locationX) {
         this.locationX = locationX;
     }
     
-    public double getLocationY() {
+    public int getLocationY() {
         return locationY;
     }
     
-    public void setLocationY(final double locationY) {
+    public void setLocationY(final int locationY) {
         this.locationY = locationY;
     }
     
-    public double getLocationZ() {
+    public int getLocationZ() {
         return locationZ;
     }
     
-    public void setLocationZ(final double locationZ) {
+    public void setLocationZ(final int locationZ) {
         this.locationZ = locationZ;
     }
     
