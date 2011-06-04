@@ -9,8 +9,8 @@ import net.minecraft.server.TileEntityChest;
  * @author halvors
  */
 public class WolfInventory extends TileEntityChest {
-    @Override
-    public boolean a_(EntityHuman entityhuman) {
+	@Override
+	public boolean a_(EntityHuman entityhuman) {
         return true;
     }
 }

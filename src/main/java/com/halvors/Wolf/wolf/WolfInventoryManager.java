@@ -41,7 +41,7 @@ public class WolfInventoryManager {
     }
     
     public void load(final World world) {
-        wolfInventorys.clear();
+        // wolfInventorys.clear();
         
         // TODO: Load WolfInventory here.
     }
@@ -56,9 +56,9 @@ public class WolfInventoryManager {
      * @param id
      */
     public void addWolfInventory(final int id) {
-        if (!wolfInventorys.containsKey(id)) {
+//        if (!wolfInventorys.containsKey(id)) {
             wolfInventorys.put(id, new WolfInventory());
-        }
+//        }
     }
     
     /**
@@ -67,9 +67,9 @@ public class WolfInventoryManager {
      * @param id
      */
     public void removeWolfInventory(final int id) {
-        if (wolfInventorys.containsKey(id)) {
+//        if (wolfInventorys.containsKey(id)) {
             wolfInventorys.remove(id);
-        }
+//        }
     }
     
     /**

@@ -38,7 +38,6 @@ import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
-import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
 
 /**
@@ -103,15 +102,6 @@ public class WolfEntityListener extends EntityListener {
                                         
                                         player.sendMessage("Name: " + ChatColor.YELLOW + name);
                                         player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + maxHealth);
-                                        
-                                        event.setCancelled(true);
-                                        
-                                        return;
-                                    }
-                                } else if (item.equals(Material.CHEST)) {
-                                    if (plugin.hasPermissions(player, "Wolf.chest")) {
-                                    	EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                    	entityPlayer.a(wolfManager.getInventory(wolf.getEntityId()));
                                         
                                         event.setCancelled(true);
                                         

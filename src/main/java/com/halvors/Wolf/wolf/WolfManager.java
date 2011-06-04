@@ -78,7 +78,7 @@ public class WolfManager {
      */
     public WolfTable getWolfTable(final Location location) {
         return plugin.getDatabase().find(WolfTable.class).where()
-            .eq("locationX", location.getX()).eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
+            .eq("locationX", location.getBlockX()).eq("locationY", location.getBlockY()).eq("locationZ", location.getBlockZ()).findUnique();
     }
 
     /**
@@ -134,9 +134,9 @@ public class WolfManager {
             wt.setName(name);
             wt.setOwner(player.getName());
             wt.setEntityId(wolf.getEntityId());
-            wt.setLocationX(wolf.getLocation().getX());
-            wt.setLocationY(wolf.getLocation().getY());
-            wt.setLocationZ(wolf.getLocation().getZ());
+            wt.setLocationX(wolf.getLocation().getBlockX());
+            wt.setLocationY(wolf.getLocation().getBlockY());
+            wt.setLocationZ(wolf.getLocation().getBlockZ());
             wt.setWorld(wolf.getWorld().getName());
             
             // Save the wolf to the database
@@ -168,7 +168,7 @@ public class WolfManager {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-        	wolfInventoryManager.removeWolfInventory(entityId);
+        	wolfInventoryManager.removeWolfInventory(wt.getId());
             plugin.getDatabase().delete(wt);
         }
     }
@@ -417,7 +417,7 @@ public class WolfManager {
     	WolfTable wt = getWolfTable(entityId);
     	
     	if (wt != null) {
-    		return wolfInventoryManager.getWolfInventory(wt.getEntityId());
+    		return wolfInventoryManager.getWolfInventory(wt.getId());
     	}
     	
     	return null;

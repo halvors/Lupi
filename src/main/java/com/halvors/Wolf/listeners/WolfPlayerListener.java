@@ -20,6 +20,7 @@
 
 package com.halvors.Wolf.listeners;
 
+import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.EntityWolf;
 import net.minecraft.server.PathEntity;
 import net.minecraft.server.PathPoint;
@@ -27,7 +28,7 @@ import net.minecraft.server.PathPoint;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -38,8 +39,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
 import com.halvors.Wolf.util.ConfigManager;
-import com.halvors.Wolf.util.WorldConfig;
 import com.halvors.Wolf.wolf.SelectedWolfManager;
+import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
 
 /**
@@ -88,31 +89,36 @@ public class WolfPlayerListener extends PlayerListener {
         if (!event.isCancelled()) {
             Player player = event.getPlayer();
             Entity entity = event.getRightClicked();
-            World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
                 
-                // Adds the wolf to database.
-                if (!wolfManager.hasWolf(wolf.getEntityId()) && wolf.isTamed() && wolf.getOwner().equals(player)) {
-                    wolfManager.addWolf(wolf);
-                }
-                
-                if (player.getItemInHand().getTypeId() == worldConfig.item) {
-                    if (plugin.hasPermissions(player, "Wolf.select")) {
-                        if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                            if (!wolfManager.hasWolf(wolf.getEntityId())) {
-                                wolfManager.addWolf(wolf);
-                                
-                                player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
-                            }
-                            
-                            selectedWolfManager.addSelectedWolf(player.getName(), wolf);
-                            
-                            player.sendMessage(ChatColor.GREEN + "Wolf selected.");
-                        }
-                    }
+                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
+                	Material item = player.getItemInHand().getType();
+                	
+                	if (item.equals(Material.BONE)) {
+	                	if (plugin.hasPermissions(player, "Wolf.select")) {
+	                		if (!wolfManager.hasWolf(wolf.getEntityId())) {
+	                			wolfManager.addWolf(wolf);
+	                                
+	                			player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
+	                			
+	                			// TODO: Remove temporary database info message
+	                			player.sendMessage("Wolf EntityId: " + wolf.getEntityId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getEntityId()).getId());
+	                		}
+	                            
+	                		selectedWolfManager.addSelectedWolf(player.getName(), wolf);
+	                            
+	                		player.sendMessage(ChatColor.GREEN + "Wolf selected.");
+	                    }
+	                } else if (item.equals(Material.CHEST)) {
+	                	if (plugin.hasPermissions(player, "Wolf.chest")) {
+	                		if (wolfManager.hasWolf(wolf.getEntityId())) {
+	                			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+	                			entityPlayer.a(wolfManager.getInventory(wolf.getEntityId()));
+	                		}
+	                    }
+	                }
                 }
             }
         }

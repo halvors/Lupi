@@ -41,20 +41,12 @@ public class WolfWorldListener extends WorldListener{
 //  private final com.halvors.Wolf.Wolf plugin;
     
     private final WolfManager wolfManager;
+    private final WolfInventoryManager wolfInventoryManager;
     
     public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
 //      this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
-    }
-    
-    @Override
-    public void onWorldLoad(WorldLoadEvent event) {
-//        wolfInventoryManager.load(event.getWorld());
-    }
-    
-    @Override
-    public void onWorldSave(WorldSaveEvent event) {
-//        wolfInventoryManager.save(event.getWorld());
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     @Override
@@ -89,13 +81,63 @@ public class WolfWorldListener extends WorldListener{
                     WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
                     
                     if (wt != null) {
-                        wt.setLocationX(wolf.getLocation().getX());
-                        wt.setLocationY(wolf.getLocation().getY());
-                        wt.setLocationZ(wolf.getLocation().getZ());
+                        wt.setLocationX(wolf.getLocation().getBlockX());
+                        wt.setLocationY(wolf.getLocation().getBlockY());
+                        wt.setLocationZ(wolf.getLocation().getBlockZ());
                         wolfManager.updateWolfTable(wt);
                     }
                 }
             }
         }
+    }
+    
+    @Override
+    public void onWorldLoad(WorldLoadEvent event) {
+        wolfInventoryManager.load(event.getWorld());
+        
+        /*
+        List<Entity> entities = event.getWorld().getEntities();
+        
+        for (Entity entity : entities) {
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                if (wolf.isTamed()) {
+                    WolfTable wt = wolfManager.getWolfTable(wolf.getLocation());
+                    
+                    if (wt != null) {
+                        wt.setEntityId(wolf.getEntityId());
+                        wolfManager.updateWolfTable(wt);
+                    }
+                }
+            }
+        }
+        */
+    }
+    
+    @Override
+    public void onWorldSave(WorldSaveEvent event) {
+        wolfInventoryManager.save(event.getWorld());
+    	
+        /*
+        List<Entity> entities = event.getWorld().getEntities();
+        
+        for (Entity entity : entities) {
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                if (wolf.isTamed()) {
+                    WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                    
+                    if (wt != null) {
+                        wt.setLocationX(wolf.getLocation().getBlockX());
+                        wt.setLocationY(wolf.getLocation().getBlockY());
+                        wt.setLocationZ(wolf.getLocation().getBlockZ());
+                        wolfManager.updateWolfTable(wt);
+                    }
+                }
+            }
+        }
+        */
     }
 }
