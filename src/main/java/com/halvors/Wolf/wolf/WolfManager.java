@@ -139,10 +139,18 @@ public class WolfManager {
             wt.setLocationZ(wolf.getLocation().getZ());
             wt.setWorld(wolf.getWorld().getName());
             
-            // Add wolf inventory
-            wolfInventoryManager.addWolfInventory(wolf.getEntityId());
-            
+            // Save the wolf to the database
             plugin.getDatabase().save(wt);
+            
+            // Pull a fresh copy of the wolf to retrieve the database ID
+            wt = getWolfTable(wolf.getEntityId());
+            
+            // Add wolf inventory
+            wolfInventoryManager.addWolfInventory(wt.getId());
+            
+            
+            
+            
         }
     }
     
