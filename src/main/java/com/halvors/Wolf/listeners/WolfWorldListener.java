@@ -41,22 +41,20 @@ public class WolfWorldListener extends WorldListener{
 //  private final com.halvors.Wolf.Wolf plugin;
     
     private final WolfManager wolfManager;
-    private final WolfInventoryManager wolfInventoryManager;
     
     public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
 //      this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-        wolfInventoryManager.load(event.getWorld());
+//        wolfInventoryManager.load(event.getWorld());
     }
     
     @Override
     public void onWorldSave(WorldSaveEvent event) {
-        wolfInventoryManager.save(event.getWorld());
+//        wolfInventoryManager.save(event.getWorld());
     }
     
     @Override

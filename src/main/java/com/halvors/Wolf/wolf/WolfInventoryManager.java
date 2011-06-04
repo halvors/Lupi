@@ -32,13 +32,12 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WolfInventoryManager {
-	private final Wolf plugin;
-    
-    private final HashMap<Integer, WolfInventory> wolfInventorys;
+//	private final Wolf plugin;
+	
+    private final HashMap<Integer, WolfInventory> wolfInventorys = new HashMap<Integer, WolfInventory>();
     
     public WolfInventoryManager(final Wolf plugin) {
-    	this.plugin = plugin;
-        this.wolfInventorys = new HashMap<Integer, WolfInventory>();
+//    	this.plugin = plugin;
     }
     
     public void load(final World world) {
@@ -54,42 +53,42 @@ public class WolfInventoryManager {
     /**
      * Add a WolfInventory
      * 
-     * @param entityId
+     * @param id
      */
-    public void addWolfInventory(final int entityId) {
-        if (!wolfInventorys.containsKey(entityId)) {
-            wolfInventorys.put(entityId, new WolfInventory());
+    public void addWolfInventory(final int id) {
+        if (!wolfInventorys.containsKey(id)) {
+            wolfInventorys.put(id, new WolfInventory());
         }
     }
     
     /**
      * Remove a WolfInventory
      * 
-     * @param entityId
+     * @param id
      */
-    public void removeWolfInventory(final int entityId) {
-        if (wolfInventorys.containsKey(entityId)) {
-            wolfInventorys.remove(entityId);
+    public void removeWolfInventory(final int id) {
+        if (wolfInventorys.containsKey(id)) {
+            wolfInventorys.remove(id);
         }
     }
     
     /**
-     * Check if wolf has inventory by entityId
+     * Check if wolf has inventory by id
      * 
-     * @param entityId
+     * @param id
      * @return
      */
-    public boolean hasWolfInventory(final int entityId) {
-        return wolfInventorys.containsKey(entityId);
+    public boolean hasWolfInventory(final int id) {
+        return wolfInventorys.containsKey(id);
     }
     
     /**
-     * Get wolf's inventory by entityId
+     * Get wolf's inventory by id
      * 
-     * @param entityId
+     * @param id
      * @return
      */
-    public WolfInventory getWolfInventory(final int entityId) {
-        return wolfInventorys.get(entityId);
+    public WolfInventory getWolfInventory(final int id) {
+        return wolfInventorys.get(id);
     }
 }

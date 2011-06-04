@@ -147,10 +147,6 @@ public class WolfManager {
             
             // Add wolf inventory
             wolfInventoryManager.addWolfInventory(wt.getId());
-            
-            
-            
-            
         }
     }
     
@@ -409,6 +405,33 @@ public class WolfManager {
      */
     public World getWorld(final String name, final String owner) {
         return getWorld(getEntityId(name, owner));
+    }
+    
+    /**
+     * Get wolf's inventory by entityId
+     * 
+     * @param entityId
+     * @return
+     */
+    public WolfInventory getInventory(final int entityId) {
+    	WolfTable wt = getWolfTable(entityId);
+    	
+    	if (wt != null) {
+    		return wolfInventoryManager.getWolfInventory(wt.getEntityId());
+    	}
+    	
+    	return null;
+    }
+    
+    /**
+     * Get wolf's inventory
+     * 
+     * @param name
+     * @param owner
+     * @return
+     */
+    public WolfInventory getInventory(final String name, final String owner) {
+        return getInventory(getEntityId(name, owner));
     }
     
     /**

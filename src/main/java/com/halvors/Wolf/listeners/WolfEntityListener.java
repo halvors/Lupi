@@ -51,13 +51,11 @@ public class WolfEntityListener extends EntityListener {
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
-    private final WolfInventoryManager wolfInventoryManager;
     
     public WolfEntityListener(final com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     @Override
@@ -107,13 +105,17 @@ public class WolfEntityListener extends EntityListener {
                                         player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + maxHealth);
                                         
                                         event.setCancelled(true);
+                                        
+                                        return;
                                     }
                                 } else if (item.equals(Material.CHEST)) {
                                     if (plugin.hasPermissions(player, "Wolf.chest")) {
                                     	EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                    	entityPlayer.a(wolfInventoryManager.getWolfInventory(wolf.getEntityId()));
+                                    	entityPlayer.a(wolfManager.getInventory(wolf.getEntityId()));
                                         
                                         event.setCancelled(true);
+                                        
+                                        return;
                                     }
                                 }
                             }
