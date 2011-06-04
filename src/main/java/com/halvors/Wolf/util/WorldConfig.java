@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -32,8 +33,8 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WorldConfig {
-	private final Wolf plugin;
-	
+    //private final Wolf plugin;
+    
     private String worldName;
     private File configFile;
 
@@ -47,10 +48,10 @@ public class WorldConfig {
     /* Configuration data end */
 
     public WorldConfig(final Wolf plugin, final String worldName) {
-    	this.plugin = plugin;
-    	this.worldName = worldName;
-    	
-    	File baseFolder = new File(plugin.getDataFolder(), "worlds/");
+        //this.plugin = plugin;
+        this.worldName = worldName;
+        
+        File baseFolder = new File(plugin.getDataFolder(), "worlds/");
         configFile = new File(baseFolder, worldName + ".yml");
 
         plugin.getConfigManager().checkConfig(configFile, "config_world.yml");
@@ -63,7 +64,7 @@ public class WorldConfig {
     /**
      * Load the configuration.
      */
-    public void load() {	
+    public void load() {    
         Configuration config = new Configuration(configFile);
         config.load();
         

@@ -6,7 +6,6 @@
 item: 352 # Item for select wolf
 
 wolf:
-    enable: true # Allow wolves to spawn
-    respawn: true # Respawn tamed wolves
-    peaceful: false # Wolves are peaceful.
-    limit: 0 # 0 to disable.
+    enable: true # Allow wolves to spawn.
+    respawn: true # Respawn tamed wolves.
+    peaceful: false # Wild wolves are peaceful.

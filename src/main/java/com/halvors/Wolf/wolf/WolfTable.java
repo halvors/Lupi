@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -23,27 +24,22 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.avaje.ebean.validation.NotEmpty;
-import com.avaje.ebean.validation.NotNull;
-
+/**
+ * Represents a wolfTable
+ * 
+ * @author halvors
+ */
 @Entity()
 @Table(name = "wolf_wolf")
 public class WolfTable {
-	@Id
+    @Id
     private int id;
-	@NotNull
-	private int entityId;
-	@NotEmpty
+    private int entityId;
     private String name;
-	@NotEmpty
     private String owner;
-	@NotNull
-	private double locationX;
-	@NotNull
-	private double locationY;
-	@NotNull
-	private double locationZ;
-	@NotEmpty
+    private double locationX;
+    private double locationY;
+    private double locationZ;
     private String world;
     
     public int getId() {
@@ -55,11 +51,11 @@ public class WolfTable {
     }
     
     public int getEntityId() {
-    	return entityId;
+        return entityId;
     }
     
     public void setEntityId(final int entityId) {
-    	this.entityId = entityId;
+        this.entityId = entityId;
     }
     
     public String getName() {
@@ -79,34 +75,34 @@ public class WolfTable {
     }
     
     public double getLocationX() {
-    	return locationX;
+        return locationX;
     }
     
     public void setLocationX(final double locationX) {
-    	this.locationX = locationX;
+        this.locationX = locationX;
     }
     
     public double getLocationY() {
-    	return locationY;
+        return locationY;
     }
     
     public void setLocationY(final double locationY) {
-    	this.locationY = locationY;
+        this.locationY = locationY;
     }
     
     public double getLocationZ() {
-    	return locationZ;
+        return locationZ;
     }
     
     public void setLocationZ(final double locationZ) {
-    	this.locationZ = locationZ;
+        this.locationZ = locationZ;
     }
     
     public String getWorld() {
-    	return world;
+        return world;
     }
     
     public void setWorld(final String world) {
-    	this.world = world;
+        this.world = world;
     }
 }

@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -25,6 +26,7 @@ import net.minecraft.server.PathPoint;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
@@ -46,80 +48,75 @@ import com.halvors.Wolf.wolf.WolfManager;
  * @author halvors
  */
 public class WolfPlayerListener extends PlayerListener {
-	private final com.halvors.Wolf.Wolf plugin;
-	
-	private final ConfigManager configManager;
-	private final WolfManager wolfManager;
-	private final SelectedWolfManager selectedWolfManager;
-	
-	public WolfPlayerListener(final com.halvors.Wolf.Wolf plugin) {
-		this.plugin = plugin;
-		this.configManager = plugin.getConfigManager();
-		this.wolfManager = plugin.getWolfManager();
-		this.selectedWolfManager = plugin.getSelectedWolfManager();
-	}
-	
-	@Override
+    private final com.halvors.Wolf.Wolf plugin;
+    
+    private final ConfigManager configManager;
+    private final WolfManager wolfManager;
+    private final SelectedWolfManager selectedWolfManager;
+    
+    public WolfPlayerListener(final com.halvors.Wolf.Wolf plugin) {
+        this.plugin = plugin;
+        this.configManager = plugin.getConfigManager();
+        this.wolfManager = plugin.getWolfManager();
+        this.selectedWolfManager = plugin.getSelectedWolfManager();
+    }
+    
+    @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
         Player player = event.getPlayer();
-
+        
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(player.getName())) {
-            if (plugin.hasPermissions(player, "WolfControl.target")) {        
-            	if (event.getItem().getTypeId() == 1) {
-                	Location pos = player.getTargetBlock(null, 120).getLocation();
-                    
-                	if ((action == Action.LEFT_CLICK_BLOCK) || (action == Action.LEFT_CLICK_AIR)) {
-                		PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
-                		EntityWolf wolf = ((CraftWolf) selectedWolfManager.getSelectedWolf(player.getName())).getHandle();
-                		wolf.a(new PathEntity(pathPoint));
-                		
-                		player.sendMessage(ChatColor.GREEN + "Wolf target set.");
-                    } else if ((action == Action.RIGHT_CLICK_BLOCK) || (action == Action.RIGHT_CLICK_AIR)) {
-                    	
+            Location pos = player.getTargetBlock(null, 120).getLocation();
+                
+            if (event.getItem().getType() == Material.SADDLE) {
+                if (plugin.hasPermissions(player, "Wolf.target")) {
+                    if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) {
+                        PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
+                        EntityWolf wolf = ((CraftWolf) selectedWolfManager.getSelectedWolf(player.getName())).getHandle();
+                        wolf.a(new PathEntity(pathPoint));
+                        
+                        player.sendMessage(ChatColor.GREEN + "Wolf target set.");
                     }
                 }
             }
         }
-	}
-	
-	@Override
-	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-		if (!event.isCancelled()) {
-			Player player = event.getPlayer();
-			Entity entity = event.getRightClicked();
-			World world = entity.getWorld();
-			WorldConfig worldConfig = configManager.getWorldConfig(world);
-			
-			if (entity instanceof Wolf) {
-				Wolf wolf = (Wolf) entity;
-				
-				if (plugin.hasPermissions(player, "WolfControl.select")) {
-					int item = worldConfig.item;
-					
-					if (item != 0) {
-						if (player.getItemInHand().getTypeId() == item) {
-							if (wolf.isTamed()) {
-								if (!wolfManager.hasWolf(wolf.getEntityId())) {
-									wolfManager.addWolf(wolf);
-									
-									player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
-								} else {
-									player.sendMessage(ChatColor.GREEN + "This is " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()) + ChatColor.GREEN + ".");
-								}
-									
-								selectedWolfManager.addSelectedWolf(player.getName(), wolf);
-								
-								player.sendMessage(ChatColor.GREEN + "Wolf selected.");
-							} else {
-								// TODO: Add something here.
-							}
-						}
-					} else {
-						player.sendMessage(ChatColor.RED + "Error: Item not set in configuration file!");
-					}
-				}
-			}
-		}
-	}
+    }
+    
+    @Override
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        if (!event.isCancelled()) {
+            Player player = event.getPlayer();
+            Entity entity = event.getRightClicked();
+            World world = entity.getWorld();
+            WorldConfig worldConfig = configManager.getWorldConfig(world);
+            
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                // Adds the wolf to database.
+                if (!wolfManager.hasWolf(wolf.getEntityId()) && wolf.isTamed() && wolf.getOwner().equals(player)) {
+                    wolfManager.addWolf(wolf);
+                    
+                    player.sendMessage("Wolf is added to database.");
+                }
+                
+                if (player.getItemInHand().getTypeId() == worldConfig.item) {
+                    if (plugin.hasPermissions(player, "Wolf.select")) {
+                        if (wolf.isTamed() && wolf.getOwner() == player) {
+                            if (!wolfManager.hasWolf(wolf.getEntityId())) {
+                                wolfManager.addWolf(wolf);
+                                
+                                player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
+                            }
+                            
+                            selectedWolfManager.addSelectedWolf(player.getName(), wolf);
+                            
+                            player.sendMessage(ChatColor.GREEN + "Wolf selected.");
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

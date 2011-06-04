@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -19,7 +20,6 @@
 
 package com.halvors.Wolf;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,39 +38,44 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.halvors.Wolf.command.WolfCommandExecutor;
 import com.halvors.Wolf.listeners.WolfEntityListener;
 import com.halvors.Wolf.listeners.WolfPlayerListener;
+import com.halvors.Wolf.listeners.WolfWorldListener;
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.wolf.SelectedWolfManager;
+import com.halvors.Wolf.wolf.WolfInventoryManager;
+import com.halvors.Wolf.wolf.WolfInventoryTable;
 import com.halvors.Wolf.wolf.WolfManager;
 import com.halvors.Wolf.wolf.WolfTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Wolf extends JavaPlugin {
-	public String name;
-	public String version;
-	
-	private final Logger log = Logger.getLogger("Minecraft");
-	
-	private PluginManager pm;
-	private PluginDescriptionFile pdfFile;
+    public String name;
+    public String version;
+    
+    private final Logger log = Logger.getLogger("Minecraft");
+    
+    private PluginManager pm;
+    private PluginDescriptionFile pdfFile;
 
-	private final ConfigManager configManager = new ConfigManager(this);
-	private final WolfManager wolfManager = new WolfManager(this);
-	private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
-	
-	private final WolfEntityListener entityListener = new WolfEntityListener(this);
-	private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
-	
+    private final ConfigManager configManager = new ConfigManager(this);
+    private final WolfManager wolfManager = new WolfManager(this);
+    private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
+    private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
+    
+    private final WolfEntityListener entityListener = new WolfEntityListener(this);
+    private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
+    private final WolfWorldListener worldListener = new WolfWorldListener(this);
+    
     public static PermissionHandler Permissions;
     
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     
     @Override
     public void onEnable() {
-    	pm = this.getServer().getPluginManager();
-    	pdfFile = this.getDescription();
-    	
-    	// Load name and version from pdfFile
+        pm = this.getServer().getPluginManager();
+        pdfFile = this.getDescription();
+        
+        // Load name and version from pdfFile
         name = pdfFile.getName();
         version = pdfFile.getVersion();
         
@@ -79,17 +84,22 @@ public class Wolf extends JavaPlugin {
         
         // Register our events Type.          
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
-//		pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
-		
-		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
+//      pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
+        
+        pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
         
-		// Register our commands
+        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.WORLD_SAVE, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
+        
+        // Register our commands
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
-		
+        
         log(Level.INFO, "version " + version + " is enabled!");
         
         setupPermissions();
@@ -98,26 +108,26 @@ public class Wolf extends JavaPlugin {
     
     @Override
     public void onDisable() {
-    	configManager.save();
-    	
-    	log(Level.INFO, "Plugin disabled!");
+        configManager.save();
+        
+        log(Level.INFO, "Plugin disabled!");
     }
     
     private void setupPermissions() {
-    	Plugin permissions = this.getServer().getPluginManager().getPlugin("Permissions");
+        Plugin permissions = this.getServer().getPluginManager().getPlugin("Permissions");
 
         if (Permissions == null) {
-        	if (permissions != null) {
-            	Permissions = ((Permissions) permissions).getHandler();
+            if (permissions != null) {
+                Permissions = ((Permissions) permissions).getHandler();
             } else {
-            	log(Level.INFO, "Permission system not detected, defaulting to OP");
+                log(Level.INFO, "Permission system not detected, defaulting to OP");
             }
         }
     }
     
     private void setupDatabase() {
         try {
-        	this.getDatabase().find(WolfTable.class).findRowCount();
+            this.getDatabase().find(WolfTable.class).findRowCount();
         } catch (PersistenceException ex) {
             log(Level.INFO, "Installing database for " + getDescription().getName() + " due to first time usage");
             installDDL();
@@ -128,6 +138,7 @@ public class Wolf extends JavaPlugin {
     public List<Class<?>> getDatabaseClasses() {
         List<Class<?>> list = new ArrayList<Class<?>>();
         list.add(WolfTable.class);
+        list.add(WolfInventoryTable.class);
         
         return list;
     }
@@ -157,14 +168,18 @@ public class Wolf extends JavaPlugin {
     }
     
     public ConfigManager getConfigManager() {
-    	return configManager;
+        return configManager;
     }
     
     public WolfManager getWolfManager() {
-    	return wolfManager;
+        return wolfManager;
+    }
+    
+    public WolfInventoryManager getWolfInventoryManager() {
+    	return wolfInventoryManager;
     }
     
     public SelectedWolfManager getSelectedWolfManager() {
-    	return selectedWolfManager;
+        return selectedWolfManager;
     }
 }

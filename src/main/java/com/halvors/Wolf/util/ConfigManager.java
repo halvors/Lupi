@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 halvors <halvors@skymiastudios.com>.
+ * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
+ * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
  * This file is part of Wolf.
  *
@@ -75,10 +76,10 @@ public class ConfigManager {
      * Save the configuration.
      */
     public void save() {
-    	Configuration config = plugin.getConfiguration();
-    	
-    	worlds.clear();
-    	
+        Configuration config = plugin.getConfiguration();
+        
+        worlds.clear();
+        
         config.save();
     }
     
@@ -86,7 +87,7 @@ public class ConfigManager {
      * Reload the configuration.
      */
     public void reload()  {
-    	load();
+        load();
     }
     
     /**
@@ -96,47 +97,47 @@ public class ConfigManager {
      * @param defaultName
      */
     public void checkConfig(File actual, String defaultName) {
-    	if (!actual.exists()) {
-    	
-    		// Make parent directories
-    		File parent = actual.getParentFile();
+        if (!actual.exists()) {
         
-    		if (!parent.exists()) {
-    			parent.mkdirs();
-    		}
-    		
-    		if (!actual.exists()) {
-    			InputStream input = ConfigManager.class.getResourceAsStream(defaultName);
+            // Make parent directories
+            File parent = actual.getParentFile();
+        
+            if (!parent.exists()) {
+                parent.mkdirs();
+            }
             
-    			if (input != null) {
-    				FileOutputStream output = null;
+            if (!actual.exists()) {
+                InputStream input = ConfigManager.class.getResourceAsStream(defaultName);
+            
+                if (input != null) {
+                    FileOutputStream output = null;
 
-    				try {
-    					output = new FileOutputStream(actual);
-                    	byte[] buf = new byte[8192];
-                    	int length = 0;
-                    	while ((length = input.read(buf)) > 0) {
-                    		output.write(buf, 0, length);
-                    	}
+                    try {
+                        output = new FileOutputStream(actual);
+                        byte[] buf = new byte[8192];
+                        int length = 0;
+                        while ((length = input.read(buf)) > 0) {
+                            output.write(buf, 0, length);
+                        }
 
-                    	plugin.log(Level.INFO, "Configuration file written: " + actual.getAbsolutePath());
-    				} catch (IOException e) {
-    					e.printStackTrace();
-    				} finally {
-    					try {
-    						if (input != null) {
-    							input.close();
-    						}
-    					} catch (IOException e) {
-    					}
+                        plugin.log(Level.INFO, "Configuration file written: " + actual.getAbsolutePath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (input != null) {
+                                input.close();
+                            }
+                        } catch (IOException e) {
+                        }
 
-    					try {
-    						if (output != null) {
-    							output.close();
-    						}
-    					} catch (IOException e) {
-    					}
-    				}
+                        try {
+                            if (output != null) {
+                                output.close();
+                            }
+                        } catch (IOException e) {
+                        }
+                    }
                 }
             }
         }
