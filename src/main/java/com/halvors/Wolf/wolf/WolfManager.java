@@ -41,8 +41,11 @@ import org.bukkit.entity.Wolf;
 public class WolfManager {
     private final com.halvors.Wolf.Wolf plugin;
     
+    private final WolfInventoryManager wolfInventoryManager;
+    
     public WolfManager(final com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     /**
@@ -74,8 +77,8 @@ public class WolfManager {
      * @return
      */
     public WolfTable getWolfTable(final Location location) {
-    	return plugin.getDatabase().find(WolfTable.class).where()
-        	.eq("locationX", location.getX()).eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
+        return plugin.getDatabase().find(WolfTable.class).where()
+            .eq("locationX", location.getX()).eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
     }
 
     /**
@@ -137,7 +140,7 @@ public class WolfManager {
             wt.setWorld(wolf.getWorld().getName());
             
             // Add wolf inventory
-//            wolfInventory.put(wolf.getEntityId(), new WolfInventory());
+            wolfInventoryManager.addWolfInventory(wolf.getEntityId());
             
             plugin.getDatabase().save(wt);
         }
@@ -161,7 +164,7 @@ public class WolfManager {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-//            wolfInventory.remove(entityId);
+        	wolfInventoryManager.removeWolfInventory(entityId);
             plugin.getDatabase().delete(wt);
         }
     }

@@ -20,9 +20,12 @@
 
 package com.halvors.Wolf.listeners;
 
+import net.minecraft.server.EntityPlayer;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -35,6 +38,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
+import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
 
 /**
@@ -47,11 +51,13 @@ public class WolfEntityListener extends EntityListener {
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
+    private final WolfInventoryManager wolfInventoryManager;
     
     public WolfEntityListener(final com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     @Override
@@ -104,8 +110,8 @@ public class WolfEntityListener extends EntityListener {
                                     }
                                 } else if (item.equals(Material.CHEST)) {
                                     if (plugin.hasPermissions(player, "Wolf.chest")) {
-//                                      EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-//                                      entityPlayer.a(wolfManager.getWolfInventory(wolf.getEntityId()));
+                                    	EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                                    	entityPlayer.a(wolfInventoryManager.getWolfInventory(wolf.getEntityId()));
                                         
                                         event.setCancelled(true);
                                     }

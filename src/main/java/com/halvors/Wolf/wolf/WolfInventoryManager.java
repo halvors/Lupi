@@ -32,12 +32,12 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WolfInventoryManager {
-//    private final Wolf plugin;
+	private final Wolf plugin;
     
     private final HashMap<Integer, WolfInventory> wolfInventorys;
     
     public WolfInventoryManager(final Wolf plugin) {
-//        this.plugin = plugin;
+    	this.plugin = plugin;
         this.wolfInventorys = new HashMap<Integer, WolfInventory>();
     }
     
@@ -68,7 +68,7 @@ public class WolfInventoryManager {
      * @param entityId
      */
     public void removeWolfInventory(final int entityId) {
-        if (!wolfInventorys.containsKey(entityId)) {
+        if (wolfInventorys.containsKey(entityId)) {
             wolfInventorys.remove(entityId);
         }
     }
