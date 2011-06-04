@@ -1,7 +1,6 @@
 TODO:
 - Get The Bukkit Team to implement this pull request in CraftBukkit: https://github.com/Bukkit/CraftBukkit/pull/315
-- Implement wolf inventory.
-- Make sure wolfManager works correctly with the new system for saving multiply wolves based on theirs location.
+- Implement wolf inventory. (This is now trowing errors)
 - Implement admin commands?
-- halvors: Finish setname and name commands.
 - Add command so owner of a wolf can add peace players that wolf not attack.
+- Replace entityId with id as default referance in database systems.
