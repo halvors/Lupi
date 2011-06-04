@@ -51,12 +51,12 @@ public class WolfWorldListener extends WorldListener{
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-        wolfInventoryManager.load();
+        wolfInventoryManager.load(event.getWorld());
     }
     
     @Override
     public void onWorldSave(WorldSaveEvent event) {
-    	wolfInventoryManager.save();
+        wolfInventoryManager.save(event.getWorld());
     }
     
     @Override
@@ -68,12 +68,11 @@ public class WolfWorldListener extends WorldListener{
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed()) {
-                    WolfTable wt = null;
-                    wt = wolfManager.getWolf(wolf.getLocation());
+                    WolfTable wt = wolfManager.getWolfTable(wolf.getLocation());
                     
                     if (wt != null) {
                         wt.setEntityId(wolf.getEntityId());
-                        wolfManager.updateWolf(wt);
+                        wolfManager.updateWolfTable(wt);
                     }
                 }
             }
@@ -89,14 +88,13 @@ public class WolfWorldListener extends WorldListener{
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed()) {
-                    WolfTable wt = null;
-                    wt = wolfManager.getWolfTable(wolf.getEntityId());
+                    WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
                     
                     if (wt != null) {
                         wt.setLocationX(wolf.getLocation().getX());
                         wt.setLocationY(wolf.getLocation().getY());
                         wt.setLocationZ(wolf.getLocation().getZ());
-                        wolfManager.updateWolf(wt);
+                        wolfManager.updateWolfTable(wt);
                     }
                 }
             }

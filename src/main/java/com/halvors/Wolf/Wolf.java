@@ -176,7 +176,7 @@ public class Wolf extends JavaPlugin {
     }
     
     public WolfInventoryManager getWolfInventoryManager() {
-    	return wolfInventoryManager;
+        return wolfInventoryManager;
     }
     
     public SelectedWolfManager getSelectedWolfManager() {

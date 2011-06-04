@@ -23,7 +23,6 @@ package com.halvors.Wolf.wolf;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -42,33 +41,50 @@ import org.bukkit.entity.Wolf;
 public class WolfManager {
     private final com.halvors.Wolf.Wolf plugin;
     
-//    private final EbeanServer database; // TODO: Use this instead of plugin.getDatabase().
-    private final HashMap<Integer, WolfInventory> wolfInventory;
-    
     public WolfManager(final com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
-//        this.database = plugin.getDatabase();
-        this.wolfInventory = new HashMap<Integer, WolfInventory>();
     }
     
     /**
-     * Get WolfTable
+     * Get WolfTable by entityId
      * 
      * @param name
      * @return WolfTable
      */
     public WolfTable getWolfTable(final int entityId) {
-        return plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
+        return plugin.getDatabase().find(WolfTable.class).where()
+            .eq("entityId", entityId).findUnique();
     }
     
     /**
-     * Get WolfTable by name
+     * Get WolfTable by name and owner
      * 
      * @param name
+     * @return WolfTable
+     */
+    public WolfTable getWolfTable(final String name, final String owner) {
+        return plugin.getDatabase().find(WolfTable.class).where()
+            .eq("name", name).eq("owner", owner).findUnique();
+    }
+    
+    /**
+     * Get WolfTable by location
+     * 
+     * @param location
      * @return
      */
-    public WolfTable getWolfTable(final String name) {
-        return getWolfTable(getEntityId(name));
+    public WolfTable getWolfTable(final Location location) {
+    	return plugin.getDatabase().find(WolfTable.class).where()
+        	.eq("locationX", location.getX()).eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
+    }
+
+    /**
+     * Update WolfTable
+     * 
+     * @param wt
+     */
+    public void updateWolfTable(final WolfTable wt) {
+        plugin.getDatabase().update(wt);
     }
     
     /**
@@ -87,7 +103,8 @@ public class WolfManager {
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables(final String owner) {
-        return plugin.getDatabase().find(WolfTable.class).where().ieq("owner", owner).findList();
+        return plugin.getDatabase().find(WolfTable.class).where()
+            .ieq("owner", owner).findList();
     }
     
     /**
@@ -102,7 +119,7 @@ public class WolfManager {
             
             // Check if a wolf with same name already exists.
             for (WolfTable wt : getWolfTables(player.getName())) {
-                if (wt.getName() == name) {
+                if (wt.getName().equalsIgnoreCase(name)) {
                     // TODO: Maybe give a random name instead of return
                     
                     return;
@@ -120,7 +137,7 @@ public class WolfManager {
             wt.setWorld(wolf.getWorld().getName());
             
             // Add wolf inventory
-            wolfInventory.put(wolf.getEntityId(), new WolfInventory());
+//            wolfInventory.put(wolf.getEntityId(), new WolfInventory());
             
             plugin.getDatabase().save(wt);
         }
@@ -136,15 +153,15 @@ public class WolfManager {
     }
     
     /**
-     * Remove a wolf
+     * Remove a wolf by entityId
      * 
      * @param name
      */
     public void removeWolf(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
+        WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-            wolfInventory.remove(entityId);
+//            wolfInventory.remove(entityId);
             plugin.getDatabase().delete(wt);
         }
     }
@@ -154,23 +171,51 @@ public class WolfManager {
      * 
      * @param name
      */
-    public void removeWolf(final String name) {
-        removeWolf(getEntityId(name));
-    }
-    
-    public void updateWolf(final WolfTable wt) {
-        plugin.getDatabase().update(wt);
+    public void removeWolf(final String name, final String owner) {
+        removeWolf(getEntityId(name, owner));
     }
     
     /**
-     * Get wolf by entityid
+     * Check if wolf exist by WolfTable
+     * 
+     * @param wt
+     * @return Boolean
+     */
+    public boolean hasWolf(final WolfTable wt) {
+        if (wt != null) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Check if wolf exist by name and owner
      * 
      * @param name
+     * @return Boolean
+     */
+    public boolean hasWolf(final String name, final String owner) {
+        return hasWolf(getWolfTable(name, owner));
+    }
+    
+    /** 
+     * Check if wolf exist by entityId
+     * 
+     * @param entityId
+     * @return Boolean
+     */
+    public boolean hasWolf(final int entityId) {
+        return hasWolf(getWolfTable(entityId));
+    }
+    
+    /**
+     * Get wolf by WolfTable
+     * 
+     * @param wt
      * @return Wolf
      */
-    public Wolf getWolf(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
-        
+    public Wolf getWolf(final WolfTable wt) {
         for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
             if (entity instanceof Wolf) {
                 if (wt.getEntityId() == entity.getEntityId())  {
@@ -183,45 +228,58 @@ public class WolfManager {
     }
     
     /**
-     * Get wolf by location
-     * 
-     * @param location
-     * @return WolfTable
-     */
-    public WolfTable getWolf(final Location location) { // TODO: Shouldn't this return Wolf? And not WolfTable?
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("locationX", location.getX())
-            .eq("locationY", location.getY()).eq("locationZ", location.getZ()).findUnique();
-        
-        if (wt != null) {
-            return wt;
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Get wolf by name
+     * Get wolf by name and owner
      * 
      * @param name
      * @return Wolf
      */
-    public Wolf getWolf(final String name) {
-        return getWolf(getEntityId(name));
+    public Wolf getWolf(final String name, final String owner) {
+        return getWolf(getWolfTable(name, owner));
     }
-        
+    
     /**
-     * Get all players wolves
+     * Get wolf by entityid
+     * 
+     * @param name
+     * @return Wolf
+     */
+    public Wolf getWolf(final int entityId) {
+        return getWolf(getWolfTable(entityId));
+    }
+    
+    /**
+     * Get all wolves
+     * 
+     * @return
+     */
+    public List<Wolf> getWolves() {    
+        List<WolfTable> wts = getWolfTables();
+        List<Wolf> wolves = new ArrayList<Wolf>();
+        
+        for (WolfTable wt : wts) {
+            for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
+                if (entity instanceof Wolf && entity.getEntityId() == wt.getEntityId()) {
+                    wolves.add((Wolf) entity);
+                }
+            }
+        }
+        
+        return wolves;
+    }
+
+    /**
+     * Get all wolves by owner
      * 
      * @param owner
      * @return List<Wolf>
      */
     public List<Wolf> getWolves(final String owner) {    
-        List<WolfTable> wts = plugin.getDatabase().find(WolfTable.class).where().ieq("owner", owner).findList();
+        List<WolfTable> wts = getWolfTables(owner);
         List<Wolf> wolves = new ArrayList<Wolf>();
         
         for (WolfTable wt : wts) {
             for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
-                if (entity instanceof Wolf && wt.getEntityId() == entity.getEntityId()) {
+                if (entity instanceof Wolf && entity.getEntityId() == wt.getEntityId()) {
                     wolves.add((Wolf) entity);
                 }
             }
@@ -231,164 +289,115 @@ public class WolfManager {
     }
     
     /**
-     * Get the wolf's owner
-     * 
-     * @param entityId
-     * @return Player
-     */
-    public Player getWolfOwner(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
-        
-        if (wt != null) {
-        	for (Player player : plugin.getServer().getOnlinePlayers()) {
-        		if (player.getName() == wt.getOwner()) {
-        			return player;
-        		}
-        	}
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Get the wolf's owner by name
+     * Get entityId by name and owner
      * 
      * @param name
-     * @return
+     * @return Integer
      */
-    public Player getWolfOwner(final String name) {
-        return getWolfOwner(getEntityId(name));
-    }
-    
-    /**
-     * Get wolf's location
-     * 
-     * @param entityId
-     * @return Location
-     */
-    public Location getWolfLocation(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
+    public int getEntityId(final String name, final String owner) {
+        WolfTable wt = getWolfTable(name, owner);
         
         if (wt != null) {
-        	World world = plugin.getServer().getWorld(wt.getWorld());
-        	double x = wt.getLocationX();
-        	double y = wt.getLocationY();
-        	double z = wt.getLocationZ();
-        
-        	Location location = new Location(world, x, y, z);
-        
-        	return location;
+            return wt.getEntityId();
         }
         
-        return null;
+        return 0;
     }
     
     /**
-     * Get the wolf's location by name
-     * 
-     * @param name
-     * @return Location
-     */
-    public Location getWolfLocation(final String name) {
-        return getWolfLocation(getEntityId(name));
-    }
-    
-    /**
-     * Get the wolf's world
-     * 
-     * @param entityId
-     * @return World
-     */
-    public World getWolfWorld(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
-        
-        if (wt != null) {
-        	return plugin.getServer().getWorld(wt.getWorld());
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Get the wolf's world by name
-     * 
-     * @param name
-     * @return
-     */
-    public World getWolfWorld(final String name) {
-        return getWolfWorld(getEntityId(name));
-    }
-    
-    /**
-     * Get wolf's inventory by entityId
-     * 
-     * @param entityId
-     * @return
-     */
-    public WolfInventory getWolfInventory(final int entityId) {
-        return wolfInventory.get(entityId);
-    }
-    
-    public WolfInventory getWolfInventory(final String name) {
-        return getWolfInventory(getEntityId(name));
-    }
-    
-    /** 
-     * Check if wolf exist
-     * 
-     * @param entityId
-     * @return
-     */
-    public boolean hasWolf(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
-        
-        if (wt != null) {
-            return true;
-        }
-        
-        return false;
-    }
-
-    /**
-     * Check if wolf exist by name
-     * 
-     * @param name
-     * @return
-     */
-    public boolean hasWolf(final String name) {
-        return hasWolf(getEntityId(name));
-    }
-    
-    /**
-     * Get wolf's name by entityId
+     * Get name by entityId
      * 
      * @param entityId
      * @return String
      */
     public String getName(final int entityId) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().eq("entityId", entityId).findUnique();
+        WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-        	return wt.getName();
+            return wt.getName();
         }
         
         return null;
     }
     
     /**
-     * Get wolf's entityId by name
+     * Get wolf's owner by entityId
      * 
-     * @param name
-     * @return
+     * @param entityId
+     * @return Player
      */
-    public int getEntityId(final String name) {
-        WolfTable wt = plugin.getDatabase().find(WolfTable.class).where().ieq("name", name).findUnique();
+    public Player getOwner(final int entityId) {
+        WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-        	return wt.getEntityId();
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
+                if (player.getName().equalsIgnoreCase(wt.getOwner())) {
+                    return player;
+                }
+            }
         }
         
-        return 0;
+        return null;
+    }
+    
+    /**
+     * Get location by entityId
+     * 
+     * @param entityId
+     * @return Location
+     */
+    public Location getLocation(final int entityId) {
+        WolfTable wt = getWolfTable(entityId);
+        
+        if (wt != null) {
+            World world = plugin.getServer().getWorld(wt.getWorld());
+            double x = wt.getLocationX();
+            double y = wt.getLocationY();
+            double z = wt.getLocationZ();
+        
+            Location location = new Location(world, x, y, z);
+        
+            return location;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Get location by name and owner
+     * 
+     * @param name
+     * @param owner
+     * @return Location
+     */
+    public Location getLocation(final String name, final String owner) {
+        return getLocation(getEntityId(name, owner));
+    }
+    
+    /**
+     * Get wolf's world by entityId
+     * 
+     * @param entityId
+     * @return World
+     */
+    public World getWorld(final int entityId) {
+        WolfTable wt = getWolfTable(entityId);
+        
+        if (wt != null) {
+            return plugin.getServer().getWorld(wt.getWorld());
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Get wolf's world by name and owner
+     * 
+     * @param name
+     * @return World
+     */
+    public World getWorld(final String name, final String owner) {
+        return getWorld(getEntityId(name, owner));
     }
     
     /**
@@ -397,7 +406,7 @@ public class WolfManager {
      * @param player
      * @param world
      * @param location
-     * @return
+     * @return Wolf
      */
     public Wolf spawnWolf(final Player player, final World world, final Location location) {
         Wolf wolf = (Wolf) world.spawnCreature(location, CreatureType.WOLF);
@@ -434,7 +443,7 @@ public class WolfManager {
     /**
      * Generate a random name
      * 
-     * @return
+     * @return String
      */
     public String getRandomName() { // TODO: Improve this. 
         Random random = new Random();

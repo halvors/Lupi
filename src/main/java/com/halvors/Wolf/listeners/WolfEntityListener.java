@@ -20,12 +20,9 @@
 
 package com.halvors.Wolf.listeners;
 
-import net.minecraft.server.EntityPlayer;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -65,7 +62,7 @@ public class WolfEntityListener extends EntityListener {
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-//                Wolf wolf = (Wolf) entity;
+//              Wolf wolf = (Wolf) entity;
                 
                 if (!worldConfig.wolfEnable) {
                     event.setCancelled(true);
@@ -88,14 +85,14 @@ public class WolfEntityListener extends EntityListener {
                     if (damager instanceof Player) {
                         Player attacker = (Player) damager;
                         
-                        if (wolf.isTamed()) {
+                        if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
                             Player player = (Player) wolf.getOwner();
                             
-                            if (player == attacker) {
+                            if (attacker.equals(player)) {
                                 Material item = player.getItemInHand().getType();
                                 
-                                if (item == Material.BONE) { // TODO: Fix big that wolf take damage after restart.
-                                    if (plugin.hasPermissions(player, "WolfControl.info")) {
+                                if (item.equals(Material.BONE)) {
+                                    if (plugin.hasPermissions(player, "Wolf.info")) {
                                         String name = wolfManager.getName(wolf.getEntityId());
                                         int health = wolf.getHealth();
                                         int maxHealth = 20;
@@ -104,17 +101,13 @@ public class WolfEntityListener extends EntityListener {
                                         player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + maxHealth);
                                         
                                         event.setCancelled(true);
-                                        
-                                        return;
                                     }
-                                } else if (item == Material.CHEST) {
-                                    if (plugin.hasPermissions(player, "WolfControl.chest")) {
-                                        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                        entityPlayer.a(wolfManager.getWolfInventory(wolf.getEntityId()));
+                                } else if (item.equals(Material.CHEST)) {
+                                    if (plugin.hasPermissions(player, "Wolf.chest")) {
+//                                      EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+//                                      entityPlayer.a(wolfManager.getWolfInventory(wolf.getEntityId()));
                                         
                                         event.setCancelled(true);
-                                        
-                                        return;
                                     }
                                 }
                             }
@@ -134,6 +127,8 @@ public class WolfEntityListener extends EntityListener {
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
                 wolfManager.removeWolf(wolf.getEntityId());
+                
+                // TODO: Drop items from inventory.
             }
         }
     }
@@ -175,10 +170,10 @@ public class WolfEntityListener extends EntityListener {
             WorldConfig worldConfig = configManager.getWorldConfig(world);
         
             if (entity instanceof Wolf) {
-//                Wolf wolf = (Wolf) entity;
+//              Wolf wolf = (Wolf) entity;
                 
                 if (target instanceof Player) {
-//                    Player player = (Player) target;
+//                  Player player = (Player) target;
                 
                     if (worldConfig.wolfPeaceful) {
                         event.setCancelled(true);

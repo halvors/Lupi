@@ -97,13 +97,11 @@ public class WolfPlayerListener extends PlayerListener {
                 // Adds the wolf to database.
                 if (!wolfManager.hasWolf(wolf.getEntityId()) && wolf.isTamed() && wolf.getOwner().equals(player)) {
                     wolfManager.addWolf(wolf);
-                    
-                    player.sendMessage("Wolf is added to database.");
                 }
                 
                 if (player.getItemInHand().getTypeId() == worldConfig.item) {
                     if (plugin.hasPermissions(player, "Wolf.select")) {
-                        if (wolf.isTamed() && wolf.getOwner() == player) {
+                        if (wolf.isTamed() && wolf.getOwner().equals(player)) {
                             if (!wolfManager.hasWolf(wolf.getEntityId())) {
                                 wolfManager.addWolf(wolf);
                                 

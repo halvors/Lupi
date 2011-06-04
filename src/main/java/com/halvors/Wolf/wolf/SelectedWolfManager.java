@@ -30,60 +30,54 @@ import org.bukkit.entity.Wolf;
  * @author halvors
  */
 public class SelectedWolfManager {
-//    private final com.halvors.Wolf.Wolf plugin;
+//  private final com.halvors.Wolf.Wolf plugin;
     
-    private final HashMap<String, Wolf> selectedWolf = new HashMap<String, Wolf>();
+    private final HashMap<String, Wolf> selectedWolfs = new HashMap<String, Wolf>();
     
     public SelectedWolfManager(final com.halvors.Wolf.Wolf plugin) {
-//        this.plugin = plugin;
+//      this.plugin = plugin;
     }
     
     /**
      * Add a selected wolf
      * 
-     * @param name
+     * @param owner
      * @param wolf
      */
-    public void addSelectedWolf(final String name, final Wolf wolf) {
-        if (selectedWolf.containsKey(name)) {
-            selectedWolf.remove(name);
+    public void addSelectedWolf(final String owner, final Wolf wolf) {
+        if (!selectedWolfs.containsKey(owner)) {
+            selectedWolfs.put(owner, wolf);
         }
-        
-        selectedWolf.put(name, wolf);
     }
     
     /**
      * Remove a selected wolf
      * 
-     * @param name
+     * @param owner
      */
-    public void removeSelectedWolf(final String name) {
-        if (selectedWolf.containsKey(name)) {
-            selectedWolf.remove(name);
+    public void removeSelectedWolf(final String owner) {
+        if (selectedWolfs.containsKey(owner)) {
+            selectedWolfs.remove(owner);
         }
     }
     
     /**
-     * Get a selected wolf
+     * Get a selected wolf by owner
      * 
-     * @param name
+     * @param owner
      * @return Wolf
      */
-    public Wolf getSelectedWolf(final String name) {
-        return selectedWolf.get(name);
+    public Wolf getSelectedWolf(final String owner) {
+        return selectedWolfs.get(owner);
     }
     
     /**
      * Check if Player has a selected wolf
      * 
-     * @param name
-     * @return if Player has selected wolf
+     * @param owner
+     * @return Boolean
      */
-    public boolean hasSelectedWolf(final String name) {
-        if (selectedWolf.containsKey(name)) {
-            return true;
-        }
-        
-        return false;
+    public boolean hasSelectedWolf(final String owner) {
+        return selectedWolfs.containsKey(owner);
     }
 }

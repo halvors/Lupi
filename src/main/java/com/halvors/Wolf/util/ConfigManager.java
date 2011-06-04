@@ -41,16 +41,8 @@ import com.halvors.Wolf.Wolf;
 public class ConfigManager {
     private final Wolf plugin;
     
-    /**
-     * Holds configurations for different worlds.
-     */
     private HashMap<String, WorldConfig> worlds;
     
-    /**
-     * Construct the object.
-     * 
-     * @param plugin
-     */
     public ConfigManager(Wolf plugin) {
         this.plugin = plugin;
         this.worlds = new HashMap<String, WorldConfig>();
