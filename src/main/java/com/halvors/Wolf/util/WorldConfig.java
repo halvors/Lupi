@@ -45,6 +45,9 @@ public class WorldConfig {
     public int wolfLimit;
     public boolean wolfRespawn;
     public boolean wolfPeaceful;
+    
+    public boolean limitEnable;
+    public int limitValue;
     /* Configuration data end */
 
     public WorldConfig(final Wolf plugin, final String worldName) {
@@ -74,6 +77,9 @@ public class WorldConfig {
         wolfLimit = config.getInt("wolf.limit", wolfLimit);
         wolfRespawn = config.getBoolean("wolf.respawn", wolfRespawn);
         wolfPeaceful = config.getBoolean("wolf.peaceful", wolfPeaceful);
+        
+        limitEnable = config.getBoolean("limit.enable", limitEnable);
+        limitValue = config.getInt("limit.value", limitValue);
     }
 
     /**

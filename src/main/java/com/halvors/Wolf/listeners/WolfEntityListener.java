@@ -149,17 +149,21 @@ public class WolfEntityListener extends EntityListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
-                int size = wolfManager.getWolves(player.getName()).size();
-                int limit = worldConfig.wolfLimit;
+                List<WolfTable> wts = wolfManager.getWolfTables(player.getName());
                 
-                if (size != 0 && size <= limit) {
-                    return;
+                int size = wts.size();
+                int limit = worldConfig.limitValue;
+                
+                if (worldConfig.limitEnable && limit <= size) {
+                	event.setCancelled(true);
+                	
+                	player.sendMessage("You can't tame this wolf, you already have " + ChatColor.YELLOW + Integer.toString(limit)+ ChatColor.WHITE + " of " + ChatColor.YELLOW + Integer.toString(size) + " wolves.");
                 }
                 
                 if (!wolfManager.hasWolf(wolf.getEntityId())) {
                     wolfManager.addWolf(wolf);
                     
-                    player.sendMessage(ChatColor.GREEN + "You're wolf is now tame. Type /name <name> for give your new wolf a name.");
+                    player.sendMessage("You're wolf is now tame. Type /setname <name> for give your new wolf a name.");
                 }
             }
         }
