@@ -146,7 +146,7 @@ public class WolfManager {
             wt = getWolfTable(wolf.getEntityId());
             
             // Add wolf inventory
-            wolfInventoryManager.addWolfInventory(wt.getId());
+            plugin.getWolfInventoryManager().addWolfInventory(wt.getId());
         }
     }
     
@@ -168,7 +168,7 @@ public class WolfManager {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-        	wolfInventoryManager.removeWolfInventory(wt.getId());
+        	plugin.getWolfInventoryManager().removeWolfInventory(wt.getId());
             plugin.getDatabase().delete(wt);
         }
     }

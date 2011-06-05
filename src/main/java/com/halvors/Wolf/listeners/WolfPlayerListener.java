@@ -38,10 +38,10 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
-import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
+import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Player related events
@@ -51,13 +51,13 @@ import com.halvors.Wolf.wolf.WolfManager;
 public class WolfPlayerListener extends PlayerListener {
     private final com.halvors.Wolf.Wolf plugin;
     
-    private final ConfigManager configManager;
+//    private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
     
     public WolfPlayerListener(final com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
+//        this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
@@ -114,8 +114,12 @@ public class WolfPlayerListener extends PlayerListener {
 	                } else if (item.equals(Material.CHEST)) {
 	                	if (plugin.hasPermissions(player, "Wolf.chest")) {
 	                		if (wolfManager.hasWolf(wolf.getEntityId())) {
+	                			WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+	                			
 	                			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-	                			entityPlayer.a(wolfManager.getInventory(wolf.getEntityId()));
+	                			entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
+	                		} else {
+	                			// Add some message here.
 	                		}
 	                    }
 	                }

@@ -20,12 +20,12 @@
 
 package com.halvors.Wolf.listeners;
 
-import net.minecraft.server.EntityPlayer;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -34,11 +34,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
-import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
+import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
+import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events
@@ -124,9 +126,14 @@ public class WolfEntityListener extends EntityListener {
             Wolf wolf = (Wolf) entity;
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
+            	WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+            	WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wt.getId());
+            	List<ItemStack> drops = event.getDrops();
+            	List<ItemStack> contents = Arrays.asList(wi.getContents());
+            	
+            	// TODO: Fix drop of itemstack.
+            	
                 wolfManager.removeWolf(wolf.getEntityId());
-                
-                // TODO: Drop items from inventory.
             }
         }
     }
@@ -158,26 +165,4 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     */
-    
-    @Override
-    public void onEntityTarget(EntityTargetEvent event) {
-        if (!event.isCancelled()) {
-            Entity entity = event.getEntity();
-            Entity target = event.getTarget();
-            World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
-        
-            if (entity instanceof Wolf) {
-//              Wolf wolf = (Wolf) entity;
-                
-                if (target instanceof Player) {
-//                  Player player = (Player) target;
-                
-                    if (worldConfig.wolfPeaceful) {
-                        event.setCancelled(true);
-                    }
-                }
-            }
-        }
-    }
 }
