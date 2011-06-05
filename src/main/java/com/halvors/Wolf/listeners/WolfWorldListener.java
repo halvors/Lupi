@@ -63,6 +63,8 @@ public class WolfWorldListener extends WorldListener{
                     if (wt != null) {
                         wt.setEntityId(wolf.getEntityId());
                         wolfManager.updateWolfTable(wt);
+                    } else {
+                    	wolfManager.addWolf(wolf);
                     }
                 }
             }
@@ -85,6 +87,8 @@ public class WolfWorldListener extends WorldListener{
                         wt.setLocationY(wolf.getLocation().getBlockY());
                         wt.setLocationZ(wolf.getLocation().getBlockZ());
                         wolfManager.updateWolfTable(wt);
+                    } else {
+                    	wolfManager.addWolf(wolf);
                     }
                 }
             }
