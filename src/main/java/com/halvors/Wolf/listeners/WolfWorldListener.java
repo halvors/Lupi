@@ -38,13 +38,13 @@ import com.halvors.Wolf.wolf.WolfTable;
  * @author speeddemon92
  */
 public class WolfWorldListener extends WorldListener{
-//  private final com.halvors.Wolf.Wolf plugin;
+//    private final com.halvors.Wolf.Wolf plugin;
     
     private final WolfManager wolfManager;
     private final WolfInventoryManager wolfInventoryManager;
     
     public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
-//      this.plugin = plugin;
+//        this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
         this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
@@ -55,7 +55,7 @@ public class WolfWorldListener extends WorldListener{
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
+                Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
                     WolfTable wt = wolfManager.getWolfTable(wolf.getLocation());
@@ -77,15 +77,13 @@ public class WolfWorldListener extends WorldListener{
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
+                Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
                     WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
                     
                     if (wt != null) {
-                        wt.setLocationX(wolf.getLocation().getBlockX());
-                        wt.setLocationY(wolf.getLocation().getBlockY());
-                        wt.setLocationZ(wolf.getLocation().getBlockZ());
+                        wt.setLocation(wolf.getLocation());
                         wolfManager.updateWolfTable(wt);
                     } else {
                         wolfManager.addWolf(wolf);

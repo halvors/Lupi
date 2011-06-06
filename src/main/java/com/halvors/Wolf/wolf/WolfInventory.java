@@ -16,26 +16,26 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
  * @author halvors
  */
 public class WolfInventory {
-	private final TileEntityVirtualChest inventory;
-	
-	public WolfInventory() {
-		this.inventory = new TileEntityVirtualChest();
-	}
+    private final TileEntityVirtualChest inventory;
+    
+    public WolfInventory() {
+        this.inventory = new TileEntityVirtualChest();
+    }
 
     public TileEntityVirtualChest getInventory() {
         return inventory;
     }
 
     public int getSize() {
-        return getInventory().getSize();
+        return inventory.getSize();
     }
 
     public String getName() {
-        return getInventory().getName();
+        return inventory.getName();
     }
 
     public ItemStack getItem(int index) {
-        return new CraftItemStack(getInventory().getItem(index));
+        return new CraftItemStack(inventory.getItem(index));
     }
 
     public List<ItemStack> getContents() {
@@ -48,29 +48,17 @@ public class WolfInventory {
 
         return items;
     }
-    
-    /*
-    public ItemStack[] getContents() {
-        ItemStack[] items = new ItemStack[getSize()];
-        net.minecraft.server.ItemStack[] mcItems = getInventory().getContents();
 
-        for (int i = 0; i < mcItems.length; i++) {
-            items[i] = mcItems[i] == null ? null : new CraftItemStack(mcItems[i]);
-        }
-
-        return items;
-    }
-    */
-
-    public void setContents(ItemStack[] items) {
-        if (getInventory().getContents().length != items.length) {
+    public void setContents(List<ItemStack> items) {
+        if (inventory.getContents().length != items.size()) {
             throw new IllegalArgumentException("Invalid inventory size; expected " + getInventory().getContents().length);
         }
 
         net.minecraft.server.ItemStack[] mcItems = getInventory().getContents();
 
-        for (int i = 0; i < items.length; i++) {
-            ItemStack item = items[i];
+        for (int i = 0; i < items.size(); i++) {
+            ItemStack item = items.get(i);
+            
             if (item == null || item.getTypeId() <= 0) {
                 mcItems[i] = null;
             } else {
@@ -80,7 +68,7 @@ public class WolfInventory {
     }
 
     public void setItem(int index, ItemStack item) {
-        getInventory().setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
+        inventory.setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
     }
 
     public boolean contains(int materialId) {
@@ -88,7 +76,8 @@ public class WolfInventory {
             if (item != null && item.getTypeId() == materialId) {
                 return true;
             }
-        }
+        } 
+        
         return false;
     }
 
@@ -100,21 +89,25 @@ public class WolfInventory {
         if (item == null) {
             return false;
         }
+        
         for (ItemStack i: getContents()) {
             if (item.equals(i)) {
                 return true;
             }
         }
+        
         return false;
     }
 
     public boolean contains(int materialId, int amount) {
         int amt = 0;
-        for (ItemStack item: getContents()) {
+        
+        for (ItemStack item : getContents()) {
             if (item != null && item.getTypeId() == materialId) {
                 amt += item.getAmount();
             }
         }
+        
         return amt >= amount;
     }
 
@@ -126,8 +119,10 @@ public class WolfInventory {
         if (item == null) {
             return false;
         }
+        
         int amt = 0;
-        for (ItemStack i: getContents()) {
+        
+        for (ItemStack i : getContents()) {
             if (item.equals(i)) {
                 amt += item.getAmount();
             }
@@ -353,7 +348,7 @@ public class WolfInventory {
     }
 
     private int getMaxItemStack() {
-        return getInventory().getMaxStackSize();
+        return inventory.getMaxStackSize();
     }
 
     public void remove(int materialId) {
@@ -372,6 +367,7 @@ public class WolfInventory {
 
     public void remove(ItemStack item) {
         List<ItemStack> items = getContents();
+        
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i) != null && items.get(i).equals(item)) {
                 clear(i);
