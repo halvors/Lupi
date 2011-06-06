@@ -1,6 +1,8 @@
 package com.halvors.Wolf.wolf;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -36,6 +38,18 @@ public class WolfInventory {
         return new CraftItemStack(getInventory().getItem(index));
     }
 
+    public List<ItemStack> getContents() {
+        List<ItemStack> items = new ArrayList<ItemStack>(getSize());
+        net.minecraft.server.ItemStack[] mcItems = inventory.getContents();
+
+        for (int i = 0; i < mcItems.length; i++) {
+            items.add(mcItems[i] == null ? null : new CraftItemStack(mcItems[i]));
+        }
+
+        return items;
+    }
+    
+    /*
     public ItemStack[] getContents() {
         ItemStack[] items = new ItemStack[getSize()];
         net.minecraft.server.ItemStack[] mcItems = getInventory().getContents();
@@ -46,6 +60,7 @@ public class WolfInventory {
 
         return items;
     }
+    */
 
     public void setContents(ItemStack[] items) {
         if (getInventory().getContents().length != items.length) {
@@ -122,14 +137,16 @@ public class WolfInventory {
 
     public HashMap<Integer, ItemStack> all(int materialId) {
         HashMap<Integer, ItemStack> slots = new HashMap<Integer, ItemStack>();
-
-        ItemStack[] inventory = getContents();
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack item = inventory[i];
+        List<ItemStack> inventory = getContents();
+        
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack item = inventory.get(i);
+            
             if (item != null && item.getTypeId() == materialId) {
                 slots.put(i, item);
             }
         }
+        
         return slots;
     }
 
@@ -139,11 +156,13 @@ public class WolfInventory {
 
     public HashMap<Integer, ItemStack> all(ItemStack item) {
         HashMap<Integer, ItemStack> slots = new HashMap<Integer, ItemStack>();
+        
         if (item != null) {
-            ItemStack[] inventory = getContents();
-            for (int i = 0; i < inventory.length; i++) {
-                if (item.equals(inventory[i])) {
-                    slots.put(i, inventory[i]);
+            List<ItemStack> inventory = getContents();
+            
+            for (int i = 0; i < inventory.size(); i++) {
+                if (item.equals(inventory.get(i))) {
+                    slots.put(i, inventory.get(i));
                 }
             }
         }
@@ -151,13 +170,16 @@ public class WolfInventory {
     }
 
     public int first(int materialId) {
-        ItemStack[] inventory = getContents();
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack item = inventory[i];
+        List<ItemStack> inventory = getContents();
+        
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack item = inventory.get(i);
+            
             if (item != null && item.getTypeId() == materialId) {
                 return i;
             }
         }
+        
         return -1;
     }
 
@@ -169,33 +191,41 @@ public class WolfInventory {
         if (item == null) {
             return -1;
         }
-        ItemStack[] inventory = getContents();
-        for (int i = 0; i < inventory.length; i++) {
-            if (item.equals(inventory[i])) {
+        
+        List<ItemStack> inventory = getContents();
+        
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equals(inventory.get(i))) {
                 return i;
             }
         }
+        
         return -1;
     }
 
     public int firstEmpty() {
-        ItemStack[] inventory = getContents();
-        for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i] == null) {
+        List<ItemStack> inventory = getContents();
+        
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) == null) {
                 return i;
             }
         }
+        
         return -1;
     }
 
     public int firstPartial(int materialId) {
-        ItemStack[] inventory = getContents();
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack item = inventory[i];
+        List<ItemStack> inventory = getContents();
+        
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack item = inventory.get(i);
+            
             if (item != null && item.getTypeId() == materialId && item.getAmount() < item.getMaxStackSize()) {
                 return i;
             }
         }
+        
         return -1;
     }
 
@@ -204,16 +234,20 @@ public class WolfInventory {
     }
 
     public int firstPartial(ItemStack item) {
-        ItemStack[] inventory = getContents();
+        List<ItemStack> inventory = getContents();
+        
         if (item == null) {
             return -1;
         }
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack cItem = inventory[i];
+        
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack cItem = inventory.get(i);
+            
             if (cItem != null && cItem.getTypeId() == item.getTypeId() && cItem.getAmount() < cItem.getMaxStackSize() && cItem.getDurability() == item.getDurability()) {
                 return i;
             }
         }
+        
         return -1;
     }
 
@@ -228,6 +262,7 @@ public class WolfInventory {
 
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];
+            
             while (true) {
                 // Do we already have a stack of it?
                 int firstPartial = firstPartial(item);
@@ -322,9 +357,10 @@ public class WolfInventory {
     }
 
     public void remove(int materialId) {
-        ItemStack[] items = getContents();
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] != null && items[i].getTypeId() == materialId) {
+        List<ItemStack> items = getContents();
+        
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i) != null && items.get(i).getTypeId() == materialId) {
                 clear(i);
             }
         }
@@ -335,9 +371,9 @@ public class WolfInventory {
     }
 
     public void remove(ItemStack item) {
-        ItemStack[] items = getContents();
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] != null && items[i].equals(item)) {
+        List<ItemStack> items = getContents();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i) != null && items.get(i).equals(item)) {
                 clear(i);
             }
         }

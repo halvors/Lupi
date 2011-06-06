@@ -21,6 +21,7 @@
 package com.halvors.Wolf.wolf;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.World;
 
@@ -32,33 +33,57 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WolfInventoryManager {
-//	private final Wolf plugin;
+	private final Wolf plugin;
 	
     private final HashMap<Integer, WolfInventory> wolfInventorys = new HashMap<Integer, WolfInventory>();
     
     public WolfInventoryManager(final Wolf plugin) {
-//    	this.plugin = plugin;
+    	this.plugin = plugin;
     }
     
     public void load(final World world) {
-//         wolfInventorys.clear();
+    	wolfInventorys.clear();
         
         // TODO: Load WolfInventory here.
+    	
+    	List<WolfInventoryTable> wits = plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
+    	
+    	for (WolfInventoryTable wit : wits) {
+    		addWolfInventory(wit.getId(), wit.getInventory());
+    	} 
     }
     
     public void save(final World world) {
         // TODO: Save WolfInventory here.
+    	
+    	for (WolfInventory wi : wolfInventorys.values()) {
+    		WolfInventoryTable wit = new WolfInventoryTable();
+    		wit.setId(1);
+    		wit.setInventory(wi);
+    		
+    		plugin.getDatabase().save(wit);
+    	}
     }
     
     /**
      * Add a WolfInventory
      * 
      * @param id
+     * @param wi
+     */
+    public void addWolfInventory(final int id, final WolfInventory wi) {
+        if (!wolfInventorys.containsKey(id)) {
+            wolfInventorys.put(id, wi);
+        }
+    }
+    
+    /**
+     * Add WolfInventory
+     * 
+     * @param id
      */
     public void addWolfInventory(final int id) {
-        if (!wolfInventorys.containsKey(id)) {
-            wolfInventorys.put(id, new WolfInventory());
-        }
+    	addWolfInventory(id, new WolfInventory());
     }
     
     /**

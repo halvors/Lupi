@@ -20,6 +20,7 @@
 
 package com.halvors.Wolf.listeners;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -127,13 +128,15 @@ public class WolfEntityListener extends EntityListener {
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
             	WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
-            	WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wt.getId());
-            	List<ItemStack> drops = event.getDrops();
-            	List<ItemStack> contents = Arrays.asList(wi.getContents());
             	
-            	// TODO: Fix drop of itemstack.
+            	if (plugin.getWolfInventoryManager().hasWolfInventory(wt.getId())) {
+            		WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wt.getId());
+	            	List<ItemStack> drops = event.getDrops();
+	            	
+	            	drops.addAll(wi.getContents());
+            	}
             	
-                wolfManager.removeWolf(wolf.getEntityId());
+            	wolfManager.removeWolf(wolf.getEntityId());
             }
         }
     }

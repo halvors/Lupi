@@ -34,6 +34,7 @@ import javax.persistence.Table;
 public class WolfInventoryTable {
     @Id
     private int id;
+    private WolfInventory inventory;
     
     public int getId() {
         return id;
@@ -41,5 +42,13 @@ public class WolfInventoryTable {
     
     public void setId(final int id) {
         this.id = id;
+    }
+    
+    public WolfInventory getInventory() {
+        return inventory;
+    }
+    
+    public void setInventory(final WolfInventory inventory) {
+        this.inventory = inventory;
     }
 }
