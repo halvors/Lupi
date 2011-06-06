@@ -54,7 +54,7 @@ public class WolfWorldListener extends WorldListener{
     
     @Override
     public void onChunkLoad(ChunkLoadEvent event) {
-        Entity[] entities = event.getChunk().getEntities();
+        List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
