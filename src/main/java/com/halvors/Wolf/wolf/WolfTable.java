@@ -24,8 +24,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+
 /**
- * Represents a WolfTable
+ * Represents a WolfTable.
  * 
  * @author halvors
  */
@@ -42,11 +46,19 @@ public class WolfTable {
     private int locationZ;
     private String world;
     
+    public WolfTable(int entityId, String name, String owner, Location location, String world) {
+    	setEntityId(entityId);
+    	setName(name);
+    	setOwner(owner);
+    	setLocation(location);
+    	setWorld(world);
+    }
+    
     public int getId() {
         return id;
     }
     
-    public void setId(final int id) {
+    public void setId(int id) {
         this.id = id;
     }
     
@@ -54,7 +66,7 @@ public class WolfTable {
         return entityId;
     }
     
-    public void setEntityId(final int entityId) {
+    public void setEntityId(int entityId) {
         this.entityId = entityId;
     }
     
@@ -62,7 +74,7 @@ public class WolfTable {
         return name;
     }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
     
@@ -70,39 +82,27 @@ public class WolfTable {
         return owner;
     }
 
-    public void setOwner(final String owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
     
-    public int getLocationX() {
-        return locationX;
+    public Location getLocation() {
+    	World world = Bukkit.getServer().getWorld(this.world);
+    	
+    	return new Location(world, locationX, locationY, locationZ);
     }
     
-    public void setLocationX(final int locationX) {
-        this.locationX = locationX;
-    }
-    
-    public int getLocationY() {
-        return locationY;
-    }
-    
-    public void setLocationY(final int locationY) {
-        this.locationY = locationY;
-    }
-    
-    public int getLocationZ() {
-        return locationZ;
-    }
-    
-    public void setLocationZ(final int locationZ) {
-        this.locationZ = locationZ;
+    public void setLocation(Location location) {
+    	this.locationX = location.getBlockX();
+    	this.locationY = location.getBlockY();
+    	this.locationZ = location.getBlockZ();
     }
     
     public String getWorld() {
         return world;
     }
     
-    public void setWorld(final String world) {
+    public void setWorld(String world) {
         this.world = world;
     }
 }

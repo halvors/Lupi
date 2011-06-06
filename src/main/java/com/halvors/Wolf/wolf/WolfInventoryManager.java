@@ -33,36 +33,23 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WolfInventoryManager {
-	private final Wolf plugin;
-	
-    private final HashMap<Integer, WolfInventory> wolfInventorys = new HashMap<Integer, WolfInventory>();
+//    private final Wolf plugin;
+    
+    private final HashMap<Integer, WolfInventory> wolfInventorys;
     
     public WolfInventoryManager(final Wolf plugin) {
-    	this.plugin = plugin;
+//        this.plugin = plugin;
+        this.wolfInventorys = new HashMap<Integer, WolfInventory>();
     }
     
-    public void load(final World world) {
-    	wolfInventorys.clear();
+    public void load(World world) {
+        wolfInventorys.clear();
         
         // TODO: Load WolfInventory here.
-    	
-    	List<WolfInventoryTable> wits = plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
-    	
-    	for (WolfInventoryTable wit : wits) {
-    		addWolfInventory(wit.getId(), wit.getInventory());
-    	} 
     }
     
-    public void save(final World world) {
+    public void save(World world) {
         // TODO: Save WolfInventory here.
-    	
-    	for (WolfInventory wi : wolfInventorys.values()) {
-    		WolfInventoryTable wit = new WolfInventoryTable();
-    		wit.setId(1);
-    		wit.setInventory(wi);
-    		
-    		plugin.getDatabase().save(wit);
-    	}
     }
     
     /**
@@ -71,7 +58,7 @@ public class WolfInventoryManager {
      * @param id
      * @param wi
      */
-    public void addWolfInventory(final int id, final WolfInventory wi) {
+    public void addWolfInventory(int id, WolfInventory wi) {
         if (!wolfInventorys.containsKey(id)) {
             wolfInventorys.put(id, wi);
         }
@@ -82,8 +69,8 @@ public class WolfInventoryManager {
      * 
      * @param id
      */
-    public void addWolfInventory(final int id) {
-    	addWolfInventory(id, new WolfInventory());
+    public void addWolfInventory(int id) {
+        addWolfInventory(id, new WolfInventory());
     }
     
     /**
@@ -91,7 +78,7 @@ public class WolfInventoryManager {
      * 
      * @param id
      */
-    public void removeWolfInventory(final int id) {
+    public void removeWolfInventory(int id) {
         if (wolfInventorys.containsKey(id)) {
             wolfInventorys.remove(id);
         }
@@ -103,7 +90,7 @@ public class WolfInventoryManager {
      * @param id
      * @return
      */
-    public boolean hasWolfInventory(final int id) {
+    public boolean hasWolfInventory(int id) {
         return wolfInventorys.containsKey(id);
     }
     
@@ -113,7 +100,7 @@ public class WolfInventoryManager {
      * @param id
      * @return
      */
-    public WolfInventory getWolfInventory(final int id) {
+    public WolfInventory getWolfInventory(int id) {
         return wolfInventorys.get(id);
     }
 }

@@ -1,9 +1,9 @@
 TODO:
 - Get The Bukkit Team to implement this pull request in CraftBukkit: https://github.com/Bukkit/CraftBukkit/pull/315
-- Implement wolf inventory. (This is now throwing errors)
 - Add command so owner of a wolf can add peace players that wolf not attack.
 - Replace entityId with id as default referance in database systems.
 - Add ability to choose per world if all tamed wolves get added on chunk loads and unloads.
-- Fix error when wolf's inventory contents gets dropped on in onEntityDeath.
+- Fix error when wolf's inventory contents gets dropped on in onEntityDeath. - Working on it (halvors).
 - Fix WolfInventoryManager pointer in WolfManager.
 - Fix EbeanServer pointer in WolfManager.
+- Make WolfInventory save and load. Don't think it's possible with database. So maybe flatfile?

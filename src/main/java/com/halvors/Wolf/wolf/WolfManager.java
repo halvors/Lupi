@@ -33,6 +33,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
+import com.halvors.Wolf.chest.TileEntityVirtualChest;
+
 /**
  * Handle wolves
  * 
@@ -41,9 +43,9 @@ import org.bukkit.entity.Wolf;
 public class WolfManager {
     private final com.halvors.Wolf.Wolf plugin;
     
-    private final WolfInventoryManager wolfInventoryManager;
+    private WolfInventoryManager wolfInventoryManager;
     
-    public WolfManager(final com.halvors.Wolf.Wolf plugin) {
+    public WolfManager(com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
         this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
@@ -54,7 +56,7 @@ public class WolfManager {
      * @param name
      * @return WolfTable
      */
-    public WolfTable getWolfTable(final int entityId) {
+    public WolfTable getWolfTable(int entityId) {
         return plugin.getDatabase().find(WolfTable.class).where()
             .eq("entityId", entityId).findUnique();
     }
@@ -65,7 +67,7 @@ public class WolfManager {
      * @param name
      * @return WolfTable
      */
-    public WolfTable getWolfTable(final String name, final String owner) {
+    public WolfTable getWolfTable(String name, String owner) {
         return plugin.getDatabase().find(WolfTable.class).where()
             .eq("name", name).eq("owner", owner).findUnique();
     }
@@ -76,7 +78,7 @@ public class WolfManager {
      * @param location
      * @return
      */
-    public WolfTable getWolfTable(final Location location) {
+    public WolfTable getWolfTable(Location location) {
         return plugin.getDatabase().find(WolfTable.class).where()
             .eq("locationX", location.getBlockX()).eq("locationY", location.getBlockY()).eq("locationZ", location.getBlockZ()).findUnique();
     }
@@ -86,7 +88,7 @@ public class WolfManager {
      * 
      * @param wt
      */
-    public void updateWolfTable(final WolfTable wt) {
+    public void updateWolfTable(WolfTable wt) {
         plugin.getDatabase().update(wt);
     }
     
@@ -105,7 +107,7 @@ public class WolfManager {
      * @param owner
      * @return List<WolfTable>
      */
-    public List<WolfTable> getWolfTables(final String owner) {
+    public List<WolfTable> getWolfTables(String owner) {
         return plugin.getDatabase().find(WolfTable.class).where()
             .ieq("owner", owner).findList();
     }
@@ -116,9 +118,9 @@ public class WolfManager {
      * @param name
      * @param wolf
      */
-    public void addWolf(final Wolf wolf, final String name) {
+    public void addWolf(Wolf wolf, String name) {
         if (wolf.isTamed()) {
-            Player player = (Player) wolf.getOwner();
+            Player player = (Player)wolf.getOwner();
             
             // Check if a wolf with same name already exists.
             for (WolfTable wt : getWolfTables(player.getName())) {
@@ -129,15 +131,8 @@ public class WolfManager {
                 }
             }
             
-            // Add wolf to table
-            WolfTable wt = new WolfTable();
-            wt.setName(name);
-            wt.setOwner(player.getName());
-            wt.setEntityId(wolf.getEntityId());
-            wt.setLocationX(wolf.getLocation().getBlockX());
-            wt.setLocationY(wolf.getLocation().getBlockY());
-            wt.setLocationZ(wolf.getLocation().getBlockZ());
-            wt.setWorld(wolf.getWorld().getName());
+            // Create a new WolfTable
+            WolfTable wt = new WolfTable(wolf.getEntityId(), name, player.getName(), wolf.getLocation(), wolf.getWorld().getName());
             
             // Save the wolf to the database
             plugin.getDatabase().save(wt);
@@ -155,7 +150,7 @@ public class WolfManager {
      * 
      * @param wolf
      */
-    public void addWolf(final Wolf wolf) {
+    public void addWolf(Wolf wolf) {
         addWolf(wolf, getRandomName());
     }
     
@@ -164,11 +159,11 @@ public class WolfManager {
      * 
      * @param name
      */
-    public void removeWolf(final int entityId) {
+    public void removeWolf(int entityId) {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-        	plugin.getWolfInventoryManager().removeWolfInventory(wt.getId());
+            plugin.getWolfInventoryManager().removeWolfInventory(wt.getId());
             plugin.getDatabase().delete(wt);
         }
     }
@@ -178,7 +173,7 @@ public class WolfManager {
      * 
      * @param name
      */
-    public void removeWolf(final String name, final String owner) {
+    public void removeWolf(String name, String owner) {
         removeWolf(getEntityId(name, owner));
     }
     
@@ -188,7 +183,7 @@ public class WolfManager {
      * @param wt
      * @return Boolean
      */
-    public boolean hasWolf(final WolfTable wt) {
+    public boolean hasWolf(WolfTable wt) {
         if (wt != null) {
             return true;
         }
@@ -202,7 +197,7 @@ public class WolfManager {
      * @param name
      * @return Boolean
      */
-    public boolean hasWolf(final String name, final String owner) {
+    public boolean hasWolf(String name, String owner) {
         return hasWolf(getWolfTable(name, owner));
     }
     
@@ -212,7 +207,7 @@ public class WolfManager {
      * @param entityId
      * @return Boolean
      */
-    public boolean hasWolf(final int entityId) {
+    public boolean hasWolf(int entityId) {
         return hasWolf(getWolfTable(entityId));
     }
     
@@ -222,7 +217,7 @@ public class WolfManager {
      * @param wt
      * @return Wolf
      */
-    public Wolf getWolf(final WolfTable wt) {
+    public Wolf getWolf(WolfTable wt) {
         for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
             if (entity instanceof Wolf) {
                 if (wt.getEntityId() == entity.getEntityId())  {
@@ -240,7 +235,7 @@ public class WolfManager {
      * @param name
      * @return Wolf
      */
-    public Wolf getWolf(final String name, final String owner) {
+    public Wolf getWolf(String name, String owner) {
         return getWolf(getWolfTable(name, owner));
     }
     
@@ -250,7 +245,7 @@ public class WolfManager {
      * @param name
      * @return Wolf
      */
-    public Wolf getWolf(final int entityId) {
+    public Wolf getWolf(int entityId) {
         return getWolf(getWolfTable(entityId));
     }
     
@@ -280,7 +275,7 @@ public class WolfManager {
      * @param owner
      * @return List<Wolf>
      */
-    public List<Wolf> getWolves(final String owner) {    
+    public List<Wolf> getWolves(String owner) {    
         List<WolfTable> wts = getWolfTables(owner);
         List<Wolf> wolves = new ArrayList<Wolf>();
         
@@ -301,7 +296,7 @@ public class WolfManager {
      * @param name
      * @return Integer
      */
-    public int getEntityId(final String name, final String owner) {
+    public int getEntityId(String name, String owner) {
         WolfTable wt = getWolfTable(name, owner);
         
         if (wt != null) {
@@ -317,7 +312,7 @@ public class WolfManager {
      * @param entityId
      * @return String
      */
-    public String getName(final int entityId) {
+    public String getName(int entityId) {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
@@ -333,7 +328,7 @@ public class WolfManager {
      * @param entityId
      * @return Player
      */
-    public Player getOwner(final int entityId) {
+    public Player getOwner(int entityId) {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
@@ -353,18 +348,11 @@ public class WolfManager {
      * @param entityId
      * @return Location
      */
-    public Location getLocation(final int entityId) {
+    public Location getLocation(int entityId) {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
-            World world = plugin.getServer().getWorld(wt.getWorld());
-            double x = wt.getLocationX();
-            double y = wt.getLocationY();
-            double z = wt.getLocationZ();
-        
-            Location location = new Location(world, x, y, z);
-        
-            return location;
+            return wt.getLocation();
         }
         
         return null;
@@ -377,7 +365,7 @@ public class WolfManager {
      * @param owner
      * @return Location
      */
-    public Location getLocation(final String name, final String owner) {
+    public Location getLocation(String name, String owner) {
         return getLocation(getEntityId(name, owner));
     }
     
@@ -387,7 +375,7 @@ public class WolfManager {
      * @param entityId
      * @return World
      */
-    public World getWorld(final int entityId) {
+    public World getWorld(int entityId) {
         WolfTable wt = getWolfTable(entityId);
         
         if (wt != null) {
@@ -403,35 +391,8 @@ public class WolfManager {
      * @param name
      * @return World
      */
-    public World getWorld(final String name, final String owner) {
+    public World getWorld(String name, String owner) {
         return getWorld(getEntityId(name, owner));
-    }
-    
-    /**
-     * Get wolf's inventory by entityId
-     * 
-     * @param entityId
-     * @return
-     */
-    public WolfInventory getInventory(final int entityId) {
-    	WolfTable wt = getWolfTable(entityId);
-    	
-    	if (wt != null) {
-    		return wolfInventoryManager.getWolfInventory(wt.getId());
-    	}
-    	
-    	return null;
-    }
-    
-    /**
-     * Get wolf's inventory
-     * 
-     * @param name
-     * @param owner
-     * @return
-     */
-    public WolfInventory getInventory(final String name, final String owner) {
-        return getInventory(getEntityId(name, owner));
     }
     
     /**
@@ -442,7 +403,7 @@ public class WolfManager {
      * @param location
      * @return Wolf
      */
-    public Wolf spawnWolf(final Player player, final World world, final Location location) {
+    public Wolf spawnWolf(Player player, World world, Location location) {
         Wolf wolf = (Wolf) world.spawnCreature(location, CreatureType.WOLF);
         wolf.setTamed(true);
         wolf.setOwner(player);
@@ -457,7 +418,7 @@ public class WolfManager {
      * @param tame
      * @return Wolf
      */
-    public Wolf spawnWolf(final Player player) {
+    public Wolf spawnWolf(Player player) {
         return spawnWolf(player, player.getWorld(), player.getLocation());
     }
     
@@ -466,7 +427,7 @@ public class WolfManager {
      * 
      * @param wolf
      */
-    public void releaseWolf(final Wolf wolf) {
+    public void releaseWolf(Wolf wolf) {
         if (hasWolf(wolf.getEntityId())) {
             removeWolf(wolf.getEntityId());
         }

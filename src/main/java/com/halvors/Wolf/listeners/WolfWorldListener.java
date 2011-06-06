@@ -20,6 +20,9 @@
 
 package com.halvors.Wolf.listeners;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -33,18 +36,18 @@ import com.halvors.Wolf.wolf.WolfManager;
 import com.halvors.Wolf.wolf.WolfTable;
 
 /**
- * Handle events for all World related events
+ * Handle events for all World related events.
  * 
  * @author speeddemon92
  */
 public class WolfWorldListener extends WorldListener{
-//  private final com.halvors.Wolf.Wolf plugin;
+//    private final com.halvors.Wolf.Wolf plugin;
     
     private final WolfManager wolfManager;
     private final WolfInventoryManager wolfInventoryManager;
     
     public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
-//      this.plugin = plugin;
+//        this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
         this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
@@ -55,7 +58,7 @@ public class WolfWorldListener extends WorldListener{
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
+                Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
                     WolfTable wt = wolfManager.getWolfTable(wolf.getLocation());
@@ -73,19 +76,19 @@ public class WolfWorldListener extends WorldListener{
 
     @Override
     public void onChunkUnload(ChunkUnloadEvent event) {
-        Entity[] entities = event.getChunk().getEntities();
+    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
+    	
+//        Entity[] entities = event.getChunk().getEntities();
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
+                Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
                     WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
                     
                     if (wt != null) {
-                        wt.setLocationX(wolf.getLocation().getBlockX());
-                        wt.setLocationY(wolf.getLocation().getBlockY());
-                        wt.setLocationZ(wolf.getLocation().getBlockZ());
+                        wt.setLocation(wolf.getLocation());
                         wolfManager.updateWolfTable(wt);
                     } else {
                         wolfManager.addWolf(wolf);
@@ -98,50 +101,10 @@ public class WolfWorldListener extends WorldListener{
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
         wolfInventoryManager.load(event.getWorld());
-        
-        /*
-        List<Entity> entities = event.getWorld().getEntities();
-        
-        for (Entity entity : entities) {
-            if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
-                
-                if (wolf.isTamed()) {
-                    WolfTable wt = wolfManager.getWolfTable(wolf.getLocation());
-                    
-                    if (wt != null) {
-                        wt.setEntityId(wolf.getEntityId());
-                        wolfManager.updateWolfTable(wt);
-                    }
-                }
-            }
-        }
-        */
     }
     
     @Override
     public void onWorldSave(WorldSaveEvent event) {
         wolfInventoryManager.save(event.getWorld());
-        
-        /*
-        List<Entity> entities = event.getWorld().getEntities();
-        
-        for (Entity entity : entities) {
-            if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
-                
-                if (wolf.isTamed()) {
-                    WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
-                    
-                    if (wt != null) {
-                        wt.setLocationX(wolf.getLocation().getBlockX());
-                        wt.setLocationY(wolf.getLocation().getBlockY());
-                        wt.setLocationZ(wolf.getLocation().getBlockZ());
-                        wolfManager.updateWolfTable(wt);
-                    }
-                }
-            }
-        }
-        */
     }
 }

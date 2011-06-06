@@ -69,7 +69,7 @@ public class WolfPlayerListener extends PlayerListener {
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(player.getName())) {
             Location pos = player.getTargetBlock(null, 120).getLocation();
                 
-            if (event.getItem().getType() == Material.SADDLE) {
+            if (event.getItem().getType().equals(Material.SADDLE)) {
                 if (plugin.hasPermissions(player, "Wolf.target")) {
                     if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) {
                         PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
@@ -90,7 +90,7 @@ public class WolfPlayerListener extends PlayerListener {
             Entity entity = event.getRightClicked();
             
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
+                Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
                 	Material item = player.getItemInHand().getType();

@@ -8,7 +8,6 @@ import net.minecraft.server.ItemStack;
 import net.minecraft.server.TileEntityChest;
 
 public class TileEntityVirtualChest extends TileEntityChest {
-
 	protected String name = "Chest";
 	protected Queue<Integer> emptyCases;
 
@@ -19,8 +18,10 @@ public class TileEntityVirtualChest extends TileEntityChest {
 
 	private void initEmptyCases() {
 		emptyCases = new ArrayDeque<Integer>(getSize());
-		for (int i = 0; i < getSize(); i++)
+		
+		for (int i = 0; i < getSize(); i++) {
 			emptyCases.add(i);
+		}
 	}
 
 	public void setName(String name) {
@@ -71,9 +72,10 @@ public class TileEntityVirtualChest extends TileEntityChest {
 	 */
 	public boolean addItemStack(ItemStack itemstack) {
 		Integer i = emptyCases.poll();
-		if (i == null)
+		
+		if (i == null) {
 			return false;
-		else {
+		} else {
 			super.setItem(i, itemstack);
 			return true;
 		}
@@ -81,6 +83,7 @@ public class TileEntityVirtualChest extends TileEntityChest {
 
 	public int firstFree() {
 		Integer firstFree = emptyCases.poll();
+		
 		return firstFree == null ? -1 : firstFree;
 	}
 
@@ -91,18 +94,23 @@ public class TileEntityVirtualChest extends TileEntityChest {
 	}
 
 	public void emptyChest() {
-		for (int i = 0; i < this.getContents().length; i++)
+		for (int i = 0; i < this.getContents().length; i++) {
 			this.getContents()[i] = null;
+		}
+		
 		initEmptyCases();
 	}
 
 	@Override
 	public ItemStack a(int i, int j) {
 		ItemStack toReturn = super.a(i, j);
+		
 		if (toReturn != null) {
 			ItemStack afterSuper[] = this.getContents();
-			if (afterSuper[i] == null)
+			
+			if (afterSuper[i] == null) {
 				emptyCases.add(i);
+			}
 		}
 
 		return toReturn;
