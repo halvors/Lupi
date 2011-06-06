@@ -25,7 +25,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Wolf;
 
 /**
- * Handle selected wolves
+ * Handle selected wolves.
  * 
  * @author halvors
  */

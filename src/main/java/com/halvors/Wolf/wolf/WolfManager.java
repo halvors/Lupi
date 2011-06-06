@@ -396,6 +396,36 @@ public class WolfManager {
     }
     
     /**
+<<<<<<< HEAD
+=======
+     * Get wolf's inventory by entityId
+     * 
+     * @param entityId
+     * @return
+     */
+    public WolfInventory getInventory(int entityId) {
+        WolfTable wt = getWolfTable(entityId);
+        
+        if (wt != null) {
+            return wolfInventoryManager.getWolfInventory(wt.getId());
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Get wolf's inventory
+     * 
+     * @param name
+     * @param owner
+     * @return
+     */
+    public WolfInventory getInventory(String name, String owner) {
+        return getInventory(getEntityId(name, owner));
+    }
+    
+    /**
+>>>>>>> 14bd8a4c03677849e31ab953deb869b7ec004e51
      * Spawn a wolf
      * 
      * @param player

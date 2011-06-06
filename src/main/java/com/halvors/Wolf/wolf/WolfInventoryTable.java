@@ -25,7 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Represents a WolfInventoryTable
+ * Represents a WolfInventoryTable.
  * 
  * @author halvors
  */

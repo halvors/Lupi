@@ -28,7 +28,7 @@ import org.bukkit.World;
 import com.halvors.Wolf.Wolf;
 
 /**
- * Handle WolfInventory's
+ * Handle WolfInventory's.
  * 
  * @author halvors
  */

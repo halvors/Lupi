@@ -43,7 +43,7 @@ import com.halvors.Wolf.wolf.WolfManager;
 import com.halvors.Wolf.wolf.WolfTable;
 
 /**
- * Handle events for all Player related events
+ * Handle events for all Player related events.
  * 
  * @author halvors
  */

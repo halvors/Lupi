@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import com.halvors.Wolf.chest.TileEntityVirtualChest;
 
 /**
- * Represents a WolfInventory
+ * Represents a WolfInventory.
  * 
  * @author halvors
  */
