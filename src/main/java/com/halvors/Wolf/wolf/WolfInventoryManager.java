@@ -33,24 +33,47 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WolfInventoryManager {
-//    private final Wolf plugin;
+    private final Wolf plugin;
     
     private final HashMap<Integer, WolfInventory> wolfInventorys;
     
     public WolfInventoryManager(final Wolf plugin) {
-//        this.plugin = plugin;
+        this.plugin = plugin;
         this.wolfInventorys = new HashMap<Integer, WolfInventory>();
     }
-    
     public void load(World world) {
-        wolfInventorys.clear();
-        
-        // TODO: Load WolfInventory here.
+    	// TODO: Load WolfInventory here.
+          
+    	List<WolfInventoryTable> wits = plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
+    
+    	for (WolfInventoryTable wit : wits) {
+    		addWolfInventory(wit.getId(), loadWolfInventory(wit));
+    	} 
     }
     
-    public void save(World world) {
-        // TODO: Save WolfInventory here.
+	public void save(World world) {
+     		// TODO: Save WolfInventory here.
+
+    	for (WolfInventory wi : wolfInventorys.values()) {
+    		WolfInventoryTable wit = new WolfInventoryTable();
+    		wit.setId(wi.getWolfId());
+    		wit.setContents(wi.getContents());
+    		if (plugin.getDatabase().find(WolfInventoryTable.class).where().eq("id", wi.getWolfId()) != null) {
+    			plugin.getDatabase().update(wit);
+    		} else {
+        		plugin.getDatabase().save(wit);
+    			
+    		}
+    	}
     }
+    
+	
+	public WolfInventory loadWolfInventory(WolfInventoryTable wit) {
+		WolfInventory wi = new WolfInventory(wit.getId());
+		wi.setContents(wit.getItemStackList());
+		return wi;
+	}
+    
     
     /**
      * Add a WolfInventory
@@ -70,7 +93,7 @@ public class WolfInventoryManager {
      * @param id
      */
     public void addWolfInventory(int id) {
-        addWolfInventory(id, new WolfInventory());
+        addWolfInventory(id, new WolfInventory(id));
     }
     
     /**

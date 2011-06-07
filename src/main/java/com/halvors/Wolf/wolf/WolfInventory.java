@@ -17,13 +17,19 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
  */
 public class WolfInventory {
     private final TileEntityVirtualChest inventory;
+    private final int wolfId;
     
-    public WolfInventory() {
+    public WolfInventory(int wolfId) {
         this.inventory = new TileEntityVirtualChest();
+        this.wolfId = wolfId;
     }
 
     public TileEntityVirtualChest getInventory() {
         return inventory;
+    }
+    
+    public int getWolfId() {
+    	return wolfId;
     }
 
     public int getSize() {

@@ -4,6 +4,8 @@ TODO:
 - Replace entityId with id as default referance in database systems.
 - Add ability to choose per world if all tamed wolves get added on chunk loads and unloads.
 - Fix error when wolf's inventory contents gets dropped on in onEntityDeath. - Working on it (halvors).
-- Fix WolfInventoryManager pointer in WolfManager.
 - Fix EbeanServer pointer in WolfManager.
 - Make WolfInventory save and load. Don't think it's possible with database. So maybe flatfile?
+- Fix database save/update table on world save.
+- Write backend for command to allow user to rename wolves
+- Fix wolves not sitting when opening inventory

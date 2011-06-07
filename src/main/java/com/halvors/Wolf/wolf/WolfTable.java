@@ -46,13 +46,6 @@ public class WolfTable {
     private int locationZ;
     private String world;
     
-    public WolfTable(int entityId, String name, String owner, Location location, String world) {
-    	setEntityId(entityId);
-    	setName(name);
-    	setOwner(owner);
-    	setLocation(location);
-    	setWorld(world);
-    }
     
     public int getId() {
         return id;
@@ -105,4 +98,41 @@ public class WolfTable {
     public void setWorld(String world) {
         this.world = world;
     }
+    
+    
+    /*
+     * Added due to errors dealing with no read/write methods
+     * Set "@Deprecated" To show not to use
+     */
+    
+    @Deprecated
+    public int getLocationX() {
+    	return this.locationX;
+    }
+    
+    @Deprecated
+    public void setLocationX(int locationX) {
+    	this.locationZ = locationX;
+    }
+    
+    @Deprecated
+    public int getLocationY() {
+    	return this.locationY;
+    }
+    
+    @Deprecated
+    public void setLocationY(int locationY) {
+    	this.locationZ = locationY;
+    }
+    
+    @Deprecated
+    public int getLocationZ() {
+    	return this.locationZ;
+    }
+    
+    @Deprecated
+    public void setLocationZ(int locationZ) {
+    	this.locationZ = locationZ;
+    }
+    
 }
