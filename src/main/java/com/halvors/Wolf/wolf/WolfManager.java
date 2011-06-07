@@ -33,7 +33,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
-import com.halvors.Wolf.chest.TileEntityVirtualChest;
+//import com.halvors.Wolf.chest.TileEntityVirtualChest;
 
 /**
  * Handle wolves
@@ -132,7 +132,14 @@ public class WolfManager {
             }
             
             // Create a new WolfTable
-            WolfTable wt = new WolfTable(wolf.getEntityId(), name, player.getName(), wolf.getLocation(), wolf.getWorld().getName());
+            WolfTable wt = new WolfTable();
+           	wt.setEntityId(wolf.getEntityId());
+            wt.setName(name);
+            wt.setOwner(player.getName());
+            wt.setLocation(wolf.getLocation());
+            wt.setWorld(wolf.getWorld().getName());
+            
+
             
             // Save the wolf to the database
             plugin.getDatabase().save(wt);

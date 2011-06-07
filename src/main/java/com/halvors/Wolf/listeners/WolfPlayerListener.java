@@ -116,6 +116,7 @@ public class WolfPlayerListener extends PlayerListener {
 	                			WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
 	                			
 	                			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+	                			wolf.setSitting(true);
 	                			entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
 	                		} else {
 	                			// Add some message here.

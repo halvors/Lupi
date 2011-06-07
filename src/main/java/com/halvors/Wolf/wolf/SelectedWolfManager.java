@@ -48,6 +48,9 @@ public class SelectedWolfManager {
     public void addSelectedWolf(final String owner, final Wolf wolf) {
         if (!selectedWolfs.containsKey(owner)) {
             selectedWolfs.put(owner, wolf);
+        } else {
+        	selectedWolfs.remove(owner);
+        	selectedWolfs.put(owner, wolf);
         }
     }
     
