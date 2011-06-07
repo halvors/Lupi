@@ -45,7 +45,7 @@ public class SelectedWolfManager {
      * @param owner
      * @param wolf
      */
-    public void addSelectedWolf(final String owner, final Wolf wolf) {
+    public void addSelectedWolf(String owner, Wolf wolf) {
         if (!selectedWolfs.containsKey(owner)) {
             selectedWolfs.put(owner, wolf);
         } else {
@@ -59,7 +59,7 @@ public class SelectedWolfManager {
      * 
      * @param owner
      */
-    public void removeSelectedWolf(final String owner) {
+    public void removeSelectedWolf(String owner) {
         if (selectedWolfs.containsKey(owner)) {
             selectedWolfs.remove(owner);
         }
@@ -71,7 +71,7 @@ public class SelectedWolfManager {
      * @param owner
      * @return Wolf
      */
-    public Wolf getSelectedWolf(final String owner) {
+    public Wolf getSelectedWolf(String owner) {
         return selectedWolfs.get(owner);
     }
     
@@ -81,7 +81,7 @@ public class SelectedWolfManager {
      * @param owner
      * @return Boolean
      */
-    public boolean hasSelectedWolf(final String owner) {
+    public boolean hasSelectedWolf(String owner) {
         return selectedWolfs.containsKey(owner);
     }
 }

@@ -139,8 +139,6 @@ public class WolfManager {
             wt.setLocation(wolf.getLocation());
             wt.setWorld(wolf.getWorld().getName());
             
-
-            
             // Save the wolf to the database
             plugin.getDatabase().save(wt);
             
