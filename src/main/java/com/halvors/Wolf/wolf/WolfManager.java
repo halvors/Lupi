@@ -430,6 +430,7 @@ public class WolfManager {
     	
     	if (wt != null) {
     		wt.setInventory(true);
+    		updateWolfTable(wt);
     		plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
     	}
     }

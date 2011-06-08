@@ -37,11 +37,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.inventory.ItemStack;
+//import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Player related events.
@@ -124,7 +123,10 @@ public class WolfPlayerListener extends PlayerListener {
                             		wolfManager.addInventory(wolf.getUniqueId());
                             		
                             		// Remove 1 chest for players inventory.
-                            		player.getInventory().remove(new ItemStack(Material.CHEST, 1));
+                            		// player.getInventory().remove(new ItemStack(Material.CHEST, 1));
+                            		if (player.getItemInHand().getType() == Material.CHEST) {
+                            			player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+                            		}
                             	}
                             } else {
                                 // Add some message here.
