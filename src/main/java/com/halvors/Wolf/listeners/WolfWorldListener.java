@@ -61,12 +61,9 @@ public class WolfWorldListener extends WorldListener{
                 Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
-                    WolfTable wt = wolfManager.getWolfTable(wolf.getLocation());
+                    WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                     
-                    if (wt != null) {
-                        wt.setEntityId(wolf.getEntityId());
-                        wolfManager.updateWolfTable(wt);
-                    } else {
+                    if (wt == null) {
                         wolfManager.addWolf(wolf);
                     }
                 }
@@ -83,12 +80,9 @@ public class WolfWorldListener extends WorldListener{
                 Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
-                    WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                    WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                     
-                    if (wt != null) {
-                        wt.setLocation(wolf.getLocation());
-                        wolfManager.updateWolfTable(wt);
-                    } else {
+                    if (wt == null) {
                         wolfManager.addWolf(wolf);
                     }
                 }

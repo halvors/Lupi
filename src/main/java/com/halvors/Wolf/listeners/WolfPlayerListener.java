@@ -98,13 +98,13 @@ public class WolfPlayerListener extends PlayerListener {
                     
                     if (item.equals(Material.BONE)) {
                         if (plugin.hasPermissions(player, "Wolf.select")) {
-                            if (!wolfManager.hasWolf(wolf.getEntityId())) {
+                            if (!wolfManager.hasWolf(wolf.getUniqueId())) {
                                 wolfManager.addWolf(wolf);
                                     
-                                player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
+                                player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getUniqueId()));
                                 
                                 // TODO: Remove temporary database info message
-                                player.sendMessage("Wolf EntityId: " + wolf.getEntityId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getEntityId()).getId());
+                                player.sendMessage("Wolf UniqueId: " + wolf.getUniqueId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getUniqueId()).getId());
                             }
                                 
                             selectedWolfManager.addSelectedWolf(player.getName(), wolf);
@@ -113,9 +113,9 @@ public class WolfPlayerListener extends PlayerListener {
                         }
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.chest")) {
-                            if (wolfManager.hasWolf(wolf.getEntityId())) {
-                            	if (wolfManager.hasInventory(wolf.getEntityId())) {
-                            		WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                            if (wolfManager.hasWolf(wolf.getUniqueId())) {
+                            	if (wolfManager.hasInventory(wolf.getUniqueId())) {
+                            		WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                             		
                             		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
