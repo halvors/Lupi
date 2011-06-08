@@ -29,7 +29,7 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
@@ -78,8 +78,6 @@ public class WolfWorldListener extends WorldListener{
     public void onChunkUnload(ChunkUnloadEvent event) {
     	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
     	
-//        Entity[] entities = event.getChunk().getEntities();
-        
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
@@ -104,7 +102,7 @@ public class WolfWorldListener extends WorldListener{
     }
     
     @Override
-    public void onWorldSave(WorldSaveEvent event) {
+    public void onWorldUnload(WorldUnloadEvent event) {
         wolfInventoryManager.save(event.getWorld());
     }
 }

@@ -133,7 +133,7 @@ public class WolfManager {
             
             // Create a new WolfTable
             WolfTable wt = new WolfTable();
-           	wt.setEntityId(wolf.getEntityId());
+            wt.setEntityId(wolf.getEntityId());
             wt.setName(name);
             wt.setOwner(player.getName());
             wt.setLocation(wolf.getLocation());

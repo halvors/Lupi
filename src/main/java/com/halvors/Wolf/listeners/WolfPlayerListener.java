@@ -93,36 +93,36 @@ public class WolfPlayerListener extends PlayerListener {
                 Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                	Material item = player.getItemInHand().getType();
-                	
-                	if (item.equals(Material.BONE)) {
-	                	if (plugin.hasPermissions(player, "Wolf.select")) {
-	                		if (!wolfManager.hasWolf(wolf.getEntityId())) {
-	                			wolfManager.addWolf(wolf);
-	                                
-	                			player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
-	                			
-	                			// TODO: Remove temporary database info message
-	                			player.sendMessage("Wolf EntityId: " + wolf.getEntityId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getEntityId()).getId());
-	                		}
-	                            
-	                		selectedWolfManager.addSelectedWolf(player.getName(), wolf);
-	                            
-	                		player.sendMessage(ChatColor.GREEN + "Wolf selected.");
-	                    }
-	                } else if (item.equals(Material.CHEST)) {
-	                	if (plugin.hasPermissions(player, "Wolf.chest")) {
-	                		if (wolfManager.hasWolf(wolf.getEntityId())) {
-	                			WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
-	                			
-	                			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-	                			wolf.setSitting(true);
-	                			entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
-	                		} else {
-	                			// Add some message here.
-	                		}
-	                    }
-	                }
+                    Material item = player.getItemInHand().getType();
+                    
+                    if (item.equals(Material.BONE)) {
+                        if (plugin.hasPermissions(player, "Wolf.select")) {
+                            if (!wolfManager.hasWolf(wolf.getEntityId())) {
+                                wolfManager.addWolf(wolf);
+                                    
+                                player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getEntityId()));
+                                
+                                // TODO: Remove temporary database info message
+                                player.sendMessage("Wolf EntityId: " + wolf.getEntityId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getEntityId()).getId());
+                            }
+                                
+                            selectedWolfManager.addSelectedWolf(player.getName(), wolf);
+                                
+                            player.sendMessage(ChatColor.GREEN + "Wolf selected.");
+                        }
+                    } else if (item.equals(Material.CHEST)) {
+                        if (plugin.hasPermissions(player, "Wolf.chest")) {
+                            if (wolfManager.hasWolf(wolf.getEntityId())) {
+                                WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                                
+                                EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                                wolf.setSitting(true);
+                                entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
+                            } else {
+                                // Add some message here.
+                            }
+                        }
+                    }
                 }
             }
         }

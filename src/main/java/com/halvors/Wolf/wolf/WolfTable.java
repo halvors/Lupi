@@ -46,7 +46,6 @@ public class WolfTable {
     private int locationZ;
     private String world;
     
-    
     public int getId() {
         return id;
     }
@@ -79,16 +78,40 @@ public class WolfTable {
         this.owner = owner;
     }
     
+    public int getLocationX() {
+        return this.locationX;
+    }
+    
+    public void setLocationX(int locationX) {
+        this.locationZ = locationX;
+    }
+    
+    public int getLocationY() {
+        return this.locationY;
+    }
+    
+    public void setLocationY(int locationY) {
+        this.locationZ = locationY;
+    }
+    
+    public int getLocationZ() {
+        return this.locationZ;
+    }
+    
+    public void setLocationZ(int locationZ) {
+        this.locationZ = locationZ;
+    }
+
     public Location getLocation() {
-    	World world = Bukkit.getServer().getWorld(this.world);
-    	
-    	return new Location(world, locationX, locationY, locationZ);
+        World world = Bukkit.getServer().getWorld(this.world);
+        
+        return new Location(world, locationX, locationY, locationZ);
     }
     
     public void setLocation(Location location) {
-    	this.locationX = location.getBlockX();
-    	this.locationY = location.getBlockY();
-    	this.locationZ = location.getBlockZ();
+        this.locationX = location.getBlockX();
+        this.locationY = location.getBlockY();
+        this.locationZ = location.getBlockZ();
     }
     
     public String getWorld() {
@@ -98,41 +121,4 @@ public class WolfTable {
     public void setWorld(String world) {
         this.world = world;
     }
-    
-    
-    /*
-     * Added due to errors dealing with no read/write methods
-     * Set "@Deprecated" To show not to use
-     */
-    
-    @Deprecated
-    public int getLocationX() {
-    	return this.locationX;
-    }
-    
-    @Deprecated
-    public void setLocationX(int locationX) {
-    	this.locationZ = locationX;
-    }
-    
-    @Deprecated
-    public int getLocationY() {
-    	return this.locationY;
-    }
-    
-    @Deprecated
-    public void setLocationY(int locationY) {
-    	this.locationZ = locationY;
-    }
-    
-    @Deprecated
-    public int getLocationZ() {
-    	return this.locationZ;
-    }
-    
-    @Deprecated
-    public void setLocationZ(int locationZ) {
-    	this.locationZ = locationZ;
-    }
-    
 }

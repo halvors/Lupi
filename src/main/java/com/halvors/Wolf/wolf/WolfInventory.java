@@ -29,7 +29,7 @@ public class WolfInventory {
     }
     
     public int getWolfId() {
-    	return wolfId;
+        return wolfId;
     }
 
     public int getSize() {

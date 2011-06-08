@@ -131,7 +131,7 @@ public class WolfEntityListener extends EntityListener {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wt.getId());
                     
                     for (ItemStack is : wi.getContents()) {
-                    	world.dropItem(wolf.getLocation(), is);
+                        world.dropItem(wolf.getLocation(), is);
                     }
                 }
                 
@@ -174,21 +174,21 @@ public class WolfEntityListener extends EntityListener {
     
     @Override
     public void onEntityTarget(EntityTargetEvent event) {
-    	if (!event.isCancelled()) {
-    		Entity entity = event.getEntity();
-    		Entity target = event.getTarget();
-    		
-    		if (entity instanceof Wolf) {
-    			Wolf wolf = (Wolf)target;
-    			
-    			if (target instanceof Player) {
-//    				Player player = (Player)target;
-    				
-    				if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
-//    					WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
-    				}
-    			}
-    		}
-    	}
+        if (!event.isCancelled()) {
+            Entity entity = event.getEntity();
+            Entity target = event.getTarget();
+            
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf)target;
+                
+                if (target instanceof Player) {
+//                    Player player = (Player)target;
+                    
+                    if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
+//                        WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                    }
+                }
+            }
+        }
     }
 }

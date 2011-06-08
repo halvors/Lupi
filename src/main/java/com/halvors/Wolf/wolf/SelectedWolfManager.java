@@ -49,8 +49,8 @@ public class SelectedWolfManager {
         if (!selectedWolfs.containsKey(owner)) {
             selectedWolfs.put(owner, wolf);
         } else {
-        	selectedWolfs.remove(owner);
-        	selectedWolfs.put(owner, wolf);
+            selectedWolfs.remove(owner);
+            selectedWolfs.put(owner, wolf);
         }
     }
     
