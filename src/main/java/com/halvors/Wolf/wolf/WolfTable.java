@@ -20,8 +20,6 @@
 
 package com.halvors.Wolf.wolf;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -82,7 +80,7 @@ public class WolfTable {
         this.world = world;
     }
     
-    public boolean getInventory() {
+    public boolean isInventory() {
     	return inventory;
     }
     

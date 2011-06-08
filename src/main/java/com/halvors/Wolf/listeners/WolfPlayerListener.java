@@ -124,6 +124,7 @@ public class WolfPlayerListener extends PlayerListener {
                             	} else {
                             		// Add inventory.
                             		wolfManager.addInventory(wolf.getUniqueId());
+                            		plugin.getWolfInventoryManager().addWolfInventory(wolfManager.getId(wolf.getUniqueId()));
                             		
                             		// Remove 1 chest for players inventory.
                             		player.getInventory().remove(new ItemStack(Material.CHEST, 1));

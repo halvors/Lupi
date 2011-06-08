@@ -139,9 +139,6 @@ public class WolfManager {
             
             // Pull a fresh copy of the wolf to retrieve the database ID
             wt = getWolfTable(wolf.getUniqueId());
-            
-            // Add wolf inventory
-            plugin.getWolfInventoryManager().addWolfInventory(wt.getId());
         }
     }
     
@@ -163,7 +160,6 @@ public class WolfManager {
         WolfTable wt = getWolfTable(uniqueId);
         
         if (wt != null) {
-            plugin.getWolfInventoryManager().removeWolfInventory(wt.getId());
             plugin.getDatabase().delete(wt);
         }
     }
@@ -292,6 +288,33 @@ public class WolfManager {
     }
     
     /**
+     * Get id
+     * 
+     * @param uniqueId
+     * @return
+     */
+    public int getId(UUID uniqueId) {
+    	WolfTable wt = getWolfTable(uniqueId);
+    	
+    	if (wt != null) {
+    		return wt.getId();
+    	}
+    	
+    	return 0;
+    }
+    
+    /**
+     * Get id
+     * 
+     * @param name
+     * @param owner
+     * @return
+     */
+    public int getId(String name, String owner) {
+    	return getId(getUniqueId(name, owner));
+    }
+    
+    /**
      * Get uniqueId
      * 
      * @param name
@@ -380,7 +403,7 @@ public class WolfManager {
     	WolfTable wt = getWolfTable(uniqueId);
     	
     	if (wt != null) {
-    		return wt.getInventory();
+    		return wt.isInventory();
     	}
     	
     	return false;
