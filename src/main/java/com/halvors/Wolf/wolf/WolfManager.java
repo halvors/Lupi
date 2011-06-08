@@ -138,6 +138,7 @@ public class WolfManager {
             wt.setOwner(player.getName());
             wt.setLocation(wolf.getLocation());
             wt.setWorld(wolf.getWorld().getName());
+            wt.setInventory(false);
             
             // Save the wolf to the database
             plugin.getDatabase().save(wt);
@@ -401,36 +402,33 @@ public class WolfManager {
     }
     
     /**
-<<<<<<< HEAD
-=======
-     * Get wolf's inventory by entityId
+     * Check if wolf has inventory by entityId
      * 
      * @param entityId
-     * @return
+     * @return Boolean
      */
-    public WolfInventory getInventory(int entityId) {
-        WolfTable wt = getWolfTable(entityId);
-        
-        if (wt != null) {
-            return wolfInventoryManager.getWolfInventory(wt.getId());
-        }
-        
-        return null;
+    public boolean hasInventory(int entityId) {
+    	WolfTable wt = getWolfTable(entityId);
+    	
+    	if (wt != null) {
+    		return wt.getInventory();
+    	}
+    	
+    	return false;
     }
     
     /**
-     * Get wolf's inventory
+     * Check if wolf has inventory by name and owner
      * 
      * @param name
      * @param owner
-     * @return
+     * @return Boolean
      */
-    public WolfInventory getInventory(String name, String owner) {
-        return getInventory(getEntityId(name, owner));
+    public boolean hasInventory(String name, String owner) {
+    	return hasInventory(getEntityId(name, owner));
     }
     
     /**
->>>>>>> 14bd8a4c03677849e31ab953deb869b7ec004e51
      * Spawn a wolf
      * 
      * @param player

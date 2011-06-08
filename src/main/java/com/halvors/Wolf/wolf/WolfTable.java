@@ -45,6 +45,7 @@ public class WolfTable {
     private int locationY;
     private int locationZ;
     private String world;
+    private boolean inventory;
     
     public int getId() {
         return id;
@@ -120,5 +121,13 @@ public class WolfTable {
     
     public void setWorld(String world) {
         this.world = world;
+    }
+    
+    public boolean getInventory() {
+    	return inventory;
+    }
+    
+    public void setInventory(boolean inventory) {
+    	this.inventory = inventory;
     }
 }

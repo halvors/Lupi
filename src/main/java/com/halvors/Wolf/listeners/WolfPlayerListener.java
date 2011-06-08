@@ -37,6 +37,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfManager;
@@ -113,11 +114,19 @@ public class WolfPlayerListener extends PlayerListener {
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.chest")) {
                             if (wolfManager.hasWolf(wolf.getEntityId())) {
-                                WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
-                                
-                                EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                wolf.setSitting(true);
-                                entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
+                            	if (wolfManager.hasInventory(wolf.getEntityId())) {
+                            		WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                            		
+                            		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                                    entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
+                                    
+                                    wolf.setSitting(true);
+                            	} else {
+                            		// Add Inventory here.
+                            		
+                            		// Remove 1 chest for players inventory
+                            		player.getInventory().remove(new ItemStack(Material.CHEST, 1));
+                            	}
                             } else {
                                 // Add some message here.
                             }

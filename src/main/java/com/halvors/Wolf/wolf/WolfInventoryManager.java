@@ -41,6 +41,7 @@ public class WolfInventoryManager {
         this.plugin = plugin;
         this.wolfInventorys = new HashMap<Integer, WolfInventory>();
     }
+    
     public void load(World world) {
         // TODO: Load WolfInventory here.
           
