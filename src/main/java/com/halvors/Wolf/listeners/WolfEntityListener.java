@@ -88,7 +88,7 @@ public class WolfEntityListener extends EntityListener {
                     if (damager instanceof Player) {
                         Player attacker = (Player)damager;
                         
-                        if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
+                        if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
                             Player player = (Player)wolf.getOwner();
                             
                             if (attacker.equals(player)) {
@@ -96,7 +96,7 @@ public class WolfEntityListener extends EntityListener {
                                 
                                 if (item.equals(Material.BONE)) {
                                     if (plugin.hasPermissions(player, "Wolf.info")) {
-                                        String name = wolfManager.getName(wolf.getEntityId());
+                                        String name = wolfManager.getName(wolf.getUniqueId());
                                         int health = wolf.getHealth();
                                         int maxHealth = 20;
                                         
@@ -124,8 +124,8 @@ public class WolfEntityListener extends EntityListener {
         if (entity instanceof Wolf) {
             Wolf wolf = (Wolf)entity;
             
-            if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
-                WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+            if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
+                WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                 
                 if (plugin.getWolfInventoryManager().hasWolfInventory(wt.getId())) {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wt.getId());
@@ -135,7 +135,7 @@ public class WolfEntityListener extends EntityListener {
                     }
                 }
                 
-                wolfManager.removeWolf(wolf.getEntityId());
+                wolfManager.removeWolf(wolf.getUniqueId());
             }
         }
     }
@@ -184,8 +184,8 @@ public class WolfEntityListener extends EntityListener {
                 if (target instanceof Player) {
 //                    Player player = (Player)target;
                     
-                    if (wolf.isTamed() && wolfManager.hasWolf(wolf.getEntityId())) {
-//                        WolfTable wt = wolfManager.getWolfTable(wolf.getEntityId());
+                    if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
+//                        WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                     }
                 }
             }
