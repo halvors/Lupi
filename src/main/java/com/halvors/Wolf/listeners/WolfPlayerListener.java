@@ -41,7 +41,6 @@ import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Player related events.
