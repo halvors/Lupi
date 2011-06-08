@@ -39,17 +39,11 @@ import org.bukkit.inventory.ItemStack;
 public class WolfInventoryTable {
     @Id
     private int id;
-    private String unigueId;
+    private String uniqueId;
     private String chestRow1;
     private String chestRow2;
     private String chestRow3;
-    
-    public WolfInventoryTable() {
-        chestRow1 = "0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0";
-        chestRow2 = "0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0";
-        chestRow3 = "0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0;0:0:0";
-    }
-    
+        
     public int getId() {
         return id;
     }
@@ -59,11 +53,11 @@ public class WolfInventoryTable {
     }
     
     public String getUnigueId() {
-    	return unigueId;
+    	return uniqueId;
     }
     
     public void setUnigueId(String uniqueId) {
-    	this.unigueId = uniqueId;
+    	this.uniqueId = uniqueId;
     }
     
     public String getChestRow1() {
