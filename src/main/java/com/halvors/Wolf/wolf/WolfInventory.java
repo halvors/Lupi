@@ -3,6 +3,7 @@ package com.halvors.Wolf.wolf;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -17,19 +18,20 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
  */
 public class WolfInventory {
     private final TileEntityVirtualChest inventory;
-    private final int wolfId;
     
-    public WolfInventory(int wolfId) {
+    private UUID uniqueId;
+    
+    public WolfInventory(UUID uniqueId) {
         this.inventory = new TileEntityVirtualChest();
-        this.wolfId = wolfId;
+        this.uniqueId = uniqueId;
     }
 
     public TileEntityVirtualChest getInventory() {
         return inventory;
     }
     
-    public int getWolfId() {
-        return wolfId;
+    public UUID getUniqueId() {
+        return uniqueId;
     }
 
     public int getSize() {

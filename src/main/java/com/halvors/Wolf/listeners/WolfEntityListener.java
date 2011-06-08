@@ -127,8 +127,8 @@ public class WolfEntityListener extends EntityListener {
             if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
                 WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                 
-                if (plugin.getWolfInventoryManager().hasWolfInventory(wt.getId())) {
-                    WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wt.getId());
+                if (plugin.getWolfInventoryManager().hasWolfInventory(wolf.getUniqueId())) {
+                    WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId());
                     
                     for (ItemStack is : wi.getContents()) {
                         world.dropItem(wolf.getLocation(), is);
