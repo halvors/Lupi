@@ -92,7 +92,7 @@ public class WolfPlayerListener extends PlayerListener {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
                 
-                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
+                if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId()) && wolf.getOwner().equals(player)) {
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {

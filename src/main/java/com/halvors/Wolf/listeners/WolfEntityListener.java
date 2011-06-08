@@ -38,7 +38,6 @@ import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
 import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
@@ -88,7 +87,7 @@ public class WolfEntityListener extends EntityListener {
                     if (damager instanceof Player) {
                         Player attacker = (Player)damager;
                         
-                        if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
+                        if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId()) && wolf.getOwner().equals(attacker)) {
                             Player player = (Player)wolf.getOwner();
                             
                             if (attacker.equals(player)) {
@@ -125,8 +124,6 @@ public class WolfEntityListener extends EntityListener {
             Wolf wolf = (Wolf)entity;
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
-                WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
-                
                 if (plugin.getWolfInventoryManager().hasWolfInventory(wolf.getUniqueId())) {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId());
                     
