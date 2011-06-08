@@ -93,7 +93,7 @@ public class WolfPlayerListener extends PlayerListener {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
                 
-                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
+                if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId()) && wolf.getOwner().equals(player)) {
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {
@@ -114,17 +114,14 @@ public class WolfPlayerListener extends PlayerListener {
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.chest")) {
                             if (wolfManager.hasWolf(wolf.getUniqueId())) {
-                            	if (wolfManager.hasInventory(wolf.getUniqueId())) {
-                            		WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
-                            		
+                            	if (wolfManager.hasInventory(wolf.getUniqueId())) {                       		
                             		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                    entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
+                                    entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId()).getInventory());
                                     
-                                    wolf.setSitting(!wolf.isSitting());
+//                                    wolf.setSitting(!wolf.isSitting()); // TODO: Check this
                             	} else {
                             		// Add inventory.
                             		wolfManager.addInventory(wolf.getUniqueId());
-                            		plugin.getWolfInventoryManager().addWolfInventory(wolfManager.getId(wolf.getUniqueId()));
                             		
                             		// Remove 1 chest for players inventory.
                             		player.getInventory().remove(new ItemStack(Material.CHEST, 1));

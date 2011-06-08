@@ -430,8 +430,7 @@ public class WolfManager {
     	
     	if (wt != null) {
     		wt.setInventory(true);
-    		
-    		// TODO: Add inventory.
+    		plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
     	}
     }
     
@@ -446,7 +445,7 @@ public class WolfManager {
     	if (wt != null) {
     		wt.setInventory(false);
     		
-    		// TODO: Remove inventory.
+    		plugin.getWolfInventoryManager().removeWolfInventory(uniqueId);
     	}
     }
     

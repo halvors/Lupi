@@ -66,17 +66,12 @@ public class Wolf extends JavaPlugin {
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
     private final WolfWorldListener worldListener = new WolfWorldListener(this);
     
-    // Adding a variable so classes can get an instance of the server easily
-//    public static Server currentServer;
-    //  Use Bukkit.getServer(); instead.
-    
     public static PermissionHandler Permissions;
     
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     
     @Override
     public void onEnable() {
-//        currentServer = this.getServer();
         pm = this.getServer().getPluginManager();
         pdfFile = this.getDescription();
         
