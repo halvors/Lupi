@@ -43,6 +43,7 @@ import com.halvors.Wolf.wolf.WolfTable;
 public class WolfWorldListener extends WorldListener{
 //    private final com.halvors.Wolf.Wolf plugin;
     
+	private Boolean loaded = false;
     private final WolfManager wolfManager;
     private final WolfInventoryManager wolfInventoryManager;
     
@@ -54,6 +55,11 @@ public class WolfWorldListener extends WorldListener{
     
     @Override
     public void onChunkLoad(ChunkLoadEvent event) {
+    	if (!loaded) {
+    		loaded = true;
+    		wolfInventoryManager.load(event.getWorld());
+    	}
+    		
         List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
         
         for (Entity entity : entities) {
@@ -73,6 +79,10 @@ public class WolfWorldListener extends WorldListener{
 
     @Override
     public void onChunkUnload(ChunkUnloadEvent event) {
+    	if (loaded) {
+    		loaded = false;
+    		wolfInventoryManager.save(event.getWorld());
+    	}
     	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
     	
         for (Entity entity : entities) {

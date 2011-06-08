@@ -36,7 +36,7 @@ import com.halvors.Wolf.Wolf;
 public class WolfInventoryManager {
     private final Wolf plugin;
     
-    private final HashMap<UUID, WolfInventory> wolfInventorys;
+    private HashMap<UUID, WolfInventory> wolfInventorys;
     
     public WolfInventoryManager(final Wolf plugin) {
         this.plugin = plugin;
@@ -49,7 +49,7 @@ public class WolfInventoryManager {
         List<WolfInventoryTable> wits = plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
     
         for (WolfInventoryTable wit : wits) {
-            addWolfInventory(UUID.fromString(wit.getUnigueId()), loadWolfInventory(wit));
+            addWolfInventory(UUID.fromString(wit.getUniqueId()), loadWolfInventory(wit));
         } 
     }
     
@@ -57,21 +57,26 @@ public class WolfInventoryManager {
              // TODO: Save WolfInventory here.
 
         for (WolfInventory wi : wolfInventorys.values()) {
-            WolfInventoryTable wit = new WolfInventoryTable();
-            wit.setUnigueId(wi.getUniqueId().toString());
-            wit.setContents(wi.getContents());
-            if (plugin.getDatabase().find(WolfInventoryTable.class).where().eq("uniqueId", wi.getUniqueId().toString()).findList() != null) {
-                plugin.getDatabase().update(wit);
+            WolfInventoryTable wit = plugin.getDatabase().find(WolfInventoryTable.class).where().eq("uniqueId", wi.getUniqueId().toString()).findUnique();
+            
+            if (wit != null) {
+            	String[] rows = wi.prepareTableForDB();
+            	wit.setChestRows(rows);
+            	plugin.getDatabase().update(wit);
             } else {
-                plugin.getDatabase().save(wit);
+            	wit = new WolfInventoryTable();
+                wit.setUniqueId(wi.getUniqueId().toString());
+                String[] rows = wi.prepareTableForDB();
+                wit.setChestRows(rows);
+            	plugin.getDatabase().save(wit);
                 
             }
         }
     }
     
     public WolfInventory loadWolfInventory(WolfInventoryTable wit) {
-        WolfInventory wi = new WolfInventory(UUID.fromString(wit.getUnigueId()));
-        wi.setContents(wit.getItemStackList());
+        WolfInventory wi = new WolfInventory(UUID.fromString(wit.getUniqueId()));
+        wi.fillFromDBTable(wit.getChestRows());
         return wi;
     }
     

@@ -11,6 +11,10 @@ import org.bukkit.event.entity.EntityEvent;
  * @author halvors
  */
 public class EntityTameEvent extends EntityEvent implements Cancellable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1159560454117043527L;
 	private boolean cancelled;
     private AnimalTamer owner;
 

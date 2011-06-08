@@ -92,7 +92,7 @@ public class WolfPlayerListener extends PlayerListener {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
                 
-                if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId()) && wolf.getOwner().equals(player)) {
+                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {
@@ -103,7 +103,7 @@ public class WolfPlayerListener extends PlayerListener {
                                 player.sendMessage(ChatColor.GREEN + "Your wolf was named: " + ChatColor.YELLOW + wolfManager.getName(wolf.getUniqueId()));
                                 
                                 // TODO: Remove temporary database info message
-                                player.sendMessage("Wolf UniqueId: " + wolf.getUniqueId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getUniqueId()).getId());
+                                //player.sendMessage("Wolf UniqueId: " + wolf.getUniqueId() + ", Database ID: " + wolfManager.getWolfTable(wolf.getUniqueId()).getId());
                             }
                                 
                             selectedWolfManager.addSelectedWolf(player.getName(), wolf);
@@ -115,7 +115,11 @@ public class WolfPlayerListener extends PlayerListener {
                             if (wolfManager.hasWolf(wolf.getUniqueId())) {
                             	if (wolfManager.hasInventory(wolf.getUniqueId())) {                       		
                             		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                    entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId()).getInventory());
+                            		
+                            		//Debug Line
+                            		//player.sendMessage("Wolf UniqueId: " + wolf.getUniqueId() + "\nDatabase ID: " + wolfManager.getWolfTable(wolf.getUniqueId()).getId());
+                                    
+                            		entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId()).getInventory());
                                     
 //                                    wolf.setSitting(!wolf.isSitting()); // TODO: Check this
                             	} else {

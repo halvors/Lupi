@@ -2,7 +2,6 @@ package com.halvors.Wolf.wolf;
 
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -12,28 +11,15 @@ import org.bukkit.entity.Player;
  * @author halvors
  */
 public class Wolf {
+	private final com.halvors.Wolf.Wolf plugin;
+	
 	private final WolfManager wolfManager;
 	
 	private UUID uniqueId;
 	
-	public Wolf(final com.halvors.Wolf.Wolf plugin, UUID uniqueId) {
+	public Wolf(final com.halvors.Wolf.Wolf plugin) {
+		this.plugin = plugin;
 		this.wolfManager = plugin.getWolfManager();
-		this.uniqueId = uniqueId;
-	}
-	
-	/**
-	 * Get id
-	 * 
-	 * @return
-	 */
-	public int getId() {
-		WolfTable wt = wolfManager.getWolfTable(uniqueId);
-		
-		if (wt != null) {
-			return wt.getId();
-		}
-		
-		return 0;
 	}
 	
 	/**
@@ -43,6 +29,15 @@ public class Wolf {
 	 */
 	public UUID getUniqueId() {
 		return uniqueId;
+	}
+	
+	/**
+	 * Set uniqueId
+	 * 
+	 * @param uniqueId
+	 */
+	public void setUniqueId(UUID uniqueId) {
+		this.uniqueId = uniqueId;
 	}
     
     /**
@@ -69,7 +64,7 @@ public class Wolf {
         WolfTable wt = wolfManager.getWolfTable(uniqueId);
         
         if (wt != null) {
-            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
                 if (player.getName().equalsIgnoreCase(wt.getOwner())) {
                     return player;
                 }
@@ -88,7 +83,7 @@ public class Wolf {
         WolfTable wt = wolfManager.getWolfTable(uniqueId);
         
         if (wt != null) {
-            return Bukkit.getServer().getWorld(wt.getWorld());
+            return plugin.getServer().getWorld(wt.getWorld());
         }
         
         return null;

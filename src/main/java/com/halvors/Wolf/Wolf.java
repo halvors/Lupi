@@ -65,6 +65,7 @@ public class Wolf extends JavaPlugin {
     private final WolfEntityListener entityListener = new WolfEntityListener(this);
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
     private final WolfWorldListener worldListener = new WolfWorldListener(this);
+   
     
     public static PermissionHandler Permissions;
     

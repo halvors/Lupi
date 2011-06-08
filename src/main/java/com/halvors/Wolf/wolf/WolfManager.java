@@ -217,7 +217,7 @@ public class WolfManager {
     public Wolf getWolf(WolfTable wt) {
         for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
             if (entity instanceof Wolf) {
-                if (UUID.fromString(wt.getUniqueId()) == entity.getUniqueId())  {
+                if (entity.getUniqueId().equals(UUID.fromString(wt.getUniqueId())))  {
                     return (Wolf) entity;
                 }
             }
