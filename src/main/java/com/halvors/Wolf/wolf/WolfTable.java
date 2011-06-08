@@ -20,13 +20,11 @@
 
 package com.halvors.Wolf.wolf;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 
 /**
  * Represents a WolfTable.
@@ -38,14 +36,11 @@ import org.bukkit.World;
 public class WolfTable {
     @Id
     private int id;
-    private int entityId;
+    private String uniqueId;
     private String name;
     private String owner;
-    private int locationX;
-    private int locationY;
-    private int locationZ;
     private String world;
-    private boolean inventory;
+    private Boolean inventory; 
     
     public int getId() {
         return id;
@@ -55,12 +50,20 @@ public class WolfTable {
         this.id = id;
     }
     
-    public int getEntityId() {
-        return entityId;
+    public UUID getUniqueId() {
+        return UUID.fromString(uniqueId);
     }
     
-    public void setEntityId(int entityId) {
-        this.entityId = entityId;
+    public String getUniqueIdString() {
+        return uniqueId;
+    }
+    
+    public void setUniqueId(UUID uniqueId) {
+        this.uniqueId = uniqueId.toString();
+    }
+    
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
     
     public String getName() {
@@ -79,42 +82,6 @@ public class WolfTable {
         this.owner = owner;
     }
     
-    public int getLocationX() {
-        return this.locationX;
-    }
-    
-    public void setLocationX(int locationX) {
-        this.locationZ = locationX;
-    }
-    
-    public int getLocationY() {
-        return this.locationY;
-    }
-    
-    public void setLocationY(int locationY) {
-        this.locationZ = locationY;
-    }
-    
-    public int getLocationZ() {
-        return this.locationZ;
-    }
-    
-    public void setLocationZ(int locationZ) {
-        this.locationZ = locationZ;
-    }
-
-    public Location getLocation() {
-        World world = Bukkit.getServer().getWorld(this.world);
-        
-        return new Location(world, locationX, locationY, locationZ);
-    }
-    
-    public void setLocation(Location location) {
-        this.locationX = location.getBlockX();
-        this.locationY = location.getBlockY();
-        this.locationZ = location.getBlockZ();
-    }
-    
     public String getWorld() {
         return world;
     }
@@ -123,11 +90,11 @@ public class WolfTable {
         this.world = world;
     }
     
-    public boolean getInventory() {
+    public Boolean getInventory() {
     	return inventory;
     }
     
-    public void setInventory(boolean inventory) {
+    public void setInventory(Boolean inventory) {
     	this.inventory = inventory;
     }
 }
