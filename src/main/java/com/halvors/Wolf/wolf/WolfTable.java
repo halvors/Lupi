@@ -50,16 +50,8 @@ public class WolfTable {
         this.id = id;
     }
     
-    public UUID getUniqueId() {
-        return UUID.fromString(uniqueId);
-    }
-    
-    public String getUniqueIdString() {
+    public String getUniqueId() {
         return uniqueId;
-    }
-    
-    public void setUniqueId(UUID uniqueId) {
-        this.uniqueId = uniqueId.toString();
     }
     
     public void setUniqueId(String uniqueId) {

@@ -49,17 +49,12 @@ public class WolfManager {
 //        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
-    /**
-     * Get WolfTable
-     * 
-     * @param uniqueId
-     * @return WolfTable
-     */
+    /*
     public WolfTable getWolfTable(String uniqueId) {
         return plugin.getDatabase().find(WolfTable.class).where()
             .eq("uniqueId", uniqueId).findUnique();
     }
-    
+    */
     
     /**
      * Get WolfTable
@@ -68,7 +63,8 @@ public class WolfManager {
      * @return WolfTable
      */
     public WolfTable getWolfTable(UUID uniqueId) {
-    	return getWolfTable(uniqueId.toString());
+    	return plugin.getDatabase().find(WolfTable.class).where()
+    		.eq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     /**
@@ -132,7 +128,7 @@ public class WolfManager {
             
             // Create a new WolfTable
             WolfTable wt = new WolfTable();
-            wt.setUniqueId(wolf.getUniqueId());
+            wt.setUniqueId(wolf.getUniqueId().toString());
             wt.setName(name);
             wt.setOwner(player.getName());
             wt.setWorld(wolf.getWorld().getName());
@@ -225,7 +221,7 @@ public class WolfManager {
     public Wolf getWolf(WolfTable wt) {
         for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
             if (entity instanceof Wolf) {
-                if (wt.getUniqueId() == entity.getUniqueId())  {
+                if (UUID.fromString(wt.getUniqueId()) == entity.getUniqueId())  {
                     return (Wolf) entity;
                 }
             }
@@ -265,7 +261,7 @@ public class WolfManager {
         
         for (WolfTable wt : wts) {
             for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
-                if (entity instanceof Wolf && entity.getUniqueId() == wt.getUniqueId()) {
+                if (entity instanceof Wolf && UUID.fromString(wt.getUniqueId()) == entity.getUniqueId()) {
                     wolves.add((Wolf) entity);
                 }
             }
@@ -286,7 +282,7 @@ public class WolfManager {
         
         for (WolfTable wt : wts) {
             for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
-                if (entity instanceof Wolf && entity.getUniqueId() == wt.getUniqueId()) {
+                if (entity instanceof Wolf && UUID.fromString(wt.getUniqueId()) == entity.getUniqueId()) {
                     wolves.add((Wolf) entity);
                 }
             }
@@ -306,7 +302,7 @@ public class WolfManager {
         WolfTable wt = getWolfTable(name, owner);
         
         if (wt != null) {
-            return wt.getUniqueId();
+            return UUID.fromString(wt.getUniqueId());
         }
         
         return null;
@@ -399,6 +395,36 @@ public class WolfManager {
      */
     public boolean hasInventory(String name, String owner) {
     	return hasInventory(getUniqueId(name, owner));
+    }
+    
+    /**
+     * Add wolf inventory
+     * 
+     * @param uniqueId
+     */
+    public void addInventory(UUID uniqueId) {
+    	WolfTable wt = getWolfTable(uniqueId);
+    	
+    	if (wt != null) {
+    		wt.setInventory(true);
+    		
+    		// TODO: Add inventory.
+    	}
+    }
+    
+    /**
+     * Remove wolf inventory
+     * 
+     * @param uniqueId
+     */
+    public void removeInventory(UUID uniqueId) {
+    	WolfTable wt = getWolfTable(uniqueId);
+    	
+    	if (wt != null) {
+    		wt.setInventory(false);
+    		
+    		// TODO: Remove inventory.
+    	}
     }
     
     /**

@@ -21,6 +21,7 @@
 package com.halvors.Wolf.command;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -264,7 +265,7 @@ public class WolfCommandExecutor implements CommandExecutor {
         
         if (!wolfTables.isEmpty()) {
             for (WolfTable wolfTable : wolfTables) {
-                Wolf wolf = wolfManager.getWolf(wolfTable.getUniqueId());
+                Wolf wolf = wolfManager.getWolf(UUID.fromString(wolfTable.getUniqueId()));
                 Location pos = wolf.getLocation();
                 
                 player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " (" + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ() + ")");

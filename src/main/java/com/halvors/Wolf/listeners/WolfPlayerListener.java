@@ -120,11 +120,12 @@ public class WolfPlayerListener extends PlayerListener {
                             		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(wt.getId()).getInventory());
                                     
-                                    wolf.setSitting(true);
+                                    wolf.setSitting(!wolf.isSitting());
                             	} else {
-                            		// Add Inventory here.
+                            		// Add inventory.
+                            		wolfManager.addInventory(wolf.getUniqueId());
                             		
-                            		// Remove 1 chest for players inventory
+                            		// Remove 1 chest for players inventory.
                             		player.getInventory().remove(new ItemStack(Material.CHEST, 1));
                             	}
                             } else {
