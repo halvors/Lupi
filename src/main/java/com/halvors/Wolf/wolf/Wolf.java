@@ -1,6 +1,7 @@
 package com.halvors.Wolf.wolf;
 
-import org.bukkit.Location;
+import java.util.UUID;
+
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -14,7 +15,7 @@ public class Wolf {
 	
 	private final WolfManager wolfManager;
 	
-	private int id;
+	private UUID uniqueId;
 	
 	public Wolf(final com.halvors.Wolf.Wolf plugin) {
 		this.plugin = plugin;
@@ -22,35 +23,22 @@ public class Wolf {
 	}
 	
 	/**
-	 * Get id
+	 * Get uniqueId
 	 * 
-	 * @return Integer
+	 * @return UUID
 	 */
-	public int getId() {
-		return id;
+	public UUID getUniqueId() {
+		return uniqueId;
 	}
 	
 	/**
-	 * Set id
+	 * Set uniqueId
+	 * 
+	 * @param uniqueId
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setUniqueId(UUID uniqueId) {
+		this.uniqueId = uniqueId;
 	}
-	
-	/**
-     * Get entityId
-     * 
-     * @return Integer
-     */
-    public int getEntityId() {
-        WolfTable wt = wolfManager.getWolfTable(id);
-        
-        if (wt != null) {
-            return wt.getEntityId();
-        }
-        
-        return 0;
-    }
     
     /**
      * Get name
@@ -58,7 +46,7 @@ public class Wolf {
      * @return String
      */
     public String getName() {
-        WolfTable wt = wolfManager.getWolfTable(id);
+        WolfTable wt = wolfManager.getWolfTable(uniqueId);
         
         if (wt != null) {
             return wt.getName();
@@ -73,7 +61,7 @@ public class Wolf {
      * @return Player
      */
     public Player getOwner() {
-        WolfTable wt = wolfManager.getWolfTable(id);
+        WolfTable wt = wolfManager.getWolfTable(uniqueId);
         
         if (wt != null) {
             for (Player player : plugin.getServer().getOnlinePlayers()) {
@@ -87,27 +75,12 @@ public class Wolf {
     }
     
     /**
-     * Get location
-     * 
-     * @return Location
-     */
-    public Location getLocation() {
-        WolfTable wt = wolfManager.getWolfTable(id);
-        
-        if (wt != null) {
-            return wt.getLocation();
-        }
-        
-        return null;
-    }
-    
-    /**
      * Get wolf's world
      * 
      * @return World
      */
     public World getWorld() {
-        WolfTable wt = wolfManager.getWolfTable(id);
+        WolfTable wt = wolfManager.getWolfTable(uniqueId);
         
         if (wt != null) {
             return plugin.getServer().getWorld(wt.getWorld());

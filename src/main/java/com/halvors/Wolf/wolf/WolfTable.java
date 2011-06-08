@@ -40,7 +40,7 @@ public class WolfTable {
     private String name;
     private String owner;
     private String world;
-    private Boolean inventory; 
+    private boolean inventory; 
     
     public int getId() {
         return id;
@@ -90,11 +90,11 @@ public class WolfTable {
         this.world = world;
     }
     
-    public Boolean getInventory() {
+    public boolean getInventory() {
     	return inventory;
     }
     
-    public void setInventory(Boolean inventory) {
+    public void setInventory(boolean inventory) {
     	this.inventory = inventory;
     }
 }
