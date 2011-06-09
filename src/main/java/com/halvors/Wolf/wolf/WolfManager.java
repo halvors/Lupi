@@ -144,6 +144,16 @@ public class WolfManager {
     }
     
     /**
+     * Check if wolf exists
+     * 
+     * @param wolf
+     * @return boolean
+     */
+    public boolean hasWolf(org.bukkit.entity.Wolf wolf) {
+    	return hasWolf(wolf.getUniqueId());
+    }
+    
+    /**
      * Get wolf
      * 
      * @param uniqueId

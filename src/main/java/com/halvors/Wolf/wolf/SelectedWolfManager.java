@@ -32,11 +32,11 @@ import org.bukkit.entity.Wolf;
 public class SelectedWolfManager {
 //    private final com.halvors.Wolf.Wolf plugin;
     
-    private final HashMap<String, Wolf> selectedWolfs;
+    private final HashMap<String, Wolf> selectedWolves;
     
     public SelectedWolfManager(final com.halvors.Wolf.Wolf plugin) {
 //        this.plugin = plugin;
-        this.selectedWolfs = new HashMap<String, Wolf>();
+        this.selectedWolves = new HashMap<String, Wolf>();
     }
     
     /**
@@ -46,11 +46,11 @@ public class SelectedWolfManager {
      * @param wolf
      */
     public void addSelectedWolf(String owner, Wolf wolf) {
-    	if (selectedWolfs.containsKey(owner)) {
-            selectedWolfs.remove(owner);
+    	if (selectedWolves.containsKey(owner)) {
+    		selectedWolves.remove(owner);
         }
         
-        selectedWolfs.put(owner, wolf);
+    	selectedWolves.put(owner, wolf);
     }
     
     /**
@@ -59,8 +59,8 @@ public class SelectedWolfManager {
      * @param owner
      */
     public void removeSelectedWolf(String owner) {
-        if (selectedWolfs.containsKey(owner)) {
-            selectedWolfs.remove(owner);
+        if (selectedWolves.containsKey(owner)) {
+        	selectedWolves.remove(owner);
         }
     }
     
@@ -71,7 +71,7 @@ public class SelectedWolfManager {
      * @return Wolf
      */
     public Wolf getSelectedWolf(String owner) {
-        return selectedWolfs.get(owner);
+        return selectedWolves.get(owner);
     }
     
     /**
@@ -81,6 +81,6 @@ public class SelectedWolfManager {
      * @return Boolean
      */
     public boolean hasSelectedWolf(String owner) {
-        return selectedWolfs.containsKey(owner);
+        return selectedWolves.containsKey(owner);
     }
 }
