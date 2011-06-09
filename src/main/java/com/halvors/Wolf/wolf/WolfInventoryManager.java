@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.World;
-
 import com.halvors.Wolf.Wolf;
 
 /**
@@ -43,21 +41,26 @@ public class WolfInventoryManager {
         this.wolfInventorys = new HashMap<UUID, WolfInventory>();
     }
     
-    public void load(World world) {
-        // TODO: Load WolfInventory here.
-          
-        List<WolfInventoryTable> wits = plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
+    public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
+    	return plugin.getDatabase().find(WolfInventoryTable.class).where()
+    		.eq("uniqueId", uniqueId.toString()).findUnique();
+    }
+    
+    public List<WolfInventoryTable> getWolfInventoryTables() {
+    	return plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
+    }
+    
+    public void load() {
+        List<WolfInventoryTable> wits = getWolfInventoryTables();
     
         for (WolfInventoryTable wit : wits) {
             addWolfInventory(UUID.fromString(wit.getUniqueId()), loadWolfInventory(wit));
         } 
     }
     
-    public void save(World world) {
-             // TODO: Save WolfInventory here.
-
+    public void unload() {
         for (WolfInventory wi : wolfInventorys.values()) {
-            WolfInventoryTable wit = plugin.getDatabase().find(WolfInventoryTable.class).where().eq("uniqueId", wi.getUniqueId().toString()).findUnique();
+            WolfInventoryTable wit = getWolfInventoryTable(wi.getUniqueId());
             
             if (wit != null) {
             	String[] rows = wi.prepareTableForDB();
@@ -69,7 +72,6 @@ public class WolfInventoryManager {
                 String[] rows = wi.prepareTableForDB();
                 wit.setChestRows(rows);
             	plugin.getDatabase().save(wit);
-                
             }
         }
     }
@@ -77,9 +79,9 @@ public class WolfInventoryManager {
     public WolfInventory loadWolfInventory(WolfInventoryTable wit) {
         WolfInventory wi = new WolfInventory(UUID.fromString(wit.getUniqueId()));
         wi.fillFromDBTable(wit.getChestRows());
+        
         return wi;
     }
-    
     
     /**
      * Add a WolfInventory

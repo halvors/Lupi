@@ -57,7 +57,7 @@ public class WolfWorldListener extends WorldListener{
     public void onChunkLoad(ChunkLoadEvent event) {
     	if (!loaded) {
     		loaded = true;
-    		wolfInventoryManager.load(event.getWorld());
+    		wolfInventoryManager.load();
     	}
     		
         List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
@@ -81,7 +81,7 @@ public class WolfWorldListener extends WorldListener{
     public void onChunkUnload(ChunkUnloadEvent event) {
     	if (loaded) {
     		loaded = false;
-    		wolfInventoryManager.save(event.getWorld());
+    		wolfInventoryManager.unload();
     	}
     	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
     	
@@ -102,11 +102,11 @@ public class WolfWorldListener extends WorldListener{
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-        wolfInventoryManager.load(event.getWorld());
+        wolfInventoryManager.load();
     }
     
     @Override
     public void onWorldUnload(WorldUnloadEvent event) {
-        wolfInventoryManager.save(event.getWorld());
+        wolfInventoryManager.unload();
     }
 }

@@ -17,9 +17,25 @@ public class Wolf {
 	
 	private UUID uniqueId;
 	
-	public Wolf(final com.halvors.Wolf.Wolf plugin) {
+	public Wolf(final com.halvors.Wolf.Wolf plugin, UUID uniqueId) {
 		this.plugin = plugin;
 		this.wolfManager = plugin.getWolfManager();
+		this.uniqueId = uniqueId;
+	}
+	
+	/**
+	 * Get id
+	 * 
+	 * @return int
+	 */
+	public int getId() {
+		WolfTable wt = wolfManager.getWolfTable(uniqueId);
+		
+		if (wt != null) {
+			return wt.getId();
+		}
+		
+		return 0;
 	}
 	
 	/**
@@ -56,7 +72,7 @@ public class Wolf {
     }
     
     /**
-     * Get wolf's owner
+     * Get owner
      * 
      * @return Player
      */
@@ -75,7 +91,7 @@ public class Wolf {
     }
     
     /**
-     * Get wolf's world
+     * Get world
      * 
      * @return World
      */
@@ -87,5 +103,20 @@ public class Wolf {
         }
         
         return null;
+    }
+    
+    /**
+     * Check if inventory exists
+     * 
+     * @return
+     */
+    public boolean hasInventory() {
+    	WolfTable wt = wolfManager.getWolfTable(uniqueId);
+    	
+    	if (wt != null) {
+    		return wt.isInventory();
+    	}
+    	
+    	return false;
     }
 }
