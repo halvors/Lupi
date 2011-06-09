@@ -20,6 +20,7 @@
 
 package com.halvors.Wolf.listeners;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
@@ -40,6 +41,7 @@ import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
 import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
+import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
@@ -89,18 +91,17 @@ public class WolfEntityListener extends EntityListener {
                     if (damager instanceof Player) {
                         Player attacker = (Player)damager;
                         
-                        if (wolf.isTamed() && wolfManager.hasWolf(wolf) && wolf.getOwner().equals(attacker)) {
+                        if (wolfManager.hasWolf(wolf) && wolf.getOwner().equals(attacker)) {
                         	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                             Player owner = (Player)wolf.getOwner();
                             Material item = owner.getItemInHand().getType();
                                 
                             if (item.equals(Material.BONE)) {
                             	if (plugin.hasPermissions(owner, "Wolf.info")) {
-                                	String name = wolf1.getName();
                                  	int health = wolf.getHealth();
                                     int maxHealth = 20;
                                         
-                                    owner.sendMessage("Name: " + ChatColor.YELLOW + name);
+                                    owner.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
                                     owner.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                                         
                                     event.setCancelled(true);
@@ -149,13 +150,12 @@ public class WolfEntityListener extends EntityListener {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
             Player owner = (Player)event.getOwner();
-//            World world = entity.getWorld();
-//            WorldConfig worldConfig = configManager.getWorldConfig(world);
+            World world = entity.getWorld();
+            WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
                 
-                /*
                 if (worldConfig.wolfLimitEnable) {
                 	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
                 	
@@ -169,7 +169,7 @@ public class WolfEntityListener extends EntityListener {
                 		
                 		return;
                 	}
-                }*/
+                }
                 
                 wolfManager.addWolf(wolf);
                 

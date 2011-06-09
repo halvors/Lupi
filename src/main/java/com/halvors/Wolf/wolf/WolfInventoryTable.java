@@ -56,7 +56,7 @@ public class WolfInventoryTable {
     }
     
     public String getChestRow1() {
-        return this.chestRow1;
+        return chestRow1;
     }
 
     public void setChestRow1(String chestRow1) {
@@ -64,7 +64,7 @@ public class WolfInventoryTable {
     }
 
     public String getChestRow2() {
-        return this.chestRow2;
+        return chestRow2;
     }
 
     public void setChestRow2(String chestRow2) {
@@ -72,7 +72,7 @@ public class WolfInventoryTable {
     }
 
     public String getChestRow3() {
-        return this.chestRow3;
+        return chestRow3;
     }
     
     public void setChestRow3(String chestRow3) {

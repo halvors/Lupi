@@ -46,11 +46,13 @@ public class SelectedWolfManager {
      * @param wolf
      */
     public void addSelectedWolf(String owner, Wolf wolf) {
-    	if (selectedWolves.containsKey(owner)) {
-    		selectedWolves.remove(owner);
-        }
-        
-    	selectedWolves.put(owner, wolf);
+    	if (wolf.isTamed()) {
+    		if (selectedWolves.containsKey(owner)) {
+    			selectedWolves.remove(owner);
+    		}
+    		
+    		selectedWolves.put(owner, wolf);
+    	}
     }
     
     /**

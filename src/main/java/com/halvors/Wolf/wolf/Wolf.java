@@ -98,6 +98,8 @@ public class Wolf {
 		
 		if (wt != null) {
 			wt.setId(id);
+			
+			plugin.getDatabase().update(wt);
 		} 
 	}
 	
@@ -107,7 +109,13 @@ public class Wolf {
 	 * @return UUID
 	 */
 	public UUID getUniqueId() {
-		return uniqueId;
+		WolfTable wt = getWolfTable();
+		
+		if (wt != null) {
+			return UUID.fromString(wt.getUniqueId());
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -116,7 +124,13 @@ public class Wolf {
 	 * @param uniqueId
 	 */
 	public void setUniqueId(UUID uniqueId) {
-		this.uniqueId = uniqueId;
+		WolfTable wt = getWolfTable();
+		
+		if (wt != null) {
+			wt.setUniqueId(uniqueId.toString());
+			
+			plugin.getDatabase().update(wt);
+		}
 	}
     
     /**
@@ -144,6 +158,8 @@ public class Wolf {
     	
     	if (wt != null) {
     		wt.setName(name);
+    		
+    		plugin.getDatabase().update(wt);
     	}
     }
     
@@ -177,6 +193,8 @@ public class Wolf {
     	if (wt != null) {
     		wt.setOwner(owner.getName());
     		getWolf().setOwner(owner);
+    		
+    		plugin.getDatabase().update(wt);
     	}
     }
     
@@ -205,6 +223,8 @@ public class Wolf {
     	
     	if (wt != null) {
     		wt.setWorld(world.getName());
+    		
+    		plugin.getDatabase().update(wt);
     	}
     }
     
@@ -233,6 +253,8 @@ public class Wolf {
     	
     	if (wt != null) {
     		wt.setInventory(inventory);
+    		
+    		plugin.getDatabase().update(wt);
     	}
     }
     
@@ -241,7 +263,7 @@ public class Wolf {
      */
     public void addInventory() {
     	setInventory(true);
-//    	updateWolfTable();
+    	
         plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
 	}
 

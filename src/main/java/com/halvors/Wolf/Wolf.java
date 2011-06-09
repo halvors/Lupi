@@ -82,6 +82,9 @@ public class Wolf extends JavaPlugin {
         // Load Configuration
         configManager.load();
         
+    	wolfManager.load();
+        wolfInventoryManager.load();
+        
         // Register our events Type.          
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
@@ -109,6 +112,9 @@ public class Wolf extends JavaPlugin {
     @Override
     public void onDisable() {
         configManager.save();
+        
+    	wolfManager.save();
+        wolfInventoryManager.save();
         
         log(Level.INFO, "Plugin disabled!");
     }
