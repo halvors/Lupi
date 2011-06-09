@@ -80,12 +80,15 @@ public class WolfManager {
             Player player = (Player)wolf.getOwner();
             
             // Check if a wolf with same name already exists.
-            for (WolfTable wt : getWolfTables(player.getName())) {
-                if (wt.getName().equalsIgnoreCase(name)) {
-                    // TODO: Maybe give a random name instead of return
-                    
-                    return;
-                }
+            Boolean nameUnique = false;
+            while (!nameUnique) {
+            	for (WolfTable wt : getWolfTables(player.getName())) {
+            		if (wt.getName().equalsIgnoreCase(name)) {
+            			name = getRandomName();
+            		} else {
+            			nameUnique = true;
+            		}
+            	}
             }
             
             // Create a new WolfTable
@@ -154,6 +157,22 @@ public class WolfManager {
     }
     
     /**
+     * Check if owner has specific named wolf
+     * 
+     * @param name
+     * @param owner
+     * @return boolean
+     */
+    public boolean hasWolf(String name, String owner) {
+    	for (Wolf wolf : getWolves()) {
+    		if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    /**
      * Get wolf
      * 
      * @param uniqueId
@@ -161,6 +180,23 @@ public class WolfManager {
      */
     public Wolf getWolf(org.bukkit.entity.Wolf wolf) {
     	return wolves.get(wolf.getUniqueId());
+    }
+    
+    /**
+     * Get wolf by name and owner
+     * 
+     * @param name
+     * @param owner
+     * @return Wolf
+     */
+    public Wolf getWolf(String name, String owner) {
+    	for (Wolf wolf : getWolves()) {
+    		if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
+    			return wolf;
+    		}
+    		
+    	}
+    	return null;
     }
     
     /**
