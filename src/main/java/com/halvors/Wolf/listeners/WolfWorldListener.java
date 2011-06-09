@@ -22,7 +22,6 @@ package com.halvors.Wolf.listeners;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
