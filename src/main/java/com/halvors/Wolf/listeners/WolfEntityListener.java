@@ -32,7 +32,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.inventory.ItemStack;
+//import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
@@ -130,9 +130,15 @@ public class WolfEntityListener extends EntityListener {
                 if (plugin.getWolfInventoryManager().hasWolfInventory(wolf.getUniqueId())) {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId());
                     
-                    for (ItemStack is : wi.getContents()) {
-                        world.dropItem(wolf.getLocation(), is);
+                    for (int i = 0; i < 27; i++) {
+                    	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
+                    			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
+                    		world.dropItem(wolf.getLocation(), wi.getItem(i));
+                    	}
                     }
+                    //for (ItemStack is : wi.getContents()) {
+                    //    world.dropItem(wolf.getLocation(), is);
+                    //}
                 }
                 
                 wolfManager.removeWolf(wolf.getUniqueId());
