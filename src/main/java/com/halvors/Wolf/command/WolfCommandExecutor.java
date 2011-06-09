@@ -261,7 +261,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     private void showWolves(Player player) {
         List<WolfTable> wolfTables = wolfManager.getWolfTables(player.getName());
         
-        player.sendMessage(ChatColor.GREEN + plugin.name + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.version + ChatColor.GREEN + ")");
+        player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
         if (!wolfTables.isEmpty()) {
             for (WolfTable wolfTable : wolfTables) {
@@ -278,7 +278,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     private void showList(Player player) {
         List<WolfTable> wolfTables = wolfManager.getWolfTables();
         
-        player.sendMessage(ChatColor.GREEN + plugin.name + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.version + ChatColor.GREEN + ")");
+        player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
         if (!wolfTables.isEmpty()) {
             for (WolfTable wolfTable : wolfTables) {
@@ -292,7 +292,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     private void showHelp(Player player, String label) {
         String command = "/" + label + " ";
         
-        player.sendMessage(ChatColor.GREEN + plugin.name + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.version + ChatColor.GREEN + ")");
+        player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         player.sendMessage(ChatColor.RED + "[]" + ChatColor.WHITE + " Required, " + ChatColor.GREEN + "<>" + ChatColor.WHITE + " Optional.");
 
         if (plugin.hasPermissions(player, "Wolf.help")) {

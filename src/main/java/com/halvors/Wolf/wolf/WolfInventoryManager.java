@@ -27,7 +27,7 @@ import java.util.UUID;
 import com.halvors.Wolf.Wolf;
 
 /**
- * Handle WolfInventory's.
+ * Handle WolfInventory's
  * 
  * @author halvors
  */

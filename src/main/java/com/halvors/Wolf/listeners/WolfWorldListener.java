@@ -22,6 +22,7 @@ package com.halvors.Wolf.listeners;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
@@ -40,10 +41,9 @@ import com.halvors.Wolf.wolf.WolfTable;
  * 
  * @author speeddemon92
  */
-public class WolfWorldListener extends WorldListener{
+public class WolfWorldListener extends WorldListener {
 //    private final com.halvors.Wolf.Wolf plugin;
     
-	private Boolean loaded = false;
     private final WolfManager wolfManager;
     private final WolfInventoryManager wolfInventoryManager;
     
@@ -55,12 +55,7 @@ public class WolfWorldListener extends WorldListener{
     
     @Override
     public void onChunkLoad(ChunkLoadEvent event) {
-    	if (!loaded) {
-    		loaded = true;
-    		wolfInventoryManager.load();
-    	}
-    		
-        List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
+    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
@@ -79,16 +74,12 @@ public class WolfWorldListener extends WorldListener{
 
     @Override
     public void onChunkUnload(ChunkUnloadEvent event) {
-    	if (loaded) {
-    		loaded = false;
-    		wolfInventoryManager.unload();
-    	}
     	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
     	
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
-                
+
                 if (wolf.isTamed()) {
                     WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
                     

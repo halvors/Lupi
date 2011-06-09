@@ -20,6 +20,8 @@
 
 package com.halvors.Wolf.listeners;
 
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -32,13 +34,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTargetEvent;
-//import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
 import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
-//import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
@@ -84,11 +84,12 @@ public class WolfEntityListener extends EntityListener {
                 
                 if (entity instanceof Wolf) {
                     Wolf wolf = (Wolf)entity;
+                    UUID uniqueId = wolf.getUniqueId();
                     
                     if (damager instanceof Player) {
                         Player attacker = (Player)damager;
                         
-                        if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
+                        if (wolf.isTamed() && wolfManager.hasWolf(uniqueId) && wolf.getOwner().equals(attacker)) {
                             Player player = (Player)wolf.getOwner();
                             
                             if (attacker.equals(player)) {
@@ -123,22 +124,20 @@ public class WolfEntityListener extends EntityListener {
         
         if (entity instanceof Wolf) {
             Wolf wolf = (Wolf)entity;
+            UUID uniqueId = wolf.getUniqueId();
             
-            if (wolf.isTamed() && wolfManager.hasWolf(wolf.getUniqueId())) {
-                //WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
-                
-                if (plugin.getWolfInventoryManager().hasWolfInventory(wolf.getUniqueId())) {
-                    WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(wolf.getUniqueId());
+            if (wolf.isTamed() && wolfManager.hasWolf(uniqueId)) {
+//            	Player player = (Player)wolf.getOwner();
+            	
+                if (wolfManager.hasInventory(uniqueId)) {
+                    WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
                     
-                    for (int i = 0; i < 27; i++) {
+                    for (int i = 0; i < wi.getSize(); i++) { // Actually 27
                     	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
                     			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
                     		world.dropItem(wolf.getLocation(), wi.getItem(i));
                     	}
                     }
-                    //for (ItemStack is : wi.getContents()) {
-                    //    world.dropItem(wolf.getLocation(), is);
-                    //}
                 }
                 
                 wolfManager.removeWolf(wolf.getUniqueId());

@@ -49,8 +49,8 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Wolf extends JavaPlugin {
-    public String name;
-    public String version;
+    private String name;
+    private String version;
     
     private final Logger log = Logger.getLogger("Minecraft");
     
@@ -166,6 +166,14 @@ public class Wolf extends JavaPlugin {
     
     public void log(Level level, String msg) {
         this.log.log(level, "[" + name + "] " + msg);
+    }
+    
+    public String getName() {
+    	return name;
+    }
+    
+    public String getVersion() {
+    	return version;
     }
     
     public ConfigManager getConfigManager() {

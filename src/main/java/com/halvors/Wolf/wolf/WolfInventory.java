@@ -17,7 +17,7 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
  * @author halvors
  */
 public class WolfInventory {
-    private TileEntityVirtualChest inventory;
+    private final TileEntityVirtualChest inventory;
     private UUID uniqueId;
     
     public WolfInventory(UUID uniqueId) {

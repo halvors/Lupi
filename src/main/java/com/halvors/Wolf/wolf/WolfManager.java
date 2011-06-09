@@ -49,13 +49,6 @@ public class WolfManager {
 //        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
-    /*
-    public WolfTable getWolfTable(String uniqueId) {
-        return plugin.getDatabase().find(WolfTable.class).where()
-            .eq("uniqueId", uniqueId).findUnique();
-    }
-    */
-    
     /**
      * Get WolfTable
      * 
@@ -78,6 +71,24 @@ public class WolfManager {
             .eq("name", name).eq("owner", owner).findUnique();
     }
 
+    /**
+     * Save WolfTable
+     * 
+     * @param wt
+     */
+    public void saveWolfTable(WolfTable wt) {
+    	plugin.getDatabase().save(wt);
+    }
+    
+    /**
+     * Delete WolfTable
+     * 
+     * @param wt
+     */
+    public void deleteWolfTable(WolfTable wt) {
+    	plugin.getDatabase().delete(wt);
+    }
+    
     /**
      * Update WolfTable
      * 
@@ -135,10 +146,7 @@ public class WolfManager {
             wt.setInventory(false);
             
             // Save the wolf to the database
-            plugin.getDatabase().save(wt);
-            
-            // Pull a fresh copy of the wolf to retrieve the database ID
-            wt = getWolfTable(wolf.getUniqueId());
+            saveWolfTable(wt);
         }
     }
     

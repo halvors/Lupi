@@ -20,6 +20,8 @@
 
 package com.halvors.Wolf.listeners;
 
+import java.util.UUID;
+
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.EntityWolf;
 import net.minecraft.server.PathEntity;
@@ -37,7 +39,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
-//import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfManager;
@@ -91,8 +92,9 @@ public class WolfPlayerListener extends PlayerListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
+                UUID uniqueId = wolf.getUniqueId();
                 
-                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
+                if (wolf.isTamed() && wolfManager.hasWolf(uniqueId) && wolf.getOwner().equals(player)) {
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {
@@ -131,6 +133,8 @@ public class WolfPlayerListener extends PlayerListener {
                             		if (player.getItemInHand().getType() == Material.CHEST) {
                             			player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                             		}
+                            		
+                            		player.sendMessage(ChatColor.YELLOW + wolfManager.getName(uniqueId) + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                             	}
                             } else {
                                 // Add some message here.
