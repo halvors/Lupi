@@ -34,7 +34,7 @@ import com.halvors.Wolf.Wolf;
 public class WolfInventoryManager {
     private final Wolf plugin;
     
-    private HashMap<UUID, WolfInventory> wolfInventorys;
+    private final HashMap<UUID, WolfInventory> wolfInventorys;
     
     public WolfInventoryManager(final Wolf plugin) {
         this.plugin = plugin;

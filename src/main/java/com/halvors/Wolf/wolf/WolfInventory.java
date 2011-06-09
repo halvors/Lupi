@@ -154,6 +154,7 @@ public class WolfInventory {
                 amt += item.getAmount();
             }
         }
+        
         return amt >= amount;
     }
 
@@ -188,6 +189,7 @@ public class WolfInventory {
                 }
             }
         }
+        
         return slots;
     }
 
@@ -329,6 +331,7 @@ public class WolfInventory {
                 }
             }
         }
+        
         return leftover;
     }
 
@@ -371,6 +374,7 @@ public class WolfInventory {
                 }
             }
         }
+        
         return leftover;
     }
 
@@ -412,15 +416,14 @@ public class WolfInventory {
         }
     }
     
-    
     public void fillFromDBTable(String[] rows)  {
     	String[] chestRow1 = rows[0].split(";");
     	String[] chestRow2 = rows[1].split(";");
     	String[] chestRow3 = rows[2].split(";");
     	
-    	for (int i = 0; i < 27; i++) {
-    		
+    	for (int i = 0; i < getSize(); i++) {
     		String[] item = null;
+    		
     		if (i >= 0 && i <= 8) {
     			item = chestRow1[i].split(":");
     		} else if (i >= 9 && i <= 17) {
@@ -438,47 +441,45 @@ public class WolfInventory {
     		} else {
     			setItem(i, new ItemStack(typeId,amount,damage));
     		}
-    		
     	}
     }
     
     public String getStackString(ItemStack stack) {
     	String out = null;
+    	
     	if (stack == null || stack.getAmount() < 1 || stack.getDurability() < 0 || stack.getTypeId() < 1) {
     		out = "0:-1:0";
     	} else {
     		out = stack.getTypeId() + ":" + stack.getDurability() + ":" + stack.getAmount();
     	}
+    	
     	return out;
     }
     
-    public String[] prepareTableForDB()
-    {
+    public String[] prepareTableForDB() {
     	String[] rows = new String[3];
     	rows[0] = "";
     	rows[1] = "";
     	rows[2] = "";
-    	for (int i = 0; i < 27; i++) {
+    	
+    	for (int i = 0; i < getSize(); i++) {
     		String stack = null;
+    		
     		if ((i + 1) % 9 != 0) {
     			stack = getStackString(getItem(i)) + ";";
     		} else {
     			stack = getStackString(getItem(i));
     		}
+    		
     		if (i >= 0 && i <= 8) {
-    			
     				rows[0] += stack;
-    			
     		} else if (i >= 9 && i <= 17) {
-    			
     				rows[1] += stack;
-    			
     		} else if (i >= 18 && i <= 26) {
-    			
     				rows[2] += stack;
-    			
     		}
     	}
+    	
     	// Debug Line
     	//System.out.println("\nrow1: " + rows[0] + "\nrow2: " + rows[1] + "\nrow3: " + rows[2]);
     	

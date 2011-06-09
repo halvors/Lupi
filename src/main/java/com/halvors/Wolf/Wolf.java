@@ -128,6 +128,7 @@ public class Wolf extends JavaPlugin {
     private void setupDatabase() {
         try {
             this.getDatabase().find(WolfTable.class).findRowCount();
+            this.getDatabase().find(WolfInventoryTable.class).findRowCount();
         } catch (PersistenceException ex) {
             log(Level.INFO, "Installing database for " + getDescription().getName() + " due to first time usage");
             installDDL();

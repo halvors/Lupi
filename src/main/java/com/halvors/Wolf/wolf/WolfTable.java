@@ -38,7 +38,7 @@ public class WolfTable {
     private String name;
     private String owner;
     private String world;
-    private boolean inventory; 
+    private boolean inventory;
     
     public int getId() {
         return id;

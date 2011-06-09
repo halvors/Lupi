@@ -176,7 +176,6 @@ public class Wolf {
     	
     	if (wt != null) {
     		wt.setOwner(owner.getName());
-    		
     		getWolf().setOwner(owner);
     	}
     }
@@ -251,14 +250,13 @@ public class Wolf {
      */
     public void removeInventory() {
     	setInventory(false);
-        
     	plugin.getWolfInventoryManager().removeWolfInventory(uniqueId);
     }
 
     /**
      * Get wolf
      * 
-     * @return
+     * @return Wolf
      */
     public org.bukkit.entity.Wolf getWolf() {
     	List<Entity> entities = getWorld().getEntities();
