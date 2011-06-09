@@ -20,7 +20,6 @@
 
 package com.halvors.Wolf.listeners;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
@@ -41,7 +40,6 @@ import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
 import com.halvors.Wolf.wolf.WolfInventory;
 import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
@@ -151,12 +149,13 @@ public class WolfEntityListener extends EntityListener {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
             Player owner = (Player)event.getOwner();
-            World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
+//            World world = entity.getWorld();
+//            WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
                 
+                /*
                 if (worldConfig.wolfLimitEnable) {
                 	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
                 	
@@ -170,16 +169,12 @@ public class WolfEntityListener extends EntityListener {
                 		
                 		return;
                 	}
-                }
+                }*/
                 
                 wolfManager.addWolf(wolf);
                 
-                if (wolfManager.hasWolf(wolf)) {
-                	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                	
-                	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                	owner.sendMessage("You can change it with /setname <name>");
-                }
+//                owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
+                owner.sendMessage("You can change it with /setname <name>");
             }
         }
     }

@@ -240,8 +240,8 @@ public class Wolf {
      * Add wolf inventory
      */
     public void addInventory() {
-        setInventory(true);
-        updateWolfTable();
+    	setInventory(true);
+//    	updateWolfTable();
         plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
 	}
 

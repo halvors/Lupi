@@ -92,9 +92,11 @@ public class WolfInventoryManager {
      * @param wi
      */
     public void addWolfInventory(UUID uniqueId, WolfInventory wi) {
-        if (!wolfInventorys.containsKey(uniqueId)) {
-            wolfInventorys.put(uniqueId, wi);
+    	if (wolfInventorys.containsKey(uniqueId)) {
+            wolfInventorys.remove(uniqueId);
         }
+        
+        wolfInventorys.put(uniqueId, wi);
     }
     
     /**

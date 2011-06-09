@@ -101,6 +101,10 @@ public class WolfPlayerListener extends PlayerListener {
                 Wolf wolf = (Wolf)entity;
                 UUID uniqueId = wolf.getUniqueId();
                 
+                if (!wolfManager.hasWolf(uniqueId)) {
+                	wolfManager.addWolf(wolf);
+                }
+                
                 if (wolf.isTamed() && wolfManager.hasWolf(wolf) && wolf.getOwner().equals(player)) {
                 	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();

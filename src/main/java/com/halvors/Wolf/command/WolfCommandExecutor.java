@@ -90,7 +90,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                         String name = player.getName();
                         
                         if (selectedWolfManager.hasSelectedWolf(name)) {
-                            Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
+                            Wolf wolf = (Wolf)selectedWolfManager.getSelectedWolf(name);
                             
                             if (wolfManager.hasWolf(wolf)) {
                             	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
