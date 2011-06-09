@@ -41,15 +41,6 @@ public class WolfInventoryManager {
         this.wolfInventorys = new HashMap<UUID, WolfInventory>();
     }
     
-    public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
-        return plugin.getDatabase().find(WolfInventoryTable.class).where()
-            .eq("uniqueId", uniqueId.toString()).findUnique();
-    }
-    
-    public List<WolfInventoryTable> getWolfInventoryTables() {
-        return plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
-    }
-    
     public void load() {
         List<WolfInventoryTable> wits = getWolfInventoryTables();
     
@@ -58,7 +49,7 @@ public class WolfInventoryManager {
         } 
     }
     
-    public void unload() {
+    public void save() {
         for (WolfInventory wi : wolfInventorys.values()) {
             WolfInventoryTable wit = getWolfInventoryTable(wi.getUniqueId());
             
@@ -76,6 +67,15 @@ public class WolfInventoryManager {
                 plugin.getDatabase().save(wit);
             }
         }
+    }
+    
+    public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
+        return plugin.getDatabase().find(WolfInventoryTable.class).where()
+            .eq("uniqueId", uniqueId.toString()).findUnique();
+    }
+    
+    public List<WolfInventoryTable> getWolfInventoryTables() {
+        return plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
     }
     
     public WolfInventory loadWolfInventory(WolfInventoryTable wit) {

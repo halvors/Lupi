@@ -49,6 +49,24 @@ public class WolfManager {
     }
 
     /**
+     * Loads wolves from database
+     */
+    public void load() {
+    	for (WolfTable wt : getWolfTables()) {
+    		UUID uniqueId = UUID.fromString(wt.getUniqueId());
+    		
+    		wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+    	}
+    }
+   
+    /**
+     * Saves wolves from database
+     */
+    public void save() {
+    	wolves.clear();
+    }
+    
+    /**
      * Get all WolfTables
      * 
      * @return List<WolfTable>
@@ -79,8 +97,9 @@ public class WolfManager {
         	UUID uniqueId = wolf.getUniqueId();
             Player player = (Player)wolf.getOwner();
             
-            // Check if a wolf with same name already exists.
-            Boolean nameUnique = false;
+            /*
+            boolean nameUnique = false;
+            
             while (!nameUnique) {
             	for (WolfTable wt : getWolfTables(player.getName())) {
             		if (wt.getName().equalsIgnoreCase(name)) {
@@ -88,6 +107,14 @@ public class WolfManager {
             		} else {
             			nameUnique = true;
             		}
+            	}
+            }
+            */
+            
+            // Check if a wolf with same name already exists.
+            for (Wolf wolf1 : getWolves(player)) {
+            	if (wolf1.getName().equalsIgnoreCase(name)) {
+            		name = getRandomName();
             	}
             }
             
@@ -106,7 +133,7 @@ public class WolfManager {
             	wolves.remove(uniqueId);
             }
             
-            wolves.put(uniqueId, new com.halvors.Wolf.wolf.Wolf(plugin, uniqueId));
+            wolves.put(uniqueId, new Wolf(plugin, uniqueId));
             
             // Pull a fresh copy of the wolf to retrieve the database ID
             //wt = getWolfTable(uniqueId);
@@ -169,6 +196,7 @@ public class WolfManager {
     			return true;
     		}
     	}
+    	
     	return false;
     }
     
@@ -183,7 +211,7 @@ public class WolfManager {
     }
     
     /**
-     * Get wolf by name and owner
+     * Get wolf
      * 
      * @param name
      * @param owner
@@ -194,8 +222,8 @@ public class WolfManager {
     		if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
     			return wolf;
     		}
-    		
     	}
+    	
     	return null;
     }
     

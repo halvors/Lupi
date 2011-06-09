@@ -88,11 +88,13 @@ public class WolfWorldListener extends WorldListener {
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
+    	wolfManager.load();
         wolfInventoryManager.load();
     }
     
     @Override
     public void onWorldUnload(WorldUnloadEvent event) {
-        wolfInventoryManager.unload();
+    	wolfManager.save();
+        wolfInventoryManager.save();
     }
 }
