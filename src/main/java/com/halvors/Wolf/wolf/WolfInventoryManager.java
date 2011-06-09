@@ -42,12 +42,12 @@ public class WolfInventoryManager {
     }
     
     public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
-    	return plugin.getDatabase().find(WolfInventoryTable.class).where()
-    		.eq("uniqueId", uniqueId.toString()).findUnique();
+        return plugin.getDatabase().find(WolfInventoryTable.class).where()
+            .eq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     public List<WolfInventoryTable> getWolfInventoryTables() {
-    	return plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
+        return plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
     }
     
     public void load() {
@@ -63,15 +63,17 @@ public class WolfInventoryManager {
             WolfInventoryTable wit = getWolfInventoryTable(wi.getUniqueId());
             
             if (wit != null) {
-            	String[] rows = wi.prepareTableForDB();
-            	wit.setChestRows(rows);
-            	plugin.getDatabase().update(wit);
+                String[] rows = wi.prepareTableForDB();
+                wit.setChestRows(rows);
+                
+                plugin.getDatabase().update(wit);
             } else {
-            	wit = new WolfInventoryTable();
+                wit = new WolfInventoryTable();
                 wit.setUniqueId(wi.getUniqueId().toString());
                 String[] rows = wi.prepareTableForDB();
                 wit.setChestRows(rows);
-            	plugin.getDatabase().save(wit);
+                
+                plugin.getDatabase().save(wit);
             }
         }
     }

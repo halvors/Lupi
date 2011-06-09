@@ -23,6 +23,7 @@ package com.halvors.Wolf.wolf;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -30,9 +31,7 @@ import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
 
 /**
  * Handle wolves
@@ -41,70 +40,21 @@ import org.bukkit.entity.Wolf;
  */
 public class WolfManager {
     private final com.halvors.Wolf.Wolf plugin;
-    
-//    private WolfInventoryManager wolfInventoryManager;
+ 
+    private final HashMap<UUID, com.halvors.Wolf.wolf.Wolf> wolves;
     
     public WolfManager(com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
-//        this.wolfInventoryManager = plugin.getWolfInventoryManager();
-    }
-    
-    /**
-     * Get WolfTable
-     * 
-     * @param uniqueId
-     * @return WolfTable
-     */
-    public WolfTable getWolfTable(UUID uniqueId) {
-    	return plugin.getDatabase().find(WolfTable.class).where()
-    		.eq("uniqueId", uniqueId.toString()).findUnique();
-    }
-    
-    /**
-     * Get WolfTable
-     * 
-     * @param name
-     * @return WolfTable
-     */
-    public WolfTable getWolfTable(String name, String owner) {
-        return plugin.getDatabase().find(WolfTable.class).where()
-            .eq("name", name).eq("owner", owner).findUnique();
+        this.wolves = new HashMap<UUID, com.halvors.Wolf.wolf.Wolf>();
     }
 
-    /**
-     * Save WolfTable
-     * 
-     * @param wt
-     */
-    public void saveWolfTable(WolfTable wt) {
-    	plugin.getDatabase().save(wt);
-    }
-    
-    /**
-     * Delete WolfTable
-     * 
-     * @param wt
-     */
-    public void deleteWolfTable(WolfTable wt) {
-    	plugin.getDatabase().delete(wt);
-    }
-    
-    /**
-     * Update WolfTable
-     * 
-     * @param wt
-     */
-    public void updateWolfTable(WolfTable wt) {
-        plugin.getDatabase().update(wt);
-    }
-    
     /**
      * Get all WolfTables
      * 
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables() {
-        return plugin.getDatabase().find(WolfTable.class).findList();
+        return plugin.getDatabase().find(WolfTable.class).where().findList();
     }
     
     /**
@@ -124,8 +74,9 @@ public class WolfManager {
      * @param name
      * @param wolf
      */
-    public void addWolf(Wolf wolf, String name) {
+    public void addWolf(org.bukkit.entity.Wolf wolf, String name) {
         if (wolf.isTamed()) {
+        	UUID uniqueId = wolf.getUniqueId();
             Player player = (Player)wolf.getOwner();
             
             // Check if a wolf with same name already exists.
@@ -139,14 +90,23 @@ public class WolfManager {
             
             // Create a new WolfTable
             WolfTable wt = new WolfTable();
-            wt.setUniqueId(wolf.getUniqueId().toString());
+            wt.setUniqueId(uniqueId.toString());
             wt.setName(name);
             wt.setOwner(player.getName());
             wt.setWorld(wolf.getWorld().getName());
             wt.setInventory(false);
             
             // Save the wolf to the database
-            saveWolfTable(wt);
+            plugin.getDatabase().save(wt);
+            
+            if (wolves.containsKey(uniqueId)) {
+            	wolves.remove(uniqueId);
+            }
+            
+            wolves.put(uniqueId, new com.halvors.Wolf.wolf.Wolf(plugin, uniqueId));
+            
+            // Pull a fresh copy of the wolf to retrieve the database ID
+            //wt = getWolfTable(uniqueId);
         }
     }
     
@@ -155,83 +115,32 @@ public class WolfManager {
      * 
      * @param wolf
      */
-    public void addWolf(Wolf wolf) {
+    public void addWolf(org.bukkit.entity.Wolf wolf) {
         addWolf(wolf, getRandomName());
     }
     
     /**
      * Remove a wolf
      * 
-     * @param uniqueId
+     * @param wolf
      */
-    public void removeWolf(UUID uniqueId) {
-        WolfTable wt = getWolfTable(uniqueId);
-        
-        if (wt != null) {
-            plugin.getDatabase().delete(wt);
+    public void removeWolf(org.bukkit.entity.Wolf wolf) {
+    	UUID uniqueId = wolf.getUniqueId();
+    	
+        if (wolves.containsKey(uniqueId)) {
+        	getWolf(wolf).deleteWolfTable();
+        	wolves.remove(uniqueId);
         }
     }
-    
+
     /**
-     * Remove a wolf
-     * 
-     * @param name
-     * @param owner
-     */
-    public void removeWolf(String name, String owner) {
-        removeWolf(getUniqueId(name, owner));
-    }
-    
-    /**
-     * Check if wolf exist by WolfTable
-     * 
-     * @param wt
-     * @return Boolean
-     */
-    public boolean hasWolf(WolfTable wt) {
-        if (wt != null) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Check if wolf exist
-     * 
-     * @param name
-     * @return Boolean
-     */
-    public boolean hasWolf(String name, String owner) {
-        return hasWolf(getWolfTable(name, owner));
-    }
-    
-    /** 
      * Check if wolf exists
      * 
      * @param uniqueId
-     * @return Boolean
+     * @return boolean
      */
     public boolean hasWolf(UUID uniqueId) {
-        return hasWolf(getWolfTable(uniqueId));
-    }
-    
-    /**
-     * Get wolf by WolfTable
-     * 
-     * @param wt
-     * @return Wolf
-     */
-    public Wolf getWolf(WolfTable wt) {
-        for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
-            if (entity instanceof Wolf) {
-                if (entity.getUniqueId().equals(UUID.fromString(wt.getUniqueId())))  {
-                    return (Wolf) entity;
-                }
-            }
-        }
-        
-        return null;
+    	return wolves.containsKey(uniqueId);
     }
     
     /**
@@ -240,18 +149,8 @@ public class WolfManager {
      * @param uniqueId
      * @return Wolf
      */
-    public Wolf getWolf(UUID uniqueId) {
-        return getWolf(getWolfTable(uniqueId));
-    }
-    
-    /**
-     * Get wolf
-     * 
-     * @param name
-     * @return Wolf
-     */
-    public Wolf getWolf(String name, String owner) {
-        return getWolf(getWolfTable(name, owner));
+    public Wolf getWolf(org.bukkit.entity.Wolf wolf) {
+    	return wolves.get(wolf.getUniqueId());
     }
     
     /**
@@ -260,18 +159,7 @@ public class WolfManager {
      * @return
      */
     public List<Wolf> getWolves() {    
-        List<WolfTable> wts = getWolfTables();
-        List<Wolf> wolves = new ArrayList<Wolf>();
-        
-        for (WolfTable wt : wts) {
-            for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
-                if (entity instanceof Wolf && UUID.fromString(wt.getUniqueId()) == entity.getUniqueId()) {
-                    wolves.add((Wolf) entity);
-                }
-            }
-        }
-        
-        return wolves;
+    	return new ArrayList<Wolf>(wolves.values());
     }
 
     /**
@@ -280,182 +168,16 @@ public class WolfManager {
      * @param owner
      * @return List<Wolf>
      */
-    public List<Wolf> getWolves(String owner) {    
-        List<WolfTable> wts = getWolfTables(owner);
-        List<Wolf> wolves = new ArrayList<Wolf>();
-        
-        for (WolfTable wt : wts) {
-            for (Entity entity : plugin.getServer().getWorld(wt.getWorld()).getEntities()) {
-                if (entity instanceof Wolf && UUID.fromString(wt.getUniqueId()) == entity.getUniqueId()) {
-                    wolves.add((Wolf) entity);
-                }
-            }
+    public List<Wolf> getWolves(Player owner) {
+    	List<Wolf> wolves = new ArrayList<Wolf>();
+    	
+        for (Wolf wolf : getWolves()) {
+        	if (wolf.getOwner().getName().equalsIgnoreCase(owner.getName())) {
+        		wolves.add(wolf);
+        	}
         }
         
         return wolves;
-    }
-    
-    /**
-     * Get id
-     * 
-     * @param uniqueId
-     * @return
-     */
-    public int getId(UUID uniqueId) {
-    	WolfTable wt = getWolfTable(uniqueId);
-    	
-    	if (wt != null) {
-    		return wt.getId();
-    	}
-    	
-    	return 0;
-    }
-    
-    /**
-     * Get id
-     * 
-     * @param name
-     * @param owner
-     * @return
-     */
-    public int getId(String name, String owner) {
-    	return getId(getUniqueId(name, owner));
-    }
-    
-    /**
-     * Get uniqueId
-     * 
-     * @param name
-     * @param owner
-     * @return UUID
-     */
-    public UUID getUniqueId(String name, String owner) {
-        WolfTable wt = getWolfTable(name, owner);
-        
-        if (wt != null) {
-            return UUID.fromString(wt.getUniqueId());
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Get name
-     * 
-     * @param uniqueId
-     * @return String
-     */
-    public String getName(UUID uniqueId) {
-        WolfTable wt = getWolfTable(uniqueId);
-        
-        if (wt != null) {
-            return wt.getName();
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Get wolf's owner
-     * 
-     * @param uniqueId
-     * @return Player
-     */
-    public Player getOwner(UUID uniqueId) {
-        WolfTable wt = getWolfTable(uniqueId);
-        
-        if (wt != null) {
-            for (Player player : plugin.getServer().getOnlinePlayers()) {
-                if (player.getName().equalsIgnoreCase(wt.getOwner())) {
-                    return player;
-                }
-            }
-        }
-        
-        return null;
-    }
-
-    /**
-     * Get wolf's world
-     * 
-     * @param uniqueId
-     * @return World
-     */
-    public World getWorld(UUID uniqueId) {
-        WolfTable wt = getWolfTable(uniqueId);
-        
-        if (wt != null) {
-            return plugin.getServer().getWorld(wt.getWorld());
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Get wolf's world
-     * 
-     * @param name
-     * @return World
-     */
-    public World getWorld(String name, String owner) {
-        return getWorld(getUniqueId(name, owner));
-    }
-    
-    /**
-     * Check if wolf has inventory
-     * 
-     * @param uniqueId
-     * @return Boolean
-     */
-    public boolean hasInventory(UUID uniqueId) {
-    	WolfTable wt = getWolfTable(uniqueId);
-    	
-    	if (wt != null) {
-    		return wt.isInventory();
-    	}
-    	
-    	return false;
-    }
-    
-    /**
-     * Check if wolf has inventory
-     * 
-     * @param name
-     * @param owner
-     * @return Boolean
-     */
-    public boolean hasInventory(String name, String owner) {
-    	return hasInventory(getUniqueId(name, owner));
-    }
-    
-    /**
-     * Add wolf inventory
-     * 
-     * @param uniqueId
-     */
-    public void addInventory(UUID uniqueId) {
-    	WolfTable wt = getWolfTable(uniqueId);
-    	
-    	if (wt != null) {
-    		wt.setInventory(true);
-    		updateWolfTable(wt);
-    		plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
-    	}
-    }
-    
-    /**
-     * Remove wolf inventory
-     * 
-     * @param uniqueId
-     */
-    public void removeInventory(UUID uniqueId) {
-    	WolfTable wt = getWolfTable(uniqueId);
-    	
-    	if (wt != null) {
-    		wt.setInventory(false);
-    		
-    		plugin.getWolfInventoryManager().removeWolfInventory(uniqueId);
-    	}
     }
     
     /**
@@ -466,8 +188,8 @@ public class WolfManager {
      * @param location
      * @return Wolf
      */
-    public Wolf spawnWolf(Player player, World world, Location location) {
-        Wolf wolf = (Wolf) world.spawnCreature(location, CreatureType.WOLF);
+    public org.bukkit.entity.Wolf spawnWolf(Player player, World world, Location location) {
+    	org.bukkit.entity.Wolf wolf = (org.bukkit.entity.Wolf)world.spawnCreature(location, CreatureType.WOLF);
         wolf.setTamed(true);
         wolf.setOwner(player);
         
@@ -481,7 +203,7 @@ public class WolfManager {
      * @param tame
      * @return Wolf
      */
-    public Wolf spawnWolf(Player player) {
+    public org.bukkit.entity.Wolf spawnWolf(Player player) {
         return spawnWolf(player, player.getWorld(), player.getLocation());
     }
     
@@ -490,9 +212,9 @@ public class WolfManager {
      * 
      * @param wolf
      */
-    public void releaseWolf(Wolf wolf) {
-        if (hasWolf(wolf.getUniqueId())) {
-            removeWolf(wolf.getUniqueId());
+    public void releaseWolf(org.bukkit.entity.Wolf wolf) {
+        if (hasWolf(wolf)) {
+            removeWolf(wolf);
         }
         
         wolf.setTamed(false);

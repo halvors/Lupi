@@ -84,6 +84,7 @@ public class WolfInventoryTable {
     	rows[0] = this.chestRow1;
     	rows[1] = this.chestRow2;
     	rows[2] = this.chestRow3;
+    	
     	return rows;
     }
     

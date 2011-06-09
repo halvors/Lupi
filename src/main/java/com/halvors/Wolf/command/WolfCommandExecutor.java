@@ -92,8 +92,10 @@ public class WolfCommandExecutor implements CommandExecutor {
                         if (selectedWolfManager.hasSelectedWolf(name)) {
                             Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
                             
-                            if (wolfManager.hasWolf(wolf.getUniqueId())) {
-                                player.sendMessage("This is: " + ChatColor.YELLOW + wolfManager.getName(wolf.getUniqueId()));
+                            if (wolfManager.hasWolf(wolf)) {
+                            	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                            	
+                                player.sendMessage("This is: " + ChatColor.YELLOW + wolf1.getName());
                             } else {
                                 // TODO: Some error message here.
                             }
@@ -108,8 +110,8 @@ public class WolfCommandExecutor implements CommandExecutor {
                         if (selectedWolfManager.hasSelectedWolf(player.getName())) {
                             Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(owner);
                             
-                            if (wolfManager.hasWolf(wolf.getUniqueId())) {
-                                WolfTable wolfTable = wolfManager.getWolfTable(wolf.getUniqueId());
+                            if (wolfManager.hasWolf(wolf)) {
+                            	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                                 String name = null;
                             
                                 if (args.length >= 2) {
@@ -118,10 +120,10 @@ public class WolfCommandExecutor implements CommandExecutor {
                                     name = wolfManager.getRandomName();
                                 }
                                 
-                                wolfTable.setName(name);
+                                wolf1.setName(name);
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You wolf selected.");
+                            player.sendMessage(ChatColor.RED + "No wolf selected.");
                         }
 
                         return true;
@@ -190,15 +192,12 @@ public class WolfCommandExecutor implements CommandExecutor {
                             receiver = (Player) plugin.getServer().getPlayer(args[2]);
                         }
                         
-                        if (wolf != null && receiver != null && wolfManager.hasWolf(wolf.getUniqueId())) {
-                            WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
-                            String name = wolfManager.getName(wolf.getUniqueId());
+                        if (wolf != null && receiver != null && wolfManager.hasWolf(wolf)) {
+                        	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                            String name = wolf1.getName();
                             
-                            if (wt != null) {
-                                wt.setOwner(receiver.getName());
-                            }
+                            wolf1.setOwner(receiver);
                             
-                            wolf.setOwner(receiver);
                             wolf.teleport(receiver);
                                 
                             player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " is now given to " + ChatColor.YELLOW + receiver.getName());
@@ -259,16 +258,16 @@ public class WolfCommandExecutor implements CommandExecutor {
     }
     
     private void showWolves(Player player) {
-        List<WolfTable> wolfTables = wolfManager.getWolfTables(player.getName());
+        List<com.halvors.Wolf.wolf.Wolf> wolves = wolfManager.getWolves(player);
         
         player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
-        if (!wolfTables.isEmpty()) {
-            for (WolfTable wolfTable : wolfTables) {
-                Wolf wolf = wolfManager.getWolf(UUID.fromString(wolfTable.getUniqueId()));
+        if (!wolves.isEmpty()) {
+            for (com.halvors.Wolf.wolf.Wolf wolf1 : wolves) {
+                Wolf wolf = wolf1.getWolf();
                 Location pos = wolf.getLocation();
                 
-                player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " (" + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ() + ")");
+                player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " (" + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ() + ")");
             }
         } else {
             player.sendMessage(ChatColor.RED + "You have no wolves.");

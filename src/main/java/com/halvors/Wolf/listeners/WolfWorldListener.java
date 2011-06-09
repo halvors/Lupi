@@ -33,7 +33,6 @@ import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
 
 /**
  * Handle events for all World related events.
@@ -61,9 +60,8 @@ public class WolfWorldListener extends WorldListener {
                 Wolf wolf = (Wolf)entity;
                 
                 if (wolf.isTamed()) {
-                    WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
-                    
-                    if (wt == null) {
+
+                    if (!wolfManager.hasWolf(wolf)) {
                         wolfManager.addWolf(wolf);
                     }
                 }
@@ -80,9 +78,7 @@ public class WolfWorldListener extends WorldListener {
                 Wolf wolf = (Wolf)entity;
 
                 if (wolf.isTamed()) {
-                    WolfTable wt = wolfManager.getWolfTable(wolf.getUniqueId());
-                    
-                    if (wt == null) {
+                	if (!wolfManager.hasWolf(wolf)) {
                         wolfManager.addWolf(wolf);
                     }
                 }

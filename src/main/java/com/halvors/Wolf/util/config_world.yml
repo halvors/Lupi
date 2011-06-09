@@ -12,6 +12,6 @@ wolf:
     #respawn: true # Respawn tamed wolves.
     #peaceful: false # Wild wolves are peaceful.
 
-limit:
-    enable: false # Enable limit of tamed wolves?
-    limit: 16 # Limit count, if limit is enabled.
+    limit:
+        enable: false # Enable limit of tamed wolves?
+        limit: 16 # Limit count, if limit is enabled.
