@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 public class Wolf {
 	private final com.halvors.Wolf.Wolf plugin;
 	
-	private UUID uniqueId;
+	private final UUID uniqueId;
 	
 	public Wolf(final com.halvors.Wolf.Wolf plugin, UUID uniqueId) {
 		this.plugin = plugin;
@@ -238,20 +238,28 @@ public class Wolf {
     }
     
     /**
-     * Add wolf inventory
+     * Add inventory
      */
     public void addInventory() {
     	setInventory(true);
-    	
         plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
 	}
 
     /**
-     * Remove wolf inventory
+     * Remove inventory
      */
     public void removeInventory() {
     	setInventory(false);
     	plugin.getWolfInventoryManager().removeWolfInventory(uniqueId);
+    }
+    
+    /**
+     * Get inventory
+     * 
+     * @return WolfInventory
+     */
+    public WolfInventory getInventory() {
+    	return plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
     }
 
     /**
@@ -265,9 +273,7 @@ public class Wolf {
     	for (Entity entity : entities) {
             if (entity instanceof Wolf) {
                 if (uniqueId.equals(entity.getUniqueId()))  {
-                	org.bukkit.entity.Wolf wolf = (org.bukkit.entity.Wolf)entity;
-                	
-                    return wolf;
+                	return (org.bukkit.entity.Wolf)entity;
                 }
             }
         }

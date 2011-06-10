@@ -36,6 +36,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
@@ -87,29 +88,50 @@ public class WolfEntityListener extends EntityListener {
                 
                 if (entity instanceof Wolf) {
                     Wolf wolf = (Wolf)entity;
-                    
-                    if (damager instanceof Player) {
-                        Player attacker = (Player)damager;
-                        
-                        if (wolfManager.hasWolf(wolf) && wolf.getOwner().equals(attacker)) {
-                        	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                            Player owner = (Player)wolf.getOwner();
-                            Material item = owner.getItemInHand().getType();
-                                
-                            if (item.equals(Material.BONE)) {
-                            	if (plugin.hasPermissions(owner, "Wolf.info")) {
-                                 	int health = wolf.getHealth();
-                                    int maxHealth = 20;
-                                        
-                                    owner.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
-                                    owner.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
-                                        
-                                    event.setCancelled(true);
 
-                                    wolf.setSitting(!wolf.isSitting());
-                                }
+                    if (wolfManager.hasWolf(wolf)) {
+                    	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                        
+                    	if (damager instanceof Player) {
+                    		Player attacker = (Player)damager;
+                        
+                    		if (wolf.getOwner().equals(attacker)) {
+                    			Player owner = (Player)wolf.getOwner();
+                    			Material item = owner.getItemInHand().getType();
+                                
+                    			if (item.equals(Material.BONE)) {
+                    				if (plugin.hasPermissions(owner, "Wolf.info")) {
+                    					int health = wolf.getHealth();
+                    					int maxHealth = 20;
+                                        
+                    					owner.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
+                    					owner.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
+                                    
+                    					event.setCancelled(true);
+
+                    					wolf.setSitting(!wolf.isSitting());
+                    					
+                    					return;
+                    				}
+                    			}
+                    		}
+                    	}
+                    	
+                    	if (wolf1.hasInventory()) {
+                    		WolfInventory wi = wolf1.getInventory();
+                    		
+                    		for (int i = 0; i < wi.getSize(); i++) {
+                            	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
+                            			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
+                            		
+                            		Material item = wi.getItem(i).getType();
+                            		
+                            		if (item.equals(Material.PORK) || item.equals(Material.GRILLED_PORK)) {
+                            			// TODO: Add health for pork and remove used pork from chest.
+                            		}
+                            	}
                             }
-                        }
+                    	}
                     }
                 }
             }
@@ -155,6 +177,7 @@ public class WolfEntityListener extends EntityListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
+                UUID uniqueId = wolf.getUniqueId();
                 
                 if (worldConfig.wolfLimitEnable) {
                 	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
@@ -173,8 +196,11 @@ public class WolfEntityListener extends EntityListener {
                 
                 wolfManager.addWolf(wolf);
                 
-//                owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                owner.sendMessage("You can change it with /setname <name>");
+                if (wolfManager.hasWolf(uniqueId)) {
+                	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
+                	owner.sendMessage("You can change name with /setname <name>");
+                }
             }
         }
     }

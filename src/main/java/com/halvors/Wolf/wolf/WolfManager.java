@@ -47,24 +47,6 @@ public class WolfManager {
         this.plugin = plugin;
         this.wolves = new HashMap<UUID, Wolf>();
     }
-
-    /**
-     * Loads wolves from database
-     */
-    public void load() {
-    	for (WolfTable wt : getWolfTables()) {
-    		UUID uniqueId = UUID.fromString(wt.getUniqueId());
-    		
-    		wolves.put(uniqueId, new Wolf(plugin, uniqueId));
-    	}
-    }
-   
-    /**
-     * Saves wolves to database
-     */
-    public void save() {
-    	wolves.clear();
-    }
     
     /**
      * Get all WolfTables
@@ -72,7 +54,7 @@ public class WolfManager {
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables() {
-        return plugin.getDatabase().find(WolfTable.class).where().findList();
+        return plugin.getDatabase().find(WolfTable.class).findList();
     }
     
     /**
@@ -84,6 +66,24 @@ public class WolfManager {
     public List<WolfTable> getWolfTables(String owner) {
         return plugin.getDatabase().find(WolfTable.class).where()
             .ieq("owner", owner).findList();
+    }
+
+    /**
+     * Load wolves from database
+     */
+    public void load() {
+    	for (WolfTable wt : getWolfTables()) {
+    		UUID uniqueId = UUID.fromString(wt.getUniqueId());
+    		
+    		wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+    	}
+    }
+   
+    /**
+     * Save wolves to database
+     */
+    public void save() {
+    	wolves.clear();
     }
     
     /**

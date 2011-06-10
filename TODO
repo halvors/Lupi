@@ -6,3 +6,8 @@ TODO:
 - Add ability for wolves to become supercharged and deal twice as much damage for a given time after giving the wolf a special item
 - Add ability to feed wolves either gunpowder or tnt and create a kamikazi effect when that wolf attacks
 - Add possible alternative to above where wolf drops live tnt and runs away to leave enemy to take damage
+- Show wolf name when user tame a wolf, also in onEntityTame().
+- Rename permission nodes? Normal features Wolf.wolf.* for admins Wolf.admin.* ?
+- Make wolf eat food from inventory when get damage.
+- Implement more functions in wolfInventory and maybe if possible inherit from TileEntityVirtualChest.
+- When item get dropped near wolf. Pick it up and add to inventory.

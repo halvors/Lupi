@@ -97,4 +97,11 @@ public class WolfWorldListener extends WorldListener {
     	wolfManager.save();
         wolfInventoryManager.save();
     }
+    
+    /*
+    @Override
+    public void onItemSpawn(ItemSpawnEvent event) {
+    	
+    }
+    */
 }

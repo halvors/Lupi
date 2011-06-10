@@ -82,9 +82,6 @@ public class Wolf extends JavaPlugin {
         // Load Configuration
         configManager.load();
         
-    	wolfManager.load();
-        wolfInventoryManager.load();
-        
         // Register our events Type.          
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
@@ -97,6 +94,7 @@ public class Wolf extends JavaPlugin {
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ITEM_SPAWN, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
         
@@ -107,6 +105,10 @@ public class Wolf extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
+        
+        // Temporary until WorldLoadEvent and WorldUnloadEvent works.
+    	wolfManager.load();
+        wolfInventoryManager.load();
     }
     
     @Override
