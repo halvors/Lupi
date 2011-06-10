@@ -28,8 +28,6 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
@@ -86,22 +84,12 @@ public class WolfWorldListener extends WorldListener {
         }
     }
     
-    @Override
-    public void onWorldLoad(WorldLoadEvent event) {
-    	wolfManager.load();
-        wolfInventoryManager.load();
-    }
-    
-    @Override
-    public void onWorldUnload(WorldUnloadEvent event) {
-    	wolfManager.save();
-        wolfInventoryManager.save();
-    }
-    
     /*
     @Override
     public void onItemSpawn(ItemSpawnEvent event) {
-    	
+    	if (!event.isCancelled()) {
+    		// TODO: Check if items are near a wolf with inventory. If get wolf and pick it up.
+    	}
     }
     */
 }

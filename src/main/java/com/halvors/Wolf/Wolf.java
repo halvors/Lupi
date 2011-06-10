@@ -38,6 +38,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.halvors.Wolf.command.WolfCommandExecutor;
 import com.halvors.Wolf.listeners.WolfEntityListener;
 import com.halvors.Wolf.listeners.WolfPlayerListener;
+import com.halvors.Wolf.listeners.WolfServerListener;
 import com.halvors.Wolf.listeners.WolfWorldListener;
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.wolf.SelectedWolfManager;
@@ -64,6 +65,7 @@ public class Wolf extends JavaPlugin {
     
     private final WolfEntityListener entityListener = new WolfEntityListener(this);
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
+    private final WolfServerListener serverListener = new WolfServerListener(this);
     private final WolfWorldListener worldListener = new WolfWorldListener(this);
     
     public static PermissionHandler Permissions;
@@ -82,7 +84,7 @@ public class Wolf extends JavaPlugin {
         // Load Configuration
         configManager.load();
         
-        // Register our events Type.          
+        // Register our events Type.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
@@ -92,11 +94,12 @@ public class Wolf extends JavaPlugin {
         pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
         
+        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener, Event.Priority.Normal, this);
+        
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.ITEM_SPAWN, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
+//        pm.registerEvent(Event.Type.ITEM_SPAWN, worldListener, Event.Priority.Normal, this);
         
         // Register our commands
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
