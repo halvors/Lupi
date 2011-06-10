@@ -29,7 +29,6 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
 
-import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
 
 /**
@@ -41,12 +40,10 @@ public class WolfWorldListener extends WorldListener {
 //    private final com.halvors.Wolf.Wolf plugin;
     
     private final WolfManager wolfManager;
-    private final WolfInventoryManager wolfInventoryManager;
     
     public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
 //        this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     @Override
