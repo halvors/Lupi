@@ -41,11 +41,11 @@ import org.bukkit.entity.Player;
 public class WolfManager {
     private final com.halvors.Wolf.Wolf plugin;
  
-    private final HashMap<UUID, com.halvors.Wolf.wolf.Wolf> wolves;
+    private final HashMap<UUID, Wolf> wolves;
     
     public WolfManager(com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
-        this.wolves = new HashMap<UUID, com.halvors.Wolf.wolf.Wolf>();
+        this.wolves = new HashMap<UUID, Wolf>();
     }
 
     /**
@@ -60,7 +60,7 @@ public class WolfManager {
     }
    
     /**
-     * Saves wolves from database
+     * Saves wolves to database
      */
     public void save() {
     	wolves.clear();
@@ -302,7 +302,7 @@ public class WolfManager {
     public String getRandomName() { // TODO: Improve this. 
         Random random = new Random();
         List<String> names = new ArrayList<String>();
-        String name = "Wolf";
+        String name = null;
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
@@ -320,7 +320,7 @@ public class WolfManager {
                 }
             } while (true);
             
-            name = (String)names.get(random.nextInt(names.size()));
+            name = names.get(random.nextInt(names.size())); // (String)names.get(random.nextInt(names.size()));
         } catch (Exception e) {
             e.printStackTrace();
         }

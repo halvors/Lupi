@@ -38,7 +38,7 @@ import com.halvors.Wolf.chest.TileEntityVirtualChest;
  */
 public class WolfInventory {
     private final TileEntityVirtualChest inventory;
-    private UUID uniqueId;
+    private final UUID uniqueId;
     
     public WolfInventory(UUID uniqueId) {
         this.inventory = new TileEntityVirtualChest();

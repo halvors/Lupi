@@ -51,27 +51,6 @@ public class Wolf {
     	return plugin.getDatabase().find(WolfTable.class).where()
     		.eq("uniqueId", uniqueId.toString()).findUnique();
     }
-
-    /**
-     * Save WolfTable
-     */
-    public void saveWolfTable() {
-    	plugin.getDatabase().save(getWolfTable());
-    }
-    
-    /**
-     * Delete WolfTable
-     */
-    public void deleteWolfTable() {
-    	plugin.getDatabase().delete(getWolfTable());
-    }
-    
-    /**
-     * Update WolfTable
-     */
-    public void updateWolfTable() {
-        plugin.getDatabase().update(getWolfTable());
-    }
 	
 	/**
 	 * Get id
