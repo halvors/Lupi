@@ -112,11 +112,11 @@ public class WolfManager {
             */
             
             // Check if a wolf with same name already exists.
-//            for (Wolf wolf1 : getWolves(player)) {
-//            	if (wolf1.getName().equalsIgnoreCase(name)) {
+//          for (Wolf wolf1 : getWolves(player)) {
+//          	if (wolf1.getName().equalsIgnoreCase(name)) {
 //            		name = getRandomName();
 //            	}
-//            }
+//          }
             
             // Create a new WolfTable
             WolfTable wt = new WolfTable();
@@ -158,7 +158,9 @@ public class WolfManager {
     	UUID uniqueId = wolf.getUniqueId();
     	
         if (wolves.containsKey(uniqueId)) {
-        	getWolf(wolf).deleteWolfTable();
+        	// TODO: Improve get of WolfTable here.
+        	plugin.getDatabase().delete(getWolf(wolf).getWolfTable());
+        	
         	wolves.remove(uniqueId);
         }
     }
