@@ -203,6 +203,22 @@ public class WolfManager {
     }
     
     /**
+     * Check if owner has a wolf/wolves
+     * 
+     * @param owner
+     * @return boolean
+     */
+    public boolean hasWolf(String owner) {
+    	for (Wolf wolf : getWolves()) {
+    		if (wolf.getOwner().getName().equalsIgnoreCase(owner)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    /**
      * Get wolf
      * 
      * @param uniqueId

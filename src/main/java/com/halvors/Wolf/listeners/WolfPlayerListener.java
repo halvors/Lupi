@@ -70,9 +70,8 @@ public class WolfPlayerListener extends PlayerListener {
         
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(name)) {
         	Wolf wolf = (Wolf)selectedWolfManager.getSelectedWolf(name);
-        	UUID uniqueId = wolf.getUniqueId();
 
-            if (wolfManager.hasWolf(uniqueId)) {
+            if (wolfManager.hasWolf(wolf)) {
             	Material item = event.getItem().getType();
             	Location pos = player.getTargetBlock(null, 120).getLocation();
             	
@@ -127,7 +126,7 @@ public class WolfPlayerListener extends PlayerListener {
                             	wolf1.addInventory();
                             		
                             	// Remove 1 chest for players inventory.
-                            	if (player.getItemInHand().getType().equals(Material.CHEST)) {
+                            	if (item.equals(Material.CHEST)) {
                             		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                             	}
                             		

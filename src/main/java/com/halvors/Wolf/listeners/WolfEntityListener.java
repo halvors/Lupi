@@ -225,23 +225,26 @@ public class WolfEntityListener extends EntityListener {
     
     
     @Override
-    public void onItemSpawn(ItemSpawnEvent event) {
+    public void onItemSpawn(ItemSpawnEvent event) { // TODO: Get this work.
     	if (!event.isCancelled()) {
     		Entity entity = event.getEntity();
     		
     		if (entity instanceof Item) {
     			Item item = (Item)entity;
-    		
-    			for (Entity e : item.getNearbyEntities(1, 1, 1)) { // TODO: Figure out position here
+    			List<Entity> entities = item.getNearbyEntities(10, 10, 10); // TODO: Figure out position here
+    			
+    			for (Entity e : entities) {
     				if (e instanceof Wolf) {
     					Wolf wolf = (Wolf)entity;
     				
     					if (wolfManager.hasWolf(wolf)) {
     						com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-    					
+
     						if (wolf1.hasInventory()) {
     							WolfInventory wi = wolf1.getInventory();
+    							
     							wi.addItem(item.getItemStack());
+    							item.remove();
     							
     							// TODO: Pick up item here.
     						}

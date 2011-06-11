@@ -7,6 +7,11 @@ import org.bukkit.event.server.ServerListener;
 import com.halvors.Wolf.wolf.WolfInventoryManager;
 import com.halvors.Wolf.wolf.WolfManager;
 
+/**
+ * Handle events for all Server related events.
+ * 
+ * @author halvors
+ */
 public class WolfServerListener extends ServerListener {
 //	private final com.halvors.Wolf.Wolf plugin;
 	

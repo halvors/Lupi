@@ -79,10 +79,18 @@ public class WolfCommandExecutor implements CommandExecutor {
                 } else if (subCommand.equalsIgnoreCase("status")) {
                 	if (plugin.hasPermissions(player, "Wolf.wolf.status")) {
                 		if (args.length >= 2) {
-                			player = plugin.getServer().getPlayer(args[1]);
+                			String owner = args[1];
+                			
+                			if (wolfManager.hasWolf(owner)) {
+                				player = plugin.getServer().getPlayer(args[1]);
+                			} else {
+                				player.sendMessage(ChatColor.RED + "Player doesn't have a wolf.");
+                			}
                 		}
                 		
-                		showPlayerWolves(player);
+                		if (player != null) {
+                			showPlayerWolves(player);
+                		}
                 		
                 		return true;
                 	}
@@ -96,7 +104,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                         	if (wolfManager.hasWolf(wolf)) {
                            		com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                                	
-                            	player.sendMessage("This is: " + ChatColor.YELLOW + wolf1.getName());
+                            	player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                             }
                         }
                         	
@@ -104,25 +112,33 @@ public class WolfCommandExecutor implements CommandExecutor {
                     }
                 } else if (subCommand.equalsIgnoreCase("setname")) {
                     if (plugin.hasPermissions(player, "Wolf.wolf.setname")) {
+                    	Wolf wolf = null;
                     	String owner = player.getName();
+                    	String name = null;
                     	
-                        if (selectedWolfManager.hasSelectedWolf(owner)) {
-                            Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(owner);
-                            
-                            if (wolfManager.hasWolf(wolf)) {
-                            	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                                String name = null;
-                            
-                                if (args.length >= 2) {
-                                    name = args[1];
-                                } else {
-                                    name = wolfManager.getRandomName();
-                                }
-                                
-                                wolf1.setName(name);
-                            }
-                        } else {
-                            player.sendMessage(ChatColor.RED + "No wolf selected.");
+                    	if (args.length <= 1) {
+                    		if (selectedWolfManager.hasSelectedWolf(owner)) {
+                    			wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
+                    			name = args[1];
+                    		} else {
+                    			player.sendMessage(ChatColor.RED + "No wolf selected.");
+                    		}
+                    	} else {
+                    		String oldName = args[1];
+                    		
+                    		if (wolfManager.hasWolf(oldName, owner)) {
+                    			wolf = (Wolf)wolfManager.getWolf(oldName, owner).getWolf();
+                    			name = args[2];
+                    		} else {
+                    			player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                    		}
+                    	}
+                    	
+                        if (wolfManager.hasWolf(wolf) && wolf != null && name != null) {
+                        	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                            wolf1.setName(name);
+                        	
+                            player.sendMessage("Wolf name set to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
                         }
 
                         return true;
@@ -145,31 +161,37 @@ public class WolfCommandExecutor implements CommandExecutor {
                         return true;
                     }
                 */
-                /*
                 } else if (subCommand.equalsIgnoreCase("stop")) {
                     if (plugin.hasPermissions(player, "Wolf.wolf.stop")) {
+                    	Wolf wolf = null;
                     	String owner = player.getName();
-                    	String name = null;
                     	
-                        if (args.length >= 1) {
-                           if (selectedWolfManager.hasSelectedWolf(player.getName())) {
-                        	   
+                        if (args.length <= 1) {
+                           if (selectedWolfManager.hasSelectedWolf(owner)) {
+                        	   wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
+                           } else {
+                        	   player.sendMessage(ChatColor.RED + "No wolf selected.");
                            }
                         } else {
-                            player.sendMessage(ChatColor.RED + "No wolf specified");
+                        	String name = args[1];
+                        	
+                        	if (wolfManager.hasWolf(name, owner)) {
+                        		wolf = (Wolf)wolfManager.getWolf(name, owner).getWolf();
+                        	} else {
+                        		player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                        	}
                         }
                         
-                        if (wolfManager.hasWolf(name, owner)) {
-                            com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(name, owner);
-                            Wolf wolf = (Wolf)wolf1.getWolf();
-                            wolf.teleport(player);
+                        if (wolfManager.hasWolf(wolf) && wolf != null) {
+                            com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                             
-                            player.sendMessage(ChatColor.GREEN + "Your wolf has stopped the attack.");
+                            wolf.setTarget(null);
+                            
+                            player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has stopped attacking.");
                         }
                     
                         return true;
                     }
-                */
                 /*
                 } else if (subCommand.equalsIgnoreCase("target")){
                     if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
@@ -192,50 +214,64 @@ public class WolfCommandExecutor implements CommandExecutor {
                         String owner = player.getName();
                         Player receiver = null;
                         
-                        if (selectedWolfManager.hasSelectedWolf(owner) && args.length <= 1) {
-                            wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
-                            receiver = (Player) plugin.getServer().getPlayer(args[1]);
+                        if (args.length <= 1) {
+                        	if (selectedWolfManager.hasSelectedWolf(owner)) {
+                                wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
+                                receiver = (Player) plugin.getServer().getPlayer(args[1]);
+                            } else {
+                                player.sendMessage(ChatColor.RED + "No wolf selected.");
+                            }
                         } else {
-                            wolf = (Wolf)wolfManager.getWolf(args[1], owner);
-                            receiver = (Player)plugin.getServer().getPlayer(args[2]);
+                        	String name = args[1];
+                        	
+                        	if (wolfManager.hasWolf(name, owner)) {
+                        		wolf = (Wolf)wolfManager.getWolf(name, owner).getWolf();
+                            	receiver = (Player)plugin.getServer().getPlayer(args[2]);
+                        	} else {
+                        		player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                        	}
                         }
                         
-                        if (wolf != null && receiver != null && wolfManager.hasWolf(wolf)) {
+                        if (wolfManager.hasWolf(wolf) && wolf != null && receiver != null) {
                         	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                             String name = wolf1.getName();
+                            String to = receiver.getName();
                             
                             wolf1.setOwner(receiver);
                             wolf.teleport(receiver);
                                 
-                            player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " is now given to " + ChatColor.YELLOW + receiver.getName());
-                            receiver.sendMessage("You have got the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner);
+                            player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
+                            receiver.sendMessage("You got the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
                         }
                         
                         return true;
                     }
                 } else if (subCommand.equalsIgnoreCase("release")) {
                     if (plugin.hasPermissions(player, "Wolf.wolf.elease")) {
+                    	Wolf wolf = null;
                         String owner = player.getName();
                         
-                        if (args.length == 1) {
+                        if (args.length <= 1) {
                             if (selectedWolfManager.hasSelectedWolf(owner)) {
-                                wolfManager.releaseWolf(selectedWolfManager.getSelectedWolf(owner));
-                                
-                                player.sendMessage(ChatColor.GREEN + "Your wolf has been released.");
+                            	wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
                             } else {
                                 player.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
                         } else {
                             String name = args[2];
-
+                            
                             if (wolfManager.hasWolf(name, owner)) {
-                                Wolf wolf = (Wolf) wolfManager.getWolf(name, owner);
-                                wolfManager.releaseWolf(wolf);
-                                
-                                player.sendMessage(ChatColor.YELLOW + name + ChatColor.GREEN + " has been released.");
+                                wolf = (Wolf)wolfManager.getWolf(name, owner).getWolf();
                             } else {
-                                player.sendMessage(ChatColor.RED + "Wolf does not exists.");
+                                player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
                             }
+                        }
+                        
+                        if (wolfManager.hasWolf(wolf) && wolf != null) {
+                        	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                        	wolfManager.releaseWolf(wolf);
+                        	
+                        	player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has been released.");
                         }
                         
                         return true;
@@ -311,28 +347,28 @@ public class WolfCommandExecutor implements CommandExecutor {
             player.sendMessage(command + "list" + ChatColor.YELLOW + " - Show a list of tamed wolves.");
         }
         
-        if (plugin.hasPermissions(player, "Wolf.name")) {
+        if (plugin.hasPermissions(player, "Wolf.wolf.status")) {
+            player.sendMessage(command + "status" + ChatColor.YELLOW + " - Show your wolves.");
+        }
+        
+        if (plugin.hasPermissions(player, "Wolf.wolf.name")) {
             player.sendMessage(command + "name " + ChatColor.YELLOW + " - Show your wolf's name.");
         }
         
-        if (plugin.hasPermissions(player, "Wolf.setname")) {
+        if (plugin.hasPermissions(player, "Wolf.wolf.setname")) {
             player.sendMessage(command + "setname " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Set your wolf's name.");
         }
         
-        if (plugin.hasPermissions(player, "Wolf.call")) {
+        if (plugin.hasPermissions(player, "Wolf.wolf.call")) {
             player.sendMessage(command + "call " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Call your wolf.");
         }
         
-        if (plugin.hasPermissions(player, "Wolf.stop")) {
+        if (plugin.hasPermissions(player, "Wolf.wolf.stop")) {
             player.sendMessage(command + "stop " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Stop your wolf from attacking.");
         }
         
-        if (plugin.hasPermissions(player, "Wolf.release")) {
+        if (plugin.hasPermissions(player, "Wolf.wolf.release")) {
             player.sendMessage(command + "release " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Release your wolf.");
-        }
-        
-        if (plugin.hasPermissions(player, "Wolf.item")) {
-            player.sendMessage(command + "item" + ChatColor.YELLOW + " - Give you the wolf item.");
         }
     }
 }

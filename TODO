@@ -11,4 +11,4 @@ TODO:
 - Implement more functions in wolfInventory and maybe if possible inherit from TileEntityVirtualChest.
 - When item get dropped near wolf. Pick it up and add to inventory.
 - Fix load and save inventory.
-- Implement all commands.
+- Fix/implement all commands.
