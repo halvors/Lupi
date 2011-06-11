@@ -27,6 +27,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -36,6 +37,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 
 import com.halvors.Wolf.util.ConfigManager;
 import com.halvors.Wolf.util.WorldConfig;
@@ -219,5 +221,34 @@ public class WolfEntityListener extends EntityListener {
                 }
             }
         }
+    }
+    
+    
+    @Override
+    public void onItemSpawn(ItemSpawnEvent event) {
+    	if (!event.isCancelled()) {
+    		Entity entity = event.getEntity();
+    		
+    		if (entity instanceof Item) {
+    			Item item = (Item)entity;
+    		
+    			for (Entity e : item.getNearbyEntities(1, 1, 1)) { // TODO: Figure out position here
+    				if (e instanceof Wolf) {
+    					Wolf wolf = (Wolf)entity;
+    				
+    					if (wolfManager.hasWolf(wolf)) {
+    						com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    					
+    						if (wolf1.hasInventory()) {
+    							WolfInventory wi = wolf1.getInventory();
+    							wi.addItem(item.getItemStack());
+    							
+    							// TODO: Pick up item here.
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}
     }
 }

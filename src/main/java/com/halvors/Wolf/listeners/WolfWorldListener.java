@@ -80,13 +80,4 @@ public class WolfWorldListener extends WorldListener {
             }
         }
     }
-    
-    /*
-    @Override
-    public void onItemSpawn(ItemSpawnEvent event) {
-    	if (!event.isCancelled()) {
-    		// TODO: Check if items are near a wolf with inventory. If get wolf and pick it up.
-    	}
-    }
-    */
 }

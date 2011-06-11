@@ -90,6 +90,8 @@ public class Wolf extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ITEM_SPAWN, entityListener, Event.Priority.Normal, this);
+
         
         pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
@@ -99,8 +101,7 @@ public class Wolf extends JavaPlugin {
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
-//        pm.registerEvent(Event.Type.ITEM_SPAWN, worldListener, Event.Priority.Normal, this);
-        
+                
         // Register our commands
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
         
