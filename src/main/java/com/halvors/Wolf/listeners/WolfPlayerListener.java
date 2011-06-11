@@ -30,6 +30,7 @@ import net.minecraft.server.PathPoint;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
@@ -40,6 +41,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
+import com.halvors.Wolf.util.ConfigManager;
+import com.halvors.Wolf.util.WorldConfig;
 import com.halvors.Wolf.wolf.SelectedWolfManager;
 import com.halvors.Wolf.wolf.WolfManager;
 
@@ -51,13 +54,13 @@ import com.halvors.Wolf.wolf.WolfManager;
 public class WolfPlayerListener extends PlayerListener {
     private final com.halvors.Wolf.Wolf plugin;
     
-//    private final ConfigManager configManager;
+    private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
     
     public WolfPlayerListener(final com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
-//        this.configManager = plugin.getConfigManager();
+        this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
@@ -95,11 +98,14 @@ public class WolfPlayerListener extends PlayerListener {
         if (!event.isCancelled()) {
             Player player = event.getPlayer();
             Entity entity = event.getRightClicked();
+            World world = entity.getWorld();
+            WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
                 UUID uniqueId = wolf.getUniqueId();
                 
+                // TODO: Remove this?
                 if (!wolfManager.hasWolf(uniqueId)) {
                 	wolfManager.addWolf(wolf);
                 }
@@ -117,23 +123,25 @@ public class WolfPlayerListener extends PlayerListener {
                             wolf.setSitting(!wolf.isSitting());
                         }
                     } else if (item.equals(Material.CHEST)) {
-                        if (plugin.hasPermissions(player, "Wolf.chest")) {
-                            if (wolf1.hasInventory()) {                       		
-                            	EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
-                            	entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(uniqueId).getInventory());
-                            } else {
-                            	// Add inventory.
-                            	wolf1.addInventory();
-                            		
-                            	// Remove 1 chest for players inventory.
-                            	if (item.equals(Material.CHEST)) {
-                            		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-                            	}
-                            		
-                            	player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
-                            }
+                        if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
+                        	if (worldConfig.wolfInventory) {
+                        		if (wolf1.hasInventory()) {
+                        			EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
+                        			entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(uniqueId).getInventory());
+	                            } else {
+	                            	// Add inventory.
+	                            	wolf1.addInventory();
+	                            		
+	                            	// Remove 1 chest for players inventory.
+	                            	if (item.equals(Material.CHEST)) {
+	                            		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+	                            	}
+	                            		
+	                            	player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
+	                            }
                             
-                            wolf.setSitting(!wolf.isSitting());
+                        		wolf.setSitting(!wolf.isSitting());
+                        	}
                         }
                     }
                 }
