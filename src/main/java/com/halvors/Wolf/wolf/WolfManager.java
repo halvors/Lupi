@@ -91,62 +91,64 @@ public class WolfManager {
      * 
      * @param name
      * @param wolf
+     * @return boolean
      */
-    public void addWolf(org.bukkit.entity.Wolf wolf, String name) {
-        if (wolf.isTamed()) {
-        	UUID uniqueId = wolf.getUniqueId();
-            Player player = (Player)wolf.getOwner();
+    public boolean addWolf(org.bukkit.entity.Wolf wolf, String name) {
+        UUID uniqueId = wolf.getUniqueId();
+        Player player = (Player)wolf.getOwner();
             
-            /*
-            boolean nameUnique = false;
-            
-            while (!nameUnique) {
-            	for (WolfTable wt : getWolfTables(player.getName())) {
-            		if (wt.getName().equalsIgnoreCase(name)) {
-            			name = getRandomName();
-            		} else {
-            			nameUnique = true;
-            		}
-            	}
-            }
-            */
-            
-            // Check if a wolf with same name already exists.
-//          for (Wolf wolf1 : getWolves(player)) {
-//          	if (wolf1.getName().equalsIgnoreCase(name)) {
-//            		name = getRandomName();
-//            	}
-//          }
-            
-            // Create a new WolfTable
-            WolfTable wt = new WolfTable();
-            wt.setUniqueId(uniqueId.toString());
-            wt.setName(name);
-            wt.setOwner(player.getName());
-            wt.setWorld(wolf.getWorld().getName());
-            wt.setInventory(false);
-            
-            // Save the wolf to the database
-            plugin.getDatabase().save(wt);
-            
-            if (wolves.containsKey(uniqueId)) {
-            	wolves.remove(uniqueId);
-            }
-            
-            wolves.put(uniqueId, new Wolf(plugin, uniqueId));
-            
-            // Pull a fresh copy of the wolf to retrieve the database ID
-            //wt = getWolfTable(uniqueId);
+        /*
+        boolean nameUnique = false;
+          
+        while (!nameUnique) {
+          	for (WolfTable wt : getWolfTables(player.getName())) {
+           		if (wt.getName().equalsIgnoreCase(name)) {
+           			name = getRandomName();
+           		} else {
+           			nameUnique = true;
+           		}
+           	}
         }
+        */
+           
+        // Check if a wolf with same name already exists.
+//        for (Wolf wolf1 : getWolves(player)) {
+//      		if (wolf1.getName().equalsIgnoreCase(name)) {
+//          		name = getRandomName();
+//      		}
+//      	}
+            
+        // Create a new WolfTable
+        WolfTable wt = new WolfTable();
+        wt.setUniqueId(uniqueId.toString());
+        wt.setName(name);
+        wt.setOwner(player.getName());
+        wt.setWorld(wolf.getWorld().getName());
+        wt.setInventory(false);
+            
+        // Save the wolf to the database
+        plugin.getDatabase().save(wt);
+            
+        if (wolves.containsKey(uniqueId)) {
+          	wolves.remove(uniqueId);
+        }
+            
+        Wolf wolf1 = new Wolf(plugin, uniqueId);
+            
+        wolves.put(uniqueId, wolf1);
+
+//		return wolves.get(uniqueId) == null ? false : true;
+		return wolves.containsKey(uniqueId);
     }
     
     /**
      * Add a wolf with a random name
      * 
      * @param wolf
+     * @return boolean
      */
-    public void addWolf(org.bukkit.entity.Wolf wolf) {
-        addWolf(wolf, getRandomName());
+    public boolean addWolf(org.bukkit.entity.Wolf wolf) {
+        return addWolf(wolf, getRandomName());
     }
     
     /**

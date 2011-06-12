@@ -271,7 +271,7 @@ public class Wolf {
     	List<Entity> entities = getWorld().getEntities();
     	
     	for (Entity entity : entities) {
-            if (entity instanceof Wolf) {
+            if (entity instanceof org.bukkit.entity.Wolf) {
                 if (uniqueId.equals(entity.getUniqueId()))  {
                 	return (org.bukkit.entity.Wolf)entity;
                 }

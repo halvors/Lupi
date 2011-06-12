@@ -180,11 +180,11 @@ public class WolfEntityListener extends EntityListener {
                 Wolf wolf = (Wolf)entity;
                 UUID uniqueId = wolf.getUniqueId();
                 
-                if (worldConfig.wolfLimitEnable) {
+                if (worldConfig.limitEnable) {
                 	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
                 	
                 	int size = wts.size();
-                	int limit = worldConfig.wolfLimitValue;
+                	int limit = 2; //worldConfig.limitValue;
                 	
                 	if (size >= limit) {
                 		owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
@@ -195,9 +195,7 @@ public class WolfEntityListener extends EntityListener {
                 	}
                 }
                 
-                wolfManager.addWolf(wolf);
-                
-                if (wolfManager.hasWolf(uniqueId)) {
+                if (wolfManager.addWolf(wolf)) {
                 	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                 	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
                 	owner.sendMessage("You can change name with /setname <name>");
@@ -245,8 +243,6 @@ public class WolfEntityListener extends EntityListener {
     							
     							wi.addItem(item.getItemStack());
     							item.remove();
-    							
-    							// TODO: Pick up item here.
     						}
     					}
     				}
