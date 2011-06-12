@@ -112,11 +112,11 @@ public class WolfManager {
         */
            
         // Check if a wolf with same name already exists.
-//      for (Wolf wolf1 : getWolves(player)) {
-//      	if (wolf1.getName().equalsIgnoreCase(name)) {
-//          	name = getRandomName();
-//          }
-//      }
+        for (Wolf wolf1 : getWolves(player)) {
+      		if (wolf1.getName().equalsIgnoreCase(name)) {
+          		name = getRandomName();
+      		}
+      	}
             
         // Create a new WolfTable
         WolfTable wt = new WolfTable();
@@ -136,11 +136,8 @@ public class WolfManager {
         Wolf wolf1 = new Wolf(plugin, uniqueId);
             
         wolves.put(uniqueId, wolf1);
-            
-        // Pull a fresh copy of the wolf to retrieve the database ID
-        //wt = getWolfTable(uniqueId);
 
-		return (wolves.get(uniqueId) == null ? false : true);
+		return wolves.get(uniqueId) == null ? false : true;
     }
     
     /**
