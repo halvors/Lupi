@@ -139,8 +139,8 @@ public class WolfManager {
             
         // Pull a fresh copy of the wolf to retrieve the database ID
         //wt = getWolfTable(uniqueId);
-            
-        return true;
+
+		return (wolves.get(uniqueId) == null ? false : true);
     }
     
     /**
