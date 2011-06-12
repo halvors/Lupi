@@ -92,9 +92,9 @@ public class WolfManager {
      * @param name
      * @param wolf
      */
-    public void addWolf(org.bukkit.entity.Wolf wolf, String name) {
-        if (wolf.isTamed()) {
-        	UUID uniqueId = wolf.getUniqueId();
+    public boolean addWolf(org.bukkit.entity.Wolf wolf, String name) {
+    	UUID uniqueId = wolf.getUniqueId();
+    	if (wolf.isTamed()) {
             Player player = (Player)wolf.getOwner();
             
             /*
@@ -137,7 +137,9 @@ public class WolfManager {
             
             // Pull a fresh copy of the wolf to retrieve the database ID
             //wt = getWolfTable(uniqueId);
+            
         }
+		return (wolves.get(uniqueId) == null ? false : true);
     }
     
     /**
@@ -145,8 +147,8 @@ public class WolfManager {
      * 
      * @param wolf
      */
-    public void addWolf(org.bukkit.entity.Wolf wolf) {
-        addWolf(wolf, getRandomName());
+    public boolean addWolf(org.bukkit.entity.Wolf wolf) {
+        return addWolf(wolf, getRandomName());
     }
     
     /**
