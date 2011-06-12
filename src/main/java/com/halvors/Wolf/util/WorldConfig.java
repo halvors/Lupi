@@ -44,8 +44,8 @@ public class WorldConfig {
     public boolean wolfEnable;
     public boolean wolfInventory;
     
-    public boolean wolfLimitEnable;
-    public int wolfLimitValue;
+    public boolean limitEnable;
+    public int limitValue;
     /* Configuration data end */
 
     public WorldConfig(final Wolf plugin, final String worldName) {
@@ -74,8 +74,8 @@ public class WorldConfig {
         wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
         wolfInventory = config.getBoolean("wolf.inventory", wolfInventory);
         
-        wolfLimitEnable = config.getBoolean("wolf.limit.enable", wolfLimitEnable);
-        wolfLimitValue = config.getInt("wolf.limit.value", wolfLimitValue);
+        limitEnable = config.getBoolean("limit.enable", limitEnable);
+        limitValue = config.getInt("limit.value", limitValue);
     }
 
     /**

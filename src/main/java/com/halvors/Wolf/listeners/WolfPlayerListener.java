@@ -69,7 +69,7 @@ public class WolfPlayerListener extends PlayerListener {
         String name = player.getName();
         
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(name)) {
-        	Wolf wolf = (Wolf)selectedWolfManager.getSelectedWolf(name);
+        	Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
 
             if (wolfManager.hasWolf(wolf)) {
             	Material item = event.getItem().getType();
@@ -97,7 +97,7 @@ public class WolfPlayerListener extends PlayerListener {
             Entity entity = event.getRightClicked();
             
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf)entity;
+                Wolf wolf = (Wolf) entity;
                 UUID uniqueId = wolf.getUniqueId();
                 
                 if (!wolfManager.hasWolf(uniqueId)) {

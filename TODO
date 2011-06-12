@@ -9,6 +9,8 @@ TODO
         - Fix/implement all commands.
         - Fix pickup item when dropped near a wolf with inventory. This is in function onItemSpawn() in WolfEntityiListener.
         - Add configuration nodes.
+        - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
+		- Fix bug when wolf is tamed, and EntityTameEvent is cancelled, wolf is partly tame.
 
     Version 0.2
         - Add command so owner of a wolf can add peace players that wolf not attack.
@@ -16,4 +18,4 @@ TODO
         - Add ability to feed wolves either gunpowder or tnt and create a kamikazi effect when that wolf attacks.
         - Add possible alternative to above where wolf drops live tnt and runs away to leave enemy to take damage.
         - Add ability for wolves to eat food from its inventory when get damaged.
-        
+        - Wolf home. By default set it where the wolf was tamed?

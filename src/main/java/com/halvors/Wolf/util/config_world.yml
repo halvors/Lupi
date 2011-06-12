@@ -3,7 +3,12 @@
 # This is the a per-world configuration file. It only affects one
 # corresponding world.
 
-item: 352 # Item for select wolf
+item_select: 352
+item_inventory: 352
+
+limit:
+    enable: false # Enable limit of tamed wolves?
+    value: 16 # Value, if limit is enabled.
 
 wolf:
     enable: true # Allow wolves to spawn.
@@ -11,7 +16,3 @@ wolf:
 
     #respawn: true # Respawn tamed wolves.
     #peaceful: false # Wild wolves are peaceful.
-
-    limit:
-        enable: false # Enable limit of tamed wolves?
-        limit: 16 # Limit count, if limit is enabled.

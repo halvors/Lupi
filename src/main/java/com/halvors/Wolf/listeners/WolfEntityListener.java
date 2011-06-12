@@ -70,7 +70,7 @@ public class WolfEntityListener extends EntityListener {
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-//                Wolf wolf = (Wolf)entity;
+//                Wolf wolf = (Wolf) entity;
                 
                 if (!worldConfig.wolfEnable) {
                     event.setCancelled(true);
@@ -85,10 +85,10 @@ public class WolfEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             
             if (event instanceof EntityDamageByEntityEvent) {
-                Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
+                Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
                 
                 if (entity instanceof Wolf) {
-                    Wolf wolf = (Wolf)entity;
+                    Wolf wolf = (Wolf) entity;
 
                     if (wolfManager.hasWolf(wolf)) {
                     	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
@@ -145,12 +145,12 @@ public class WolfEntityListener extends EntityListener {
         World world = entity.getWorld();
         
         if (entity instanceof Wolf) {
-            Wolf wolf = (Wolf)entity;
+            Wolf wolf = (Wolf) entity;
             UUID uniqueId = wolf.getUniqueId();
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
             	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-//            	Player owner = (Player)wolf.getOwner();
+//            	Player owner = (Player) wolf.getOwner();
             	
                 if (wolf1.hasInventory()) {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
@@ -172,35 +172,33 @@ public class WolfEntityListener extends EntityListener {
     public void onEntityTame(EntityTameEvent event) {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
-            Player owner = (Player)event.getOwner();
+            Player player = (Player) event.getOwner();
             World world = entity.getWorld();
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf)entity;
-                UUID uniqueId = wolf.getUniqueId();
+                Wolf wolf = (Wolf) entity;
                 
-                if (worldConfig.wolfLimitEnable) {
-                	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
+                if (worldConfig.limitEnable) {
+                	List<WolfTable> wts = wolfManager.getWolfTables(player.getName());
                 	
                 	int size = wts.size();
-                	int limit = worldConfig.wolfLimitValue;
+                	int limit = worldConfig.limitValue;
                 	
                 	if (size >= limit) {
-                		owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
+                		player.sendMessage("You can't tame this wolf, you already have " + ChatColor.YELLOW + Integer.toString(size) + ChatColor.WHITE + " of " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + ".");
                 		
                 		event.setCancelled(true);
-                		
-                		return;
                 	}
                 }
                 
-                wolfManager.addWolf(wolf);
-                
-                if (wolfManager.hasWolf(uniqueId)) {
+                if (wolfManager.addWolf(wolf)) {
                 	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                	owner.sendMessage("You can change name with /setname <name>");
+
+                	player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
+                	player.sendMessage("You can change name with /setname <name>");
+                } else {
+                	// TODO: Add error message here.
                 }
             }
         }
@@ -213,11 +211,10 @@ public class WolfEntityListener extends EntityListener {
             Entity target = event.getTarget();
             
             if (entity instanceof Wolf) {
-//                Wolf wolf = (Wolf)target;
-//                UUID uniqueId = wolf.getUniqueId();
+//                Wolf wolf = (Wolf) target;
                 
                 if (target instanceof Player) {
-//                	Player player = (Player)target;
+//                	Player player = (Player) target;
                 }
             }
         }
@@ -225,17 +222,15 @@ public class WolfEntityListener extends EntityListener {
     
     
     @Override
-    public void onItemSpawn(ItemSpawnEvent event) { // TODO: Get this work.
+    public void onItemSpawn(ItemSpawnEvent event) {
     	if (!event.isCancelled()) {
-    		Entity entity = event.getEntity();
-    		
-    		if (entity instanceof Item) {
-    			Item item = (Item)entity;
-    			List<Entity> entities = item.getNearbyEntities(10, 10, 10); // TODO: Figure out position here
+    		if (event.getEntity() instanceof Item) {
+    			Item item = (Item) event.getEntity();
+    			List<Entity> entities = item.getNearbyEntities(1, 0, 1); // TODO: Figure out position here
     			
-    			for (Entity e : entities) {
-    				if (e instanceof Wolf) {
-    					Wolf wolf = (Wolf)entity;
+    			for (Entity entity : entities) {
+    				if (entity instanceof Wolf) {
+    					Wolf wolf = (Wolf) entity;
     				
     					if (wolfManager.hasWolf(wolf)) {
     						com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
@@ -243,10 +238,9 @@ public class WolfEntityListener extends EntityListener {
     						if (wolf1.hasInventory()) {
     							WolfInventory wi = wolf1.getInventory();
     							
+    							// Add item to inventory and remove it.
     							wi.addItem(item.getItemStack());
     							item.remove();
-    							
-    							// TODO: Pick up item here.
     						}
     					}
     				}
