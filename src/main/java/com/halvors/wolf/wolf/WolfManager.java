@@ -42,13 +42,16 @@ import com.halvors.wolf.WolfPlugin;
  */
 public class WolfManager {
     private final WolfPlugin plugin;
-    private List<String> wolfnames = new ArrayList<String>();
+    
     private final HashMap<UUID, Wolf> wolves;
+    private List<String> wolfNames;
     
     public WolfManager(final WolfPlugin plugin) {
         this.plugin = plugin;
-        initializeRandomNames();
         this.wolves = new HashMap<UUID, Wolf>();
+        this.wolfNames = new ArrayList<String>();
+        
+        initRandomNames();
     }
     
     /**
@@ -111,7 +114,8 @@ public class WolfManager {
            			nameUnique = true;
            		}
            	}
-        nameUnique = true;
+          	
+          	nameUnique = true;
         } while (!nameUnique);
         
         if (hasWolf(uniqueId)) {
@@ -304,7 +308,7 @@ public class WolfManager {
      * @return Wolf
      */
     public org.bukkit.entity.Wolf spawnWolf(Player player, World world, Location location) {
-    	org.bukkit.entity.Wolf wolf = (org.bukkit.entity.Wolf)world.spawnCreature(location, CreatureType.WOLF);
+    	org.bukkit.entity.Wolf wolf = (org.bukkit.entity.Wolf) world.spawnCreature(location, CreatureType.WOLF);
         wolf.setTamed(true);
         wolf.setOwner(player);
         
@@ -338,7 +342,7 @@ public class WolfManager {
     /**
      * Generate the table of premade wolf names
      */
-    private void initializeRandomNames() {  
+    private void initRandomNames() {  
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
            
@@ -351,7 +355,7 @@ public class WolfManager {
                 s1 = s1.trim();
                 
                 if (s1.length() > 0) {
-                    wolfnames.add(s1);
+                    wolfNames.add(s1);
                 }
             } while (true);
             
@@ -368,7 +372,7 @@ public class WolfManager {
     public String getRandomName() {
         Random random = new Random();
         
-        String name = wolfnames.get(random.nextInt(wolfnames.size()));
+        String name = wolfNames.get(random.nextInt(wolfNames.size()));
         
         return name;
     }
