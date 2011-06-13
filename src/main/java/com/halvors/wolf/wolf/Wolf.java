@@ -37,10 +37,13 @@ import com.halvors.wolf.WolfPlugin;
 public class Wolf {
 	private final WolfPlugin plugin;
 	
+    private final WolfInventoryManager wolfInventoryManager;
+	
 	private final UUID uniqueId;
 	
 	public Wolf(final WolfPlugin plugin, UUID uniqueId) {
 		this.plugin = plugin;
+		this.wolfInventoryManager = plugin.getWolfInventoryManager();
 		this.uniqueId = uniqueId;
 	}
 	
@@ -173,7 +176,7 @@ public class Wolf {
     	
     	if (wt != null) {
     		wt.setOwner(owner.getName());
-    		getWolf().setOwner(owner);
+    		getEntity().setOwner(owner);
     		
     		plugin.getDatabase().update(wt);
     	}
@@ -244,7 +247,7 @@ public class Wolf {
      */
     public void addInventory() {
     	setInventory(true);
-        plugin.getWolfInventoryManager().addWolfInventory(uniqueId);
+        wolfInventoryManager.addWolfInventory(uniqueId);
 	}
 
     /**
@@ -252,7 +255,7 @@ public class Wolf {
      */
     public void removeInventory() {
     	setInventory(false);
-    	plugin.getWolfInventoryManager().removeWolfInventory(uniqueId);
+    	wolfInventoryManager.removeWolfInventory(uniqueId);
     }
     
     /**
@@ -261,15 +264,15 @@ public class Wolf {
      * @return WolfInventory
      */
     public WolfInventory getInventory() {
-    	return plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
+    	return wolfInventoryManager.getWolfInventory(uniqueId);
     }
 
     /**
-     * Get wolf
+     * Get the wolf entity
      * 
      * @return Wolf
      */
-    public org.bukkit.entity.Wolf getWolf() {
+    public org.bukkit.entity.Wolf getEntity() {
     	List<Entity> entities = getWorld().getEntities();
     	
     	for (Entity entity : entities) {

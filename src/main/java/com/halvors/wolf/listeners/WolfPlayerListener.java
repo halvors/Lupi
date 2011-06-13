@@ -80,7 +80,7 @@ public class WolfPlayerListener extends PlayerListener {
             	Location pos = player.getTargetBlock(null, 120).getLocation();
             	
             	if (item.equals(Material.SADDLE)) {
-            		if (plugin.hasPermissions(player, "Wolf.target")) {
+            		if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
             			if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
             				PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
             				EntityWolf entityWolf = ((CraftWolf)wolf).getHandle();
@@ -107,6 +107,7 @@ public class WolfPlayerListener extends PlayerListener {
                 UUID uniqueId = wolf.getUniqueId();
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
+                	
                 	// Add tamed wolves that existed prior to plugin if wolf is tamed and player is the owner
                 	if (!wolfManager.hasWolf(uniqueId)) {
                     	wolfManager.addWolf(wolf);
@@ -114,11 +115,12 @@ public class WolfPlayerListener extends PlayerListener {
                     	player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
                     	player.sendMessage("You can change name with /wolf setname <name>");
                     }
+                	
                 	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {
-                        if (plugin.hasPermissions(player, "Wolf.select")) {
+                        if (plugin.hasPermissions(player, "Wolf.wolf.select")) {
                             selectedWolfManager.addSelectedWolf(player.getName(), wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
