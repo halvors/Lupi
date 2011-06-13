@@ -158,7 +158,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     							String owner = player.getName();
 
     							if (wolfManager.hasWolf(name, owner)) {
-    								Wolf wolf = (Wolf) wolfManager.getWolf(name, owner).getWolf();
+    								Wolf wolf = (Wolf) wolfManager.getWolf(name, owner).getEntity();
     								wolf.teleport(player);
 
     								player.sendMessage(ChatColor.GREEN + "Your wolf is coming.");
