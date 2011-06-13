@@ -106,12 +106,14 @@ public class WolfPlayerListener extends PlayerListener {
                 Wolf wolf = (Wolf) entity;
                 UUID uniqueId = wolf.getUniqueId();
                 
-                // TODO: Remove this?
-                if (!wolfManager.hasWolf(uniqueId)) {
-                	wolfManager.addWolf(wolf);
-                }
-                
-                if (wolf.isTamed() && wolfManager.hasWolf(wolf) && wolf.getOwner().equals(player)) {
+                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
+                	// Add tamed wolves that existed prior to plugin if wolf is tamed and player is the owner
+                	if (!wolfManager.hasWolf(uniqueId)) {
+                    	wolfManager.addWolf(wolf);
+                    	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    	player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
+                    	player.sendMessage("You can change name with /wolf setname <name>");
+                    }
                 	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();
                     

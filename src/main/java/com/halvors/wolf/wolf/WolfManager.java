@@ -42,11 +42,12 @@ import com.halvors.wolf.WolfPlugin;
  */
 public class WolfManager {
     private final WolfPlugin plugin;
- 
+    private List<String> wolfnames = new ArrayList<String>();
     private final HashMap<UUID, Wolf> wolves;
     
     public WolfManager(final WolfPlugin plugin) {
         this.plugin = plugin;
+        initializeRandomNames();
         this.wolves = new HashMap<UUID, Wolf>();
     }
     
@@ -99,19 +100,24 @@ public class WolfManager {
         UUID uniqueId = wolf.getUniqueId();
         Player player = (Player)wolf.getOwner();
             
-        /*
+        String wolfname = name;
         boolean nameUnique = false;
           
-        while (!nameUnique) {
+        do {
           	for (WolfTable wt : getWolfTables(player.getName())) {
-           		if (wt.getName().equalsIgnoreCase(name)) {
-           			name = getRandomName();
+           		if (wt.getName().equalsIgnoreCase(wolfname)) {
+           			wolfname = getRandomName();
            		} else {
            			nameUnique = true;
            		}
            	}
+        nameUnique = true;
+        } while (!nameUnique);
+        
+        
+        if (hasWolf(uniqueId)) {
+        	return false;
         }
-        */
            
         // Check if a wolf with same name already exists.
 //        for (Wolf wolf1 : getWolves(player)) {
@@ -317,14 +323,9 @@ public class WolfManager {
     }
     
     /**
-     * Generate a random name
-     * 
-     * @return String
+     * Generate the table of premade wolf names
      */
-    public String getRandomName() { // TODO: Improve this. 
-        Random random = new Random();
-        List<String> names = new ArrayList<String>();
-        String name = null;
+    private void initializeRandomNames() {  
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
@@ -338,14 +339,26 @@ public class WolfManager {
                 s1 = s1.trim();
                 
                 if (s1.length() > 0) {
-                    names.add(s1);
+                    wolfnames.add(s1);
                 }
             } while (true);
             
-            name = names.get(random.nextInt(names.size())); // (String)names.get(random.nextInt(names.size()));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Generate a random name
+     * 
+     * @return String
+     */
+    public String getRandomName() {
+        Random random = new Random();
+        
+        String name = null;
+
+        name = wolfnames.get(random.nextInt(wolfnames.size())); // (String)names.get(random.nextInt(names.size()));
         
         return name;
     }

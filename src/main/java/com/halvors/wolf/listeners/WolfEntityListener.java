@@ -194,11 +194,12 @@ public class WolfEntityListener extends EntityListener {
                 		return;
                 	}
                 }
+                wolfManager.addWolf(wolf);
                 
-                if (wolfManager.addWolf(wolf)) {
+                if (wolfManager.hasWolf(wolf)) {
                 	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                 	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                	owner.sendMessage("You can change name with /setname <name>");
+                	owner.sendMessage("You can change name with /wolf setname <name>");
                 }
             }
         }
