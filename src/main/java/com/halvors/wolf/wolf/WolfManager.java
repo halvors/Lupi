@@ -99,14 +99,14 @@ public class WolfManager {
     public boolean addWolf(org.bukkit.entity.Wolf wolf, String name) {
         UUID uniqueId = wolf.getUniqueId();
         Player player = (Player)wolf.getOwner();
-            
-        String wolfname = name;
+        
         boolean nameUnique = false;
-          
+        
+        // Check if a wolf with same name already exists.
         do {
           	for (WolfTable wt : getWolfTables(player.getName())) {
-           		if (wt.getName().equalsIgnoreCase(wolfname)) {
-           			wolfname = getRandomName();
+           		if (wt.getName().equalsIgnoreCase(name)) {
+           			name = getRandomName();
            		} else {
            			nameUnique = true;
            		}
@@ -114,17 +114,9 @@ public class WolfManager {
         nameUnique = true;
         } while (!nameUnique);
         
-        
         if (hasWolf(uniqueId)) {
         	return false;
         }
-           
-        // Check if a wolf with same name already exists.
-//        for (Wolf wolf1 : getWolves(player)) {
-//      		if (wolf1.getName().equalsIgnoreCase(name)) {
-//          		name = getRandomName();
-//      		}
-//      	}
             
         // Create a new WolfTable
         WolfTable wt = new WolfTable();
@@ -146,7 +138,7 @@ public class WolfManager {
         wolves.put(uniqueId, wolf1);
 
 //		return wolves.get(uniqueId) == null ? false : true;
-		return wolves.containsKey(uniqueId);
+		return hasWolf(uniqueId);
     }
     
     /**
@@ -162,17 +154,28 @@ public class WolfManager {
     /**
      * Remove a wolf
      * 
-     * @param wolf
+     * @param uniqueId
+     * @return boolean
      */
-    public void removeWolf(org.bukkit.entity.Wolf wolf) {
-    	UUID uniqueId = wolf.getUniqueId();
-    	
-        if (wolves.containsKey(uniqueId)) {
-        	// TODO: Improve get of WolfTable here.
-        	plugin.getDatabase().delete(getWolf(wolf).getWolfTable());
-        	
+    public boolean removeWolf(UUID uniqueId) {
+        if (wolves.containsKey(uniqueId)) {     	
         	wolves.remove(uniqueId);
+        	
+        	plugin.getDatabase().delete(getWolf(uniqueId).getWolfTable()); // TODO: Improve?
         }
+        
+        return !(hasWolf(uniqueId));
+    }
+    
+    
+    /**
+     * Remove a wolf
+     * 
+     * @param wolf
+     * @return boolean
+     */
+    public boolean removeWolf(org.bukkit.entity.Wolf wolf) {
+    	return removeWolf(wolf.getUniqueId());
     }
 
     /**
@@ -234,8 +237,18 @@ public class WolfManager {
      * @param uniqueId
      * @return Wolf
      */
+    public Wolf getWolf(UUID uniqueId) {
+    	return wolves.get(uniqueId);
+    }
+    
+    /**
+     * Get wolf
+     * 
+     * @param Wolf
+     * @return Wolf
+     */
     public Wolf getWolf(org.bukkit.entity.Wolf wolf) {
-    	return wolves.get(wolf.getUniqueId());
+    	return getWolf(wolf.getUniqueId());
     }
     
     /**
@@ -326,7 +339,6 @@ public class WolfManager {
      * Generate the table of premade wolf names
      */
     private void initializeRandomNames() {  
-        
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
            
@@ -356,9 +368,7 @@ public class WolfManager {
     public String getRandomName() {
         Random random = new Random();
         
-        String name = null;
-
-        name = wolfnames.get(random.nextInt(wolfnames.size())); // (String)names.get(random.nextInt(names.size()));
+        String name = wolfnames.get(random.nextInt(wolfnames.size()));
         
         return name;
     }
