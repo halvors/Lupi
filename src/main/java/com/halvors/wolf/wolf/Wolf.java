@@ -23,9 +23,11 @@ package com.halvors.wolf.wolf;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.halvors.wolf.WolfPlugin;
 
@@ -289,4 +291,25 @@ public class Wolf {
     	
     	return null;
     }
+    
+    /*
+    public void eat(ItemStack item) {
+    	Material type = item.getType();
+    	
+    	if (type.equals(Material.PORK) || type.equals(Material.GRILLED_PORK)) {
+    		org.bukkit.entity.Wolf wolf = getEntity();
+    		int amount = item.getAmount();
+    		
+    		for (int i = 0; i < amount; i++) {
+    			int health = wolf.getHealth();
+    			int heal = 3;
+    			
+    			if (health <= 20) {
+    				wolf.setHealth(health + heal);
+    				item.setAmount(amount - 1);
+    			}
+    		}
+    	}
+    }
+    */
 }

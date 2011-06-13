@@ -85,15 +85,15 @@ public class WolfEntityListener extends EntityListener {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
             
-            if (event instanceof EntityDamageByEntityEvent) {
-                Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
-                
-                if (entity instanceof Wolf) {
-                    Wolf wolf = (Wolf)entity;
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
 
-                    if (wolfManager.hasWolf(wolf)) {
-                    	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                        
+                if (wolfManager.hasWolf(wolf)) {
+                	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                	
+                	if (event instanceof EntityDamageByEntityEvent) {
+                		Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
+ 
                     	if (damager instanceof Player) {
                     		Player attacker = (Player)damager;
                         
@@ -118,23 +118,23 @@ public class WolfEntityListener extends EntityListener {
                     			}
                     		}
                     	}
-                    	
-                    	if (wolf1.hasInventory()) {
-                    		WolfInventory wi = wolf1.getInventory();
-                    		
-                    		for (int i = 0; i < wi.getSize(); i++) {
-                            	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
-                            			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
-                            		
-                            		Material item = wi.getItem(i).getType();
-                            		
-                            		if (item.equals(Material.PORK) || item.equals(Material.GRILLED_PORK)) {
-                            			// TODO: Add health for pork and remove used pork from chest.
-                            		}
-                            	}
-                            }
-                    	}
                     }
+                	
+                	/*
+                	if (wolf1.hasInventory()) {
+                		WolfInventory wi = wolf1.getInventory();
+                 		
+                 		for (int i = 0; i < wi.getSize(); i++) {
+                         	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
+                         			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
+                         		
+                         		wolf1.eat(wi.getItem(i));
+                         		
+                         		// TODO: Add some kind of message here.
+                         	}
+                 		}
+                 	}
+                 	*/
                 }
             }
         }
