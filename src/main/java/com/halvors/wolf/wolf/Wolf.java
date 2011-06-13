@@ -144,6 +144,10 @@ public class Wolf {
     		wt.setName(name);
     		
     		plugin.getDatabase().update(wt);
+    		
+    		if (hasInventory()) {
+    	        getInventory().setName(name + "'s inventory");
+    		}
     	}
     }
     
@@ -247,7 +251,7 @@ public class Wolf {
      */
     public void addInventory() {
     	setInventory(true);
-        wolfInventoryManager.addWolfInventory(uniqueId);
+        wolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
 	}
 
     /**

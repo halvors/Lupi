@@ -121,8 +121,11 @@ public class WolfInventoryManager {
      * 
      * @param uniqueId
      */
-    public void addWolfInventory(UUID uniqueId) {
-        addWolfInventory(uniqueId, new WolfInventory(uniqueId));
+    public void addWolfInventory(UUID uniqueId, String name) {
+    	WolfInventory wi = new WolfInventory(uniqueId);
+    	wi.setName(name);
+    	
+        addWolfInventory(uniqueId, wi);
     }
     
     /**

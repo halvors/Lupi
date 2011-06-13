@@ -45,6 +45,7 @@ import com.halvors.wolf.WolfPlugin;
 import com.halvors.wolf.util.ConfigManager;
 import com.halvors.wolf.util.WorldConfig;
 import com.halvors.wolf.wolf.SelectedWolfManager;
+import com.halvors.wolf.wolf.WolfInventoryManager;
 import com.halvors.wolf.wolf.WolfManager;
 
 /**
@@ -57,12 +58,14 @@ public class WolfPlayerListener extends PlayerListener {
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
+    private final WolfInventoryManager wolfInventoryManager;
     private final SelectedWolfManager selectedWolfManager;
     
     public WolfPlayerListener(final WolfPlugin plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
     
@@ -131,11 +134,8 @@ public class WolfPlayerListener extends PlayerListener {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
                         	if (worldConfig.wolfInventory) {
                         		if (wolf1.hasInventory()) {
-                        			EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
-                        	        String name = plugin.getWolfManager().getWolf(uniqueId).getName() + "'s Chest";
-                        	        plugin.getWolfInventoryManager().getWolfInventory(uniqueId).setName(name);
-
-                        			entityPlayer.a(plugin.getWolfInventoryManager().getWolfInventory(uniqueId).getInventory());
+                        			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                        			entityPlayer.a(wolfInventoryManager.getWolfInventory(uniqueId).getInventory());
 	                            } else {
 	                            	// Add inventory.
 	                            	wolf1.addInventory();
