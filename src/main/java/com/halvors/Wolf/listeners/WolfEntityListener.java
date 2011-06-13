@@ -178,7 +178,6 @@ public class WolfEntityListener extends EntityListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf)entity;
-                UUID uniqueId = wolf.getUniqueId();
                 
                 if (worldConfig.limitEnable) {
                 	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
@@ -225,15 +224,13 @@ public class WolfEntityListener extends EntityListener {
     @Override
     public void onItemSpawn(ItemSpawnEvent event) { // TODO: Get this work.
     	if (!event.isCancelled()) {
-    		Entity entity = event.getEntity();
-    		
-    		if (entity instanceof Item) {
-    			Item item = (Item)entity;
+    		if (event.getEntity() instanceof Item) {
+    			Item item = (Item) event.getEntity();
     			List<Entity> entities = item.getNearbyEntities(10, 10, 10); // TODO: Figure out position here
     			
-    			for (Entity e : entities) {
-    				if (e instanceof Wolf) {
-    					Wolf wolf = (Wolf)entity;
+    			for (Entity entity : entities) {
+    				if (entity instanceof Wolf) {
+    					Wolf wolf = (Wolf) entity;
     				
     					if (wolfManager.hasWolf(wolf)) {
     						com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);

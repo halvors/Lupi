@@ -33,6 +33,8 @@ import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
+import com.avaje.ebean.EbeanServer;
+
 /**
  * Handle wolves
  * 
@@ -41,10 +43,13 @@ import org.bukkit.entity.Player;
 public class WolfManager {
     private final com.halvors.Wolf.Wolf plugin;
  
+    private final EbeanServer database;
+    
     private final HashMap<UUID, Wolf> wolves;
     
     public WolfManager(com.halvors.Wolf.Wolf plugin) {
         this.plugin = plugin;
+        this.database = plugin.getDatabase();
         this.wolves = new HashMap<UUID, Wolf>();
     }
     
