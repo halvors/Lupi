@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import com.avaje.ebean.EbeanServer;
 import com.halvors.wolf.WolfPlugin;
 
 /**
@@ -35,13 +34,10 @@ import com.halvors.wolf.WolfPlugin;
 public class WolfInventoryManager {
     private final WolfPlugin plugin;
     
-    private final EbeanServer database;
-    
     private final HashMap<UUID, WolfInventory> wolfInventorys;
     
     public WolfInventoryManager(final WolfPlugin plugin) {
         this.plugin = plugin;
-        this.database = plugin.getDatabase();
         this.wolfInventorys = new HashMap<UUID, WolfInventory>();
     }
     

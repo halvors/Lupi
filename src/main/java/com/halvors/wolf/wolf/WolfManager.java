@@ -33,7 +33,6 @@ import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
-import com.avaje.ebean.EbeanServer;
 import com.halvors.wolf.WolfPlugin;
 
 /**
@@ -44,13 +43,10 @@ import com.halvors.wolf.WolfPlugin;
 public class WolfManager {
     private final WolfPlugin plugin;
  
-    private final EbeanServer database;
-    
     private final HashMap<UUID, Wolf> wolves;
     
     public WolfManager(final WolfPlugin plugin) {
         this.plugin = plugin;
-        this.database = plugin.getDatabase();
         this.wolves = new HashMap<UUID, Wolf>();
     }
     
@@ -60,7 +56,7 @@ public class WolfManager {
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables() {
-        return database.find(WolfTable.class).findList();
+        return plugin.getDatabase().find(WolfTable.class).findList();
     }
     
     /**
@@ -70,7 +66,7 @@ public class WolfManager {
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables(String owner) {
-        return database.find(WolfTable.class).where()
+        return plugin.getDatabase().find(WolfTable.class).where()
             .ieq("owner", owner).findList();
     }
 
