@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.wolf;
+package com.halvors.wolf.wolf;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,17 +27,19 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import com.halvors.wolf.WolfPlugin;
+
 /**
  * Represents a wolf
  * 
  * @author halvors
  */
 public class Wolf {
-	private final com.halvors.Wolf.Wolf plugin;
+	private final WolfPlugin plugin;
 	
 	private final UUID uniqueId;
 	
-	public Wolf(final com.halvors.Wolf.Wolf plugin, UUID uniqueId) {
+	public Wolf(final WolfPlugin plugin, UUID uniqueId) {
 		this.plugin = plugin;
 		this.uniqueId = uniqueId;
 	}

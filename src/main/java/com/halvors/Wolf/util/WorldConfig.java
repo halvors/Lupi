@@ -18,14 +18,14 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.util;
+package com.halvors.wolf.util;
 
 import java.io.File;
 import java.util.logging.Level;
 
 import org.bukkit.util.config.Configuration;
 
-import com.halvors.Wolf.Wolf;
+import com.halvors.wolf.WolfPlugin;
 
 /**
  * Holds the configuration for individual worlds.
@@ -33,7 +33,7 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WorldConfig {
-    //private final Wolf plugin;
+    //private final WolfPlugin plugin;
     
     private String worldName;
     private File configFile;
@@ -48,7 +48,7 @@ public class WorldConfig {
     public int limitValue;
     /* Configuration data end */
 
-    public WorldConfig(final Wolf plugin, final String worldName) {
+    public WorldConfig(final WolfPlugin plugin, final String worldName) {
         //this.plugin = plugin;
         this.worldName = worldName;
         

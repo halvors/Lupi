@@ -18,11 +18,13 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.wolf;
+package com.halvors.wolf.wolf;
 
 import java.util.HashMap;
 
 import org.bukkit.entity.Wolf;
+
+import com.halvors.wolf.WolfPlugin;
 
 /**
  * Handle selected wolves.
@@ -30,11 +32,11 @@ import org.bukkit.entity.Wolf;
  * @author halvors
  */
 public class SelectedWolfManager {
-//    private final com.halvors.Wolf.Wolf plugin;
+//    private final WolfPlugin plugin;
     
     private final HashMap<String, Wolf> selectedWolves;
     
-    public SelectedWolfManager(final com.halvors.Wolf.Wolf plugin) {
+    public SelectedWolfManager(final WolfPlugin plugin) {
 //        this.plugin = plugin;
         this.selectedWolves = new HashMap<String, Wolf>();
     }

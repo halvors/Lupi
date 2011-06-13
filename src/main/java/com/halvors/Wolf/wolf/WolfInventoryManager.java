@@ -18,13 +18,14 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.wolf;
+package com.halvors.wolf.wolf;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import com.halvors.Wolf.Wolf;
+import com.avaje.ebean.EbeanServer;
+import com.halvors.wolf.WolfPlugin;
 
 /**
  * Handle WolfInventory's
@@ -32,12 +33,15 @@ import com.halvors.Wolf.Wolf;
  * @author halvors
  */
 public class WolfInventoryManager {
-    private final Wolf plugin;
+    private final WolfPlugin plugin;
+    
+    private final EbeanServer database;
     
     private final HashMap<UUID, WolfInventory> wolfInventorys;
     
-    public WolfInventoryManager(final Wolf plugin) {
+    public WolfInventoryManager(final WolfPlugin plugin) {
         this.plugin = plugin;
+        this.database = plugin.getDatabase();
         this.wolfInventorys = new HashMap<UUID, WolfInventory>();
     }
     

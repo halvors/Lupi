@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.chest;
+package com.halvors.wolf.chest;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

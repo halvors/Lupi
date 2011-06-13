@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.wolf;
+package com.halvors.wolf.wolf;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
-import com.halvors.Wolf.chest.TileEntityVirtualChest;
+import com.halvors.wolf.chest.TileEntityVirtualChest;
 
 /**
  * Represents a WolfInventory.

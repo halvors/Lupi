@@ -1,5 +1,5 @@
 name: Wolf
-main: com.halvors.Wolf.Wolf
+main: com.halvors.wolf.Wolf
 version: 0.1
 author: halvors, speeddemon92
 database: true

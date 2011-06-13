@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.listeners;
+package com.halvors.wolf.listeners;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,8 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
 
-import com.halvors.Wolf.wolf.WolfManager;
+import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.wolf.WolfManager;
 
 /**
  * Handle events for all World related events.
@@ -37,11 +38,11 @@ import com.halvors.Wolf.wolf.WolfManager;
  * @author speeddemon92
  */
 public class WolfWorldListener extends WorldListener {
-//    private final com.halvors.Wolf.Wolf plugin;
+//    private final WolfPlugin plugin;
     
     private final WolfManager wolfManager;
     
-    public WolfWorldListener(final com.halvors.Wolf.Wolf plugin) {
+    public WolfWorldListener(final WolfPlugin plugin) {
 //        this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
     }

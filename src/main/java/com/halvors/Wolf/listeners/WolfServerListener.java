@@ -1,11 +1,12 @@
-package com.halvors.Wolf.listeners;
+package com.halvors.wolf.listeners;
 
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 
-import com.halvors.Wolf.wolf.WolfInventoryManager;
-import com.halvors.Wolf.wolf.WolfManager;
+import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.wolf.WolfInventoryManager;
+import com.halvors.wolf.wolf.WolfManager;
 
 /**
  * Handle events for all Server related events.
@@ -13,12 +14,12 @@ import com.halvors.Wolf.wolf.WolfManager;
  * @author halvors
  */
 public class WolfServerListener extends ServerListener {
-//	private final com.halvors.Wolf.Wolf plugin;
+//	private final WolfPlugin plugin;
 	
 	private final WolfManager wolfManager;
 	private final WolfInventoryManager wolfInventoryManager;
 	
-	public WolfServerListener(final com.halvors.Wolf.Wolf plugin) {
+	public WolfServerListener(final WolfPlugin plugin) {
 //		this.plugin = plugin;
 		this.wolfManager = plugin.getWolfManager();
 		this.wolfInventoryManager = plugin.getWolfInventoryManager();

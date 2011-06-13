@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf;
+package com.halvors.wolf;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,21 +35,21 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.halvors.Wolf.command.WolfCommandExecutor;
-import com.halvors.Wolf.listeners.WolfEntityListener;
-import com.halvors.Wolf.listeners.WolfPlayerListener;
-import com.halvors.Wolf.listeners.WolfServerListener;
-import com.halvors.Wolf.listeners.WolfWorldListener;
-import com.halvors.Wolf.util.ConfigManager;
-import com.halvors.Wolf.wolf.SelectedWolfManager;
-import com.halvors.Wolf.wolf.WolfInventoryManager;
-import com.halvors.Wolf.wolf.WolfInventoryTable;
-import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
+import com.halvors.wolf.command.WolfCommandExecutor;
+import com.halvors.wolf.listeners.WolfEntityListener;
+import com.halvors.wolf.listeners.WolfPlayerListener;
+import com.halvors.wolf.listeners.WolfServerListener;
+import com.halvors.wolf.listeners.WolfWorldListener;
+import com.halvors.wolf.util.ConfigManager;
+import com.halvors.wolf.wolf.SelectedWolfManager;
+import com.halvors.wolf.wolf.WolfInventoryManager;
+import com.halvors.wolf.wolf.WolfInventoryTable;
+import com.halvors.wolf.wolf.WolfManager;
+import com.halvors.wolf.wolf.WolfTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-public class Wolf extends JavaPlugin {
+public class WolfPlugin extends JavaPlugin {
     private String name;
     private String version;
     

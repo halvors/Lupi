@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.listeners;
+package com.halvors.wolf.listeners;
 
 import java.util.UUID;
 
@@ -41,10 +41,11 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
-import com.halvors.Wolf.util.ConfigManager;
-import com.halvors.Wolf.util.WorldConfig;
-import com.halvors.Wolf.wolf.SelectedWolfManager;
-import com.halvors.Wolf.wolf.WolfManager;
+import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.util.ConfigManager;
+import com.halvors.wolf.util.WorldConfig;
+import com.halvors.wolf.wolf.SelectedWolfManager;
+import com.halvors.wolf.wolf.WolfManager;
 
 /**
  * Handle events for all Player related events.
@@ -52,13 +53,13 @@ import com.halvors.Wolf.wolf.WolfManager;
  * @author halvors
  */
 public class WolfPlayerListener extends PlayerListener {
-    private final com.halvors.Wolf.Wolf plugin;
+    private final WolfPlugin plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
     
-    public WolfPlayerListener(final com.halvors.Wolf.Wolf plugin) {
+    public WolfPlayerListener(final WolfPlugin plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
@@ -111,7 +112,7 @@ public class WolfPlayerListener extends PlayerListener {
                 }
                 
                 if (wolf.isTamed() && wolfManager.hasWolf(wolf) && wolf.getOwner().equals(player)) {
-                	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {

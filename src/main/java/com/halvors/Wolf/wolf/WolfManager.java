@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.wolf;
+package com.halvors.wolf.wolf;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,6 +34,7 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 import com.avaje.ebean.EbeanServer;
+import com.halvors.wolf.WolfPlugin;
 
 /**
  * Handle wolves
@@ -41,13 +42,13 @@ import com.avaje.ebean.EbeanServer;
  * @author halvors
  */
 public class WolfManager {
-    private final com.halvors.Wolf.Wolf plugin;
+    private final WolfPlugin plugin;
  
     private final EbeanServer database;
     
     private final HashMap<UUID, Wolf> wolves;
     
-    public WolfManager(com.halvors.Wolf.Wolf plugin) {
+    public WolfManager(final WolfPlugin plugin) {
         this.plugin = plugin;
         this.database = plugin.getDatabase();
         this.wolves = new HashMap<UUID, Wolf>();

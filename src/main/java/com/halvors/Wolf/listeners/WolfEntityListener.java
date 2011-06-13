@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.listeners;
+package com.halvors.wolf.listeners;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,11 +39,12 @@ import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 
-import com.halvors.Wolf.util.ConfigManager;
-import com.halvors.Wolf.util.WorldConfig;
-import com.halvors.Wolf.wolf.WolfInventory;
-import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
+import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.util.ConfigManager;
+import com.halvors.wolf.util.WorldConfig;
+import com.halvors.wolf.wolf.WolfInventory;
+import com.halvors.wolf.wolf.WolfManager;
+import com.halvors.wolf.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
@@ -51,12 +52,12 @@ import com.halvors.Wolf.wolf.WolfTable;
  * @author halvors
  */
 public class WolfEntityListener extends EntityListener {
-    private final com.halvors.Wolf.Wolf plugin;
+    private final WolfPlugin plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     
-    public WolfEntityListener(final com.halvors.Wolf.Wolf plugin) {
+    public WolfEntityListener(final WolfPlugin plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
@@ -91,7 +92,7 @@ public class WolfEntityListener extends EntityListener {
                     Wolf wolf = (Wolf)entity;
 
                     if (wolfManager.hasWolf(wolf)) {
-                    	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                         
                     	if (damager instanceof Player) {
                     		Player attacker = (Player)damager;
@@ -149,7 +150,7 @@ public class WolfEntityListener extends EntityListener {
             UUID uniqueId = wolf.getUniqueId();
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
-            	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+            	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 //            	Player owner = (Player)wolf.getOwner();
             	
                 if (wolf1.hasInventory()) {
@@ -195,7 +196,7 @@ public class WolfEntityListener extends EntityListener {
                 }
                 
                 if (wolfManager.addWolf(wolf)) {
-                	com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                 	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
                 	owner.sendMessage("You can change name with /setname <name>");
                 }
@@ -233,7 +234,7 @@ public class WolfEntityListener extends EntityListener {
     					Wolf wolf = (Wolf) entity;
     				
     					if (wolfManager.hasWolf(wolf)) {
-    						com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    						com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
     						if (wolf1.hasInventory()) {
     							WolfInventory wi = wolf1.getInventory();

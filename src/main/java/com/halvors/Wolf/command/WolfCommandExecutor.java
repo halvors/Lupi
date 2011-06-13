@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.Wolf.command;
+package com.halvors.wolf.command;
 
 import java.util.List;
 
@@ -30,9 +30,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
-import com.halvors.Wolf.wolf.SelectedWolfManager;
-import com.halvors.Wolf.wolf.WolfManager;
-import com.halvors.Wolf.wolf.WolfTable;
+import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.wolf.SelectedWolfManager;
+import com.halvors.wolf.wolf.WolfManager;
+import com.halvors.wolf.wolf.WolfTable;
 
 /**
  * Represents a CommandExecutor
@@ -40,13 +41,13 @@ import com.halvors.Wolf.wolf.WolfTable;
  * @author halvors
  */
 public class WolfCommandExecutor implements CommandExecutor {
-    private final com.halvors.Wolf.Wolf plugin;
+    private final WolfPlugin plugin;
 
 //    private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
 
-    public WolfCommandExecutor(final com.halvors.Wolf.Wolf plugin) {
+    public WolfCommandExecutor(final WolfPlugin plugin) {
         this.plugin = plugin;
 //        this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
@@ -104,7 +105,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     							Wolf wolf = (Wolf)selectedWolfManager.getSelectedWolf(name);
 
     							if (wolfManager.hasWolf(wolf)) {
-    								com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    								com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
     								player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
     							}
@@ -142,7 +143,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     						}
 
     						if (wolfManager.hasWolf(wolf) && wolf != null && name != null) {
-    							com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
     							wolf1.setName(name);
 
     							player.sendMessage("Wolf name set to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
@@ -190,7 +191,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     						}
 
     						if (wolfManager.hasWolf(wolf) && wolf != null) {
-    							com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
     							wolf.setTarget(null);
 
@@ -240,7 +241,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     						}
 
     						if (wolfManager.hasWolf(wolf) && wolf != null && receiver != null) {
-    							com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
     							String name = wolf1.getName();
     							String to = receiver.getName();
 
@@ -275,7 +276,7 @@ public class WolfCommandExecutor implements CommandExecutor {
     						}
 
     						if (wolfManager.hasWolf(wolf) && wolf != null) {
-    							com.halvors.Wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
     							wolfManager.releaseWolf(wolf);
 
     							player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has been released.");
@@ -313,12 +314,12 @@ public class WolfCommandExecutor implements CommandExecutor {
     }
 
     private void showPlayerWolves(Player player) {
-        List<com.halvors.Wolf.wolf.Wolf> wolves = wolfManager.getWolves(player);
+        List<com.halvors.wolf.wolf.Wolf> wolves = wolfManager.getWolves(player);
         
         player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
         if (!wolves.isEmpty()) {
-            for (com.halvors.Wolf.wolf.Wolf wolf1 : wolves) {
+            for (com.halvors.wolf.wolf.Wolf wolf1 : wolves) {
                 Wolf wolf = wolf1.getWolf();
                 Location pos = wolf.getLocation();
                 
