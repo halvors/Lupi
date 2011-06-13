@@ -60,7 +60,7 @@ public class WolfManager {
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables() {
-        return plugin.getDatabase().find(WolfTable.class).findList();
+        return database.find(WolfTable.class).findList();
     }
     
     /**
@@ -70,7 +70,7 @@ public class WolfManager {
      * @return List<WolfTable>
      */
     public List<WolfTable> getWolfTables(String owner) {
-        return plugin.getDatabase().find(WolfTable.class).where()
+        return database.find(WolfTable.class).where()
             .ieq("owner", owner).findList();
     }
 
