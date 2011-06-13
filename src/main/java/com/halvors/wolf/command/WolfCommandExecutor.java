@@ -151,24 +151,23 @@ public class WolfCommandExecutor implements CommandExecutor {
 
     						return true;
     					}
-    					/*
-                } else if (subCommand.equalsIgnoreCase("call")) {
-                    if (plugin.hasPermissions(player, "Wolf.wolf.call")) {
-                        if (args.length <= 1) {
-                            String name = args[1];
-                            String owner = player.getName();
 
-                            if (wolfManager.hasWolf(name, owner)) {
-                                Wolf wolf = (Wolf) wolfManager.getWolf(name, owner);
-                                wolf.teleport(player);
+    				} else if (subCommand.equalsIgnoreCase("call")) {
+    					if (plugin.hasPermissions(player, "Wolf.wolf.call")) {
+    						if (args.length == 2) {
+    							String name = args[1];
+    							String owner = player.getName();
 
-                                player.sendMessage(ChatColor.GREEN + "Your wolf is comming.");
-                            }
-                        }
+    							if (wolfManager.hasWolf(name, owner)) {
+    								Wolf wolf = (Wolf) wolfManager.getWolf(name, owner).getWolf();
+    								wolf.teleport(player);
 
-                        return true;
-                    }
-    					 */
+    								player.sendMessage(ChatColor.GREEN + "Your wolf is coming.");
+    							}
+    						}
+    					}
+    					return true;
+
     				} else if (subCommand.equalsIgnoreCase("stop")) {
     					if (plugin.hasPermissions(player, "Wolf.wolf.stop")) {
     						Wolf wolf = null;
@@ -222,14 +221,15 @@ public class WolfCommandExecutor implements CommandExecutor {
     						String owner = player.getName();
     						Player receiver = null;
 
-    						if (args.length <= 1) {
+    						if (args.length == 2) {
     							if (selectedWolfManager.hasSelectedWolf(owner)) {
     								wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
     								receiver = (Player) plugin.getServer().getPlayer(args[1]);
     							} else {
     								player.sendMessage(ChatColor.RED + "No wolf selected.");
+    								return true;
     							}
-    						} else {
+    						} else if (args.length == 3) {
     							String name = args[1];
 
     							if (wolfManager.hasWolf(name, owner)) {
@@ -237,8 +237,13 @@ public class WolfCommandExecutor implements CommandExecutor {
     								receiver = (Player)plugin.getServer().getPlayer(args[2]);
     							} else {
     								player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+    								return true;
     							}
+    						} else {
+    							player.sendMessage(ChatColor.RED + "Correct Syntax is /wolf give <player> (wolf)");
+    							return true;
     						}
+
 
     						if (wolfManager.hasWolf(wolf) && wolf != null && receiver != null) {
     							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
@@ -259,21 +264,27 @@ public class WolfCommandExecutor implements CommandExecutor {
     						Wolf wolf = null;
     						String owner = player.getName();
 
-    						if (args.length <= 1) {
+    						if (args.length == 1) {
     							if (selectedWolfManager.hasSelectedWolf(owner)) {
     								wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
     							} else {
     								player.sendMessage(ChatColor.RED + "No wolf selected.");
+    								return true;
     							}
-    						} else {
-    							String name = args[2];
+    						} else if (args.length == 2){
+    							String name = args[1];
 
     							if (wolfManager.hasWolf(name, owner)) {
     								wolf = (Wolf)wolfManager.getWolf(name, owner).getWolf();
     							} else {
     								player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+    								return true;
     							}
+    						} else {
+    							player.sendMessage(ChatColor.RED + "Too many arguments.");
+    							return true;
     						}
+
 
     						if (wolfManager.hasWolf(wolf) && wolf != null) {
     							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
@@ -308,8 +319,8 @@ public class WolfCommandExecutor implements CommandExecutor {
     		}
     	} else {
     		sender.sendMessage("Sorry but these commands are for in-game players only.");
-    	}
-    	
+
+    	}	
     	return false;
     }
 

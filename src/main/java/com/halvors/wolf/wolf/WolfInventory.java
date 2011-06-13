@@ -60,6 +60,10 @@ public class WolfInventory {
     public String getName() {
         return inventory.getName();
     }
+    
+    public void setName(String name) {
+    	inventory.setName(name);
+    }
 
     public ItemStack getItem(int index) {
         return new CraftItemStack(inventory.getItem(index));
