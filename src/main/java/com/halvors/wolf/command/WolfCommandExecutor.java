@@ -287,9 +287,10 @@ public class WolfCommandExecutor implements CommandExecutor {
 
     						if (wolfManager.hasWolf(wolf) && wolf != null) {
     							com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-    							wolfManager.releaseWolf(wolf);
 
     							player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has been released.");
+    							
+    							wolfManager.releaseWolf(wolf);
     						}
 
     						return true;

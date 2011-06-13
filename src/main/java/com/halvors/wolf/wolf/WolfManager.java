@@ -163,9 +163,9 @@ public class WolfManager {
      */
     public boolean removeWolf(UUID uniqueId) {
         if (wolves.containsKey(uniqueId)) {     	
-        	wolves.remove(uniqueId);
-        	
         	plugin.getDatabase().delete(getWolf(uniqueId).getWolfTable()); // TODO: Improve?
+        	
+        	wolves.remove(uniqueId);
         }
         
         return !(hasWolf(uniqueId));
