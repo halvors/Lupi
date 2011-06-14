@@ -35,6 +35,8 @@ import com.halvors.wolf.WolfPlugin;
 public class WorldConfig {
     //private final WolfPlugin plugin;
     
+	private final ConfigManager configManager;
+	
     private String worldName;
     private File configFile;
 
@@ -43,6 +45,7 @@ public class WorldConfig {
     
     public boolean wolfEnable;
     public boolean wolfInventory;
+    public boolean wolfPvp;
     
     public boolean limitEnable;
     public int limitValue;
@@ -50,12 +53,13 @@ public class WorldConfig {
 
     public WorldConfig(final WolfPlugin plugin, final String worldName) {
         //this.plugin = plugin;
+    	this.configManager = plugin.getConfigManager();
         this.worldName = worldName;
         
         File baseFolder = new File(plugin.getDataFolder(), "worlds/");
         configFile = new File(baseFolder, worldName + ".yml");
 
-        plugin.getConfigManager().checkConfig(configFile, "config_world.yml");
+        configManager.checkConfig(configFile, "config_world.yml");
 
         load();
 
@@ -71,15 +75,17 @@ public class WorldConfig {
         
         item = config.getInt("item", item);
         
-        wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
-        wolfInventory = config.getBoolean("wolf.inventory", wolfInventory);
-        
         limitEnable = config.getBoolean("limit.enable", limitEnable);
         limitValue = config.getInt("limit.value", limitValue);
+        
+        wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
+        wolfInventory = config.getBoolean("wolf.inventory", wolfInventory);
+        wolfPvp = config.getBoolean("wolf.pvp", wolfPvp);
     }
 
     /**
      * Get world name.
+     * 
      * @return worldName
      */
     public String getWorldName() {

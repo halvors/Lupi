@@ -73,23 +73,23 @@ public class WolfPlayerListener extends PlayerListener {
         String name = player.getName();
         
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(name)) {
-        	Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
+            Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
 
             if (wolfManager.hasWolf(wolf)) {
-            	Material item = event.getItem().getType();
-            	Location pos = player.getTargetBlock(null, 120).getLocation();
-            	
-            	if (item.equals(Material.SADDLE)) {
-            		if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
-            			if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
-            				PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
-            				EntityWolf entityWolf = ((CraftWolf)wolf).getHandle();
-            				entityWolf.a(new PathEntity(pathPoint));
+                Material item = event.getItem().getType();
+                Location pos = player.getTargetBlock(null, 120).getLocation();
+                
+                if (item.equals(Material.SADDLE)) {
+                    if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
+                        if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
+                            PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
+                            EntityWolf entityWolf = ((CraftWolf)wolf).getHandle();
+                            entityWolf.a(new PathEntity(pathPoint));
                         
-            				player.sendMessage(ChatColor.GREEN + "Wolf target set.");
-            			}
-            		}
-            	}
+                            player.sendMessage(ChatColor.GREEN + "Wolf target set.");
+                        }
+                    }
+                }
             }
         }
     }
@@ -107,16 +107,16 @@ public class WolfPlayerListener extends PlayerListener {
                 UUID uniqueId = wolf.getUniqueId();
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                	
-                	// Add tamed wolves that existed prior to plugin if wolf is tamed and player is the owner
-                	if (!wolfManager.hasWolf(uniqueId)) {
-                    	wolfManager.addWolf(wolf);
-                    	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                    	player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                    	player.sendMessage("You can change name with /wolf setname <name>");
+                    
+                    // Add tamed wolves that existed prior to plugin if wolf is tamed and player is the owner
+                    if (!wolfManager.hasWolf(uniqueId)) {
+                        wolfManager.addWolf(wolf);
+                        com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                        player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
+                        player.sendMessage("You can change name with /wolf setname <name>");
                     }
-                	
-                	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    
+                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {
@@ -129,24 +129,24 @@ public class WolfPlayerListener extends PlayerListener {
                         }
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
-                        	if (worldConfig.wolfInventory) {
-                        		if (wolf1.hasInventory()) {
-                        			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                        			entityPlayer.a(wolf1.getInventory());
-	                            } else {
-	                            	// Add inventory.
-	                            	wolf1.addInventory();
-	                            		
-	                            	// Remove 1 chest for players inventory.
-	                            	if (item.equals(Material.CHEST)) {
-	                            		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-	                            	}
-	                            		
-	                            	player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
-	                            }
+                            if (worldConfig.wolfInventory) {
+                                if (wolf1.hasInventory()) {
+                                    EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                                    entityPlayer.a(wolf1.getInventory());
+                                } else {
+                                    // Add inventory.
+                                    wolf1.addInventory();
+                                        
+                                    // Remove 1 chest for players inventory.
+                                    if (item.equals(Material.CHEST)) {
+                                        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+                                    }
+                                        
+                                    player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
+                                }
                             
-                        		wolf.setSitting(!wolf.isSitting());
-                        	}
+                                wolf.setSitting(!wolf.isSitting());
+                            }
                         }
                     }
                 }

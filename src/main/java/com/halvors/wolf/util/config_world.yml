@@ -15,4 +15,5 @@ limit:
 wolf:
     enable: true # Allow wolves to spawn.
     inventory: true # Enable wolf inventory?
+    pvp: true
 

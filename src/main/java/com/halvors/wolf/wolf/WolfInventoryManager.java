@@ -109,7 +109,7 @@ public class WolfInventoryManager {
      * @param wi
      */
     public void addWolfInventory(UUID uniqueId, WolfInventory wi) {
-    	if (wolfInventorys.containsKey(uniqueId)) {
+        if (wolfInventorys.containsKey(uniqueId)) {
             wolfInventorys.remove(uniqueId);
         }
         
@@ -122,8 +122,8 @@ public class WolfInventoryManager {
      * @param uniqueId
      */
     public void addWolfInventory(UUID uniqueId, String name) {
-    	WolfInventory wi = new WolfInventory(uniqueId, name);
-    	
+        WolfInventory wi = new WolfInventory(uniqueId, name);
+        
         addWolfInventory(uniqueId, wi);
     }
     

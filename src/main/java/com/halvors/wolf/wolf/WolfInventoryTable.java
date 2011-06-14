@@ -48,11 +48,11 @@ public class WolfInventoryTable {
     }
     
     public String getUniqueId() {
-    	return uniqueId;
+        return uniqueId;
     }
     
     public void setUniqueId(String uniqueId) {
-    	this.uniqueId = uniqueId;
+        this.uniqueId = uniqueId;
     }
     
     public String getChestRow1() {
@@ -80,17 +80,17 @@ public class WolfInventoryTable {
     }
     
     public String[] getChestRows() {
-    	String[] rows = new String[3];
-    	rows[0] = this.chestRow1;
-    	rows[1] = this.chestRow2;
-    	rows[2] = this.chestRow3;
-    	
-    	return rows;
+        String[] rows = new String[3];
+        rows[0] = this.chestRow1;
+        rows[1] = this.chestRow2;
+        rows[2] = this.chestRow3;
+        
+        return rows;
     }
     
     public void setChestRows(String[] rows) {
-    	this.chestRow1 = rows[0];
-    	this.chestRow2 = rows[1];
-    	this.chestRow3 = rows[2];
+        this.chestRow1 = rows[0];
+        this.chestRow2 = rows[1];
+        this.chestRow3 = rows[2];
     }
 }

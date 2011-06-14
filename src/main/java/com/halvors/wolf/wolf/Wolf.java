@@ -35,87 +35,87 @@ import com.halvors.wolf.WolfPlugin;
  * @author halvors
  */
 public class Wolf {
-	private final WolfPlugin plugin;
-	
+    private final WolfPlugin plugin;
+    
     private final WolfInventoryManager wolfInventoryManager;
-	
-	private final UUID uniqueId;
-	
-	public Wolf(final WolfPlugin plugin, UUID uniqueId) {
-		this.plugin = plugin;
-		this.wolfInventoryManager = plugin.getWolfInventoryManager();
-		this.uniqueId = uniqueId;
-	}
-	
+    
+    private final UUID uniqueId;
+    
+    public Wolf(final WolfPlugin plugin, UUID uniqueId) {
+        this.plugin = plugin;
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
+        this.uniqueId = uniqueId;
+    }
+    
     /**
      * Get WolfTable
      * 
      * @return WolfTable
      */
     public WolfTable getWolfTable() {
-    	return plugin.getDatabase().find(WolfTable.class).where()
-    		.eq("uniqueId", uniqueId.toString()).findUnique();
+        return plugin.getDatabase().find(WolfTable.class).where()
+            .eq("uniqueId", uniqueId.toString()).findUnique();
     }
-	
-	/**
-	 * Get id
-	 * 
-	 * @return int
-	 */
-	public int getId() {
-		WolfTable wt = getWolfTable();
-		
-		if (wt != null) {
-			return wt.getId();
-		}
-		
-		return 0;
-	}
-	
-	/**
-	 * Set id
-	 * 
-	 * @param id
-	 */
-	public void setId(int id) {
-		WolfTable wt = getWolfTable();
-		
-		if (wt != null) {
-			wt.setId(id);
-			
-			plugin.getDatabase().update(wt);
-		} 
-	}
-	
-	/**
-	 * Get uniqueId
-	 * 
-	 * @return UUID
-	 */
-	public UUID getUniqueId() {
-		WolfTable wt = getWolfTable();
-		
-		if (wt != null) {
-			return UUID.fromString(wt.getUniqueId());
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Set uniqueId
-	 * 
-	 * @param uniqueId
-	 */
-	public void setUniqueId(UUID uniqueId) {
-		WolfTable wt = getWolfTable();
-		
-		if (wt != null) {
-			wt.setUniqueId(uniqueId.toString());
-			
-			plugin.getDatabase().update(wt);
-		}
-	}
+    
+    /**
+     * Get id
+     * 
+     * @return int
+     */
+    public int getId() {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            return wt.getId();
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * Set id
+     * 
+     * @param id
+     */
+    public void setId(int id) {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setId(id);
+            
+            plugin.getDatabase().update(wt);
+        } 
+    }
+    
+    /**
+     * Get uniqueId
+     * 
+     * @return UUID
+     */
+    public UUID getUniqueId() {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            return UUID.fromString(wt.getUniqueId());
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Set uniqueId
+     * 
+     * @param uniqueId
+     */
+    public void setUniqueId(UUID uniqueId) {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setUniqueId(uniqueId.toString());
+            
+            plugin.getDatabase().update(wt);
+        }
+    }
     
     /**
      * Get name
@@ -138,17 +138,17 @@ public class Wolf {
      * @param name
      */
     public void setName(String name) {
-    	WolfTable wt = getWolfTable();
-    	
-    	if (wt != null) {
-    		wt.setName(name);
-    		
-    		plugin.getDatabase().update(wt);
-    		
-    		if (hasInventory()) {
-    	        getInventory().setName(name + "'s inventory");
-    		}
-    	}
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setName(name);
+            
+            plugin.getDatabase().update(wt);
+            
+            if (hasInventory()) {
+                getInventory().setName(name + "'s inventory");
+            }
+        }
     }
     
     /**
@@ -176,14 +176,14 @@ public class Wolf {
      * @param owner
      */
     public void setOwner(Player owner) {
-    	WolfTable wt = getWolfTable();
-    	
-    	if (wt != null) {
-    		wt.setOwner(owner.getName());
-    		getEntity().setOwner(owner);
-    		
-    		plugin.getDatabase().update(wt);
-    	}
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setOwner(owner.getName());
+            getEntity().setOwner(owner);
+            
+            plugin.getDatabase().update(wt);
+        }
     }
     
     /**
@@ -207,13 +207,13 @@ public class Wolf {
      * @param world
      */
     public void setWorld(World world) {
-    	WolfTable wt = getWolfTable();
-    	
-    	if (wt != null) {
-    		wt.setWorld(world.getName());
-    		
-    		plugin.getDatabase().update(wt);
-    	}
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setWorld(world.getName());
+            
+            plugin.getDatabase().update(wt);
+        }
     }
     
     /**
@@ -222,13 +222,13 @@ public class Wolf {
      * @return boolean
      */
     public boolean hasInventory() {
-    	WolfTable wt = getWolfTable();
-    	
-    	if (wt != null) {
-    		return wt.isInventory();
-    	}
-    	
-    	return false;
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            return wt.isInventory();
+        }
+        
+        return false;
     }
     
     /**
@@ -237,29 +237,29 @@ public class Wolf {
      * @param inventory
      */
     public void setInventory(boolean inventory) {
-    	WolfTable wt = getWolfTable();
-    	
-    	if (wt != null) {
-    		wt.setInventory(inventory);
-    		
-    		plugin.getDatabase().update(wt);
-    	}
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setInventory(inventory);
+            
+            plugin.getDatabase().update(wt);
+        }
     }
     
     /**
      * Add inventory
      */
     public void addInventory() {
-    	setInventory(true);
+        setInventory(true);
         wolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
-	}
+    }
 
     /**
      * Remove inventory
      */
     public void removeInventory() {
-    	setInventory(false);
-    	wolfInventoryManager.removeWolfInventory(uniqueId);
+        setInventory(false);
+        wolfInventoryManager.removeWolfInventory(uniqueId);
     }
     
     /**
@@ -268,7 +268,7 @@ public class Wolf {
      * @return WolfInventory
      */
     public WolfInventory getInventory() {
-    	return wolfInventoryManager.getWolfInventory(uniqueId);
+        return wolfInventoryManager.getWolfInventory(uniqueId);
     }
 
     /**
@@ -277,16 +277,16 @@ public class Wolf {
      * @return Wolf
      */
     public org.bukkit.entity.Wolf getEntity() {
-    	List<Entity> entities = getWorld().getEntities();
-    	
-    	for (Entity entity : entities) {
+        List<Entity> entities = getWorld().getEntities();
+        
+        for (Entity entity : entities) {
             if (entity instanceof org.bukkit.entity.Wolf) {
                 if (uniqueId.equals(entity.getUniqueId()))  {
-                	return (org.bukkit.entity.Wolf)entity;
+                    return (org.bukkit.entity.Wolf)entity;
                 }
             }
         }
-    	
-    	return null;
+        
+        return null;
     }
 }

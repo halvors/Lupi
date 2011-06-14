@@ -20,7 +20,9 @@
 
 package com.halvors.wolf.wolf;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.server.EntityHuman;
@@ -77,7 +79,7 @@ public class WolfInventory extends TileEntityChest {
     public void setItem(int index, ItemStack item) {
         super.setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
     }
-
+    
     public ItemStack[] getBukkitContents() {
         ItemStack[] items = new ItemStack[getSize()];
         net.minecraft.server.ItemStack[] mcItems = super.getContents();

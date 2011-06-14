@@ -51,7 +51,7 @@ public class WolfWorldListener extends WorldListener {
     
     @Override
     public void onChunkLoad(ChunkLoadEvent event) {
-    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
+        List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
@@ -69,14 +69,14 @@ public class WolfWorldListener extends WorldListener {
 
     @Override
     public void onChunkUnload(ChunkUnloadEvent event) {
-    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
-    	
+        List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
+        
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
 
                 if (wolf.isTamed()) {
-                	if (!wolfManager.hasWolf(wolf)) {
+                    if (!wolfManager.hasWolf(wolf)) {
                         wolfManager.addWolf(wolf);
                     }
                 }
@@ -86,11 +86,11 @@ public class WolfWorldListener extends WorldListener {
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-    	wolfManager.load(event.getWorld());
+        wolfManager.load(event.getWorld());
     }
     
     @Override
     public void onWorldUnload(WorldUnloadEvent event) {
-    	wolfManager.save(event.getWorld());
+        wolfManager.save(event.getWorld());
     }
 }

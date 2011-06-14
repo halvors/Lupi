@@ -71,7 +71,7 @@ public class WolfEntityListener extends EntityListener {
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-//                Wolf wolf = (Wolf)entity;
+//                Wolf wolf = (Wolf) entity;
                 
                 if (!worldConfig.wolfEnable) {
                     event.setCancelled(true);
@@ -89,52 +89,52 @@ public class WolfEntityListener extends EntityListener {
                 Wolf wolf = (Wolf) entity;
 
                 if (wolfManager.hasWolf(wolf)) {
-                	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                	
-                	if (event instanceof EntityDamageByEntityEvent) {
-                		Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
+                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    
+                    if (event instanceof EntityDamageByEntityEvent) {
+                        Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
  
-                    	if (damager instanceof Player) {
-                    		Player attacker = (Player)damager;
+                        if (damager instanceof Player) {
+                            Player attacker = (Player) damager;
                         
-                    		if (wolf.getOwner().equals(attacker)) {
-                    			Player owner = (Player)wolf.getOwner();
-                    			Material item = owner.getItemInHand().getType();
+                            if (wolf.getOwner().equals(attacker)) {
+                                Player owner = (Player) wolf.getOwner();
+                                Material item = owner.getItemInHand().getType();
                                 
-                    			if (item.equals(Material.BONE)) {
-                    				if (plugin.hasPermissions(owner, "Wolf.info")) {
-                    					int health = wolf.getHealth();
-                    					int maxHealth = 20;
+                                if (item.equals(Material.BONE)) {
+                                    if (plugin.hasPermissions(owner, "Wolf.info")) {
+                                        int health = wolf.getHealth();
+                                        int maxHealth = 20;
                                         
-                    					owner.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
-                    					owner.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
+                                        owner.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
+                                        owner.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                                     
-                    					event.setCancelled(true);
+                                        event.setCancelled(true);
 
-                    					wolf.setSitting(!wolf.isSitting());
-                    					
-                    					return;
-                    				}
-                    			}
-                    		}
-                    	}
+                                        wolf.setSitting(!wolf.isSitting());
+                                        
+                                        return;
+                                    }
+                                }
+                            }
+                        }
                     }
-                	
-                	/*
-                	if (wolf1.hasInventory()) {
-                		WolfInventory wi = wolf1.getInventory();
-                 		
-                 		for (int i = 0; i < wi.getSize(); i++) {
-                         	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
-                         			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
-                         		
-                         		wolf1.eat(wi.getItem(i));
-                         		
-                         		// TODO: Add some kind of message here.
-                         	}
-                 		}
-                 	}
-                 	*/
+                    
+                    /*
+                    if (wolf1.hasInventory()) {
+                        WolfInventory wi = wolf1.getInventory();
+                         
+                         for (int i = 0; i < wi.getSize(); i++) {
+                             if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
+                                     && wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
+                                 
+                                 wolf1.eat(wi.getItem(i));
+                                 
+                                 // TODO: Add some kind of message here.
+                             }
+                         }
+                     }
+                     */
                 }
             }
         }
@@ -146,21 +146,21 @@ public class WolfEntityListener extends EntityListener {
         World world = entity.getWorld();
         
         if (entity instanceof Wolf) {
-            Wolf wolf = (Wolf)entity;
+            Wolf wolf = (Wolf) entity;
             UUID uniqueId = wolf.getUniqueId();
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
-            	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-//            	Player owner = (Player)wolf.getOwner();
-            	
+                com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+//                Player owner = (Player) wolf.getOwner();
+                
                 if (wolf1.hasInventory()) {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
                     
                     for (int i = 0; i < wi.getSize(); i++) { // Actually 27
-                    	if (wi.getItem(i) != null && wi.getBukkitItem(i).getAmount() > 0 
-                    			&& wi.getBukkitItem(i).getTypeId() > 0  && wi.getBukkitItem(i).getDurability() > -1) {
-                    		world.dropItem(wolf.getLocation(), wi.getBukkitItem(i));
-                    	}
+                        if (wi.getItem(i) != null && wi.getBukkitItem(i).getAmount() > 0 
+                                && wi.getBukkitItem(i).getTypeId() > 0  && wi.getBukkitItem(i).getDurability() > -1) {
+                            world.dropItem(wolf.getLocation(), wi.getBukkitItem(i));
+                        }
                     }
                 }
                 
@@ -173,33 +173,33 @@ public class WolfEntityListener extends EntityListener {
     public void onEntityTame(EntityTameEvent event) {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
-            Player owner = (Player)event.getOwner();
+            Player owner = (Player) event.getOwner();
             World world = entity.getWorld();
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf)entity;
+                Wolf wolf = (Wolf) entity;
                 
                 if (worldConfig.limitEnable) {
-                	List<WolfTable> wts = wolfManager.getWolfTables(owner);
-                	
-                	int size = wts.size();
-                	int limit = 2; //worldConfig.limitValue;
-                	
-                	if (size >= limit) {
-                		owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
-                		
-                		event.setCancelled(true);
-                		
-                		return;
-                	}
+                    List<WolfTable> wts = wolfManager.getWolfTables(owner);
+                    
+                    int size = wts.size();
+                    int limit = 2; //worldConfig.limitValue;
+                    
+                    if (size >= limit) {
+                        owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
+                        
+                        event.setCancelled(true);
+                        
+                        return;
+                    }
                 }
                 wolfManager.addWolf(wolf);
                 
                 if (wolfManager.hasWolf(wolf)) {
-                	com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                	owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                	owner.sendMessage("You can change name with /wolf setname <name>");
+                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
+                    owner.sendMessage("You can change name with /wolf setname <name>");
                 }
             }
         }
@@ -210,43 +210,47 @@ public class WolfEntityListener extends EntityListener {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
             Entity target = event.getTarget();
+            World world = entity.getWorld();
+            WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-//                Wolf wolf = (Wolf)target;
-//                UUID uniqueId = wolf.getUniqueId();
+                Wolf wolf = (Wolf) target;
                 
                 if (target instanceof Player) {
-//                	Player player = (Player)target;
+                    Player player = (Player) target;
+                    
+                    if (worldConfig.wolfPvp && !wolf.getOwner().equals(player)) {
+                    	event.setCancelled(true);
+                    }
                 }
             }
         }
     }
     
-    
     @Override
     public void onItemSpawn(ItemSpawnEvent event) {
-    	if (!event.isCancelled()) {
-    		if (event.getEntity() instanceof Item) {
-    			Item item = (Item) event.getEntity();
-    			List<Entity> entities = item.getNearbyEntities(1, 1, 1); // TODO: Figure out position here
-    			
-    			for (Entity entity : entities) {
-    				if (entity instanceof Wolf) {
-    					Wolf wolf = (Wolf) entity;
-    				
-    					if (wolfManager.hasWolf(wolf)) {
-    						com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+        if (!event.isCancelled()) {
+            if (event.getEntity() instanceof Item) {
+                Item item = (Item) event.getEntity();
+                List<Entity> entities = item.getNearbyEntities(1, 1, 1); // TODO: Figure out position here
+                
+                for (Entity entity : entities) {
+                    if (entity instanceof Wolf) {
+                        Wolf wolf = (Wolf) entity;
+                    
+                        if (wolfManager.hasWolf(wolf)) {
+                            com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
-    						if (wolf1.hasInventory()) {
-    							WolfInventory wi = wolf1.getInventory();
-    							
-    							wi.addItem(item.getItemStack());
-    							item.remove();
-    						}
-    					}
-    				}
-    			}
-    		}
-    	}
+                            if (wolf1.hasInventory()) {
+                                WolfInventory wi = wolf1.getInventory();
+                                
+                                wi.addItem(item.getItemStack());
+                                item.remove();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
