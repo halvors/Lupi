@@ -157,9 +157,9 @@ public class WolfEntityListener extends EntityListener {
                     WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
                     
                     for (int i = 0; i < wi.getSize(); i++) { // Actually 27
-                    	if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
-                    			&& wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
-                    		world.dropItem(wolf.getLocation(), wi.getItem(i));
+                    	if (wi.getItem(i) != null && wi.getBukkitItem(i).getAmount() > 0 
+                    			&& wi.getBukkitItem(i).getTypeId() > 0  && wi.getBukkitItem(i).getDurability() > -1) {
+                    		world.dropItem(wolf.getLocation(), wi.getBukkitItem(i));
                     	}
                     }
                 }
