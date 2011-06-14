@@ -135,7 +135,7 @@ public class WolfPlayerListener extends PlayerListener {
                         	if (worldConfig.wolfInventory) {
                         		if (wolf1.hasInventory()) {
                         			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                        			entityPlayer.a(wolfInventoryManager.getWolfInventory(uniqueId).getInventory());
+                        			entityPlayer.a(wolfInventoryManager.getWolfInventory(uniqueId));
 	                            } else {
 	                            	// Add inventory.
 	                            	wolf1.addInventory();
