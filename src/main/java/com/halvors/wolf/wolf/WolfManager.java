@@ -64,14 +64,25 @@ public class WolfManager {
     }
     
     /**
-     * Get all owners WolfTables
+     * Get all WolfTable's with owner
      * 
      * @param owner
      * @return List<WolfTable>
      */
-    public List<WolfTable> getWolfTables(String owner) {
+    public List<WolfTable> getWolfTables(Player owner) {
         return plugin.getDatabase().find(WolfTable.class).where()
-            .ieq("owner", owner).findList();
+            .ieq("owner", owner.getName()).findList();
+    }
+    
+    /**
+     * Get all WolfTable's with world
+     * 
+     * @param owner
+     * @return List<WolfTable>
+     */
+    public List<WolfTable> getWolfTables(World world) {
+        return plugin.getDatabase().find(WolfTable.class).where()
+            .ieq("world", world.getName()).findList();
     }
 
     /**
@@ -93,6 +104,30 @@ public class WolfManager {
     }
     
     /**
+     * Load wolves from database with world
+     */
+    public void load(World world) {
+    	for (WolfTable wt : getWolfTables(world)) {
+    		UUID uniqueId = UUID.fromString(wt.getUniqueId());
+    		
+    		wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+    	}
+    }
+   
+    /**
+     * Save wolves to database with world
+     */
+    public void save(World world) {
+    	for (Wolf wolf : wolves.values()) {
+    		if (wolf.getWorld().equals(world.getName())) {
+    			UUID uniqueId = wolf.getUniqueId();
+    			
+    			wolves.remove(uniqueId);
+    		}
+    	}
+    }
+    
+    /**
      * Add a wolf
      * 
      * @param name
@@ -107,7 +142,7 @@ public class WolfManager {
         
         // Check if a wolf with same name already exists.
         do {
-          	for (WolfTable wt : getWolfTables(player.getName())) {
+          	for (WolfTable wt : getWolfTables(player)) {
            		if (wt.getName().equalsIgnoreCase(name)) {
            			name = getRandomName();
            		} else {

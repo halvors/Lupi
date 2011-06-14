@@ -181,7 +181,7 @@ public class WolfEntityListener extends EntityListener {
                 Wolf wolf = (Wolf)entity;
                 
                 if (worldConfig.limitEnable) {
-                	List<WolfTable> wts = wolfManager.getWolfTables(owner.getName());
+                	List<WolfTable> wts = wolfManager.getWolfTables(owner);
                 	
                 	int size = wts.size();
                 	int limit = 2; //worldConfig.limitValue;

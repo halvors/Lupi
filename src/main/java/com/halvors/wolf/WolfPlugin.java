@@ -101,6 +101,9 @@ public class WolfPlugin extends JavaPlugin {
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
+        
+        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
                 
         // Register our commands
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));

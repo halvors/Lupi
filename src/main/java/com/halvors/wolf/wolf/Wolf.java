@@ -23,11 +23,9 @@ package com.halvors.wolf.wolf;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import com.halvors.wolf.WolfPlugin;
 
