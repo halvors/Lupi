@@ -20,7 +20,10 @@
 
 package com.halvors.wolf.wolf;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.server.EntityHuman;
@@ -78,37 +81,37 @@ public class WolfInventory extends TileEntityChest {
         super.setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
     }
     
-    public ItemStack[] getBukkitContents() {
-        ItemStack[] items = new ItemStack[getSize()];
-        net.minecraft.server.ItemStack[] mcItems = super.getContents();
+    public List<ItemStack> getBukkitContents() {
+        List<ItemStack> items = new ArrayList<ItemStack>(getSize());
+        List<net.minecraft.server.ItemStack> mcItems = Arrays.asList(super.getContents());
 
-        for (int i = 0; i < mcItems.length; i++) {
-            items[i] = mcItems[i] == null ? null : new CraftItemStack(mcItems[i]);
+        for (int i = 0; i < mcItems.size(); i++) {
+        	items.add(mcItems.get(i) == null ? null : new CraftItemStack(mcItems.get(i)));
         }
 
         return items;
     }
 
-    public void setContents(ItemStack[] items) {
-        if (super.getContents().length != items.length) {
+    public void setBukkitContents(List<ItemStack> items) {
+        if (super.getContents().length != items.size()) {
             throw new IllegalArgumentException("Invalid inventory size; expected " + super.getContents().length);
         }
 
-        net.minecraft.server.ItemStack[] mcItems = super.getContents();
+        List<net.minecraft.server.ItemStack> mcItems = Arrays.asList(super.getContents());
 
-        for (int i = 0; i < items.length; i++) {
-            ItemStack item = items[i];
+        for (int i = 0; i < items.size(); i++) {
+            ItemStack item = items.get(i);
             
             if (item == null || item.getTypeId() <= 0) {
-                mcItems[i] = null;
+                mcItems.set(i, null);
             } else {
-                mcItems[i] = new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability());
+                mcItems.add(new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability()));
             }
         }
     }
 
     public boolean contains(int materialId) {
-        for (ItemStack item: getBukkitContents()) {
+        for (ItemStack item : getBukkitContents()) {
             if (item != null && item.getTypeId() == materialId) {
                 return true;
             }
@@ -138,7 +141,7 @@ public class WolfInventory extends TileEntityChest {
     public boolean contains(int materialId, int amount) {
         int amt = 0;
         
-        for (ItemStack item: getBukkitContents()) {
+        for (ItemStack item : getBukkitContents()) {
             if (item != null && item.getTypeId() == materialId) {
                 amt += item.getAmount();
             }
@@ -158,7 +161,7 @@ public class WolfInventory extends TileEntityChest {
         
         int amt = 0;
         
-        for (ItemStack i: getBukkitContents()) {
+        for (ItemStack i : getBukkitContents()) {
             if (item.equals(i)) {
                 amt += item.getAmount();
             }
@@ -170,10 +173,10 @@ public class WolfInventory extends TileEntityChest {
     public HashMap<Integer, ItemStack> all(int materialId) {
         HashMap<Integer, ItemStack> slots = new HashMap<Integer, ItemStack>();
 
-        ItemStack[] inventory = getBukkitContents();
+        List<ItemStack> inventory = getBukkitContents();
         
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack item = inventory[i];
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack item = inventory.get(i);
             if (item != null && item.getTypeId() == materialId) {
                 slots.put(i, item);
             }
@@ -190,10 +193,11 @@ public class WolfInventory extends TileEntityChest {
         HashMap<Integer, ItemStack> slots = new HashMap<Integer, ItemStack>();
         
         if (item != null) {
-            ItemStack[] inventory = getBukkitContents();
-            for (int i = 0; i < inventory.length; i++) {
-                if (item.equals(inventory[i])) {
-                    slots.put(i, inventory[i]);
+            List<ItemStack> inventory = getBukkitContents();
+            
+            for (int i = 0; i < inventory.size(); i++) {
+                if (item.equals(inventory.get(i))) {
+                    slots.put(i, inventory.get(i));
                 }
             }
         }
@@ -202,10 +206,11 @@ public class WolfInventory extends TileEntityChest {
     }
 
     public int first(int materialId) {
-        ItemStack[] inventory = getBukkitContents();
+        List<ItemStack> inventory = getBukkitContents();
         
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack item = inventory[i];
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack item = inventory.get(i);
+            
             if (item != null && item.getTypeId() == materialId) {
                 return i;
             }
@@ -223,10 +228,10 @@ public class WolfInventory extends TileEntityChest {
             return -1;
         }
         
-        ItemStack[] inventory = getBukkitContents();
+        List<ItemStack> inventory = getBukkitContents();
         
-        for (int i = 0; i < inventory.length; i++) {
-            if (item.equals(inventory[i])) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equals(inventory.get(i))) {
                 return i;
             }
         }
@@ -235,10 +240,10 @@ public class WolfInventory extends TileEntityChest {
     }
 
     public int firstEmpty() {
-        ItemStack[] inventory = getBukkitContents();
+        List<ItemStack> inventory = getBukkitContents();
         
-        for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i] == null) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) == null) {
                 return i;
             }
         }
@@ -247,10 +252,10 @@ public class WolfInventory extends TileEntityChest {
     }
 
     public int firstPartial(int materialId) {
-        ItemStack[] inventory = getBukkitContents();
+        List<ItemStack> inventory = getBukkitContents();
         
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack item = inventory[i];
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack item = inventory.get(i);
             if (item != null && item.getTypeId() == materialId && item.getAmount() < item.getMaxStackSize()) {
                 return i;
             }
@@ -264,14 +269,14 @@ public class WolfInventory extends TileEntityChest {
     }
 
     public int firstPartial(ItemStack item) {
-        ItemStack[] inventory = getBukkitContents();
+        List<ItemStack> inventory = getBukkitContents();
         
         if (item == null) {
             return -1;
         }
         
-        for (int i = 0; i < inventory.length; i++) {
-            ItemStack cItem = inventory[i];
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack cItem = inventory.get(i);
             if (cItem != null && cItem.getTypeId() == item.getTypeId() && cItem.getAmount() < cItem.getMaxStackSize() && cItem.getDurability() == item.getDurability()) {
                 return i;
             }
@@ -387,10 +392,10 @@ public class WolfInventory extends TileEntityChest {
     }
 
     public void remove(int materialId) {
-        ItemStack[] items = getBukkitContents();
+        List<ItemStack> items = getBukkitContents();
         
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] != null && items[i].getTypeId() == materialId) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i) != null && items.get(i).getTypeId() == materialId) {
                 clear(i);
             }
         }
@@ -401,10 +406,10 @@ public class WolfInventory extends TileEntityChest {
     }
 
     public void remove(ItemStack item) {
-        ItemStack[] items = getBukkitContents();
+        List<ItemStack> items = getBukkitContents();
         
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] != null && items[i].equals(item)) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i) != null && items.get(i).equals(item)) {
                 clear(i);
             }
         }
@@ -443,49 +448,49 @@ public class WolfInventory extends TileEntityChest {
             if (typeId < 1 || damage < 0 || amount < 1) {
                 setItem(i, new ItemStack(null));
             } else {
-                setItem(i, new ItemStack(typeId,amount,damage));
+                setItem(i, new ItemStack(typeId, amount, damage));
             }
         }
     }
        
-    public String getStackString(ItemStack stack) {
+    public String getStackString(ItemStack itemstack) {
         String out = null;
        
-        if (stack == null || stack.getAmount() < 1 || stack.getDurability() < 0 || stack.getTypeId() < 1) {
+        if (itemstack == null || itemstack.getAmount() < 1 || itemstack.getDurability() < 0 || itemstack.getTypeId() < 1) {
             out = "0:-1:0";
         } else {
-            out = stack.getTypeId() + ":" + stack.getDurability() + ":" + stack.getAmount();
+            out = itemstack.getTypeId() + ":" + itemstack.getDurability() + ":" + itemstack.getAmount();
         }
        
         return out;
     }
        
-     public String[] prepareTableForDB() {
-         String[] rows = new String[3];
-         rows[0] = "";
+    public String[] prepareTableForDB() {
+    	String[] rows = new String[3];
+        rows[0] = "";
         rows[1] = "";
         rows[2] = "";
        
         for (int i = 0; i < getSize(); i++) {
-            String stack = null;
-       
-            if ((i + 1) % 9 != 0) {
-                 stack = getStackString(getBukkitItem(i)) + ";";
-            } else {
-                stack = getStackString(getBukkitItem(i));
-            }
-       
-            if (i >= 0 && i <= 8) {
-                rows[0] += stack;
-            } else if (i >= 9 && i <= 17) {
-                rows[1] += stack;
-            } else if (i >= 18 && i <= 26) {
+        	String stack = null;
+        	
+        	if ((i + 1) % 9 != 0) {
+        		stack = getStackString(getBukkitItem(i)) + ";";
+        	} else {
+        		stack = getStackString(getBukkitItem(i));
+        	}
+        	
+        	if (i >= 0 && i <= 8) {
+        		rows[0] += stack;
+        	} else if (i >= 9 && i <= 17) {
+        		rows[1] += stack;
+        	} else if (i >= 18 && i <= 26) {
                 rows[2] += stack;
             }
         }
-       
+        
         return rows;
-     }
+    }
      
     @Override
     public boolean a_(EntityHuman entityhuman) {
