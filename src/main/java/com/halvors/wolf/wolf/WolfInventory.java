@@ -74,7 +74,7 @@ public class WolfInventory extends TileEntityChest {
         return new CraftItemStack(super.getItem(index));
     }
     
-    public void setItem(int index, ItemStack item) {
+    public void setBukkitItem(int index, ItemStack item) {
         super.setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
     }
     
@@ -89,7 +89,7 @@ public class WolfInventory extends TileEntityChest {
         return items;
     }
 
-    public void setContents(ItemStack[] items) {
+    public void setBukkitContents(ItemStack[] items) {
         if (super.getContents().length != items.length) {
             throw new IllegalArgumentException("Invalid inventory size; expected " + super.getContents().length);
         }
@@ -307,11 +307,11 @@ public class WolfInventory extends TileEntityChest {
                     } else {
                         // More than a single stack!
                         if (item.getAmount() > getMaxItemStack()) {
-                            setItem(firstFree, new CraftItemStack(item.getTypeId(), getMaxItemStack(), item.getDurability()));
+                            setBukkitItem(firstFree, new CraftItemStack(item.getTypeId(), getMaxItemStack(), item.getDurability()));
                             item.setAmount(item.getAmount() - getMaxItemStack());
                         } else {
                             // Just store it
-                            setItem(firstFree, item);
+                            setBukkitItem(firstFree, item);
                             break;
                         }
                     }
@@ -367,7 +367,7 @@ public class WolfInventory extends TileEntityChest {
                     } else {
                         // split the stack and store
                         itemStack.setAmount(amount - toDelete);
-                        setItem(first, itemStack);
+                        setBukkitItem(first, itemStack);
                         toDelete = 0;
                     }
                 }
@@ -441,9 +441,9 @@ public class WolfInventory extends TileEntityChest {
             int amount = (item[2] == null ? 0 : Integer.valueOf(item[2]));
        
             if (typeId < 1 || damage < 0 || amount < 1) {
-                setItem(i, new ItemStack(null));
+                setBukkitItem(i, new ItemStack(null));
             } else {
-                setItem(i, new ItemStack(typeId,amount,damage));
+                setBukkitItem(i, new ItemStack(typeId,amount,damage));
             }
         }
     }
