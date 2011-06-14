@@ -312,7 +312,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                 sender.sendMessage("Sorry but these commands are for in-game players only.");
             }
         
-        return false;
+        return true;
     }
 
     private void showPlayerWolves(Player player) {
