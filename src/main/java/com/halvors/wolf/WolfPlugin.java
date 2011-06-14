@@ -114,7 +114,7 @@ public class WolfPlugin extends JavaPlugin {
         setupDatabase();
         
         // Temporary until WorldLoadEvent and WorldUnloadEvent works.
-    	wolfManager.load();
+        wolfManager.load();
         wolfInventoryManager.load();
     }
     
@@ -122,7 +122,7 @@ public class WolfPlugin extends JavaPlugin {
     public void onDisable() {
         configManager.save();
         
-    	wolfManager.save();
+        wolfManager.save();
         wolfInventoryManager.save();
         
         log(Level.INFO, "Plugin disabled!");
@@ -184,11 +184,11 @@ public class WolfPlugin extends JavaPlugin {
     }
     
     public String getName() {
-    	return name;
+        return name;
     }
     
     public String getVersion() {
-    	return version;
+        return version;
     }
     
     public ConfigManager getConfigManager() {

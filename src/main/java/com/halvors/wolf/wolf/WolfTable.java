@@ -81,10 +81,10 @@ public class WolfTable {
     }
     
     public boolean isInventory() {
-    	return inventory;
+        return inventory;
     }
     
     public void setInventory(boolean inventory) {
-    	this.inventory = inventory;
+        this.inventory = inventory;
     }
 }
