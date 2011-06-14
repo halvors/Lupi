@@ -219,7 +219,7 @@ public class WolfEntityListener extends EntityListener {
                 if (target instanceof Player) {
                     Player player = (Player) target;
                     
-                    if (worldConfig.wolfPvp && !wolf.getOwner().equals(player)) {
+                    if (world.getPVP() && worldConfig.wolfPvp && !wolf.getOwner().equals(player)) {
                     	event.setCancelled(true);
                     }
                 }
