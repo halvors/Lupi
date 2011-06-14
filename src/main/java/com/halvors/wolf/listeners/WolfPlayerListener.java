@@ -45,7 +45,6 @@ import com.halvors.wolf.WolfPlugin;
 import com.halvors.wolf.util.ConfigManager;
 import com.halvors.wolf.util.WorldConfig;
 import com.halvors.wolf.wolf.SelectedWolfManager;
-import com.halvors.wolf.wolf.WolfInventoryManager;
 import com.halvors.wolf.wolf.WolfManager;
 
 /**
@@ -58,14 +57,12 @@ public class WolfPlayerListener extends PlayerListener {
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
-    private final WolfInventoryManager wolfInventoryManager;
     private final SelectedWolfManager selectedWolfManager;
     
     public WolfPlayerListener(final WolfPlugin plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
     
@@ -135,7 +132,7 @@ public class WolfPlayerListener extends PlayerListener {
                         	if (worldConfig.wolfInventory) {
                         		if (wolf1.hasInventory()) {
                         			EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                        			entityPlayer.a(wolfInventoryManager.getWolfInventory(uniqueId));
+                        			entityPlayer.a(wolf1.getInventory());
 	                            } else {
 	                            	// Add inventory.
 	                            	wolf1.addInventory();

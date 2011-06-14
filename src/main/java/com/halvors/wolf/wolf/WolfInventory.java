@@ -23,6 +23,7 @@ package com.halvors.wolf.wolf;
 import java.util.HashMap;
 import java.util.UUID;
 
+import net.minecraft.server.EntityHuman;
 import net.minecraft.server.TileEntityChest;
 
 import org.bukkit.Material;
@@ -36,7 +37,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class WolfInventory extends TileEntityChest {
     private UUID uniqueId;
-    private String name = "Chest";
+    private String name = "Wolf inventory";
     
     public WolfInventory(UUID uniqueId) {
     	super();
@@ -97,6 +98,7 @@ public class WolfInventory extends TileEntityChest {
 
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];
+            
             if (item == null || item.getTypeId() <= 0) {
                 mcItems[i] = null;
             } else {
@@ -111,6 +113,7 @@ public class WolfInventory extends TileEntityChest {
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -122,21 +125,25 @@ public class WolfInventory extends TileEntityChest {
         if (item == null) {
             return false;
         }
+        
         for (ItemStack i: getBukkitContents()) {
             if (item.equals(i)) {
                 return true;
             }
         }
+        
         return false;
     }
 
     public boolean contains(int materialId, int amount) {
         int amt = 0;
+        
         for (ItemStack item: getBukkitContents()) {
             if (item != null && item.getTypeId() == materialId) {
                 amt += item.getAmount();
             }
         }
+        
         return amt >= amount;
     }
 
@@ -464,4 +471,18 @@ public class WolfInventory extends TileEntityChest {
        
     	return rows;
  	}
+ 	
+    @Override
+    public boolean a_(EntityHuman entityhuman) {
+        /*
+         * For this proof of concept, we ALWAYS validate the chest. This
+         * behavior has not been thoroughly tested, and may cause unexpected
+         * results depending on the state of the player.
+         * 
+         * Depending on your purposes, you might want to change this. It would
+         * likely be preferable to enforce your business logic outside of this
+         * file instead, however.
+         */
+        return true;
+    }
 }
