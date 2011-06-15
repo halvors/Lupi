@@ -4,7 +4,7 @@ TODO
         - Rename permission nodes? For normal features "Wolf.wolf" and for admins "Wolf.admin". - DONE
         - Fix/implement all commands.
         - Add configuration nodes.
-		- Fix bug when wolf is tamed, and EntityTameEvent is cancelled, wolf is partly tame.
+		- Fix bug when wolf is tamed, and EntityTameEvent is cancelled, wolf is partly tame. - DONE
 		- Improve WolfInventory and merge with TileEntityVirtualChest. - DONE
         - Add wolf's name to inventory. - DONE
         - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.

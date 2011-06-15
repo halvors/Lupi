@@ -90,11 +90,11 @@ public class WolfManager {
      * @param uniqueId
      */
     public void loadWolf(UUID uniqueId) {
-    	if (hasWolf(uniqueId)) {
-    		wolves.remove(uniqueId);
-    	}
-    		
-    	wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+        if (hasWolf(uniqueId)) {
+            wolves.remove(uniqueId);
+        }
+            
+        wolves.put(uniqueId, new Wolf(plugin, uniqueId));
     }
     
     /**
@@ -103,7 +103,7 @@ public class WolfManager {
      * @param wolf
      */
     public void loadWolf(org.bukkit.entity.Wolf wolf) {
-    	loadWolf(wolf.getUniqueId());
+        loadWolf(wolf.getUniqueId());
     }
     
     /**
@@ -112,9 +112,9 @@ public class WolfManager {
      * @param uniqueId
      */
     public void unloadWolf(UUID uniqueId) {
-    	if (hasWolf(uniqueId)) {
-    		wolves.remove(uniqueId);
-    	}
+        if (hasWolf(uniqueId)) {
+            wolves.remove(uniqueId);
+        }
     }
     
     /**
@@ -123,7 +123,7 @@ public class WolfManager {
      * @param wolf
      */
     public void unloadWolf(org.bukkit.entity.Wolf wolf) {
-    	unloadWolf(wolf.getUniqueId());
+        unloadWolf(wolf.getUniqueId());
     }
     
     /**
@@ -163,15 +163,15 @@ public class WolfManager {
         
         // Check if a wolf with same name already exists.
         while (!nameUnique) {
-        	for (WolfTable wt : getWolfTables(player)) {
-        		if (wt.getName().equalsIgnoreCase(name)) {
-        			name = getRandomName();
+            for (WolfTable wt : getWolfTables(player)) {
+                if (wt.getName().equalsIgnoreCase(name)) {
+                    name = getRandomName();
                 } else {
-                	nameUnique = true;
+                    nameUnique = true;
                 }
-        	}
+            }
               
-        	nameUnique = true;
+            nameUnique = true;
         }
             
         // Create a new WolfTable
@@ -186,7 +186,7 @@ public class WolfManager {
         plugin.getDatabase().save(wt);
             
         if (wolves.containsKey(uniqueId)) {
-        	wolves.remove(uniqueId);
+            wolves.remove(uniqueId);
         }
 
         wolves.put(uniqueId, new Wolf(plugin, uniqueId));
@@ -391,13 +391,13 @@ public class WolfManager {
      */
     public void releaseWolf(org.bukkit.entity.Wolf wolf) {
         if (hasWolf(wolf)) {
-        	Wolf wolf1 = getWolf(wolf);
-        	
-        	// Drop inventory contents id wolf have inventory.
+            Wolf wolf1 = getWolf(wolf);
+            
+            // Drop inventory contents id wolf have inventory.
             if (wolf1.hasInventory()) {
-            	wolf1.dropInventory();
+                wolf1.dropInventory();
             }
-        	
+            
             removeWolf(wolf);
         }
         

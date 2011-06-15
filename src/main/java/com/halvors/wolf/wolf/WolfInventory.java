@@ -86,7 +86,7 @@ public class WolfInventory extends TileEntityChest {
         List<net.minecraft.server.ItemStack> mcItems = Arrays.asList(super.getContents());
 
         for (int i = 0; i < mcItems.size(); i++) {
-        	items.add(mcItems.get(i) == null ? null : new CraftItemStack(mcItems.get(i)));
+            items.add(mcItems.get(i) == null ? null : new CraftItemStack(mcItems.get(i)));
         }
 
         return items;
@@ -466,25 +466,25 @@ public class WolfInventory extends TileEntityChest {
     }
        
     public String[] prepareTableForDB() {
-    	String[] rows = new String[3];
+        String[] rows = new String[3];
         rows[0] = "";
         rows[1] = "";
         rows[2] = "";
        
         for (int i = 0; i < getSize(); i++) {
-        	String stack = null;
-        	
-        	if ((i + 1) % 9 != 0) {
-        		stack = getItemStackString(getBukkitItem(i)) + ";";
-        	} else {
-        		stack = getItemStackString(getBukkitItem(i));
-        	}
-        	
-        	if (i >= 0 && i <= 8) {
-        		rows[0] += stack;
-        	} else if (i >= 9 && i <= 17) {
-        		rows[1] += stack;
-        	} else if (i >= 18 && i <= 26) {
+            String stack = null;
+            
+            if ((i + 1) % 9 != 0) {
+                stack = getItemStackString(getBukkitItem(i)) + ";";
+            } else {
+                stack = getItemStackString(getBukkitItem(i));
+            }
+            
+            if (i >= 0 && i <= 8) {
+                rows[0] += stack;
+            } else if (i >= 9 && i <= 17) {
+                rows[1] += stack;
+            } else if (i >= 18 && i <= 26) {
                 rows[2] += stack;
             }
         }

@@ -85,7 +85,7 @@ public class Wolf {
             wt.setId(id);
             
             plugin.getDatabase().update(wt);
-        } 
+        }
     }
     
     /**
