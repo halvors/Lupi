@@ -395,5 +395,7 @@ public class WolfManager {
         }
         
         wolf.setTamed(false);
+        
+        // TODO: Set wild wolf health.
     }
 }

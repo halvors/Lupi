@@ -20,8 +20,6 @@
 
 package com.halvors.wolf.listeners;
 
-import java.util.UUID;
-
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.EntityWolf;
 import net.minecraft.server.PathEntity;
@@ -104,17 +102,17 @@ public class WolfPlayerListener extends PlayerListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
-                UUID uniqueId = wolf.getUniqueId();
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                    
                     // Add tamed wolves that existed prior to plugin if wolf is tamed and player is the owner
+                	/*
                     if (!wolfManager.hasWolf(uniqueId)) {
                         wolfManager.addWolf(wolf);
                         com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                         player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
                         player.sendMessage("You can change name with /wolf setname <name>");
                     }
+                    */
                     
                     com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();
@@ -125,6 +123,16 @@ public class WolfPlayerListener extends PlayerListener {
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                             
+//                            wolf.setSitting(!wolf.isSitting());
+                        }
+                    } else if (item.equals(Material.PAPER)) {
+                    	if (plugin.hasPermissions(player, "Wolf.wolf.info")) {
+                    		int health = wolf.getHealth();
+                            int maxHealth = 20;
+                                
+                            player.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
+                            player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
+
 //                            wolf.setSitting(!wolf.isSitting());
                         }
                     } else if (item.equals(Material.CHEST)) {

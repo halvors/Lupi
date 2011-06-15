@@ -23,16 +23,14 @@ package com.halvors.wolf.listeners;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
@@ -80,6 +78,7 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     
+    /*
     @Override
     public void onEntityDamage(EntityDamageEvent event) {
         if (!event.isCancelled()) {
@@ -96,49 +95,13 @@ public class WolfEntityListener extends EntityListener {
  
                         if (damager instanceof Player) {
                             Player attacker = (Player) damager;
-                        
-                            if (wolf.getOwner().equals(attacker)) {
-                                Player owner = (Player) wolf.getOwner();
-                                Material item = owner.getItemInHand().getType();
-                                
-                                if (item.equals(Material.BONE)) {
-                                    if (plugin.hasPermissions(owner, "Wolf.info")) {
-                                        int health = wolf.getHealth();
-                                        int maxHealth = 20;
-                                        
-                                        owner.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
-                                        owner.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
-                                    
-                                        event.setCancelled(true);
-
-                                        wolf.setSitting(!wolf.isSitting());
-                                        
-                                        return;
-                                    }
-                                }
-                            }
                         }
                     }
-                    
-                    /*
-                    if (wolf1.hasInventory()) {
-                        WolfInventory wi = wolf1.getInventory();
-                         
-                         for (int i = 0; i < wi.getSize(); i++) {
-                             if (wi.getItem(i) != null && wi.getItem(i).getAmount() > 0 
-                                     && wi.getItem(i).getTypeId() > 0  && wi.getItem(i).getDurability() > -1) {
-                                 
-                                 wolf1.eat(wi.getItem(i));
-                                 
-                                 // TODO: Add some kind of message here.
-                             }
-                         }
-                     }
-                     */
                 }
             }
         }
     }
+    */
     
     @Override
     public void onEntityDeath(EntityDeathEvent event) {
@@ -182,9 +145,8 @@ public class WolfEntityListener extends EntityListener {
                 
                 if (worldConfig.limitEnable) {
                     List<WolfTable> wts = wolfManager.getWolfTables(owner);
-                    
                     int size = wts.size();
-                    int limit = 2; //worldConfig.limitValue;
+                    int limit = worldConfig.limitValue;
                     
                     if (size >= limit) {
                         owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
@@ -215,7 +177,7 @@ public class WolfEntityListener extends EntityListener {
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) target;
+                Wolf wolf = (Wolf) entity;
                 
                 if (target instanceof Player) {
                     Player player = (Player) target;
