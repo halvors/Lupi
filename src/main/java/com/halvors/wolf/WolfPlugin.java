@@ -109,11 +109,22 @@ public class WolfPlugin extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
+        
+        // Load wolves from database.
+        wolfManager.load();
+        
+        // Load inventorys from database.
+        wolfInventoryManager.load();
     }
     
     @Override
     public void onDisable() {
         configManager.save();
+        // Unload wolves from database.
+        wolfManager.unload();
+        
+        // Unload inventorys from database.
+        wolfInventoryManager.unload();
         
         log(Level.INFO, "Plugin disabled!");
     }

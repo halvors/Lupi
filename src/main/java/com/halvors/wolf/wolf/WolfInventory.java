@@ -446,7 +446,7 @@ public class WolfInventory extends TileEntityChest {
             int amount = (item[2] == null ? 0 : Integer.valueOf(item[2]));
        
             if (typeId < 1 || damage < 0 || amount < 1) {
-                setItem(i, new ItemStack(null));
+                super.setItem(i, null);
             } else {
                 setItem(i, new ItemStack(typeId, amount, damage));
             }

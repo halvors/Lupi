@@ -5,8 +5,8 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 
 import com.halvors.wolf.WolfPlugin;
-import com.halvors.wolf.wolf.WolfInventoryManager;
-import com.halvors.wolf.wolf.WolfManager;
+//import com.halvors.wolf.wolf.WolfInventoryManager;
+//import com.halvors.wolf.wolf.WolfManager;
 
 /**
  * Handle events for all Server related events.
@@ -16,30 +16,22 @@ import com.halvors.wolf.wolf.WolfManager;
 public class WolfServerListener extends ServerListener {
 //    private final WolfPlugin plugin;
     
-    private final WolfManager wolfManager;
-    private final WolfInventoryManager wolfInventoryManager;
+//    private final WolfManager wolfManager;
+//    private final WolfInventoryManager wolfInventoryManager;
     
     public WolfServerListener(final WolfPlugin plugin) {
 //        this.plugin = plugin;
-        this.wolfManager = plugin.getWolfManager();
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
+//        this.wolfManager = plugin.getWolfManager();
+//        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     @Override
     public void onPluginEnable(PluginEnableEvent event) {
-        // Load wolves from database.
-        wolfManager.load();
         
-        // Load inventorys from database.
-        wolfInventoryManager.load();
     }
     
     @Override
     public void onPluginDisable(PluginDisableEvent event) {
-        // Unload wolves from database.
-        wolfManager.unload();
         
-        // Unload inventorys from database.
-        wolfInventoryManager.unload();
     }
 }
