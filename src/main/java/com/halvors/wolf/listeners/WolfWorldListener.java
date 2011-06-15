@@ -28,8 +28,6 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.wolf.WolfPlugin;
 import com.halvors.wolf.wolf.WolfManager;
@@ -58,9 +56,10 @@ public class WolfWorldListener extends WorldListener {
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed()) {
-
                     if (!wolfManager.hasWolf(wolf)) {
                         wolfManager.addWolf(wolf);
+                        
+                        // TODO: Show a message to owner.
                     }
                 }
             }
@@ -82,15 +81,5 @@ public class WolfWorldListener extends WorldListener {
                 }
             }
         }
-    }
-    
-    @Override
-    public void onWorldLoad(WorldLoadEvent event) {
-        wolfManager.load(event.getWorld());
-    }
-    
-    @Override
-    public void onWorldUnload(WorldUnloadEvent event) {
-        wolfManager.save(event.getWorld());
     }
 }

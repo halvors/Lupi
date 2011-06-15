@@ -73,9 +73,9 @@ public class WolfInventoryManager {
     }
     
     /**
-     * Save inventorys to database
+     * Unload inventorys from database
      */
-    public void save() {
+    public void unload() {
         for (WolfInventory wi : wolfInventorys.values()) {
             WolfInventoryTable wit = getWolfInventoryTable(wi.getUniqueId());
             

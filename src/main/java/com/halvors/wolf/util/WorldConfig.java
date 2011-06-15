@@ -44,6 +44,7 @@ public class WorldConfig {
     public int item;
     
     public boolean wolfEnable;
+    public boolean wolfAutoAdd;
     public boolean wolfInventory;
     public boolean wolfPvp;
     
@@ -79,6 +80,7 @@ public class WorldConfig {
         limitValue = config.getInt("limit.value", limitValue);
         
         wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
+        wolfAutoAdd = config.getBoolean("wolf.autoadd", wolfAutoAdd);
         wolfInventory = config.getBoolean("wolf.inventory", wolfInventory);
         wolfPvp = config.getBoolean("wolf.pvp", wolfPvp);
     }

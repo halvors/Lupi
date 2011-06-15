@@ -194,6 +194,7 @@ public class WolfEntityListener extends EntityListener {
                         return;
                     }
                 }
+                
                 wolfManager.addWolf(wolf);
                 
                 if (wolfManager.hasWolf(wolf)) {

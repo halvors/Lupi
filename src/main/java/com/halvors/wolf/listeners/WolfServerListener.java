@@ -27,19 +27,19 @@ public class WolfServerListener extends ServerListener {
     
     @Override
     public void onPluginEnable(PluginEnableEvent event) {
-        // Load wolves from database
+        // Load wolves from database.
         wolfManager.load();
         
-        // Load inventorys from database
+        // Load inventorys from database.
         wolfInventoryManager.load();
     }
     
     @Override
     public void onPluginDisable(PluginDisableEvent event) {
-        // Save wolves to database
-        wolfManager.save();
+        // Unload wolves from database.
+        wolfManager.unload();
         
-        // Save inventorys to database
-        wolfInventoryManager.save();
+        // Unload inventorys from database.
+        wolfInventoryManager.unload();
     }
 }

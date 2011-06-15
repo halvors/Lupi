@@ -6,14 +6,13 @@
 item_select: 352
 item_inventory: 352
 
-autoaddtamedwolves: true
-
 limit:
     enable: false # Enable limit of tamed wolves?
     value: 16 # Value, if limit is enabled.
 
 wolf:
     enable: true # Allow wolves to spawn.
+    autoadd: true
     inventory: true # Enable wolf inventory?
     pvp: true
 

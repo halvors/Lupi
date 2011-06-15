@@ -85,6 +85,47 @@ public class WolfManager {
             .ieq("world", world.getName()).findList();
     }
 
+    
+    /**
+     * Load a wolf
+     * 
+     * @param uniqueId
+     */
+    public void loadWolf(UUID uniqueId) {
+    	if (hasWolf(uniqueId)) {
+    		wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+    	}
+    }
+    
+    /**
+     * Load a wolf
+     * 
+     * @param wolf
+     */
+    public void loadWolf(org.bukkit.entity.Wolf wolf) {
+    	loadWolf(wolf.getUniqueId());
+    }
+    
+    /**
+     * Unload a wolf
+     * 
+     * @param uniqueId
+     */
+    public void unloadWolf(UUID uniqueId) {
+    	if (hasWolf(uniqueId)) {
+    		wolves.remove(uniqueId);
+    	}
+    }
+    
+    /**
+     * Unload a wolf
+     * 
+     * @param wolf
+     */
+    public void unloadWolf(org.bukkit.entity.Wolf wolf) {
+    	unloadWolf(wolf.getUniqueId());
+    }
+    
     /**
      * Load wolves from database
      */
@@ -99,32 +140,8 @@ public class WolfManager {
     /**
      * Save wolves to database
      */
-    public void save() {
+    public void unload() {
         wolves.clear();
-    }
-    
-    /**
-     * Load wolves from database with world
-     */
-    public void load(World world) {
-        for (WolfTable wt : getWolfTables(world)) {
-            UUID uniqueId = UUID.fromString(wt.getUniqueId());
-            
-            wolves.put(uniqueId, new Wolf(plugin, uniqueId));
-        }
-    }
-   
-    /**
-     * Save wolves to database with world
-     */
-    public void save(World world) {
-        for (Wolf wolf : wolves.values()) {
-            if (wolf.getWorld().equals(world.getName())) {
-                UUID uniqueId = wolf.getUniqueId();
-                
-                wolves.remove(uniqueId);
-            }
-        }
     }
     
     /**

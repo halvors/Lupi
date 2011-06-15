@@ -9,6 +9,8 @@ TODO
         - Add wolf's name to inventory. - Done
         - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
         - Add better multiworld support.
+        - Optimize list commands.
+        - Optimize database.
 
     Version 0.2
         - Add command so owner of a wolf can add peace players that wolf not attack.
@@ -18,4 +20,5 @@ TODO
         - Add ability for wolves to eat food from its inventory when get damaged.
         - Wolf home. By default set it where the wolf was tamed?
         - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
-        - Wolf shops? Maybe use the Register API.
+        - Economy support. Maybe use the Register API.
+        - Wolf shops.

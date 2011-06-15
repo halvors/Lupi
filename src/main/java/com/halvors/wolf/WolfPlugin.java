@@ -101,9 +101,6 @@ public class WolfPlugin extends JavaPlugin {
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
-        
-        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
                 
         // Register our commands
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
@@ -112,18 +109,11 @@ public class WolfPlugin extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
-        
-        // Temporary until WorldLoadEvent and WorldUnloadEvent works.
-        wolfManager.load();
-        wolfInventoryManager.load();
     }
     
     @Override
     public void onDisable() {
         configManager.save();
-        
-        wolfManager.save();
-        wolfInventoryManager.save();
         
         log(Level.INFO, "Plugin disabled!");
     }

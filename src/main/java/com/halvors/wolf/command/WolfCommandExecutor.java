@@ -137,7 +137,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                    return true;
                                }
                            } else {
-                               player.sendMessage(ChatColor.RED + "Invalid number of arguments");
+                               player.sendMessage(ChatColor.RED + "Too many arguments.");
                                 
                                return true;
                            }
@@ -241,7 +241,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                    return true;
                                }
                            } else {
-                               player.sendMessage(ChatColor.RED + "Correct Syntax is /wolf give <player> (wolf)");
+                               player.sendMessage(ChatColor.RED + "Too many arguments.");
                                 
                                return true;
                            }
