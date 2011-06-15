@@ -38,7 +38,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.halvors.wolf.command.WolfCommandExecutor;
 import com.halvors.wolf.listeners.WolfEntityListener;
 import com.halvors.wolf.listeners.WolfPlayerListener;
-import com.halvors.wolf.listeners.WolfServerListener;
 import com.halvors.wolf.listeners.WolfWorldListener;
 import com.halvors.wolf.util.ConfigManager;
 import com.halvors.wolf.wolf.SelectedWolfManager;
@@ -65,7 +64,6 @@ public class WolfPlugin extends JavaPlugin {
     
     private final WolfEntityListener entityListener = new WolfEntityListener(this);
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
-    private final WolfServerListener serverListener = new WolfServerListener(this);
     private final WolfWorldListener worldListener = new WolfWorldListener(this);
     
     public static PermissionHandler Permissions;
@@ -92,12 +90,8 @@ public class WolfPlugin extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
 //        pm.registerEvent(Event.Type.ITEM_SPAWN, entityListener, Event.Priority.Normal, this);
 
-        
         pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
-        
-        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener, Event.Priority.Normal, this);
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
@@ -121,6 +115,7 @@ public class WolfPlugin extends JavaPlugin {
     public void onDisable() {
     	// Save configuration.
         configManager.save();
+        
         // Unload wolves from database.
         wolfManager.unload();
         

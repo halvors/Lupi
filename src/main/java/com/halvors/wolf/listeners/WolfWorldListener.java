@@ -72,7 +72,8 @@ public class WolfWorldListener extends WorldListener {
         
         for (Entity entity : entities) {
             if (entity instanceof Wolf) {
- /*               Wolf wolf = (Wolf) entity;
+            	/*
+            	Wolf wolf = (Wolf) entity;
 
                 if (wolf.isTamed()) {
                     if (wolfManager.hasWolf(wolf)) {
@@ -80,7 +81,8 @@ public class WolfWorldListener extends WorldListener {
                     } else {
                     	wolfManager.addWolf(wolf);
                     }
-                }*/
+                }
+                */
             }
         }
     }

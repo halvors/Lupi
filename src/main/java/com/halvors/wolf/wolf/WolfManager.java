@@ -28,7 +28,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 import com.halvors.wolf.WolfPlugin;
@@ -53,7 +55,7 @@ public class WolfManager {
     }
     
     /**
-     * Get all WolfTables
+     * Get all WolfTables.
      * 
      * @return List<WolfTable>
      */
@@ -62,7 +64,7 @@ public class WolfManager {
     }
     
     /**
-     * Get all WolfTable's with owner
+     * Get all WolfTable's with owner.
      * 
      * @param owner
      * @return List<WolfTable>
@@ -73,7 +75,7 @@ public class WolfManager {
     }
     
     /**
-     * Get all WolfTable's with world
+     * Get all WolfTable's with world.
      * 
      * @param owner
      * @return List<WolfTable>
@@ -85,7 +87,7 @@ public class WolfManager {
 
     
     /**
-     * Load a wolf
+     * Load a wolf.
      * 
      * @param uniqueId
      */
@@ -98,7 +100,7 @@ public class WolfManager {
     }
     
     /**
-     * Load a wolf
+     * Load a wolf.
      * 
      * @param wolf
      */
@@ -107,7 +109,7 @@ public class WolfManager {
     }
     
     /**
-     * Unload a wolf
+     * Unload a wolf.
      * 
      * @param uniqueId
      */
@@ -118,7 +120,7 @@ public class WolfManager {
     }
     
     /**
-     * Unload a wolf
+     * Unload a wolf.
      * 
      * @param wolf
      */
@@ -127,7 +129,7 @@ public class WolfManager {
     }
     
     /**
-     * Load wolves from database
+     * Load wolves from database.
      */
     public void load() {
         for (WolfTable wt : getWolfTables()) {
@@ -138,14 +140,14 @@ public class WolfManager {
     }
    
     /**
-     * Save wolves to database
+     * Save wolves to database.
      */
     public void unload() {
         wolves.clear();
     }
     
     /**
-     * Add a wolf
+     * Add a wolf.
      * 
      * @param name
      * @param wolf
@@ -195,7 +197,7 @@ public class WolfManager {
     }
     
     /**
-     * Add a wolf with a random name
+     * Add a wolf with a random name.
      * 
      * @param wolf
      * @return boolean
@@ -205,7 +207,7 @@ public class WolfManager {
     }
     
     /**
-     * Remove a wolf
+     * Remove a wolf.
      * 
      * @param uniqueId
      * @return boolean
@@ -222,7 +224,7 @@ public class WolfManager {
     
     
     /**
-     * Remove a wolf
+     * Remove a wolf.
      * 
      * @param wolf
      * @return boolean
@@ -232,7 +234,7 @@ public class WolfManager {
     }
 
     /**
-     * Check if wolf exists
+     * Check if wolf exists.
      * 
      * @param uniqueId
      * @return boolean
@@ -242,7 +244,7 @@ public class WolfManager {
     }
     
     /**
-     * Check if wolf exists
+     * Check if wolf exists.
      * 
      * @param wolf
      * @return boolean
@@ -252,7 +254,7 @@ public class WolfManager {
     }
     
     /**
-     * Check if owner has specific named wolf
+     * Check if owner has specific named wolf.
      * 
      * @param name
      * @param owner
@@ -269,7 +271,7 @@ public class WolfManager {
     }
     
     /**
-     * Check if owner has a wolf/wolves
+     * Check if owner has a wolf/wolves.
      * 
      * @param owner
      * @return boolean
@@ -285,7 +287,7 @@ public class WolfManager {
     }
     
     /**
-     * Get wolf
+     * Get wolf.
      * 
      * @param uniqueId
      * @return Wolf
@@ -295,7 +297,7 @@ public class WolfManager {
     }
     
     /**
-     * Get wolf
+     * Get wolf.
      * 
      * @param Wolf
      * @return Wolf
@@ -305,7 +307,7 @@ public class WolfManager {
     }
     
     /**
-     * Get wolf
+     * Get wolf.
      * 
      * @param name
      * @param owner
@@ -322,7 +324,7 @@ public class WolfManager {
     }
     
     /**
-     * Get all wolves
+     * Get all wolves.
      * 
      * @return
      */
@@ -331,7 +333,7 @@ public class WolfManager {
     }
 
     /**
-     * Get owners wolves
+     * Get owners wolves.
      * 
      * @param owner
      * @return List<Wolf>
@@ -349,7 +351,7 @@ public class WolfManager {
     }
     
     /**
-     * Generate the table of premade wolf names
+     * Generate the table of premade wolf names.
      */
     private void initRandomNames() {  
         try {
@@ -374,7 +376,7 @@ public class WolfManager {
     }
     
     /**
-     * Generate a random name
+     * Generate a random name.
      * 
      * @return String
      */
@@ -385,7 +387,24 @@ public class WolfManager {
     }
     
     /**
-     * Release a wolf
+     * Spawn a wolf.
+     * 
+     * @param location
+     * @param player
+     * @return
+     */
+    public org.bukkit.entity.Wolf spawnWolf(Location location, Player player) {
+    	World world = location.getWorld();
+    	org.bukkit.entity.Wolf wolf = (org.bukkit.entity.Wolf) world.spawnCreature(location, CreatureType.WOLF);
+    	
+    	wolf.setTamed(true);
+    	wolf.setOwner(player);
+    	
+    	return wolf;
+    }
+    
+    /**
+     * Release a wolf.
      * 
      * @param wolf
      */

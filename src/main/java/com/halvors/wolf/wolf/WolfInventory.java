@@ -36,7 +36,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Represents a WolfInventory.
  * 
- * @author halvors
+ * @author speeddemon92
  */
 public class WolfInventory extends TileEntityChest {
     private UUID uniqueId;
