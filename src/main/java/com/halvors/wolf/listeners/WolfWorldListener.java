@@ -56,10 +56,10 @@ public class WolfWorldListener extends WorldListener {
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed()) {
-                    if (!wolfManager.hasWolf(wolf)) {
+                	if (wolfManager.hasWolf(wolf)) {
+                		wolfManager.loadWolf(wolf);
+                	} else {
                         wolfManager.addWolf(wolf);
-                        
-                        // TODO: Show a message to owner.
                     }
                 }
             }
@@ -75,8 +75,10 @@ public class WolfWorldListener extends WorldListener {
                 Wolf wolf = (Wolf) entity;
 
                 if (wolf.isTamed()) {
-                    if (!wolfManager.hasWolf(wolf)) {
-                        wolfManager.addWolf(wolf);
+                    if (wolfManager.hasWolf(wolf)) {
+                        wolfManager.unloadWolf(wolf);
+                    } else {
+                    	wolfManager.addWolf(wolf);
                     }
                 }
             }

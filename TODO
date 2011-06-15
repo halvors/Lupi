@@ -11,6 +11,7 @@ TODO
         - Add better multiworld support.
         - Optimize list commands.
         - Optimize database.
+        - Drop inventory contents when a wolf is released.
 
     Version 0.2
         - Add command so owner of a wolf can add peace players that wolf not attack.

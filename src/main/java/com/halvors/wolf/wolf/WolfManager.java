@@ -28,9 +28,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 import com.halvors.wolf.WolfPlugin;
@@ -44,7 +42,7 @@ public class WolfManager {
     private final WolfPlugin plugin;
     
     private final HashMap<UUID, Wolf> wolves;
-    private List<String> wolfNames;
+    private final List<String> wolfNames;
     
     public WolfManager(final WolfPlugin plugin) {
         this.plugin = plugin;
@@ -93,8 +91,10 @@ public class WolfManager {
      */
     public void loadWolf(UUID uniqueId) {
     	if (hasWolf(uniqueId)) {
-    		wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+    		wolves.remove(uniqueId);
     	}
+    		
+    	wolves.put(uniqueId, new Wolf(plugin, uniqueId));
     }
     
     /**
@@ -153,25 +153,25 @@ public class WolfManager {
      */
     public boolean addWolf(org.bukkit.entity.Wolf wolf, String name) {
         UUID uniqueId = wolf.getUniqueId();
-        Player player = (Player)wolf.getOwner();
+        Player player = (Player) wolf.getOwner();
+        
+        if (hasWolf(uniqueId)) {
+            return false;
+        }
         
         boolean nameUnique = false;
         
         // Check if a wolf with same name already exists.
-        do {
-              for (WolfTable wt : getWolfTables(player)) {
-                   if (wt.getName().equalsIgnoreCase(name)) {
-                       name = getRandomName();
-                   } else {
-                       nameUnique = true;
-                   }
-               }
+        while (!nameUnique) {
+        	for (WolfTable wt : getWolfTables(player)) {
+        		if (wt.getName().equalsIgnoreCase(name)) {
+        			name = getRandomName();
+                } else {
+                	nameUnique = true;
+                }
+        	}
               
-              nameUnique = true;
-        } while (!nameUnique);
-        
-        if (hasWolf(uniqueId)) {
-            return false;
+        	nameUnique = true;
         }
             
         // Create a new WolfTable
@@ -186,14 +186,11 @@ public class WolfManager {
         plugin.getDatabase().save(wt);
             
         if (wolves.containsKey(uniqueId)) {
-              wolves.remove(uniqueId);
+        	wolves.remove(uniqueId);
         }
-            
-        Wolf wolf1 = new Wolf(plugin, uniqueId);
-            
-        wolves.put(uniqueId, wolf1);
 
-//        return wolves.get(uniqueId) == null ? false : true;
+        wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+        
         return hasWolf(uniqueId);
     }
     
@@ -352,54 +349,15 @@ public class WolfManager {
     }
     
     /**
-     * Spawn a wolf
-     * 
-     * @param player
-     * @param world
-     * @param location
-     * @return Wolf
-     */
-    public org.bukkit.entity.Wolf spawnWolf(Player player, World world, Location location) {
-        org.bukkit.entity.Wolf wolf = (org.bukkit.entity.Wolf) world.spawnCreature(location, CreatureType.WOLF);
-        wolf.setTamed(true);
-        wolf.setOwner(player);
-        
-        return wolf;
-    }
-    
-    /**
-     * Spawn a wolf at player's position
-     * 
-     * @param player
-     * @param tame
-     * @return Wolf
-     */
-    public org.bukkit.entity.Wolf spawnWolf(Player player) {
-        return spawnWolf(player, player.getWorld(), player.getLocation());
-    }
-    
-    /**
-     * Release a wolf
-     * 
-     * @param wolf
-     */
-    public void releaseWolf(org.bukkit.entity.Wolf wolf) {
-        if (hasWolf(wolf)) {
-            removeWolf(wolf);
-        }
-        
-        wolf.setTamed(false);
-    }
-    
-    /**
      * Generate the table of premade wolf names
      */
     private void initRandomNames() {  
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
            
-            do {
+            while (true) {
                 String s1;
+                
                 if ((s1 = bufferedReader.readLine()) == null) {
                     break;
                 }
@@ -409,8 +367,7 @@ public class WolfManager {
                 if (s1.length() > 0) {
                     wolfNames.add(s1);
                 }
-            } while (true);
-            
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -424,8 +381,19 @@ public class WolfManager {
     public String getRandomName() {
         Random random = new Random();
         
-        String name = wolfNames.get(random.nextInt(wolfNames.size()));
+        return wolfNames.get(random.nextInt(wolfNames.size()));
+    }
+    
+    /**
+     * Release a wolf
+     * 
+     * @param wolf
+     */
+    public void releaseWolf(org.bukkit.entity.Wolf wolf) {
+        if (hasWolf(wolf)) {
+            removeWolf(wolf);
+        }
         
-        return name;
+        wolf.setTamed(false);
     }
 }

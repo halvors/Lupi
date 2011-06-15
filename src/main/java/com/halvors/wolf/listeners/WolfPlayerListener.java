@@ -138,9 +138,7 @@ public class WolfPlayerListener extends PlayerListener {
                                     wolf1.addInventory();
                                         
                                     // Remove 1 chest for players inventory.
-                                    if (item.equals(Material.CHEST)) {
-                                        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-                                    }
+                                    player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                                         
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
