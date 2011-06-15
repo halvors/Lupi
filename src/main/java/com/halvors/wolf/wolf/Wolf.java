@@ -26,6 +26,7 @@ import java.util.UUID;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.halvors.wolf.WolfPlugin;
 
@@ -269,6 +270,23 @@ public class Wolf {
      */
     public WolfInventory getInventory() {
         return wolfInventoryManager.getWolfInventory(uniqueId);
+    }
+    
+    /**
+     * Drop inventory contents
+     */
+    public void dropInventory() {
+    	if (hasInventory()) {
+    		WolfInventory wi = getInventory();
+    		World world = getWorld();
+    		org.bukkit.entity.Wolf wolf = getEntity();
+    		
+    		for (ItemStack item : wi.getBukkitContents()) {
+    			if (item != null && item.getAmount() > 0 && item.getDurability() > -1) {
+                    world.dropItem(wolf.getLocation(), item);
+                }
+    		}
+    	}
     }
 
     /**

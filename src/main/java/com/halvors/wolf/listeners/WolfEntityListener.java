@@ -21,12 +21,10 @@
 package com.halvors.wolf.listeners;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -34,12 +32,10 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.ItemSpawnEvent;
 
 import com.halvors.wolf.WolfPlugin;
 import com.halvors.wolf.util.ConfigManager;
 import com.halvors.wolf.util.WorldConfig;
-import com.halvors.wolf.wolf.WolfInventory;
 import com.halvors.wolf.wolf.WolfManager;
 import com.halvors.wolf.wolf.WolfTable;
 
@@ -49,13 +45,13 @@ import com.halvors.wolf.wolf.WolfTable;
  * @author halvors
  */
 public class WolfEntityListener extends EntityListener {
-    private final WolfPlugin plugin;
+//    private final WolfPlugin plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     
     public WolfEntityListener(final WolfPlugin plugin) {
-        this.plugin = plugin;
+//        this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
     }
@@ -105,25 +101,16 @@ public class WolfEntityListener extends EntityListener {
     @Override
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
-        World world = entity.getWorld();
-        
+
         if (entity instanceof Wolf) {
             Wolf wolf = (Wolf) entity;
-            UUID uniqueId = wolf.getUniqueId();
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
                 com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 //                Player owner = (Player) wolf.getOwner();
                 
                 if (wolf1.hasInventory()) {
-                    WolfInventory wi = plugin.getWolfInventoryManager().getWolfInventory(uniqueId);
-                    
-                    for (int i = 0; i < wi.getSize(); i++) { // Actually 27
-                        if (wi.getItem(i) != null && wi.getBukkitItem(i).getAmount() > 0 
-                                && wi.getBukkitItem(i).getTypeId() > 0  && wi.getBukkitItem(i).getDurability() > -1) {
-                            world.dropItem(wolf.getLocation(), wi.getBukkitItem(i));
-                        }
-                    }
+                	wolf1.dropInventory();
                 }
                 
                 wolfManager.removeWolf(wolf);
@@ -189,6 +176,7 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     
+    /*
     @Override
     public void onItemSpawn(ItemSpawnEvent event) {
         if (!event.isCancelled()) {
@@ -215,4 +203,5 @@ public class WolfEntityListener extends EntityListener {
             }
         }
     }
+    */
 }

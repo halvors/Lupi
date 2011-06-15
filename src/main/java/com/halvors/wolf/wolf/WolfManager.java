@@ -391,10 +391,18 @@ public class WolfManager {
      */
     public void releaseWolf(org.bukkit.entity.Wolf wolf) {
         if (hasWolf(wolf)) {
+        	Wolf wolf1 = getWolf(wolf);
+        	
+        	// Drop inventory contents id wolf have inventory.
+            if (wolf1.hasInventory()) {
+            	wolf1.dropInventory();
+            }
+        	
             removeWolf(wolf);
         }
         
         wolf.setTamed(false);
+        wolf.setOwner(null);
         
         // TODO: Set wild wolf health.
     }
