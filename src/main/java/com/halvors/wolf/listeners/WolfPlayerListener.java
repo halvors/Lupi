@@ -71,7 +71,7 @@ public class WolfPlayerListener extends PlayerListener {
         String name = player.getName();
         
         if (event.hasItem() && selectedWolfManager.hasSelectedWolf(name)) {
-            Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
+            Wolf wolf = selectedWolfManager.getSelectedWolf(name);
 
             if (wolfManager.hasWolf(wolf)) {
                 Material item = event.getItem().getType();
