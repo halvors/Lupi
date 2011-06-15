@@ -23,7 +23,6 @@ package com.halvors.wolf.listeners;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;

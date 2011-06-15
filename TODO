@@ -5,13 +5,14 @@ TODO
         - Fix/implement all commands.
         - Add configuration nodes.
 		- Fix bug when wolf is tamed, and EntityTameEvent is cancelled, wolf is partly tame.
-		- Improve WolfInventory and merge with TileEntityVirtualChest.
-        - Add wolf's name to inventory. - Done
+		- Improve WolfInventory and merge with TileEntityVirtualChest. - DONE
+        - Add wolf's name to inventory. - DONE
         - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
         - Add better multiworld support.
         - Optimize list commands.
         - Optimize database.
         - Drop inventory contents when a wolf is released.
+        - Fix that EntityTargetEvent isn't called because it's not implemented for wolves.
 
     Version 0.2
         - Add command so owner of a wolf can add peace players that wolf not attack.
@@ -22,4 +23,6 @@ TODO
         - Wolf home. By default set it where the wolf was tamed?
         - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
         - Economy support. Maybe use the Register API.
-        - Wolf shops.
+        - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
+        - Add ability for tamed wolves to have some kind of armor. Like if a diamond block is in inventory it get's more health.
+        
