@@ -129,7 +129,7 @@ public class WolfInventory extends TileEntityChest {
             return false;
         }
         
-        for (ItemStack i: getBukkitContents()) {
+        for (ItemStack i : getBukkitContents()) {
             if (item.equals(i)) {
                 return true;
             }

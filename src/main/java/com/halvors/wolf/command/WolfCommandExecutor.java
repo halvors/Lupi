@@ -261,7 +261,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("release")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.elease")) {
+                       if (plugin.hasPermissions(player, "Wolf.wolf.release")) {
                            Wolf wolf = null;
                            String owner = player.getName();
 
@@ -339,7 +339,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                 player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " - " + wolfTable.getOwner());
             }
         } else {
-            player.sendMessage(ChatColor.RED + "There is no tame wolves.");
+            player.sendMessage(ChatColor.RED + "There is no tamed wolves.");
         }
     }
     
@@ -375,6 +375,10 @@ public class WolfCommandExecutor implements CommandExecutor {
         
         if (plugin.hasPermissions(player, "Wolf.wolf.stop")) {
             player.sendMessage(command + "stop " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Stop your wolf from attacking.");
+        }
+        
+        if (plugin.hasPermissions(player, "Wolf.wolf.give")) {
+            player.sendMessage(command + "give " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + "> [" + ChatColor.WHITE + "player" + ChatColor.GREEN + "]" + ChatColor.YELLOW + " - Release your wolf.");
         }
         
         if (plugin.hasPermissions(player, "Wolf.wolf.release")) {

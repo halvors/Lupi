@@ -77,11 +77,11 @@ public class WolfPlugin extends JavaPlugin {
         pm = this.getServer().getPluginManager();
         pdfFile = this.getDescription();
         
-        // Load name and version from pdfFile
+        // Load name and version from pdfFile.
         name = pdfFile.getName();
         version = pdfFile.getVersion();
         
-        // Load Configuration
+        // Load configuration.
         configManager.load();
         
         // Register our events Type.
@@ -102,7 +102,7 @@ public class WolfPlugin extends JavaPlugin {
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
                 
-        // Register our commands
+        // Register our commands.
         this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
         
         log(Level.INFO, "version " + version + " is enabled!");
@@ -113,6 +113,7 @@ public class WolfPlugin extends JavaPlugin {
     
     @Override
     public void onDisable() {
+    	// Save configuration.
         configManager.save();
         
         log(Level.INFO, "Plugin disabled!");
