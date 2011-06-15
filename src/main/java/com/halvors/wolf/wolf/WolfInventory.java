@@ -453,7 +453,7 @@ public class WolfInventory extends TileEntityChest {
         }
     }
        
-    public String getStackString(ItemStack itemstack) {
+    public String getItemStackString(ItemStack itemstack) {
         String out = null;
        
         if (itemstack == null || itemstack.getAmount() < 1 || itemstack.getDurability() < 0 || itemstack.getTypeId() < 1) {
@@ -475,9 +475,9 @@ public class WolfInventory extends TileEntityChest {
         	String stack = null;
         	
         	if ((i + 1) % 9 != 0) {
-        		stack = getStackString(getBukkitItem(i)) + ";";
+        		stack = getItemStackString(getBukkitItem(i)) + ";";
         	} else {
-        		stack = getStackString(getBukkitItem(i));
+        		stack = getItemStackString(getBukkitItem(i));
         	}
         	
         	if (i >= 0 && i <= 8) {

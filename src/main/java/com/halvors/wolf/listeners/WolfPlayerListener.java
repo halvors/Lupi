@@ -125,7 +125,7 @@ public class WolfPlayerListener extends PlayerListener {
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                             
-                            wolf.setSitting(!wolf.isSitting());
+//                            wolf.setSitting(!wolf.isSitting());
                         }
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
@@ -145,7 +145,7 @@ public class WolfPlayerListener extends PlayerListener {
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
                             
-                                wolf.setSitting(!wolf.isSitting());
+//                                wolf.setSitting(!wolf.isSitting());
                             }
                         }
                     }
