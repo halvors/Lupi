@@ -107,8 +107,7 @@ public class WolfEntityListener extends EntityListener {
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
                 com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-//                Player owner = (Player) wolf.getOwner();
-                
+
                 if (wolf1.hasInventory()) {
                 	wolf1.dropInventory();
                 }
@@ -143,12 +142,12 @@ public class WolfEntityListener extends EntityListener {
                     }
                 }
                 
-                wolfManager.addWolf(wolf);
-                
-                if (wolfManager.hasWolf(wolf)) {
+                if (wolfManager.addWolf(wolf)) {
                     com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
                     owner.sendMessage("You can change name with /wolf setname <name>");
+                } else {
+                	// TODO: Display some kind of error message here.
                 }
             }
         }

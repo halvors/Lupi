@@ -186,6 +186,7 @@ public class WolfManager {
             
         // Save the wolf to the database
         plugin.getDatabase().save(wt);
+        plugin.getDatabase().update(wt); // TODO: Need to be tested.
             
         if (wolves.containsKey(uniqueId)) {
             wolves.remove(uniqueId);

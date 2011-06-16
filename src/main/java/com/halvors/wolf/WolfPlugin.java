@@ -72,8 +72,8 @@ public class WolfPlugin extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        pm = this.getServer().getPluginManager();
-        pdfFile = this.getDescription();
+        pm = getServer().getPluginManager();
+        pdfFile = getDescription();
         
         // Load name and version from pdfFile.
         name = pdfFile.getName();
@@ -95,9 +95,9 @@ public class WolfPlugin extends JavaPlugin {
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
-                
+        
         // Register our commands.
-        this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
+        getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
         
         log(Level.INFO, "version " + version + " is enabled!");
         
@@ -126,7 +126,7 @@ public class WolfPlugin extends JavaPlugin {
     }
     
     private void setupPermissions() {
-        Plugin permissions = this.getServer().getPluginManager().getPlugin("Permissions");
+        Plugin permissions = getServer().getPluginManager().getPlugin("Permissions");
 
         if (Permissions == null) {
             if (permissions != null) {
@@ -139,8 +139,8 @@ public class WolfPlugin extends JavaPlugin {
     
     private void setupDatabase() {
         try {
-            this.getDatabase().find(WolfTable.class).findRowCount();
-            this.getDatabase().find(WolfInventoryTable.class).findRowCount();
+            getDatabase().find(WolfTable.class).findRowCount();
+            getDatabase().find(WolfInventoryTable.class).findRowCount();
         } catch (PersistenceException ex) {
             log(Level.INFO, "Installing database for " + getDescription().getName() + " due to first time usage");
             installDDL();
