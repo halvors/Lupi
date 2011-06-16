@@ -49,7 +49,7 @@ public class WolfInventoryManager {
      */
     public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
         return plugin.getDatabase().find(WolfInventoryTable.class).where()
-            .eq("uniqueId", uniqueId.toString()).findUnique();
+            .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     /**

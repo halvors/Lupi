@@ -55,7 +55,7 @@ public class Wolf {
      */
     public WolfTable getWolfTable() {
         return plugin.getDatabase().find(WolfTable.class).where()
-            .eq("uniqueId", uniqueId.toString()).findUnique();
+            .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     /**
