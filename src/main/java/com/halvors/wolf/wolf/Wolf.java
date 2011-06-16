@@ -178,10 +178,11 @@ public class Wolf {
      */
     public void setOwner(Player owner) {
         WolfTable wt = getWolfTable();
+        org.bukkit.entity.Wolf wolf = getEntity();
         
         if (wt != null) {
             wt.setOwner(owner.getName());
-            getEntity().setOwner(owner);
+            wolf.setOwner(owner);
             
             plugin.getDatabase().update(wt);
         }
@@ -264,7 +265,7 @@ public class Wolf {
     }
     
     /**
-     * Get inventory
+     * Get inventory.
      * 
      * @return WolfInventory
      */
@@ -273,7 +274,7 @@ public class Wolf {
     }
     
     /**
-     * Drop inventory contents
+     * Drop inventory contents.
      */
     public void dropInventory() {
     	if (hasInventory()) {
@@ -290,7 +291,7 @@ public class Wolf {
     }
 
     /**
-     * Get the wolf entity
+     * Get the wolf entity.
      * 
      * @return Wolf
      */
