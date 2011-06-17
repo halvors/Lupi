@@ -87,10 +87,10 @@ public class WolfPlugin extends JavaPlugin {
 //        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
+//        pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
 //        pm.registerEvent(Event.Type.ITEM_SPAWN, entityListener, Event.Priority.Normal, this);
 
-        pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
+//        pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
@@ -99,16 +99,16 @@ public class WolfPlugin extends JavaPlugin {
         // Register our commands.
         getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
         
-        log(Level.INFO, "version " + version + " is enabled!");
+        log(Level.INFO, "version " + getVersion() + " is enabled!");
         
         setupPermissions();
         setupDatabase();
         
         // Load wolves from database.
-        wolfManager.load();
+//        wolfManager.load();
         
         // Load inventorys from database.
-        wolfInventoryManager.load();
+//        wolfInventoryManager.load();
     }
     
     @Override
@@ -117,12 +117,12 @@ public class WolfPlugin extends JavaPlugin {
         configManager.save();
         
         // Unload wolves from database.
-        wolfManager.unload();
+//        wolfManager.unload();
         
         // Unload inventorys from database.
-        wolfInventoryManager.unload();
+//        wolfInventoryManager.unload();
         
-        log(Level.INFO, "Plugin disabled!");
+        log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
     
     private void setupPermissions() {

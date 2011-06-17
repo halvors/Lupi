@@ -41,15 +41,14 @@ public class WorldConfig {
     private File configFile;
 
     /* Configuration data start */
-    public int item;
-    
     public boolean wolfEnable;
-    public boolean wolfAutoAdd;
-    public boolean wolfInventory;
-    public boolean wolfPvp;
+    public int wolfItem;
     
     public boolean limitEnable;
     public int limitValue;
+    
+    public boolean inventoryEnable;
+    public int inventoryItem;
     /* Configuration data end */
 
     public WorldConfig(final WolfPlugin plugin, final String worldName) {
@@ -74,15 +73,14 @@ public class WorldConfig {
         Configuration config = new Configuration(configFile);
         config.load();
         
-        item = config.getInt("item", item);
+        wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
+        wolfItem = config.getInt("wolf.item", wolfItem);
         
         limitEnable = config.getBoolean("limit.enable", limitEnable);
         limitValue = config.getInt("limit.value", limitValue);
         
-        wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
-        wolfAutoAdd = config.getBoolean("wolf.autoadd", wolfAutoAdd);
-        wolfInventory = config.getBoolean("wolf.inventory", wolfInventory);
-        wolfPvp = config.getBoolean("wolf.pvp", wolfPvp);
+        inventoryEnable = config.getBoolean("inventory.enable", inventoryEnable);
+        inventoryItem = config.getInt("inventory.item", inventoryItem);
     }
 
     /**

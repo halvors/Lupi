@@ -7,7 +7,6 @@ TODO
         - Optimize list commands. Add pages.
         - Optimize database.
         - Fix that EntityTargetEvent isn't called because it's not implemented for wolves in CraftBukkit.
-        - Fix the critical bug that happends when multiplie players tame wolves. All wolves is registered in database with the owner that is the player that tamed the first wolf.
         
     Version 0.2
         - Add command so owner of a wolf can add peace players that wolf not attack.
@@ -21,4 +20,5 @@ TODO
         - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
         - Add ability for tamed wolves to have some kind of armor. Like if a diamond block is in inventory it get's more health.
         - Add support for tamed wolves to be teleported to other worlds if player use portal.
+        - Add BukkitContrib as a soft dependcy. So users can choose to use it.
         

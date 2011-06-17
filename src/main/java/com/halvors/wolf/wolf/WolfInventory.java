@@ -39,26 +39,22 @@ import org.bukkit.inventory.ItemStack;
  * @author speeddemon92
  */
 public class WolfInventory extends TileEntityChest {
-    private UUID uniqueId;
+    private final UUID uniqueId;
     private String name = "Wolf inventory";
     
     public WolfInventory(UUID uniqueId) {
         super();
-        setUniqueId(uniqueId);
+        this.uniqueId = uniqueId;
     }
     
     public WolfInventory(UUID uniqueId, String name) {
         super();
-        setUniqueId(uniqueId);
-        setName(name);
+        this.uniqueId = uniqueId;
+        this.name = name;
     }
 
     public UUID getUniqueId() {
         return uniqueId;
-    }
-    
-    public void setUniqueId(UUID uniqueId) {
-        this.uniqueId = uniqueId;
     }
     
     public String getName() {

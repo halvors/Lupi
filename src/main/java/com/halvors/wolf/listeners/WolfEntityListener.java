@@ -31,7 +31,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.halvors.wolf.WolfPlugin;
 import com.halvors.wolf.util.ConfigManager;
@@ -153,6 +152,7 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     
+    /*
     @Override
     public void onEntityTarget(EntityTargetEvent event) {
         if (!event.isCancelled()) {
@@ -174,8 +174,7 @@ public class WolfEntityListener extends EntityListener {
             }
         }
     }
-    
-    /*
+
     @Override
     public void onItemSpawn(ItemSpawnEvent event) {
         if (!event.isCancelled()) {

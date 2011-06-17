@@ -78,8 +78,6 @@ public class WolfWorldListener extends WorldListener {
                 if (wolf.isTamed()) {
                     if (wolfManager.hasWolf(wolf)) {
                         wolfManager.unloadWolf(wolf);
-                    } else {
-                    	wolfManager.addWolf(wolf);
                     }
                 }
                 */

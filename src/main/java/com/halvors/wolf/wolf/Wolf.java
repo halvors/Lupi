@@ -104,21 +104,6 @@ public class Wolf {
     }
     
     /**
-     * Set uniqueId.
-     * 
-     * @param uniqueId
-     */
-    public void setUniqueId(UUID uniqueId) {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            wt.setUniqueId(uniqueId.toString());
-            
-            plugin.getDatabase().update(wt);
-        }
-    }
-    
-    /**
      * Get name.
      * 
      * @return String

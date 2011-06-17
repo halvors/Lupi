@@ -21,22 +21,15 @@
 package com.halvors.wolf.listeners;
 
 import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.EntityWolf;
-import net.minecraft.server.PathEntity;
-import net.minecraft.server.PathPoint;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
 import com.halvors.wolf.WolfPlugin;
@@ -64,6 +57,7 @@ public class WolfPlayerListener extends PlayerListener {
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
     
+    /*
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
@@ -93,6 +87,7 @@ public class WolfPlayerListener extends PlayerListener {
             }
         }
     }
+    */
     
     @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
@@ -125,7 +120,7 @@ public class WolfPlayerListener extends PlayerListener {
                         }
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
-                            if (worldConfig.wolfInventory) {
+                            if (worldConfig.inventoryEnable) {
                                 if (wolf1.hasInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(wolf1.getInventory());
