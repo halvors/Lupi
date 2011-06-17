@@ -158,7 +158,8 @@ public class WolfManager {
         Player player = (Player) wolf.getOwner();
         
         if (hasWolf(uniqueId)) {
-            return false;
+        	removeWolf(uniqueId);
+//            return false;
         }
         
         boolean nameUnique = false;
@@ -175,8 +176,8 @@ public class WolfManager {
               
             nameUnique = true;
         }
-            
-        // Create a new WolfTable
+        
+        // Create a new WolfTable.
         WolfTable wt = new WolfTable();
         wt.setUniqueId(uniqueId.toString());
         wt.setName(name);
@@ -184,9 +185,8 @@ public class WolfManager {
         wt.setWorld(wolf.getWorld().getName());
         wt.setInventory(false);
             
-        // Save the wolf to the database
+        // Save the wolf to database.
         plugin.getDatabase().save(wt);
-        plugin.getDatabase().update(wt); // TODO: Need to be tested.
             
         if (wolves.containsKey(uniqueId)) {
             wolves.remove(uniqueId);
@@ -215,12 +215,14 @@ public class WolfManager {
      */
     public boolean removeWolf(UUID uniqueId) {
         if (wolves.containsKey(uniqueId)) {         
-            plugin.getDatabase().delete(getWolf(uniqueId).getWolfTable()); // TODO: Improve?
+            plugin.getDatabase().delete(getWolf(uniqueId).getWolfTable());
             
             wolves.remove(uniqueId);
+            
+            return true;
         }
         
-        return !(hasWolf(uniqueId));
+        return false;
     }
     
     

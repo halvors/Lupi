@@ -178,10 +178,11 @@ public class Wolf {
      */
     public void setOwner(Player owner) {
         WolfTable wt = getWolfTable();
+        org.bukkit.entity.Wolf wolf = getEntity();
         
         if (wt != null) {
             wt.setOwner(owner.getName());
-            getEntity().setOwner(owner);
+            wolf.setOwner(owner);
             
             plugin.getDatabase().update(wt);
         }
