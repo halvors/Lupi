@@ -49,7 +49,7 @@ public class Wolf {
     }
     
     /**
-     * Get WolfTable
+     * Get WolfTable.
      * 
      * @return WolfTable
      */
@@ -59,7 +59,7 @@ public class Wolf {
     }
     
     /**
-     * Get id
+     * Get id.
      * 
      * @return int
      */
@@ -74,7 +74,7 @@ public class Wolf {
     }
     
     /**
-     * Set id
+     * Set id.
      * 
      * @param id
      */
@@ -89,7 +89,7 @@ public class Wolf {
     }
     
     /**
-     * Get uniqueId
+     * Get uniqueId.
      * 
      * @return UUID
      */
@@ -104,7 +104,7 @@ public class Wolf {
     }
     
     /**
-     * Set uniqueId
+     * Set uniqueId.
      * 
      * @param uniqueId
      */
@@ -119,7 +119,7 @@ public class Wolf {
     }
     
     /**
-     * Get name
+     * Get name.
      * 
      * @return String
      */
@@ -134,7 +134,7 @@ public class Wolf {
     }
     
     /**
-     * Set name
+     * Set name.
      * 
      * @param name
      */
@@ -153,7 +153,7 @@ public class Wolf {
     }
     
     /**
-     * Get owner
+     * Get owner.
      * 
      * @return Player
      */
@@ -172,7 +172,7 @@ public class Wolf {
     }
     
     /**
-     * Set owner
+     * Set owner.
      * 
      * @param owner
      */
@@ -188,7 +188,7 @@ public class Wolf {
     }
     
     /**
-     * Get world
+     * Get world.
      * 
      * @return World
      */
@@ -203,7 +203,7 @@ public class Wolf {
     }
     
     /**
-     * Set world
+     * Set world.
      * 
      * @param world
      */
@@ -218,7 +218,7 @@ public class Wolf {
     }
     
     /**
-     * Check if inventory exists
+     * Check if inventory exists.
      * 
      * @return boolean
      */
@@ -233,7 +233,7 @@ public class Wolf {
     }
     
     /**
-     * Set inventory
+     * Set inventory.
      * 
      * @param inventory
      */
@@ -248,7 +248,7 @@ public class Wolf {
     }
     
     /**
-     * Add inventory
+     * Add inventory.
      */
     public void addInventory() {
         setInventory(true);
@@ -256,7 +256,7 @@ public class Wolf {
     }
 
     /**
-     * Remove inventory
+     * Remove inventory.
      */
     public void removeInventory() {
         setInventory(false);
@@ -264,7 +264,7 @@ public class Wolf {
     }
     
     /**
-     * Get inventory
+     * Get inventory.
      * 
      * @return WolfInventory
      */
@@ -273,7 +273,7 @@ public class Wolf {
     }
     
     /**
-     * Drop inventory contents
+     * Drop inventory contents.
      */
     public void dropInventory() {
     	if (hasInventory()) {
@@ -290,7 +290,7 @@ public class Wolf {
     }
 
     /**
-     * Get the wolf entity
+     * Get the wolf entity.
      * 
      * @return Wolf
      */
