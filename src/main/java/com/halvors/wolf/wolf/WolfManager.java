@@ -161,7 +161,8 @@ public class WolfManager {
         	removeWolf(uniqueId);
 //            return false;
         }
-        
+        /*
+	 * No longer efficient
         boolean nameUnique = false;
         
         // Check if a wolf with same name already exists.
@@ -175,7 +176,29 @@ public class WolfManager {
             }
               
             nameUnique = true;
-        }
+        }*/
+
+
+	boolean nameIsUnique = false;
+	List<String> usedNames;
+	//Check if a wolf with the same name already exists.
+
+	for (WolfTable wt : getWolfTables(player)) {
+		usedNames.add(wt.getName());
+	}
+
+	if (usedNames.size() == wolfNames.size()) {
+		name = getRandomName() + Random.nextInt(10);
+	} else {
+		name = getRandomName();
+		do {
+			if (usedNames.contains(name)) {
+        			name = getRandomName();
+              		} else {
+                		nameIsUnique = true;
+                	}
+		} while (!nameIsUnique);
+	}
         
         // Create a new WolfTable.
         WolfTable wt = new WolfTable();
