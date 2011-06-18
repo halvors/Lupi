@@ -31,6 +31,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.halvors.wolf.WolfPlugin;
 import com.halvors.wolf.util.ConfigManager;
@@ -152,7 +153,6 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     
-    /*
     @Override
     public void onEntityTarget(EntityTargetEvent event) {
         if (!event.isCancelled()) {
@@ -166,15 +166,20 @@ public class WolfEntityListener extends EntityListener {
                 
                 if (target instanceof Player) {
                     Player player = (Player) target;
-                    
-                    if (world.getPVP() && worldConfig.wolfPvp && !wolf.getOwner().equals(player)) {
-                    	event.setCancelled(true);
-                    }
+
+                    if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
+                    	if (!wolf.getOwner().equals(player)) {
+                    		if (worldConfig.wolfPvp && world.getPVP()) {
+                    			event.setCancelled(true);
+                    		}
+                    	}
+                	}
                 }
             }
         }
     }
 
+    /*
     @Override
     public void onItemSpawn(ItemSpawnEvent event) {
         if (!event.isCancelled()) {
