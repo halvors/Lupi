@@ -1,7 +1,6 @@
 TODO
     Version 0.1
-        - Add configuration nodes.
-        - Add better multiworld support.
+        - Add configuration nodes. And be sure it's flexible for future changes.
         - Optimize list commands. Add pages.
         - Optimize database.
         
@@ -21,5 +20,4 @@ TODO
         - Economy support. Maybe use the Register API.
         - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
         - Add BukkitContrib as a soft dependcy. So users can choose to use it.
-        - Fix that EntityTargetEvent isn't called because it's not implemented for wolves in CraftBukkit.
         
