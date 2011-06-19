@@ -3,6 +3,7 @@ TODO
         - Add configuration nodes. And be sure it's flexible for future changes.
         - Optimize list commands. Add pages.
         - Optimize database.
+        - Set wolf sit when open inventory and set them sin when close inventory.
         
     Version 0.2
     	- Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
