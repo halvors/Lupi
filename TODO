@@ -2,15 +2,16 @@ TODO
     Version 0.1
         - Add configuration nodes. And be sure it's flexible for future changes.
         - Optimize list commands. Add pages.
-        - Optimize database.
-        - Set wolf sit when open inventory and set them sin when close inventory.
+        - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their chunk loads.
+        - Set wolf sit when open inventory and set them stand up when close inventory.
         
     Version 0.2
     	- Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
     	- Add ability for wolves to eat food from its inventory when get damaged.
-    	- Wolf home. By default set it where the wolf was tamed?
     	- Add ability for tamed wolves to have some kind of armor. Like if a diamond block is in inventory it get's more health.
+    	- Wolf home. By default set it where the wolf was tamed?
     	- Add support for tamed wolves to be teleported to other worlds if player use portal.
+    	- Add admin commands.
     
     Ideas:
         - Add command so owner of a wolf can add peace players that wolf not attack.
