@@ -3,6 +3,7 @@ TODO
         - Add configuration nodes. And be sure it's flexible for future changes.
         - Optimize list commands. Add pages.
         - Optimize database.
+        - Debug and make stable before release.
         
     Version 0.2
     	- Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
@@ -10,6 +11,7 @@ TODO
     	- Wolf home. By default set it where the wolf was tamed?
     	- Add ability for tamed wolves to have some kind of armor. Like if a diamond block is in inventory it get's more health.
     	- Add support for tamed wolves to be teleported to other worlds if player use portal.
+        - Add ability to set wolf sitting, or enter other minecart when player enter Minecart or other vehicle.
     
     Ideas:
         - Add command so owner of a wolf can add peace players that wolf not attack.
