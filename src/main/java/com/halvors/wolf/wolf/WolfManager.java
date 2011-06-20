@@ -84,7 +84,24 @@ public class WolfManager {
         return plugin.getDatabase().find(WolfTable.class).where()
             .ieq("world", world.getName()).findList();
     }
-
+    
+    /**
+     * Load wolves from database.
+     */
+    public void load() {
+        for (WolfTable wt : getWolfTables()) {
+            UUID uniqueId = UUID.fromString(wt.getUniqueId());
+            
+            wolves.put(uniqueId, new Wolf(plugin, uniqueId));
+        }
+    }
+   
+    /**
+     * Save wolves to database.
+     */
+    public void unload() {
+        wolves.clear();
+    }
     
     /**
      * Load a wolf.
@@ -92,11 +109,9 @@ public class WolfManager {
      * @param uniqueId
      */
     public void loadWolf(UUID uniqueId) {
-        if (hasWolf(uniqueId)) {
-            wolves.remove(uniqueId);
+        if (!hasWolf(uniqueId)) {
+            wolves.put(uniqueId, new Wolf(plugin, uniqueId));
         }
-            
-        wolves.put(uniqueId, new Wolf(plugin, uniqueId));
     }
     
     /**
@@ -129,24 +144,6 @@ public class WolfManager {
     }
     
     /**
-     * Load wolves from database.
-     */
-    public void load() {
-        for (WolfTable wt : getWolfTables()) {
-            UUID uniqueId = UUID.fromString(wt.getUniqueId());
-            
-            wolves.put(uniqueId, new Wolf(plugin, uniqueId));
-        }
-    }
-   
-    /**
-     * Save wolves to database.
-     */
-    public void unload() {
-        wolves.clear();
-    }
-    
-    /**
      * Add a wolf.
      * 
      * @param name
@@ -158,9 +155,9 @@ public class WolfManager {
         Player player = (Player) wolf.getOwner();
         
         if (hasWolf(uniqueId)) {
-        	removeWolf(uniqueId);
-//            return false;
+        	return false;
         }
+        
         /*
          * No longer efficient
         boolean nameUnique = false;
@@ -178,9 +175,8 @@ public class WolfManager {
             nameUnique = true;
         }*/
 
-
         boolean nameIsUnique = false;
-        List<String> usedNames = new ArrayList<String>();;
+        List<String> usedNames = new ArrayList<String>();
         
         // Check if a wolf with the same name already exists.
         for (WolfTable wt : getWolfTables(player)) {
@@ -264,7 +260,35 @@ public class WolfManager {
     }
 
     /**
-     * Check if wolf exists.
+     * Check if wolf exists in database.
+     * 
+     * @param uniqueId
+     * @return boolean
+     */
+    public boolean hasWolfInDB(UUID uniqueId) {
+        List<WolfTable> wts = getWolfTables();
+        
+        for (WolfTable wt : wts) {
+        	if (UUID.fromString(wt.getUniqueId()).equals(uniqueId)) {
+        		return true;
+        	}
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Check if wolf exists in database.
+     * 
+     * @param wolf
+     * @return boolean
+     */
+    public boolean hasWolfInDB(org.bukkit.entity.Wolf wolf) {
+        return hasWolfInDB(wolf.getUniqueId());
+    }
+    
+    /**
+     * Check if loaded wolf exists.
      * 
      * @param uniqueId
      * @return boolean
@@ -274,7 +298,7 @@ public class WolfManager {
     }
     
     /**
-     * Check if wolf exists.
+     * Check if loaded wolf exists.
      * 
      * @param wolf
      * @return boolean
@@ -284,7 +308,7 @@ public class WolfManager {
     }
     
     /**
-     * Check if owner has specific named wolf.
+     * Check if owner has specific named loaded wolf.
      * 
      * @param name
      * @param owner
@@ -301,7 +325,7 @@ public class WolfManager {
     }
     
     /**
-     * Check if owner has a wolf/wolves.
+     * Check if owner has a loaded wolf/wolves.
      * 
      * @param owner
      * @return boolean
@@ -356,7 +380,7 @@ public class WolfManager {
     /**
      * Get all wolves.
      * 
-     * @return
+     * @return List<Wolf>
      */
     public List<Wolf> getWolves() {    
         return new ArrayList<Wolf>(wolves.values());

@@ -56,7 +56,7 @@ public class WolfWorldListener extends WorldListener {
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed()) {
-                	if (wolfManager.hasWolf(wolf.getUniqueId())) {
+                	if (wolfManager.hasWolfInDB(wolf.getUniqueId())) {
                 		wolfManager.loadWolf(wolf);
                 	} else {
                         wolfManager.addWolf(wolf);

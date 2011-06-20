@@ -22,6 +22,7 @@ package com.halvors.wolf.wolf;
 
 import java.util.HashMap;
 
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
 import com.halvors.wolf.WolfPlugin;
@@ -44,38 +45,44 @@ public class SelectedWolfManager {
     /**
      * Add a selected wolf
      * 
-     * @param owner
+     * @param player
      * @param wolf
      */
-    public void addSelectedWolf(String owner, Wolf wolf) {
+    public void addSelectedWolf(Player player, Wolf wolf) {
         if (wolf.isTamed()) {
-            if (selectedWolves.containsKey(owner)) {
-                selectedWolves.remove(owner);
+        	String name = player.getName();
+        	
+            if (selectedWolves.containsKey(name)) {
+                selectedWolves.remove(name);
             }
             
-            selectedWolves.put(owner, wolf);
+            selectedWolves.put(name, wolf);
         }
     }
     
     /**
      * Remove a selected wolf
      * 
-     * @param owner
+     * @param player
      */
-    public void removeSelectedWolf(String owner) {
-        if (selectedWolves.containsKey(owner)) {
-            selectedWolves.remove(owner);
+    public void removeSelectedWolf(Player player) {
+    	String name = player.getName();
+    	
+        if (selectedWolves.containsKey(name)) {
+            selectedWolves.remove(name);
         }
     }
     
     /**
      * Get a selected wolf by owner
      * 
-     * @param owner
+     * @param player
      * @return Wolf
      */
-    public Wolf getSelectedWolf(String owner) {
-        return selectedWolves.get(owner);
+    public Wolf getSelectedWolf(Player player) {
+    	String name = player.getName();
+    	
+        return selectedWolves.get(name);
     }
     
     /**
@@ -84,7 +91,7 @@ public class SelectedWolfManager {
      * @param owner
      * @return Boolean
      */
-    public boolean hasSelectedWolf(String owner) {
-        return selectedWolves.containsKey(owner);
+    public boolean hasSelectedWolf(Player player) {
+        return selectedWolves.containsKey(player);
     }
 }

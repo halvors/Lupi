@@ -1,4 +1,5 @@
 Version 0.1
+	- Fix bug that wolf isn't added when chunk loads.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
     - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their chunk loads.

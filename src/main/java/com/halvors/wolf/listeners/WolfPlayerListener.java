@@ -106,7 +106,7 @@ public class WolfPlayerListener extends PlayerListener {
                     
                     if (item.equals(Material.BONE)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.select")) {
-                            selectedWolfManager.addSelectedWolf(player.getName(), wolf);
+                            selectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                             
