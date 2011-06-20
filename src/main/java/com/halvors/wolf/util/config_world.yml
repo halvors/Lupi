@@ -3,17 +3,15 @@
 # This is the a per-world configuration file. It only affects one
 # corresponding world.
 
-item_select: 352
-item_inventory: 352
-
-autoaddtamedwolves: true
+wolf:
+    enable: true # Allow wolves to spawn.
+    item: 352 # Item for select tamed wolves.
+    pvp: false # Set wolf to not attack players when pvp is off
 
 limit:
     enable: false # Enable limit of tamed wolves?
     value: 16 # Value, if limit is enabled.
 
-wolf:
-    enable: true # Allow wolves to spawn.
-    inventory: true # Enable wolf inventory?
-    pvp: true
-
+inventory:
+    enable: true # Use wolf inventory?
+    item: 352 # Item for open/add wolf inventory.

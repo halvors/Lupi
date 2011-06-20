@@ -1,21 +1,28 @@
-TODO
-    Version 0.1
-        - Add ability to choose per world if all tamed wolves get added on chunk loads and unloads.
-        - Rename permission nodes? For normal features "Wolf.wolf" and for admins "Wolf.admin".
-        - Fix/implement all commands.
-        - Add configuration nodes.
-		- Fix bug when wolf is tamed, and EntityTameEvent is cancelled, wolf is partly tame.
-		- Improve WolfInventory and merge with TileEntityVirtualChest.
-        - Add wolf's name to inventory. - Done
-        - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
-        - Add better multiworld support.
-
-    Version 0.2
-        - Add command so owner of a wolf can add peace players that wolf not attack.
-        - Add ability for wolves to become "supercharged" and deal twice as much damage for a given time after giving the wolf a special item.
-        - Add ability to feed wolves either gunpowder or TNT and create a "kamikazi" effect when that wolf attacks.
-        - Add possible alternative to above where wolf drops live TNT and runs away to leave enemy to take damage.
-        - Add ability for wolves to eat food from its inventory when get damaged.
-        - Wolf home. By default set it where the wolf was tamed?
-        - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
-        - Wolf shops? Maybe use the Register API.
+Version 0.1
+	- Fix bug that wolf isn't added when chunk loads.
+    - Add configuration nodes. And be sure it's flexible for future changes.
+    - Optimize list commands. Add pages.
+    - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their chunk loads.
+    - Set wolf sit when open inventory and set them stand up when close inventory.
+    - Optimize database.
+    - Debug and make stable before release.
+    
+Version 0.2
+    - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
+    - Add ability for wolves to eat food from its inventory when get damaged.
+    - Add ability for tamed wolves to have some kind of armor. Like if a diamond block is in inventory it get's more health.
+    - Wolf home. By default set it where the wolf was tamed?
+    - Add support for tamed wolves to be teleported to other worlds if player use portal.
+    - Add admin commands.
+    - Add ability to set wolf sitting, or enter other minecart when player enter Minecart or other vehicle.
+    
+Ideas:
+    - Add command so owner of a wolf can add peace players that wolf not attack.
+    - Add ability for wolves to become "supercharged" and deal twice as much damage for a given time after giving the wolf a special item.
+    - Add ability to feed wolves either gunpowder or TNT and create a "kamikazi" effect when that wolf attacks.
+    - Add possible alternative to above where wolf drops live TNT and runs away to leave enemy to take damage.
+    - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
+    - Economy support. Maybe use the Register API.
+    - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
+    - Add BukkitContrib as a soft dependcy. So users can choose to use it.
+    

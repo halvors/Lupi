@@ -38,7 +38,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.halvors.wolf.command.WolfCommandExecutor;
 import com.halvors.wolf.listeners.WolfEntityListener;
 import com.halvors.wolf.listeners.WolfPlayerListener;
-import com.halvors.wolf.listeners.WolfServerListener;
 import com.halvors.wolf.listeners.WolfWorldListener;
 import com.halvors.wolf.util.ConfigManager;
 import com.halvors.wolf.wolf.SelectedWolfManager;
@@ -65,7 +64,6 @@ public class WolfPlugin extends JavaPlugin {
     
     private final WolfEntityListener entityListener = new WolfEntityListener(this);
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
-    private final WolfServerListener serverListener = new WolfServerListener(this);
     private final WolfWorldListener worldListener = new WolfWorldListener(this);
     
     public static PermissionHandler Permissions;
@@ -74,62 +72,59 @@ public class WolfPlugin extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        pm = this.getServer().getPluginManager();
-        pdfFile = this.getDescription();
+        pm = getServer().getPluginManager();
+        pdfFile = getDescription();
         
-        // Load name and version from pdfFile
+        // Load name and version from pdfFile.
         name = pdfFile.getName();
         version = pdfFile.getVersion();
         
-        // Load Configuration
+        // Load configuration.
         configManager.load();
         
         // Register our events Type.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
+//        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.ITEM_SPAWN, entityListener, Event.Priority.Normal, this);
 
-        
-        pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
-        
-        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener, Event.Priority.Normal, this);
         
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
+
+        // Register our commands.
+        getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
         
-        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
-                
-        // Register our commands
-        this.getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
-        
-        log(Level.INFO, "version " + version + " is enabled!");
+        log(Level.INFO, "version " + getVersion() + " is enabled!");
         
         setupPermissions();
         setupDatabase();
         
-        // Temporary until WorldLoadEvent and WorldUnloadEvent works.
-        wolfManager.load();
-        wolfInventoryManager.load();
+        // Load wolves from database.
+//        wolfManager.load();
+        
+        // Load inventorys from database.
+//        wolfInventoryManager.load();
     }
     
     @Override
     public void onDisable() {
+    	// Save configuration.
         configManager.save();
         
-        wolfManager.save();
-        wolfInventoryManager.save();
+        // Unload wolves from database.
+//        wolfManager.unload();
         
-        log(Level.INFO, "Plugin disabled!");
+        // Unload inventorys from database.
+//        wolfInventoryManager.unload();
+        
+        log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
     
     private void setupPermissions() {
-        Plugin permissions = this.getServer().getPluginManager().getPlugin("Permissions");
+        Plugin permissions = getServer().getPluginManager().getPlugin("Permissions");
 
         if (Permissions == null) {
             if (permissions != null) {
@@ -142,8 +137,8 @@ public class WolfPlugin extends JavaPlugin {
     
     private void setupDatabase() {
         try {
-            this.getDatabase().find(WolfTable.class).findRowCount();
-            this.getDatabase().find(WolfInventoryTable.class).findRowCount();
+            getDatabase().find(WolfTable.class).findRowCount();
+            getDatabase().find(WolfInventoryTable.class).findRowCount();
         } catch (PersistenceException ex) {
             log(Level.INFO, "Installing database for " + getDescription().getName() + " due to first time usage");
             installDDL();

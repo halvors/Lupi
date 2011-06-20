@@ -20,25 +20,16 @@
 
 package com.halvors.wolf.listeners;
 
-import java.util.UUID;
-
 import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.EntityWolf;
-import net.minecraft.server.PathEntity;
-import net.minecraft.server.PathPoint;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
 import com.halvors.wolf.WolfPlugin;
@@ -67,34 +58,6 @@ public class WolfPlayerListener extends PlayerListener {
     }
     
     @Override
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        Action action = event.getAction();
-        Player player = event.getPlayer();
-        String name = player.getName();
-        
-        if (event.hasItem() && selectedWolfManager.hasSelectedWolf(name)) {
-            Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
-
-            if (wolfManager.hasWolf(wolf)) {
-                Material item = event.getItem().getType();
-                Location pos = player.getTargetBlock(null, 120).getLocation();
-                
-                if (item.equals(Material.SADDLE)) {
-                    if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
-                        if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
-                            PathPoint[] pathPoint = { new PathPoint(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()) };
-                            EntityWolf entityWolf = ((CraftWolf)wolf).getHandle();
-                            entityWolf.a(new PathEntity(pathPoint));
-                        
-                            player.sendMessage(ChatColor.GREEN + "Wolf target set.");
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (!event.isCancelled()) {
             Player player = event.getPlayer();
@@ -104,32 +67,28 @@ public class WolfPlayerListener extends PlayerListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
-                UUID uniqueId = wolf.getUniqueId();
                 
-                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                    
-                    // Add tamed wolves that existed prior to plugin if wolf is tamed and player is the owner
-                    if (!wolfManager.hasWolf(uniqueId)) {
-                        wolfManager.addWolf(wolf);
-                        com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                        player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                        player.sendMessage("You can change name with /wolf setname <name>");
-                    }
-                    
+                if (wolf.isTamed() && wolf.getOwner().equals(player) && wolfManager.hasWolf(wolf)) {
                     com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     Material item = player.getItemInHand().getType();
                     
                     if (item.equals(Material.BONE)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.select")) {
-                            selectedWolfManager.addSelectedWolf(player.getName(), wolf);
+                            selectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
-                            
-                            wolf.setSitting(!wolf.isSitting());
+                        }
+                    } else if (item.equals(Material.BOOK)) {
+                    	if (plugin.hasPermissions(player, "Wolf.wolf.info")) {
+                    		int health = wolf.getHealth() / 2;
+                            int maxHealth = 10;
+                                
+                            player.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
+                            player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                         }
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
-                            if (worldConfig.wolfInventory) {
+                            if (worldConfig.inventoryEnable) {
                                 if (wolf1.hasInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(wolf1.getInventory());
@@ -138,14 +97,10 @@ public class WolfPlayerListener extends PlayerListener {
                                     wolf1.addInventory();
                                         
                                     // Remove 1 chest for players inventory.
-                                    if (item.equals(Material.CHEST)) {
-                                        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-                                    }
+                                    player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                                         
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
-                            
-                                wolf.setSitting(!wolf.isSitting());
                             }
                         }
                     }

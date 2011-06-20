@@ -23,6 +23,7 @@ package com.halvors.wolf.command;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +31,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
 import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.util.ConfigManager;
+import com.halvors.wolf.util.WorldConfig;
 import com.halvors.wolf.wolf.SelectedWolfManager;
 import com.halvors.wolf.wolf.WolfManager;
 import com.halvors.wolf.wolf.WolfTable;
@@ -42,20 +45,20 @@ import com.halvors.wolf.wolf.WolfTable;
 public class WolfCommandExecutor implements CommandExecutor {
     private final WolfPlugin plugin;
 
-//    private final ConfigManager configManager;
+    private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
 
     public WolfCommandExecutor(final WolfPlugin plugin) {
         this.plugin = plugin;
-//        this.configManager = plugin.getConfigManager();
+        this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player)sender; 
+            Player player = (Player) sender;
 
             if (args.length == 0) {
                 if (plugin.hasPermissions(player, "Wolf.wolf.list")) {
@@ -96,10 +99,8 @@ public class WolfCommandExecutor implements CommandExecutor {
                        }
                    } else if (subCommand.equalsIgnoreCase("name")) {
                        if (plugin.hasPermissions(player, "Wolf.wolf.name")) {
-                           String name = player.getName();
-
-                           if (selectedWolfManager.hasSelectedWolf(name)) {
-                               Wolf wolf = (Wolf) selectedWolfManager.getSelectedWolf(name);
+                           if (selectedWolfManager.hasSelectedWolf(player)) {
+                               Wolf wolf = selectedWolfManager.getSelectedWolf(player);
 
                                if (wolfManager.hasWolf(wolf)) {
                                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
@@ -117,8 +118,8 @@ public class WolfCommandExecutor implements CommandExecutor {
                            String name = null;
 
                            if (args.length == 2) {
-                               if (selectedWolfManager.hasSelectedWolf(owner)) {
-                                   wolf = (Wolf) selectedWolfManager.getSelectedWolf(owner);
+                               if (selectedWolfManager.hasSelectedWolf(player)) {
+                                   wolf = selectedWolfManager.getSelectedWolf(player);
                                    name = args[1];
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
@@ -129,7 +130,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                String oldName = args[1];
                                
                                if (wolfManager.hasWolf(oldName, owner)) {
-                                   wolf = (Wolf) wolfManager.getWolf(oldName, owner).getEntity();
+                                   wolf = wolfManager.getWolf(oldName, owner).getEntity();
                                    name = args[2];
                                } else {
                                    player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
@@ -137,7 +138,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                    return true;
                                }
                            } else {
-                               player.sendMessage(ChatColor.RED + "Invalid number of arguments");
+                               player.sendMessage(ChatColor.RED + "Too many arguments.");
                                 
                                return true;
                            }
@@ -158,7 +159,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                             String owner = player.getName();
 
                             if (wolfManager.hasWolf(name, owner)) {
-                                Wolf wolf = (Wolf) wolfManager.getWolf(name, owner).getEntity();
+                                Wolf wolf = wolfManager.getWolf(name, owner).getEntity();
                                 wolf.teleport(player);
 
                                 player.sendMessage(ChatColor.GREEN + "Your wolf is coming.");
@@ -173,8 +174,8 @@ public class WolfCommandExecutor implements CommandExecutor {
                            String owner = player.getName();
 
                            if (args.length <= 1) {
-                               if (selectedWolfManager.hasSelectedWolf(owner)) {
-                                   wolf = (Wolf)selectedWolfManager.getSelectedWolf(owner);
+                               if (selectedWolfManager.hasSelectedWolf(player)) {
+                                   wolf = selectedWolfManager.getSelectedWolf(player);
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
                                }
@@ -182,7 +183,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                String name = args[1];
 
                                if (wolfManager.hasWolf(name, owner)) {
-                                   wolf = (Wolf) wolfManager.getWolf(name, owner).getEntity();
+                                   wolf = wolfManager.getWolf(name, owner).getEntity();
                                } else {
                                   player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
                                }
@@ -219,11 +220,13 @@ public class WolfCommandExecutor implements CommandExecutor {
                            Wolf wolf = null;
                            String owner = player.getName();
                            Player receiver = null;
-
+                           World world = player.getWorld();
+                           WorldConfig worldConfig = configManager.getWorldConfig(world);
+                           
                            if (args.length == 2) {
-                               if (selectedWolfManager.hasSelectedWolf(owner)) {
-                                   wolf = (Wolf) selectedWolfManager.getSelectedWolf(owner);
-                                   receiver = (Player) plugin.getServer().getPlayer(args[1]);
+                               if (selectedWolfManager.hasSelectedWolf(player)) {
+                                   wolf = selectedWolfManager.getSelectedWolf(player);
+                                   receiver = plugin.getServer().getPlayer(args[1]);
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
                                     
@@ -233,15 +236,15 @@ public class WolfCommandExecutor implements CommandExecutor {
                                String name = args[1];
 
                                if (wolfManager.hasWolf(name, owner)) {
-                                   wolf = (Wolf) wolfManager.getWolf(name, owner).getEntity();
-                                   receiver = (Player) plugin.getServer().getPlayer(args[2]);
+                                   wolf = wolfManager.getWolf(name, owner).getEntity();
+                                   receiver = plugin.getServer().getPlayer(args[2]);
                                } else {
                                    player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
                                     
                                    return true;
                                }
                            } else {
-                               player.sendMessage(ChatColor.RED + "Correct Syntax is /wolf give <player> (wolf)");
+                               player.sendMessage(ChatColor.RED + "Too many arguments.");
                                 
                                return true;
                            }
@@ -251,9 +254,22 @@ public class WolfCommandExecutor implements CommandExecutor {
                                String name = wolf1.getName();
                                String to = receiver.getName();
 
+                        	   if (worldConfig.limitEnable) {
+                                   List<WolfTable> wts = wolfManager.getWolfTables(player);
+                                   int size = wts.size();
+                                   int limit = worldConfig.limitValue;
+                                   
+                                   if (size >= limit) {
+                                       player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + ".");
+                                       receiver.sendMessage(owner + " gave you the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " but you can't get more wolves because the limit is the limit is " + ChatColor.YELLOW + Integer.toString(limit) + ".");
+                                       
+                                       return false;
+                                   }
+                               }
+                               
                                wolf1.setOwner(receiver);
                                wolf.teleport(receiver);
-
+                               
                                player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
                                receiver.sendMessage("You got the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
                            }
@@ -261,13 +277,13 @@ public class WolfCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("release")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.elease")) {
+                       if (plugin.hasPermissions(player, "Wolf.wolf.release")) {
                            Wolf wolf = null;
                            String owner = player.getName();
 
                            if (args.length == 1) {
-                               if (selectedWolfManager.hasSelectedWolf(owner)) {
-                                   wolf = (Wolf) selectedWolfManager.getSelectedWolf(owner);
+                               if (selectedWolfManager.hasSelectedWolf(player)) {
+                                   wolf = selectedWolfManager.getSelectedWolf(player);
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
                                     
@@ -277,7 +293,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                String name = args[1];
 
                                if (wolfManager.hasWolf(name, owner)) {
-                                   wolf = (Wolf) wolfManager.getWolf(name, owner).getEntity();
+                                   wolf = wolfManager.getWolf(name, owner).getEntity();
                                } else {
                                    player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
                                     
@@ -339,7 +355,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                 player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " - " + wolfTable.getOwner());
             }
         } else {
-            player.sendMessage(ChatColor.RED + "There is no tame wolves.");
+            player.sendMessage(ChatColor.RED + "There is no tamed wolves.");
         }
     }
     
@@ -375,6 +391,10 @@ public class WolfCommandExecutor implements CommandExecutor {
         
         if (plugin.hasPermissions(player, "Wolf.wolf.stop")) {
             player.sendMessage(command + "stop " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Stop your wolf from attacking.");
+        }
+        
+        if (plugin.hasPermissions(player, "Wolf.wolf.give")) {
+            player.sendMessage(command + "give " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + "> [" + ChatColor.WHITE + "player" + ChatColor.GREEN + "]" + ChatColor.YELLOW + " - Release your wolf.");
         }
         
         if (plugin.hasPermissions(player, "Wolf.wolf.release")) {

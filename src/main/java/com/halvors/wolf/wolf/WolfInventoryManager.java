@@ -49,7 +49,7 @@ public class WolfInventoryManager {
      */
     public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
         return plugin.getDatabase().find(WolfInventoryTable.class).where()
-            .eq("uniqueId", uniqueId.toString()).findUnique();
+            .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     /**
@@ -73,9 +73,9 @@ public class WolfInventoryManager {
     }
     
     /**
-     * Save inventorys to database
+     * Unload inventorys from database
      */
-    public void save() {
+    public void unload() {
         for (WolfInventory wi : wolfInventorys.values()) {
             WolfInventoryTable wit = getWolfInventoryTable(wi.getUniqueId());
             

@@ -26,6 +26,7 @@ import java.util.UUID;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.halvors.wolf.WolfPlugin;
 
@@ -48,17 +49,17 @@ public class Wolf {
     }
     
     /**
-     * Get WolfTable
+     * Get WolfTable.
      * 
      * @return WolfTable
      */
     public WolfTable getWolfTable() {
         return plugin.getDatabase().find(WolfTable.class).where()
-            .eq("uniqueId", uniqueId.toString()).findUnique();
+            .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     /**
-     * Get id
+     * Get id.
      * 
      * @return int
      */
@@ -73,7 +74,7 @@ public class Wolf {
     }
     
     /**
-     * Set id
+     * Set id.
      * 
      * @param id
      */
@@ -84,11 +85,11 @@ public class Wolf {
             wt.setId(id);
             
             plugin.getDatabase().update(wt);
-        } 
+        }
     }
     
     /**
-     * Get uniqueId
+     * Get uniqueId.
      * 
      * @return UUID
      */
@@ -103,22 +104,7 @@ public class Wolf {
     }
     
     /**
-     * Set uniqueId
-     * 
-     * @param uniqueId
-     */
-    public void setUniqueId(UUID uniqueId) {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            wt.setUniqueId(uniqueId.toString());
-            
-            plugin.getDatabase().update(wt);
-        }
-    }
-    
-    /**
-     * Get name
+     * Get name.
      * 
      * @return String
      */
@@ -133,7 +119,7 @@ public class Wolf {
     }
     
     /**
-     * Set name
+     * Set name.
      * 
      * @param name
      */
@@ -152,7 +138,7 @@ public class Wolf {
     }
     
     /**
-     * Get owner
+     * Get owner.
      * 
      * @return Player
      */
@@ -171,23 +157,24 @@ public class Wolf {
     }
     
     /**
-     * Set owner
+     * Set owner.
      * 
      * @param owner
      */
     public void setOwner(Player owner) {
         WolfTable wt = getWolfTable();
+        org.bukkit.entity.Wolf wolf = getEntity();
         
         if (wt != null) {
             wt.setOwner(owner.getName());
-            getEntity().setOwner(owner);
+            wolf.setOwner(owner);
             
             plugin.getDatabase().update(wt);
         }
     }
     
     /**
-     * Get world
+     * Get world.
      * 
      * @return World
      */
@@ -202,7 +189,7 @@ public class Wolf {
     }
     
     /**
-     * Set world
+     * Set world.
      * 
      * @param world
      */
@@ -217,7 +204,7 @@ public class Wolf {
     }
     
     /**
-     * Check if inventory exists
+     * Check if inventory exists.
      * 
      * @return boolean
      */
@@ -232,7 +219,7 @@ public class Wolf {
     }
     
     /**
-     * Set inventory
+     * Set inventory.
      * 
      * @param inventory
      */
@@ -247,7 +234,7 @@ public class Wolf {
     }
     
     /**
-     * Add inventory
+     * Add inventory.
      */
     public void addInventory() {
         setInventory(true);
@@ -255,7 +242,7 @@ public class Wolf {
     }
 
     /**
-     * Remove inventory
+     * Remove inventory.
      */
     public void removeInventory() {
         setInventory(false);
@@ -263,16 +250,33 @@ public class Wolf {
     }
     
     /**
-     * Get inventory
+     * Get inventory.
      * 
      * @return WolfInventory
      */
     public WolfInventory getInventory() {
         return wolfInventoryManager.getWolfInventory(uniqueId);
     }
+    
+    /**
+     * Drop inventory contents.
+     */
+    public void dropInventory() {
+    	if (hasInventory()) {
+    		WolfInventory wi = getInventory();
+    		World world = getWorld();
+    		org.bukkit.entity.Wolf wolf = getEntity();
+    		
+    		for (ItemStack item : wi.getBukkitContents()) {
+    			if (item != null && item.getAmount() > 0 && item.getDurability() > -1) {
+                    world.dropItem(wolf.getLocation(), item);
+                }
+    		}
+    	}
+    }
 
     /**
-     * Get the wolf entity
+     * Get the wolf entity.
      * 
      * @return Wolf
      */
