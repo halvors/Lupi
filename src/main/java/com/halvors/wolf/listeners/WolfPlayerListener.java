@@ -57,38 +57,6 @@ public class WolfPlayerListener extends PlayerListener {
         this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
     
-    /*
-    @Override
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        Action action = event.getAction();
-        Player player = event.getPlayer();
-        String name = player.getName();
-        
-        if (event.hasItem() && selectedWolfManager.hasSelectedWolf(name)) {
-            Wolf wolf = selectedWolfManager.getSelectedWolf(name);
-            
-            if (wolf.isTamed() && wolf.getOwner().equals(player) && wolfManager.hasWolf(wolf)) {
-                com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                Material item = event.getItem().getType();
-                
-                if (item.equals(Material.SADDLE)) {
-                    if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
-                        Location location = player.getTargetBlock(null, 120).getLocation();
-                    	
-                        if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
-                            PathPoint[] pathPoint = { new PathPoint(location.getBlockX(), location.getBlockY(), location.getBlockZ()) };
-                            EntityWolf entityWolf = ((CraftWolf) wolf).getHandle();
-                            entityWolf.a(new PathEntity(pathPoint));
-                        
-                            player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + "has got a target.");
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
-    
     @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (!event.isCancelled()) {
@@ -109,8 +77,6 @@ public class WolfPlayerListener extends PlayerListener {
                             selectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
-                            
-                            wolf.setSitting(true);
                         }
                     } else if (item.equals(Material.BOOK)) {
                     	if (plugin.hasPermissions(player, "Wolf.wolf.info")) {
@@ -119,8 +85,6 @@ public class WolfPlayerListener extends PlayerListener {
                                 
                             player.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
                             player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
-                            
-                            wolf.setSitting(true);
                         }
                     } else if (item.equals(Material.CHEST)) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
@@ -138,8 +102,6 @@ public class WolfPlayerListener extends PlayerListener {
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
                             }
-                            
-                            wolf.setSitting(true);
                         }
                     }
                 }

@@ -73,31 +73,6 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     
-    /*
-    @Override
-    public void onEntityDamage(EntityDamageEvent event) {
-        if (!event.isCancelled()) {
-            Entity entity = event.getEntity();
-            
-            if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
-
-                if (wolfManager.hasWolf(wolf)) {
-                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                    
-                    if (event instanceof EntityDamageByEntityEvent) {
-                        Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
- 
-                        if (damager instanceof Player) {
-                            Player attacker = (Player) damager;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
-    
     @Override
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
@@ -178,33 +153,4 @@ public class WolfEntityListener extends EntityListener {
             }
         }
     }
-
-    /*
-    @Override
-    public void onItemSpawn(ItemSpawnEvent event) {
-        if (!event.isCancelled()) {
-            if (event.getEntity() instanceof Item) {
-                Item item = (Item) event.getEntity();
-                List<Entity> entities = item.getNearbyEntities(1, 1, 1); // TODO: Figure out position here
-                
-                for (Entity entity : entities) {
-                    if (entity instanceof Wolf) {
-                        Wolf wolf = (Wolf) entity;
-                    
-                        if (wolfManager.hasWolf(wolf)) {
-                            com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-
-                            if (wolf1.hasInventory()) {
-                                WolfInventory wi = wolf1.getInventory();
-                                
-                                wi.addItem(item.getItemStack());
-                                item.remove();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
 }
