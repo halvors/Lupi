@@ -49,13 +49,10 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class WolfPlugin extends JavaPlugin {
-    private String name;
-    private String version;
-    
     private final Logger log = Logger.getLogger("Minecraft");
     
     private PluginManager pm;
-    private PluginDescriptionFile pdfFile;
+    private PluginDescriptionFile desc;
 
     private final ConfigManager configManager = new ConfigManager(this);
     private final WolfManager wolfManager = new WolfManager(this);
@@ -71,11 +68,7 @@ public class WolfPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
-        pdfFile = getDescription();
-        
-        // Load name and version from pdfFile.
-        name = pdfFile.getName();
-        version = pdfFile.getVersion();
+        desc = getDescription();
         
         // Load configuration.
         configManager.load();
@@ -99,24 +92,12 @@ public class WolfPlugin extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
-        
-        // Load wolves from database.
-//        wolfManager.load();
-        
-        // Load inventorys from database.
-//        wolfInventoryManager.load();
     }
     
     @Override
     public void onDisable() {
     	// Save configuration.
         configManager.save();
-        
-        // Unload wolves from database.
-//        wolfManager.unload();
-        
-        // Unload inventorys from database.
-//        wolfInventoryManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
@@ -161,15 +142,15 @@ public class WolfPlugin extends JavaPlugin {
     }
     
     public void log(Level level, String msg) {
-        this.log.log(level, "[" + name + "] " + msg);
+        this.log.log(level, "[" + getName() + "] " + msg);
     }
     
     public String getName() {
-        return name;
+        return desc.getName();
     }
     
     public String getVersion() {
-        return version;
+        return desc.getVersion();
     }
     
     public ConfigManager getConfigManager() {
