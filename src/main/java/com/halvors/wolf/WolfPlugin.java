@@ -68,8 +68,6 @@ public class WolfPlugin extends JavaPlugin {
     
     public static PermissionHandler Permissions;
     
-    private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
-    
     @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
@@ -160,18 +158,6 @@ public class WolfPlugin extends JavaPlugin {
         } else {
             return player.isOp();
         }
-    }
-    
-    public boolean isDebugging(final Player player) {
-        if (debugees.containsKey(player)) {
-            return debugees.get(player);
-        } else {
-            return false;
-        }
-    }
-
-    public void setDebugging(final Player player, final boolean value) {
-        debugees.put(player, value);
     }
     
     public void log(Level level, String msg) {
