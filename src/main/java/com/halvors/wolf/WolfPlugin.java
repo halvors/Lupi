@@ -64,7 +64,6 @@ public class WolfPlugin extends JavaPlugin {
     
     public static PermissionHandler Permissions;
     
-    @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
         desc = getDescription();
@@ -74,7 +73,6 @@ public class WolfPlugin extends JavaPlugin {
         
         // Register our events Type.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
-//        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
@@ -93,7 +91,6 @@ public class WolfPlugin extends JavaPlugin {
         setupDatabase();
     }
     
-    @Override
     public void onDisable() {
     	// Save configuration.
         configManager.save();
