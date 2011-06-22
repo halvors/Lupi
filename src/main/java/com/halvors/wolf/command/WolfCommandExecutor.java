@@ -87,7 +87,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                if (wolfManager.hasWolf(owner)) {
                                    player = (Player) plugin.getServer().getPlayer(args[1]);
                                } else {
-                                   player.sendMessage(ChatColor.RED + "Player doesn't have a wolf.");
+                                   player.sendMessage(ChatColor.RED + "Sorry, That player doesn't have a tamed wolf.");
                                }
                            }
 
@@ -105,7 +105,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                if (wolfManager.hasWolf(wolf)) {
                                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
-                                   player.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
+                                   player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                                }
                            }
 
@@ -116,11 +116,13 @@ public class WolfCommandExecutor implements CommandExecutor {
                            Wolf wolf = null;
                            String owner = player.getName();
                            String name = null;
+                           String grammar = "";
 
                            if (args.length == 2) {
                                if (selectedWolfManager.hasSelectedWolf(player)) {
                                    wolf = selectedWolfManager.getSelectedWolf(player);
                                    name = args[1];
+                                   grammar = "this";
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
                                     
@@ -132,8 +134,9 @@ public class WolfCommandExecutor implements CommandExecutor {
                                if (wolfManager.hasWolf(oldName, owner)) {
                                    wolf = wolfManager.getWolf(oldName, owner).getEntity();
                                    name = args[2];
+                                   grammar = "that";
                                } else {
-                                   player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                                   player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                                     
                                    return true;
                                }
@@ -147,7 +150,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                                wolf1.setName(name);
                                
-                               player.sendMessage("Wolf name set to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
+                               player.sendMessage("The name of " + grammar + " wolf has been set to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
                            }
                            
                            return true;
@@ -162,7 +165,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                 Wolf wolf = wolfManager.getWolf(name, owner).getEntity();
                                 wolf.teleport(player);
 
-                                player.sendMessage(ChatColor.GREEN + "Your wolf is coming.");
+                                player.sendMessage(ChatColor.GREEN + "Your wolf is on its way.");
                             }
                            }
                             
@@ -185,7 +188,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                if (wolfManager.hasWolf(name, owner)) {
                                    wolf = wolfManager.getWolf(name, owner).getEntity();
                                } else {
-                                  player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                                  player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                                }
                            }
 
@@ -239,7 +242,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                    wolf = wolfManager.getWolf(name, owner).getEntity();
                                    receiver = plugin.getServer().getPlayer(args[2]);
                                } else {
-                                   player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                                   player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                                     
                                    return true;
                                }
@@ -259,10 +262,10 @@ public class WolfCommandExecutor implements CommandExecutor {
                                    List<WolfTable> wts = wolfManager.getWolfTables(player);
                                    
                                    if (limit <= wts.size()) {
-                                       player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + ".");
-                                       receiver.sendMessage(owner + " gave you the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " but you can't get more wolves because the limit is the limit is " + ChatColor.YELLOW + Integer.toString(limit) + ".");
+                                       player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
+                                       receiver.sendMessage(owner + " tried to give you " + ChatColor.YELLOW + name + ChatColor.WHITE + " but you can't receive the wolf because the limit is " + ChatColor.YELLOW + Integer.toString(limit)  + ChatColor.WHITE + " wolves.");
                                        
-                                       return false;
+                                       return true;
                                    }
                                }
                                
@@ -270,7 +273,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                wolf.teleport(receiver);
                                
                                player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
-                               receiver.sendMessage("You got the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
+                               receiver.sendMessage("You have received " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
                            }
 
                            return true;
@@ -294,7 +297,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                if (wolfManager.hasWolf(name, owner)) {
                                    wolf = wolfManager.getWolf(name, owner).getEntity();
                                } else {
-                                   player.sendMessage(ChatColor.RED + "Wolf doesn't exists.");
+                                   player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                                     
                                    return true;
                                }
@@ -354,7 +357,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                 player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " - " + wolfTable.getOwner());
             }
         } else {
-            player.sendMessage(ChatColor.RED + "There is no tamed wolves.");
+            player.sendMessage(ChatColor.RED + "There are no tamed wolves.");
         }
     }
     
