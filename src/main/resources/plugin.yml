@@ -1,7 +1,9 @@
 name: Wolf
 main: com.halvors.wolf.WolfPlugin
 version: 0.1
-author: halvors, speeddemon92
+description: Wolf is a wolf plugin for Bukkit.
+authors: [halvors, speeddemon92]
+website: 
 database: true
 
 commands:
