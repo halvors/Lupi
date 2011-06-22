@@ -253,13 +253,12 @@ public class WolfCommandExecutor implements CommandExecutor {
                                com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                                String name = wolf1.getName();
                                String to = receiver.getName();
-
-                        	   if (worldConfig.limitEnable) {
+                               int limit = worldConfig.wolfLimit;
+                               
+                        	   if (limit > 0) {
                                    List<WolfTable> wts = wolfManager.getWolfTables(player);
-                                   int size = wts.size();
-                                   int limit = worldConfig.limitValue;
                                    
-                                   if (size >= limit) {
+                                   if (limit <= wts.size()) {
                                        player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + ".");
                                        receiver.sendMessage(owner + " gave you the wolf " + ChatColor.YELLOW + name + ChatColor.WHITE + " but you can't get more wolves because the limit is the limit is " + ChatColor.YELLOW + Integer.toString(limit) + ".");
                                        

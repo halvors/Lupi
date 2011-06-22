@@ -6,11 +6,8 @@
 wolf:
     enable: true # Allow wolves to spawn.
     item: 352 # Item for select tamed wolves.
-    pvp: false # Set wolf to not attack players when pvp is off
-
-limit:
-    enable: false # Enable limit of tamed wolves?
-    value: 16 # Value, if limit is enabled.
+    pvp: false # Set wolf to not attack players when pvp is off.
+    limit: 0 # Enable limit? 0 for disable and 1 or higher to enable.
 
 inventory:
     enable: true # Use wolf inventory?

@@ -106,13 +106,12 @@ public class WolfEntityListener extends EntityListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
+                int limit = worldConfig.wolfLimit;
                 
-                if (worldConfig.limitEnable) {
+                if (limit > 0) {
                     List<WolfTable> wts = wolfManager.getWolfTables(owner);
-                    int size = wts.size();
-                    int limit = worldConfig.limitValue;
                     
-                    if (size >= limit) {
+                    if (limit <= wts.size()) {
                         owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
                         
                         event.setCancelled(true);
