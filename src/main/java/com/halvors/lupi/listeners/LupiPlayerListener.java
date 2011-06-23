@@ -43,17 +43,15 @@ import com.halvors.lupi.wolf.WolfManager;
  * @author halvors
  */
 public class LupiPlayerListener extends PlayerListener {
-    private final Lupi plugin;
+    private Lupi plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
-    private final SelectedWolfManager selectedWolfManager;
-    
-    public LupiPlayerListener(final Lupi plugin) {
+
+    public LupiPlayerListener(Lupi plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
-        this.selectedWolfManager = plugin.getSelectedWolfManager();
     }
     
     @Override
@@ -73,7 +71,7 @@ public class LupiPlayerListener extends PlayerListener {
                     
                     if (item == worldConfig.wolfItem) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.select")) {
-                            selectedWolfManager.addSelectedWolf(player, wolf);
+                            SelectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                         }

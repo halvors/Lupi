@@ -41,12 +41,12 @@ import com.halvors.lupi.Lupi;
  * @author halvors
  */
 public class WolfManager {
-    private final Lupi plugin;
+    private Lupi plugin;
     
     private final HashMap<UUID, Wolf> wolves = new HashMap<UUID, Wolf>();
     private final List<String> wolfNames = new ArrayList<String>();
     
-    public WolfManager(final Lupi plugin) {
+    public WolfManager(Lupi plugin) {
         this.plugin = plugin;
 
         initRandomNames();

@@ -25,21 +25,13 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
-import com.halvors.lupi.Lupi;
-
 /**
  * Handle selected wolves.
  * 
  * @author halvors
  */
 public class SelectedWolfManager {
-//    private final WolfPlugin plugin;
-    
-    private final HashMap<String, Wolf> selectedWolves = new HashMap<String, Wolf>();
-    
-    public SelectedWolfManager(final Lupi plugin) {
-//        this.plugin = plugin;
-    }
+    private final static HashMap<String, Wolf> selectedWolves = new HashMap<String, Wolf>();
     
     /**
      * Add a selected wolf
@@ -47,7 +39,7 @@ public class SelectedWolfManager {
      * @param player
      * @param wolf
      */
-    public void addSelectedWolf(Player player, Wolf wolf) {
+    public static void addSelectedWolf(Player player, Wolf wolf) {
         if (wolf.isTamed()) {
         	String name = player.getName();
         	
@@ -64,7 +56,7 @@ public class SelectedWolfManager {
      * 
      * @param player
      */
-    public void removeSelectedWolf(Player player) {
+    public static void removeSelectedWolf(Player player) {
     	String name = player.getName();
     	
         if (selectedWolves.containsKey(name)) {
@@ -78,7 +70,7 @@ public class SelectedWolfManager {
      * @param player
      * @return Wolf
      */
-    public Wolf getSelectedWolf(Player player) {
+    public static Wolf getSelectedWolf(Player player) {
         return selectedWolves.get(player.getName());
     }
     
@@ -88,7 +80,7 @@ public class SelectedWolfManager {
      * @param owner
      * @return Boolean
      */
-    public boolean hasSelectedWolf(Player player) {
+    public static boolean hasSelectedWolf(Player player) {
         return selectedWolves.containsKey(player.getName());
     }
 }

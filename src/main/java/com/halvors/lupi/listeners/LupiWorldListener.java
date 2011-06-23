@@ -37,11 +37,11 @@ import com.halvors.lupi.wolf.WolfManager;
  * @author speeddemon92
  */
 public class LupiWorldListener extends WorldListener {
-//    private final WolfPlugin plugin;
+//    private Lupi plugin;
     
     private final WolfManager wolfManager;
     
-    public LupiWorldListener(final Lupi plugin) {
+    public LupiWorldListener(Lupi plugin) {
 //        this.plugin = plugin;
         this.wolfManager = plugin.getWolfManager();
     }

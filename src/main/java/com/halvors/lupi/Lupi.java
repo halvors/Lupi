@@ -34,12 +34,11 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.halvors.lupi.command.LupiCommandExecutor;
+import com.halvors.lupi.commands.LupiCommandExecutor;
 import com.halvors.lupi.listeners.LupiEntityListener;
 import com.halvors.lupi.listeners.LupiPlayerListener;
 import com.halvors.lupi.listeners.LupiWorldListener;
 import com.halvors.lupi.util.ConfigManager;
-import com.halvors.lupi.wolf.SelectedWolfManager;
 import com.halvors.lupi.wolf.WolfManager;
 import com.halvors.lupi.wolf.WolfTable;
 import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
@@ -56,8 +55,7 @@ public class Lupi extends JavaPlugin {
     private final ConfigManager configManager = new ConfigManager(this);
     private final WolfManager wolfManager = new WolfManager(this);
     private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
-    private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
-    
+
     private final LupiEntityListener entityListener = new LupiEntityListener(this);
     private final LupiPlayerListener playerListener = new LupiPlayerListener(this);
     private final LupiWorldListener worldListener = new LupiWorldListener(this);
@@ -171,9 +169,5 @@ public class Lupi extends JavaPlugin {
     
     public WolfInventoryManager getWolfInventoryManager() {
         return wolfInventoryManager;
-    }
-    
-    public SelectedWolfManager getSelectedWolfManager() {
-        return selectedWolfManager;
     }
 }

@@ -45,12 +45,12 @@ import com.halvors.lupi.wolf.WolfTable;
  * @author halvors
  */
 public class LupiEntityListener extends EntityListener {
-//    private final WolfPlugin plugin;
+//    private Lupi plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     
-    public LupiEntityListener(final Lupi plugin) {
+    public LupiEntityListener(Lupi plugin) {
 //        this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();

@@ -33,8 +33,8 @@ import com.halvors.lupi.Lupi;
  * @author halvors
  */
 public class WorldConfig {
-    //private final WolfPlugin plugin;
-    
+//	private Lupi plugin;
+	
 	private final ConfigManager configManager;
 	
     private String worldName;
@@ -53,8 +53,8 @@ public class WorldConfig {
     public int inventoryItem;
     /* Configuration data end */
 
-    public WorldConfig(final Lupi plugin, final String worldName) {
-        //this.plugin = plugin;
+    public WorldConfig(Lupi plugin, final String worldName) {
+//        this.plugin = plugin;
     	this.configManager = plugin.getConfigManager();
         this.worldName = worldName;
         

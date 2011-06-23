@@ -39,7 +39,7 @@ import org.bukkit.inventory.ItemStack;
  * @author speeddemon92
  */
 public class WolfInventory extends TileEntityChest {
-    private final UUID uniqueId;
+    private UUID uniqueId;
     private String name = "Wolf inventory";
     
     public WolfInventory(UUID uniqueId) {
@@ -284,12 +284,6 @@ public class WolfInventory extends TileEntityChest {
     public HashMap<Integer, ItemStack> addItem(ItemStack... items) {
         HashMap<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
 
-        /* TODO: some optimization
-         * - Create a 'firstPartial' with a 'fromIndex'
-         * - Record the lastPartial per Material
-         * - Cache firstEmpty result
-         */
-
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];
             while (true) {
@@ -342,8 +336,6 @@ public class WolfInventory extends TileEntityChest {
 
     public HashMap<Integer, ItemStack> removeItem(ItemStack... items) {
         HashMap<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
-
-        // TODO: optimization
 
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];

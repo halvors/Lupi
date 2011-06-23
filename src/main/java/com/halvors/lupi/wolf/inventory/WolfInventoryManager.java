@@ -32,13 +32,12 @@ import com.halvors.lupi.Lupi;
  * @author halvors
  */
 public class WolfInventoryManager {
-    private final Lupi plugin;
+    private Lupi plugin;
     
-    private final HashMap<UUID, WolfInventory> wolfInventorys;
+    private final HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
     
-    public WolfInventoryManager(final Lupi plugin) {
+    public WolfInventoryManager(Lupi plugin) {
         this.plugin = plugin;
-        this.wolfInventorys = new HashMap<UUID, WolfInventory>();
     }
     
     /**

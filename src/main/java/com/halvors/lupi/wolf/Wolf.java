@@ -38,16 +38,15 @@ import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
  * @author halvors
  */
 public class Wolf {
-    private final Lupi plugin;
+    private Lupi plugin;
+    private UUID uniqueId;
     
     private final WolfInventoryManager wolfInventoryManager;
     
-    private final UUID uniqueId;
-    
-    public Wolf(final Lupi plugin, UUID uniqueId) {
+    public Wolf(Lupi plugin, UUID uniqueId) {
         this.plugin = plugin;
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
         this.uniqueId = uniqueId;
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     /**
