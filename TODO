@@ -1,5 +1,4 @@
 Version 0.1
-	- Fix SelectedWolfManager.
 	- Fix bug that wolf isn't added when chunk loads.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
