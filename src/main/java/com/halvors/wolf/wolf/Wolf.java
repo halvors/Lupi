@@ -29,6 +29,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.wolf.inventory.WolfInventory;
+import com.halvors.wolf.wolf.inventory.WolfInventoryManager;
 
 /**
  * Represents a wolf

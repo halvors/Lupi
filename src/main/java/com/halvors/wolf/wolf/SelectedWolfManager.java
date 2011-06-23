@@ -35,11 +35,10 @@ import com.halvors.wolf.WolfPlugin;
 public class SelectedWolfManager {
 //    private final WolfPlugin plugin;
     
-    private final HashMap<String, Wolf> selectedWolves;
+    private final HashMap<String, Wolf> selectedWolves = new HashMap<String, Wolf>();
     
     public SelectedWolfManager(final WolfPlugin plugin) {
 //        this.plugin = plugin;
-        this.selectedWolves = new HashMap<String, Wolf>();
     }
     
     /**

@@ -37,13 +37,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.halvors.wolf.command.WolfCommandExecutor;
 import com.halvors.wolf.listeners.WolfEntityListener;
 import com.halvors.wolf.listeners.WolfPlayerListener;
-import com.halvors.wolf.listeners.WolfWorldListener;
 import com.halvors.wolf.util.ConfigManager;
 import com.halvors.wolf.wolf.SelectedWolfManager;
-import com.halvors.wolf.wolf.WolfInventoryManager;
-import com.halvors.wolf.wolf.WolfInventoryTable;
 import com.halvors.wolf.wolf.WolfManager;
 import com.halvors.wolf.wolf.WolfTable;
+import com.halvors.wolf.wolf.inventory.WolfInventoryManager;
+import com.halvors.wolf.wolf.inventory.WolfInventoryTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -55,13 +54,12 @@ public class WolfPlugin extends JavaPlugin {
 
     private final ConfigManager configManager = new ConfigManager(this);
     private final WolfManager wolfManager = new WolfManager(this);
-    private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
     private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
+    private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
     
     private final WolfEntityListener entityListener = new WolfEntityListener(this);
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
-    private final WolfWorldListener worldListener = new WolfWorldListener(this);
-    
+
     public static PermissionHandler Permissions;
     
     public void onEnable() {
@@ -78,9 +76,6 @@ public class WolfPlugin extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
 
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
-        
-        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
 
         // Register our commands.
         getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
@@ -89,11 +84,17 @@ public class WolfPlugin extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
+        
+        // Load wolves from database.
+        wolfManager.load();
     }
     
     public void onDisable() {
     	// Save configuration.
         configManager.save();
+        
+        // Load wolves from database.
+        wolfManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
@@ -157,11 +158,11 @@ public class WolfPlugin extends JavaPlugin {
         return wolfManager;
     }
     
-    public WolfInventoryManager getWolfInventoryManager() {
-        return wolfInventoryManager;
-    }
-    
     public SelectedWolfManager getSelectedWolfManager() {
         return selectedWolfManager;
+    }
+    
+    public WolfInventoryManager getWolfInventoryManager() {
+        return wolfInventoryManager;
     }
 }

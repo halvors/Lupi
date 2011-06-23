@@ -18,7 +18,7 @@
  * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.wolf.wolf;
+package com.halvors.wolf.wolf.inventory;
 
 import java.util.HashMap;
 import java.util.List;

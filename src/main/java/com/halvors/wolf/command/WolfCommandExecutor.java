@@ -77,24 +77,6 @@ public class WolfCommandExecutor implements CommandExecutor {
                        if (plugin.hasPermissions(player, "Wolf.list")) {
                            showWolves(player);
                            
-                        return true;
-                    }
-                   } else if (subCommand.equalsIgnoreCase("status")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.status")) {
-                           if (args.length >= 2) {
-                               String owner = args[1];
-
-                               if (wolfManager.hasWolf(owner)) {
-                                   player = (Player) plugin.getServer().getPlayer(args[1]);
-                               } else {
-                                   player.sendMessage(ChatColor.RED + "Sorry, That player doesn't have a tamed wolf.");
-                               }
-                           }
-
-                           if (player != null) {
-                               showPlayerWolves(player);
-                           }
-
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("name")) {
@@ -202,22 +184,6 @@ public class WolfCommandExecutor implements CommandExecutor {
 
                            return true;
                        }
-                        /*
-                } else if (subCommand.equalsIgnoreCase("target")){
-                    if (plugin.hasPermissions(player, "Wolf.wolf.target")) {
-                        if (args.length == 2) {
-                            Player target = plugin.getServer().getPlayer(args[1]);
-
-                            if (target != null) {
-
-                            } else {
-                                player.sendMessage(ChatColor.RED + "Target doesn't exist.");
-                            }
-                        }
-
-                    return true;
-                }
-                  */
                    } else if (subCommand.equalsIgnoreCase("give")) {
                        if (plugin.hasPermissions(player, "Wolf.wolf.give")) {
                            Wolf wolf = null;
@@ -373,10 +339,6 @@ public class WolfCommandExecutor implements CommandExecutor {
         
         if (plugin.hasPermissions(player, "Wolf.list")) {
             player.sendMessage(command + "list" + ChatColor.YELLOW + " - Show a list of tamed wolves.");
-        }
-        
-        if (plugin.hasPermissions(player, "Wolf.wolf.status")) {
-            player.sendMessage(command + "status" + ChatColor.YELLOW + " - Show your wolves.");
         }
         
         if (plugin.hasPermissions(player, "Wolf.wolf.name")) {

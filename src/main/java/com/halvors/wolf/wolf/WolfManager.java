@@ -34,6 +34,7 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 import com.halvors.wolf.WolfPlugin;
+import com.halvors.wolf.wolf.inventory.WolfInventoryManager;
 
 /**
  * Handle wolves
@@ -43,13 +44,14 @@ import com.halvors.wolf.WolfPlugin;
 public class WolfManager {
     private final WolfPlugin plugin;
     
-    private final HashMap<UUID, Wolf> wolves;
-    private final List<String> wolfNames;
+    private final WolfInventoryManager wolfInventoryManager;
+    
+    private final HashMap<UUID, Wolf> wolves = new HashMap<UUID, Wolf>();
+    private final List<String> wolfNames = new ArrayList<String>();
     
     public WolfManager(final WolfPlugin plugin) {
         this.plugin = plugin;
-        this.wolves = new HashMap<UUID, Wolf>();
-        this.wolfNames = new ArrayList<String>();
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
         
         initRandomNames();
     }
@@ -94,6 +96,9 @@ public class WolfManager {
             
             wolves.put(uniqueId, new Wolf(plugin, uniqueId));
         }
+        
+        // Load inventorys from database.
+        wolfInventoryManager.load();
     }
    
     /**
@@ -101,6 +106,9 @@ public class WolfManager {
      */
     public void unload() {
         wolves.clear();
+        
+        // Load inventorys from database.
+        wolfInventoryManager.unload();
     }
     
     /**
@@ -390,7 +398,7 @@ public class WolfManager {
      */
     private void initRandomNames() {  
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfNames.txt")));
            
             while (true) {
                 String s1;
