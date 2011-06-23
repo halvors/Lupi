@@ -79,9 +79,7 @@ public class SelectedWolfManager {
      * @return Wolf
      */
     public Wolf getSelectedWolf(Player player) {
-    	String name = player.getName();
-    	
-        return selectedWolves.get(name);
+        return selectedWolves.get(player.getName());
     }
     
     /**
@@ -91,6 +89,6 @@ public class SelectedWolfManager {
      * @return Boolean
      */
     public boolean hasSelectedWolf(Player player) {
-        return selectedWolves.containsKey(player);
+        return selectedWolves.containsKey(player.getName());
     }
 }

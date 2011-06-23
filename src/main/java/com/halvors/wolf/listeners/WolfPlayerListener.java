@@ -23,7 +23,6 @@ package com.halvors.wolf.listeners;
 import net.minecraft.server.EntityPlayer;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -70,15 +69,15 @@ public class WolfPlayerListener extends PlayerListener {
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player) && wolfManager.hasWolf(wolf)) {
                     com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                    Material item = player.getItemInHand().getType();
+                    int item = player.getItemInHand().getTypeId();
                     
-                    if (item.equals(Material.BONE)) {
+                    if (item == worldConfig.wolfItem) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.select")) {
                             selectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                         }
-                    } else if (item.equals(Material.BOOK)) {
+                    } else if (item == worldConfig.infoItem) {
                     	if (plugin.hasPermissions(player, "Wolf.wolf.info")) {
                     		int health = wolf.getHealth() / 2;
                             int maxHealth = 10;
@@ -86,7 +85,7 @@ public class WolfPlayerListener extends PlayerListener {
                             player.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
                             player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                         }
-                    } else if (item.equals(Material.CHEST)) {
+                    } else if (item == worldConfig.inventoryItem) {
                         if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
                                 if (wolf1.hasInventory()) {
@@ -101,6 +100,8 @@ public class WolfPlayerListener extends PlayerListener {
                                         
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
+                            } else {
+                            	player.sendMessage(ChatColor.RED + "Wolf inventory is not enabled.");
                             }
                         }
                     }

@@ -8,5 +8,7 @@ database: true
 
 commands:
     wolf:
-        description:
+        description: Command for Wolf.
+        aliases: #[lupi, wolves]
         usage:
+

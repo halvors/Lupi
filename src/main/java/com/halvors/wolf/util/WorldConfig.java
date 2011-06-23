@@ -47,6 +47,8 @@ public class WorldConfig {
     public boolean wolfPvp;
     public int wolfLimit;
     
+    public int infoItem;
+    
     public boolean inventoryEnable;
     public int inventoryItem;
     /* Configuration data end */
@@ -78,6 +80,8 @@ public class WorldConfig {
         wolfFriendly = config.getBoolean("wolf.friendly", wolfFriendly);
         wolfPvp = config.getBoolean("wolf.pvp", wolfPvp);
         wolfLimit = config.getInt("wolf.limit", wolfLimit);
+        
+        infoItem = config.getInt("info.item", infoItem);
         
         inventoryEnable = config.getBoolean("inventory.enable", inventoryEnable);
         inventoryItem = config.getInt("inventory.item", inventoryItem);

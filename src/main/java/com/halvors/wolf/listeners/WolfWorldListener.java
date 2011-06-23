@@ -26,7 +26,6 @@ import java.util.List;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
 
 import com.halvors.wolf.WolfPlugin;
@@ -49,39 +48,18 @@ public class WolfWorldListener extends WorldListener {
     
     @Override
     public void onChunkLoad(ChunkLoadEvent event) {
-        List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
-        
-        for (Entity entity : entities) {
-            if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
-                
-                if (wolf.isTamed()) {
-                	if (wolfManager.hasWolfInDB(wolf.getUniqueId())) {
-                		wolfManager.loadWolf(wolf);
-                	} else {
+    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
+
+    	for (Entity entity : entities) {
+    		if (entity instanceof Wolf) {
+    			Wolf wolf = (Wolf) entity;
+    			
+    			if (wolf.isTamed()) {
+                	if (!wolfManager.hasWolf(wolf)) {
                         wolfManager.addWolf(wolf);
                     }
                 }
-            }
-        }
-    }
-
-    @Override
-    public void onChunkUnload(ChunkUnloadEvent event) {
-        List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
-        
-        for (Entity entity : entities) {
-            if (entity instanceof Wolf) {
-            	/*
-            	Wolf wolf = (Wolf) entity;
-
-                if (wolf.isTamed()) {
-                    if (wolfManager.hasWolf(wolf)) {
-                        wolfManager.unloadWolf(wolf);
-                    }
-                }
-                */
-            }
-        }
+    		}
+    	}
     }
 }
