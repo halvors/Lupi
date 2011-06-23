@@ -99,7 +99,7 @@ public class WolfEntityListener extends EntityListener {
     public void onEntityTame(EntityTameEvent event) {
         if (!event.isCancelled()) {
             Entity entity = event.getEntity();
-            Player owner = (Player) event.getOwner();
+            Player player = (Player) event.getOwner();
             World world = entity.getWorld();
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
@@ -108,10 +108,10 @@ public class WolfEntityListener extends EntityListener {
                 int limit = worldConfig.wolfLimit;
                 
                 if (limit > 0) {
-                    List<WolfTable> wts = wolfManager.getWolfTables(owner);
+                    List<WolfTable> wts = wolfManager.getWolfTables(player);
                     
                     if (limit <= wts.size()) {
-                        owner.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit));
+                        player.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
                         
                         event.setCancelled(true);
                         
@@ -121,8 +121,8 @@ public class WolfEntityListener extends EntityListener {
                 
                 if (wolfManager.addWolf(wolf)) {
                     com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-                    owner.sendMessage("This is " + ChatColor.YELLOW + wolf1.getName());
-                    owner.sendMessage("You can change name with /wolf setname <name>");
+                    player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
+                    player.sendMessage("You can change name with /wolf setname <name>.");
                 } else {
                 	// TODO: Display some kind of error message here.
                 }
@@ -144,12 +144,18 @@ public class WolfEntityListener extends EntityListener {
                 if (target instanceof Player) {
                     Player player = (Player) target;
 
-                    if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
-                    	if (!wolf.getOwner().equals(player)) {
-                    		if (worldConfig.wolfPvp && world.getPVP()) {
-                    			event.setCancelled(true);
+                    if (wolf.isTamed()) {
+                    	if (wolfManager.hasWolf(wolf)) {
+                    		if (!wolf.getOwner().equals(player)) {
+                    			if (worldConfig.wolfPvp && world.getPVP()) {
+                    				event.setCancelled(true);
+                    			}
                     		}
                     	}
+                	} else {
+                		if (worldConfig.wolfFriendly) {
+                			event.setCancelled(true);
+                		}
                 	}
                 }
             }

@@ -43,6 +43,7 @@ public class WorldConfig {
     /* Configuration data start */
     public boolean wolfEnable;
     public int wolfItem;
+    public boolean wolfFriendly;
     public boolean wolfPvp;
     public int wolfLimit;
     
@@ -74,6 +75,7 @@ public class WorldConfig {
         
         wolfEnable = config.getBoolean("wolf.enable", wolfEnable);
         wolfItem = config.getInt("wolf.item", wolfItem);
+        wolfFriendly = config.getBoolean("wolf.friendly", wolfFriendly);
         wolfPvp = config.getBoolean("wolf.pvp", wolfPvp);
         wolfLimit = config.getInt("wolf.limit", wolfLimit);
         
