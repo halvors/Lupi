@@ -3,18 +3,16 @@ Version 0.1
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
     - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their chunk loads.
-    - Set wolf sit when open inventory and set them stand up when close inventory.
-    - Optimize database.
     - Debug and make stable before release.
     
 Version 0.2
-    - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players.
+    - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players. (Think we'll need an EntityMoveEvent or something)
     - Add ability for wolves to eat food from its inventory when get damaged.
     - Add ability for tamed wolves to have some kind of armor. Like if a diamond block is in inventory it get's more health.
     - Wolf home. By default set it where the wolf was tamed?
     - Add support for tamed wolves to be teleported to other worlds if player use portal.
     - Add admin commands.
-    - Add ability to set wolf sitting, or enter other minecart when player enter Minecart or other vehicle.
+    - Set wolf sit when open inventory and set them stand up when close inventory. (Will need InventoryOpenEvent and InventoryCloseEvent).
     
 Ideas:
     - Add command so owner of a wolf can add peace players that wolf not attack.
@@ -25,4 +23,9 @@ Ideas:
     - Economy support. Maybe use the Register API.
     - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
     - Add BukkitContrib as a soft dependcy. So users can choose to use it.
+    - Add ability to set wolf sitting, or enter other minecart when player enter Minecart or other vehicle.
+    
+    compgurusteve:
+    Would anyone want to try to tackle this? I was thinking mainly having a set "pen" the player makes with fences and have it spawn a new 'untamed' wolf only if there were 2 wolves lured inside created pen. Anything additional thoughts?
+
     
