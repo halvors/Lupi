@@ -44,4 +44,6 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <modules>
+  </modules>
 </project>
