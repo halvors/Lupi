@@ -55,8 +55,8 @@ public class WolfPlugin extends JavaPlugin {
 
     private final ConfigManager configManager = new ConfigManager(this);
     private final WolfManager wolfManager = new WolfManager(this);
-    private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
     private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
+    private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
     
     private final WolfEntityListener entityListener = new WolfEntityListener(this);
     private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
@@ -73,6 +73,7 @@ public class WolfPlugin extends JavaPlugin {
         
         // Register our events Type.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
+//        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
@@ -168,11 +169,11 @@ public class WolfPlugin extends JavaPlugin {
         return wolfManager;
     }
     
-    public SelectedWolfManager getSelectedWolfManager() {
-        return selectedWolfManager;
-    }
-    
     public WolfInventoryManager getWolfInventoryManager() {
         return wolfInventoryManager;
+    }
+    
+    public SelectedWolfManager getSelectedWolfManager() {
+        return selectedWolfManager;
     }
 }

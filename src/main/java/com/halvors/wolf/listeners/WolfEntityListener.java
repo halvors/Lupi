@@ -76,6 +76,29 @@ public class WolfEntityListener extends EntityListener {
         }
     }
     
+    /*
+    @Override
+    public void onEntityDamage(EntityDamageEvent event) {
+    	if (!event.isCancelled()) {
+    		Entity entity = event.getEntity();
+    		
+    		if (entity instanceof Wolf) {
+    			Wolf wolf = (Wolf) entity;
+    			
+    			if (wolfManager.hasWolf(wolf)) {
+    				com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    				
+    				if (wolf1.hasInventory()) {
+    					WolfInventory wi = wolf1.getInventory();
+    					
+    					// TODO: Make wolf eat food from inventory here.
+    				}
+    			}
+    		}
+    	}
+    }
+    */
+    
     @Override
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
