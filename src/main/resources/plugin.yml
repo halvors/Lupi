@@ -1,7 +1,7 @@
-name: Wolf
-main: com.halvors.wolf.WolfPlugin
+name: Lupi
+main: com.halvors.lupi.Lupi
 version: 0.1
-description: Wolf is a wolf plugin for Bukkit.
+description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92]
 website: 
 database: true
@@ -9,6 +9,6 @@ database: true
 commands:
     wolf:
         description: Command for Wolf.
-        aliases: #[lupi, wolves]
+        aliases: [lupi]
         usage:
 

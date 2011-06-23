@@ -2,23 +2,23 @@
  * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
  * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
- * This file is part of Wolf.
+ * This file is part of Lupi.
  *
- * Wolf is free software: you can redistribute it and/or modify
+ * Lupi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Wolf is distributed in the hope that it will be useful,
+ * Lupi is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.wolf.listeners;
+package com.halvors.lupi.listeners;
 
 import java.util.List;
 
@@ -33,24 +33,24 @@ import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-import com.halvors.wolf.WolfPlugin;
-import com.halvors.wolf.util.ConfigManager;
-import com.halvors.wolf.util.WorldConfig;
-import com.halvors.wolf.wolf.WolfManager;
-import com.halvors.wolf.wolf.WolfTable;
+import com.halvors.lupi.Lupi;
+import com.halvors.lupi.util.ConfigManager;
+import com.halvors.lupi.util.WorldConfig;
+import com.halvors.lupi.wolf.WolfManager;
+import com.halvors.lupi.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
  * 
  * @author halvors
  */
-public class WolfEntityListener extends EntityListener {
+public class LupiEntityListener extends EntityListener {
 //    private final WolfPlugin plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     
-    public WolfEntityListener(final WolfPlugin plugin) {
+    public LupiEntityListener(final Lupi plugin) {
 //        this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
@@ -107,7 +107,7 @@ public class WolfEntityListener extends EntityListener {
             Wolf wolf = (Wolf) entity;
             
             if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
-                com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
                 if (wolf1.hasInventory()) {
                 	wolf1.dropInventory();
@@ -143,7 +143,7 @@ public class WolfEntityListener extends EntityListener {
                 }
                 
                 if (wolfManager.addWolf(wolf)) {
-                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                     player.sendMessage("You can change name with /wolf setname <name>.");
                 } else {

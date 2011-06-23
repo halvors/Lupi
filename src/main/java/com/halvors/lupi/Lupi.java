@@ -2,23 +2,23 @@
  * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
  * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
- * This file is part of Wolf.
+ * This file is part of Lupi.
  *
- * Wolf is free software: you can redistribute it and/or modify
+ * Lupi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Wolf is distributed in the hope that it will be useful,
+ * Lupi is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.wolf;
+package com.halvors.lupi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +34,20 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.halvors.wolf.command.WolfCommandExecutor;
-import com.halvors.wolf.listeners.WolfEntityListener;
-import com.halvors.wolf.listeners.WolfPlayerListener;
-import com.halvors.wolf.listeners.WolfWorldListener;
-import com.halvors.wolf.util.ConfigManager;
-import com.halvors.wolf.wolf.SelectedWolfManager;
-import com.halvors.wolf.wolf.WolfManager;
-import com.halvors.wolf.wolf.WolfTable;
-import com.halvors.wolf.wolf.inventory.WolfInventoryManager;
-import com.halvors.wolf.wolf.inventory.WolfInventoryTable;
+import com.halvors.lupi.command.LupiCommandExecutor;
+import com.halvors.lupi.listeners.LupiEntityListener;
+import com.halvors.lupi.listeners.LupiPlayerListener;
+import com.halvors.lupi.listeners.LupiWorldListener;
+import com.halvors.lupi.util.ConfigManager;
+import com.halvors.lupi.wolf.SelectedWolfManager;
+import com.halvors.lupi.wolf.WolfManager;
+import com.halvors.lupi.wolf.WolfTable;
+import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
+import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-public class WolfPlugin extends JavaPlugin {
+public class Lupi extends JavaPlugin {
     private final Logger log = Logger.getLogger("Minecraft");
     
     private PluginManager pm;
@@ -58,9 +58,9 @@ public class WolfPlugin extends JavaPlugin {
     private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
     private final SelectedWolfManager selectedWolfManager = new SelectedWolfManager(this);
     
-    private final WolfEntityListener entityListener = new WolfEntityListener(this);
-    private final WolfPlayerListener playerListener = new WolfPlayerListener(this);
-    private final WolfWorldListener worldListener = new WolfWorldListener(this);
+    private final LupiEntityListener entityListener = new LupiEntityListener(this);
+    private final LupiPlayerListener playerListener = new LupiPlayerListener(this);
+    private final LupiWorldListener worldListener = new LupiWorldListener(this);
     
     public static PermissionHandler Permissions;
     
@@ -83,7 +83,7 @@ public class WolfPlugin extends JavaPlugin {
         pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         
         // Register our commands.
-        getCommand("wolf").setExecutor(new WolfCommandExecutor(this));
+        getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
         
         log(Level.INFO, "version " + getVersion() + " is enabled!");
         

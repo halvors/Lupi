@@ -2,23 +2,23 @@
  * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
  * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
- * This file is part of Wolf.
+ * This file is part of Lupi.
  *
- * Wolf is free software: you can redistribute it and/or modify
+ * Lupi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Wolf is distributed in the hope that it will be useful,
+ * Lupi is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.wolf.listeners;
+package com.halvors.lupi.listeners;
 
 import net.minecraft.server.EntityPlayer;
 
@@ -31,25 +31,25 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerListener;
 
-import com.halvors.wolf.WolfPlugin;
-import com.halvors.wolf.util.ConfigManager;
-import com.halvors.wolf.util.WorldConfig;
-import com.halvors.wolf.wolf.SelectedWolfManager;
-import com.halvors.wolf.wolf.WolfManager;
+import com.halvors.lupi.Lupi;
+import com.halvors.lupi.util.ConfigManager;
+import com.halvors.lupi.util.WorldConfig;
+import com.halvors.lupi.wolf.SelectedWolfManager;
+import com.halvors.lupi.wolf.WolfManager;
 
 /**
  * Handle events for all Player related events.
  * 
  * @author halvors
  */
-public class WolfPlayerListener extends PlayerListener {
-    private final WolfPlugin plugin;
+public class LupiPlayerListener extends PlayerListener {
+    private final Lupi plugin;
     
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
     
-    public WolfPlayerListener(final WolfPlugin plugin) {
+    public LupiPlayerListener(final Lupi plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
@@ -68,7 +68,7 @@ public class WolfPlayerListener extends PlayerListener {
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player) && wolfManager.hasWolf(wolf)) {
-                    com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     int item = player.getItemInHand().getTypeId();
                     
                     if (item == worldConfig.wolfItem) {

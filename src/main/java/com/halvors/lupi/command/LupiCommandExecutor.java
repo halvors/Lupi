@@ -2,23 +2,23 @@
  * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
  * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
- * This file is part of Wolf.
+ * This file is part of Lupi.
  *
- * Wolf is free software: you can redistribute it and/or modify
+ * Lupi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Wolf is distributed in the hope that it will be useful,
+ * Lupi is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.wolf.command;
+package com.halvors.lupi.command;
 
 import java.util.List;
 
@@ -30,26 +30,26 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
-import com.halvors.wolf.WolfPlugin;
-import com.halvors.wolf.util.ConfigManager;
-import com.halvors.wolf.util.WorldConfig;
-import com.halvors.wolf.wolf.SelectedWolfManager;
-import com.halvors.wolf.wolf.WolfManager;
-import com.halvors.wolf.wolf.WolfTable;
+import com.halvors.lupi.Lupi;
+import com.halvors.lupi.util.ConfigManager;
+import com.halvors.lupi.util.WorldConfig;
+import com.halvors.lupi.wolf.SelectedWolfManager;
+import com.halvors.lupi.wolf.WolfManager;
+import com.halvors.lupi.wolf.WolfTable;
 
 /**
  * Represents a CommandExecutor
  * 
  * @author halvors
  */
-public class WolfCommandExecutor implements CommandExecutor {
-    private final WolfPlugin plugin;
+public class LupiCommandExecutor implements CommandExecutor {
+    private final Lupi plugin;
 
     private final ConfigManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
 
-    public WolfCommandExecutor(final WolfPlugin plugin) {
+    public LupiCommandExecutor(final Lupi plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
         this.wolfManager = plugin.getWolfManager();
@@ -85,7 +85,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                                Wolf wolf = selectedWolfManager.getSelectedWolf(player);
 
                                if (wolfManager.hasWolf(wolf)) {
-                                   com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                                   com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
                                    player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                                }
@@ -129,7 +129,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                            }
 
                            if (wolfManager.hasWolf(wolf) && wolf != null && name != null) {
-                               com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                               com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                                wolf1.setName(name);
                                
                                player.sendMessage("The name of " + grammar + " wolf has been set to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
@@ -175,7 +175,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                            }
 
                            if (wolfManager.hasWolf(wolf) && wolf != null) {
-                               com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                               com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
                                wolf.setTarget(null);
 
@@ -219,7 +219,7 @@ public class WolfCommandExecutor implements CommandExecutor {
                            }
 
                            if (wolfManager.hasWolf(wolf) && wolf != null && receiver != null) {
-                               com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                               com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                                String name = wolf1.getName();
                                String to = receiver.getName();
                                int limit = worldConfig.wolfLimit;
@@ -275,7 +275,7 @@ public class WolfCommandExecutor implements CommandExecutor {
 
 
                            if (wolfManager.hasWolf(wolf) && wolf != null) {
-                               com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                               com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
                                player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has been released.");
                                 
@@ -300,12 +300,12 @@ public class WolfCommandExecutor implements CommandExecutor {
     }
 
     private void showPlayerWolves(Player player) {
-        List<com.halvors.wolf.wolf.Wolf> wolves = wolfManager.getWolves(player);
+        List<com.halvors.lupi.wolf.Wolf> wolves = wolfManager.getWolves(player);
         
         player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
         if (!wolves.isEmpty()) {
-            for (com.halvors.wolf.wolf.Wolf wolf1 : wolves) {
+            for (com.halvors.lupi.wolf.Wolf wolf1 : wolves) {
                 player.sendMessage(ChatColor.YELLOW + wolf1.getName());
             }
         } else {

@@ -2,23 +2,23 @@
  * Copyright (C) 2011 halvors <halvors@skymiastudios.com>
  * Copyright (C) 2011 speeddemon92 <speeddemon92@gmail.com>
  *
- * This file is part of Wolf.
+ * This file is part of Lupi.
  *
- * Wolf is free software: you can redistribute it and/or modify
+ * Lupi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Wolf is distributed in the hope that it will be useful,
+ * Lupi is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Wolf.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.wolf.util;
+package com.halvors.lupi.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,7 +30,7 @@ import java.util.logging.Level;
 import org.bukkit.World;
 import org.bukkit.util.config.Configuration;
 
-import com.halvors.wolf.WolfPlugin;
+import com.halvors.lupi.Lupi;
 
 /**
  * Represents the global configuration and also delegates configuration
@@ -39,11 +39,11 @@ import com.halvors.wolf.WolfPlugin;
  * @author halvors
  */
 public class ConfigManager {
-    private final WolfPlugin plugin;
+    private final Lupi plugin;
     
     private HashMap<String, WorldConfig> worlds;
     
-    public ConfigManager(WolfPlugin plugin) {
+    public ConfigManager(Lupi plugin) {
         this.plugin = plugin;
         this.worlds = new HashMap<String, WorldConfig>();
     }
