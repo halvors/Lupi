@@ -1,5 +1,5 @@
 Version 0.1
-	- Fix bug that wolf isn't added when chunk loads.
+	- Improve load and unload for WolfInventoryManager. Use the inventory branch for this.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
     - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their chunk loads.
@@ -27,5 +27,3 @@ Ideas:
     
     compgurusteve:
     Would anyone want to try to tackle this? I was thinking mainly having a set "pen" the player makes with fences and have it spawn a new 'untamed' wolf only if there were 2 wolves lured inside created pen. Anything additional thoughts?
-
-    
