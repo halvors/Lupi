@@ -49,52 +49,66 @@ public class WolfManager {
     }
     
     /**
+     * Get WolfTable
+     * 
+     * @param uniqueId
+     * @return
+     */
+    public static WolfTable getWolfTable(UUID uniqueId) {
+        return Lupi.getDB().find(WolfTable.class).where()
+        	.ieq("uniqueId", uniqueId.toString()).findUnique();
+    }
+    
+    /**
      * Get all WolfTables.
      * 
      * @return
      */
     public static List<WolfTable> getWolfTables() {
-        return Lupi.getDb().find(WolfTable.class).findList();
+        return Lupi.getDB().find(WolfTable.class).findList();
     }
     
     /**
-     * Get all WolfTable's with owner.
+     * Get all owner WolfTable's.
      * 
      * @param owner
      * @return
      */
     public static List<WolfTable> getWolfTables(Player owner) {
-        return Lupi.getDb().find(WolfTable.class).where()
+        return Lupi.getDB().find(WolfTable.class).where()
             .ieq("owner", owner.getName()).findList();
     }
     
     /**
-     * Get all WolfTable's with world.
-     * 
-     * @param owner
-     * @return
+     * Load wolves in world.
      */
-    public static List<WolfTable> getWolfTables(World world) {
-        return Lupi.getDb().find(WolfTable.class).where()
-            .ieq("world", world.getName()).findList();
-    }
-    
-    /**
-     * Load wolves from database.
-     */
-    public static void load() {
+    public static void load(World world) {
     	for (WolfTable wt : getWolfTables()) {
-    		UUID uniqueId = UUID.fromString(wt.getUniqueId());
+    		if (wt.getWorld().equalsIgnoreCase(world.getName())) {
+    			UUID uniqueId = UUID.fromString(wt.getUniqueId());
                 
-    		wolves.put(uniqueId, new Wolf(uniqueId));
+    	        if (wolves.containsKey(uniqueId)) {
+    	            wolves.remove(uniqueId);
+    	        }
+    			
+    			wolves.put(uniqueId, new Wolf(uniqueId));
+    		}
     	}
     }
    
     /**
-     * Unload wolves from database.
+     * Unload wolves in world.
      */
-    public static void unload() {
-        wolves.clear();
+    public static void unload(World world) {
+        for (Wolf wolf : getWolves()) {
+        	if (wolf.getWorld().getName().equalsIgnoreCase(world.getName())) {
+        		UUID uniqueId = wolf.getUniqueId();
+        		
+        		if (wolves.containsKey(uniqueId)) {
+    	            wolves.remove(uniqueId);
+    	        }
+        	}
+        }
     }
     
     /**
@@ -184,7 +198,7 @@ public class WolfManager {
         wt.setInventory(false);
             
         // Save the wolf to database.
-        Lupi.getDb().save(wt);
+        Lupi.getDB().save(wt);
             
         if (wolves.containsKey(uniqueId)) {
             wolves.remove(uniqueId);
@@ -213,7 +227,7 @@ public class WolfManager {
      */
     public static boolean removeWolf(UUID uniqueId) {
         if (wolves.containsKey(uniqueId)) {         
-            Lupi.getDb().delete(getWolf(uniqueId).getWolfTable());
+            Lupi.getDB().delete(getWolfTable(uniqueId));
             
             wolves.remove(uniqueId);
             

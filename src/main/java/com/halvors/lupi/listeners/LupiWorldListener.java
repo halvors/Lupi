@@ -20,12 +20,12 @@
 
 package com.halvors.lupi.listeners;
 
-import java.util.List;
-
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.WolfManager;
@@ -44,9 +44,13 @@ public class LupiWorldListener extends WorldListener {
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-    	List<Entity> entities = event.getWorld().getEntities();
+    	World world = event.getWorld();
     	
-    	for (Entity entity : entities) {
+        // Load wolves from database.
+		WolfManager.load(world);
+		
+		// Add tamed wolves that not already exists in database.
+    	for (Entity entity : world.getEntities()) {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
@@ -56,6 +60,16 @@ public class LupiWorldListener extends WorldListener {
                     }
                 }
     		}
+    	}
+    }
+    
+    @Override
+    public void onWorldUnload(WorldUnloadEvent event) {
+    	if (!event.isCancelled()) {
+    		World world = event.getWorld();
+    		
+            // Unload wolves from database.
+    		WolfManager.unload(world);
     	}
     }
 }

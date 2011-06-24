@@ -51,7 +51,7 @@ public class Wolf {
      * @return
      */
     public WolfTable getWolfTable() {
-        return Lupi.getDb().find(WolfTable.class).where()
+        return Lupi.getDB().find(WolfTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -81,7 +81,7 @@ public class Wolf {
         if (wt != null) {
             wt.setId(id);
             
-            Lupi.getDb().update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
@@ -126,7 +126,7 @@ public class Wolf {
         if (wt != null) {
             wt.setName(name);
             
-            Lupi.getDb().update(wt);
+            Lupi.getDB().update(wt);
             
             if (hasInventory()) {
                 getInventory().setName(name + "'s inventory");
@@ -166,7 +166,7 @@ public class Wolf {
             wt.setOwner(owner.getName());
             wolf.setOwner(owner);
             
-            Lupi.getDb().update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
@@ -196,7 +196,7 @@ public class Wolf {
         if (wt != null) {
             wt.setWorld(world.getName());
             
-            Lupi.getDb().update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
@@ -226,7 +226,7 @@ public class Wolf {
         if (wt != null) {
             wt.setInventory(inventory);
             
-            Lupi.getDb().update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
