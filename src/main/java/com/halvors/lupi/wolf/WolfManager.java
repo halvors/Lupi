@@ -166,6 +166,7 @@ public class WolfManager {
             return false;
         }
         
+        /*
         Random random = new Random();
         List<String> usedNames = new ArrayList<String>();
         boolean nameIsUnique = false;
@@ -188,6 +189,7 @@ public class WolfManager {
                 }
             } while (!nameIsUnique);
         }
+        */
         
         // Create a new WolfTable.
         WolfTable wt = new WolfTable();
