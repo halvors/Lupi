@@ -41,16 +41,10 @@ import com.halvors.lupi.listeners.LupiPlayerListener;
 import com.halvors.lupi.listeners.LupiWorldListener;
 import com.halvors.lupi.util.ConfigManager;
 import com.halvors.lupi.wolf.WolfTable;
-import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-/**
- * Lupi
- * 
- * @author halvors
- */
 public class Lupi extends JavaPlugin {
     private final Logger log = Logger.getLogger("Minecraft");
     
@@ -58,13 +52,21 @@ public class Lupi extends JavaPlugin {
     private PluginDescriptionFile desc;
     private static EbeanServer database;
 
-    private final ConfigManager configManager = new ConfigManager(this);
+    private final ConfigManager configManager;
 
-    private final LupiEntityListener entityListener = new LupiEntityListener(this);
-    private final LupiPlayerListener playerListener = new LupiPlayerListener(this);
-    private final LupiWorldListener worldListener = new LupiWorldListener(this);
+    private final LupiEntityListener entityListener;
+    private final LupiPlayerListener playerListener;
+    private final LupiWorldListener worldListener;
     
     public static PermissionHandler Permissions;
+    
+    public Lupi() {
+        this.configManager = new ConfigManager(this);
+        
+        this.entityListener = new LupiEntityListener(this);
+        this.playerListener = new LupiPlayerListener(this);
+        this.worldListener = new LupiWorldListener(this);
+    }
     
     public void onEnable() {
         pm = getServer().getPluginManager();

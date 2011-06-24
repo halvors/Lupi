@@ -1,9 +1,8 @@
 Version 0.1
 	- Fix the random function in getRandomName(), causes NullPointerException.
-	- Improve load and unload for WolfInventoryManager. Use the inventory branch for this.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
-    - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their chunk loads.
+    - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their world loads.
     
 Version 0.2
     - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players. (Think we'll need an EntityMoveEvent or something)

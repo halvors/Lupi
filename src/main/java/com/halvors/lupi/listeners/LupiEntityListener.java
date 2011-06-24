@@ -20,25 +20,22 @@
 
 package com.halvors.lupi.listeners;
 
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.util.ConfigManager;
 import com.halvors.lupi.util.WorldConfig;
 import com.halvors.lupi.wolf.WolfManager;
-import com.halvors.lupi.wolf.WolfTable;
 
 /**
  * Handle events for all Entity related events.
@@ -127,22 +124,23 @@ public class LupiEntityListener extends EntityListener {
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
+                
+                // Check the wolf limit.
                 int limit = worldConfig.wolfLimit;
                 
                 if (limit > 0) {
-                    List<WolfTable> wts = WolfManager.getWolfTables(player);
-                    
-                    if (limit <= wts.size()) {
+                    if (limit <= WolfManager.getWolves(player).size()) {
                         player.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
                         
                         event.setCancelled(true);
-                        
                         return;
                     }
                 }
                 
+                // Add the wolf.
                 if (WolfManager.addWolf(wolf)) {
                     com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                    
                     player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                     player.sendMessage("You can change name with /wolf setname <name>.");
                 } else {
