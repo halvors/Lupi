@@ -40,7 +40,6 @@ import com.halvors.lupi.listeners.LupiEntityListener;
 import com.halvors.lupi.listeners.LupiPlayerListener;
 import com.halvors.lupi.listeners.LupiWorldListener;
 import com.halvors.lupi.util.ConfigManager;
-import com.halvors.lupi.wolf.WolfManager;
 import com.halvors.lupi.wolf.WolfTable;
 import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
@@ -91,11 +90,17 @@ public class Lupi extends JavaPlugin {
         setupDatabase();
         
         database = getDatabase();
+        
+        // Load wolf inventorys from database.
+        WolfInventoryManager.load();
     }
     
     public void onDisable() {
         // Save configuration.
         configManager.save();
+        
+        // Unload wolf inventorys from database.
+        WolfInventoryManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
@@ -151,7 +156,7 @@ public class Lupi extends JavaPlugin {
         return desc.getVersion();
     }
     
-    public static EbeanServer getDb() {
+    public static EbeanServer getDB() {
     	return database;
     }
     

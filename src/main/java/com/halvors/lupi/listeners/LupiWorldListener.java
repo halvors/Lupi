@@ -20,8 +20,7 @@
 
 package com.halvors.lupi.listeners;
 
-import java.util.List;
-
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.WorldListener;
@@ -30,6 +29,7 @@ import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.WolfManager;
+
 
 /**
  * Handle events for all World related events.
@@ -45,16 +45,18 @@ public class LupiWorldListener extends WorldListener {
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-    	List<Entity> entities = event.getWorld().getEntities();
+    	World world = event.getWorld();
     	
-    	for (Entity entity : entities) {
+        // Load wolves from database.
+		WolfManager.load(world);
+		
+		// Add tamed wolves that not already exists in database.
+    	for (Entity entity : world.getEntities()) {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
     			if (wolf.isTamed()) {
-                	if (WolfManager.hasWolf(wolf)) {
-                		WolfManager.loadWolf(wolf);
-                	} else {
+                	if (!WolfManager.hasWolf(wolf)) {
                         WolfManager.addWolf(wolf);
                     }
                 }
@@ -65,19 +67,10 @@ public class LupiWorldListener extends WorldListener {
     @Override
     public void onWorldUnload(WorldUnloadEvent event) {
     	if (!event.isCancelled()) {
-    		List<Entity> entities = event.getWorld().getEntities();
+    		World world = event.getWorld();
     		
-    		for (Entity entity : entities) {
-    			if (entity instanceof Wolf) {
-    				Wolf wolf = (Wolf) entity;
-    				
-    				if (wolf.isTamed()) {
-                    	if (WolfManager.hasWolf(wolf)) {
-                            WolfManager.unloadWolf(wolf);
-                        }
-                    }
-    			}
-    		}
+            // Unload wolves from database.
+    		WolfManager.unload(world);
     	}
     }
 }

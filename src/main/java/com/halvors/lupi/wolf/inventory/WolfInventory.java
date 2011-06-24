@@ -52,31 +52,60 @@ public class WolfInventory extends TileEntityChest {
         this.uniqueId = uniqueId;
         this.name = name;
     }
-
+    
+    /**
+     * Get the uniqueId
+     * 
+     * @return
+     */
     public UUID getUniqueId() {
         return uniqueId;
     }
     
+    /**
+     * Set the uniqueId
+     * 
+     * @param uniqueId
+     */
+    public void setUniqueId(UUID uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+    
+    /**
+     * Return the name of the inventory
+     *
+     * @return The inventory name
+     */
     public String getName() {
         return name;
     }
-
+    
+    /**
+     * Set the name of the inventory
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    
     public int getSize() {
         return super.getSize();
     }
-
+    
     public ItemStack getBukkitItem(int index) {
         return new CraftItemStack(super.getItem(index));
     }
     
-    public void setItem(int index, ItemStack item) {
+    public void setBukkitItem(int index, ItemStack item) {
         super.setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
     }
     
+    /**
+     * Get all ItemStacks from the inventory
+     *
+     * @return All the ItemStacks from all slots
+     */
     public List<ItemStack> getBukkitContents() {
         List<ItemStack> items = new ArrayList<ItemStack>(getSize());
         List<net.minecraft.server.ItemStack> mcItems = Arrays.asList(super.getContents());
@@ -87,7 +116,12 @@ public class WolfInventory extends TileEntityChest {
 
         return items;
     }
-
+    
+    /**
+     * Set the inventory's contents
+     *
+     * @return All the ItemStacks from all slots
+     */
     public void setBukkitContents(List<ItemStack> items) {
         if (super.getContents().length != items.size()) {
             throw new IllegalArgumentException("Invalid inventory size; expected " + super.getContents().length);
@@ -105,7 +139,13 @@ public class WolfInventory extends TileEntityChest {
             }
         }
     }
-
+    
+    /**
+     * Check if the inventory contains any ItemStacks with the given materialId
+     *
+     * @param materialId The materialId to check for
+     * @return If any ItemStacks were found
+     */
     public boolean contains(int materialId) {
         for (ItemStack item : getBukkitContents()) {
             if (item != null && item.getTypeId() == materialId) {
@@ -115,11 +155,24 @@ public class WolfInventory extends TileEntityChest {
         
         return false;
     }
-
+    
+    /**
+     * Check if the inventory contains any ItemStacks with the given material
+     *
+     * @param material The material to check for
+     * @return If any ItemStacks were found
+     */
     public boolean contains(Material material) {
         return contains(material.getId());
     }
-
+    
+    /**
+     * Check if the inventory contains any ItemStacks matching the given ItemStack
+     * This will only match if both the type and the amount of the stack match
+     *
+     * @param item The ItemStack to match against
+     * @return If any matching ItemStacks were found
+     */
     public boolean contains(ItemStack item) {
         if (item == null) {
             return false;
@@ -133,7 +186,14 @@ public class WolfInventory extends TileEntityChest {
         
         return false;
     }
-
+    
+    /**
+     * Check if the inventory contains any ItemStacks with the given materialId and at least the minimum amount specified
+     *
+     * @param materialId The materialId to check for
+     * @param amount The minimum amount to look for
+     * @return If any ItemStacks were found
+     */
     public boolean contains(int materialId, int amount) {
         int amt = 0;
         
@@ -145,11 +205,24 @@ public class WolfInventory extends TileEntityChest {
         
         return amt >= amount;
     }
-
+    
+    /**
+     * Check if the inventory contains any ItemStacks with the given material and at least the minimum amount specified
+     *
+     * @param material The material to check for
+     * @return If any ItemStacks were found
+     */
     public boolean contains(Material material, int amount) {
         return contains(material.getId(), amount);
     }
-
+    
+    /**
+     * Check if the inventory contains any ItemStacks matching the given ItemStack and at least the minimum amount specified
+     * This will only match if both the type and the amount of the stack match
+     *
+     * @param item The ItemStack to match against
+     * @return If any matching ItemStacks were found
+     */
     public boolean contains(ItemStack item, int amount) {
         if (item == null) {
             return false;
@@ -165,7 +238,13 @@ public class WolfInventory extends TileEntityChest {
         
         return amt >= amount;
     }
-
+    
+    /**
+     * Find all slots in the inventory containing any ItemStacks with the given materialId
+     *
+     * @param materialId The materialId to look for
+     * @return The Slots found.
+     */
     public HashMap<Integer, ItemStack> all(int materialId) {
         HashMap<Integer, ItemStack> slots = new HashMap<Integer, ItemStack>();
 
@@ -180,11 +259,24 @@ public class WolfInventory extends TileEntityChest {
         
         return slots;
     }
-
+    
+    /**
+     * Find all slots in the inventory containing any ItemStacks with the given material
+     *
+     * @param materialId The material to look for
+     * @return The Slots found.
+     */
     public HashMap<Integer, ItemStack> all(Material material) {
         return all(material.getId());
     }
-
+    
+    /**
+     * Find all slots in the inventory containing any ItemStacks with the given ItemStack
+     * This will only match slots if both the type and the amount of the stack match
+     *
+     * @param item The ItemStack to match against
+     * @return The Slots found.
+     */
     public HashMap<Integer, ItemStack> all(ItemStack item) {
         HashMap<Integer, ItemStack> slots = new HashMap<Integer, ItemStack>();
         
@@ -200,7 +292,13 @@ public class WolfInventory extends TileEntityChest {
         
         return slots;
     }
-
+    
+    /**
+     * Find the first slot in the inventory containing an ItemStack with the given materialId
+     *
+     * @param materialId The materialId to look for
+     * @return The Slot found.
+     */
     public int first(int materialId) {
         List<ItemStack> inventory = getBukkitContents();
         
@@ -214,11 +312,24 @@ public class WolfInventory extends TileEntityChest {
         
         return -1;
     }
-
+    
+    /**
+     * Find the first slot in the inventory containing an ItemStack with the given material
+     *
+     * @param materialId The material to look for
+     * @return The Slot found.
+     */
     public int first(Material material) {
         return first(material.getId());
     }
-
+    
+    /**
+     * Find the first slot in the inventory containing an ItemStack with the given stack
+     * This will only match a slot if both the type and the amount of the stack match
+     *
+     * @param item The ItemStack to match against
+     * @return The Slot found.
+     */
     public int first(ItemStack item) {
         if (item == null) {
             return -1;
@@ -234,7 +345,12 @@ public class WolfInventory extends TileEntityChest {
         
         return -1;
     }
-
+    
+    /**
+     * Find the first empty Slot.
+     *
+     * @return The first empty Slot found.
+     */
     public int firstEmpty() {
         List<ItemStack> inventory = getBukkitContents();
         
@@ -246,7 +362,7 @@ public class WolfInventory extends TileEntityChest {
         
         return -1;
     }
-
+    
     public int firstPartial(int materialId) {
         List<ItemStack> inventory = getBukkitContents();
         
@@ -280,7 +396,16 @@ public class WolfInventory extends TileEntityChest {
         
         return -1;
     }
-
+    
+    /**
+     * Stores the given ItemStacks in the inventory.
+     *
+     * This will try to fill existing stacks and empty slots as good as it can.
+     * It will return a HashMap of what it couldn't fit.
+     *
+     * @param items The ItemStacks to add
+     * @return
+     */
     public HashMap<Integer, ItemStack> addItem(ItemStack... items) {
         HashMap<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
 
@@ -298,15 +423,17 @@ public class WolfInventory extends TileEntityChest {
                     if (firstFree == -1) {
                         // No space at all!
                         leftover.put(i, item);
+                        
                         break;
                     } else {
                         // More than a single stack!
                         if (item.getAmount() > getMaxItemStack()) {
-                            setItem(firstFree, new CraftItemStack(item.getTypeId(), getMaxItemStack(), item.getDurability()));
+                            setBukkitItem(firstFree, new CraftItemStack(item.getTypeId(), getMaxItemStack(), item.getDurability()));
                             item.setAmount(item.getAmount() - getMaxItemStack());
                         } else {
                             // Just store it
-                            setItem(firstFree, item);
+                        	setBukkitItem(firstFree, item);
+                        	
                             break;
                         }
                     }
@@ -333,7 +460,16 @@ public class WolfInventory extends TileEntityChest {
         
         return leftover;
     }
-
+    
+    /**
+     * Removes the given ItemStacks from the inventory.
+     *
+     * It will try to remove 'as much as possible' from the types and amounts you
+     * give as arguments. It will return a HashMap of what it couldn't remove.
+     *
+     * @param items The ItemStacks to remove
+     * @return
+     */
     public HashMap<Integer, ItemStack> removeItem(ItemStack... items) {
         HashMap<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
 
@@ -348,6 +484,7 @@ public class WolfInventory extends TileEntityChest {
                 if (first == -1) {
                     item.setAmount(toDelete);
                     leftover.put(i, item);
+                    
                     break;
                 } else {
                     ItemStack itemStack = getBukkitItem(first);
@@ -360,7 +497,7 @@ public class WolfInventory extends TileEntityChest {
                     } else {
                         // split the stack and store
                         itemStack.setAmount(amount - toDelete);
-                        setItem(first, itemStack);
+                        setBukkitItem(first, itemStack);
                         toDelete = 0;
                     }
                 }
@@ -378,7 +515,12 @@ public class WolfInventory extends TileEntityChest {
     private int getMaxItemStack() {
         return super.getMaxStackSize();
     }
-
+    
+    /**
+     * Remove all stacks in the inventory matching the given materialId.
+     *
+     * @param materialId The material to remove
+     */
     public void remove(int materialId) {
         List<ItemStack> items = getBukkitContents();
         
@@ -388,11 +530,22 @@ public class WolfInventory extends TileEntityChest {
             }
         }
     }
-
+    
+    /**
+     * Remove all stacks in the inventory matching the given material.
+     *
+     * @param material The material to remove
+     */
     public void remove(Material material) {
         remove(material.getId());
     }
-
+    
+    /**
+     * Remove all stacks in the inventory matching the given stack.
+     * This will only match a slot if both the type and the amount of the stack match
+     *
+     * @param item The ItemStack to match against
+     */
     public void remove(ItemStack item) {
         List<ItemStack> items = getBukkitContents();
         
@@ -402,11 +555,19 @@ public class WolfInventory extends TileEntityChest {
             }
         }
     }
-
+    
+    /**
+     * Clear out a particular slot in the index
+     *
+     * @param index The index to empty.
+     */
     public void clear(int index) {
         super.setItem(index, null);
     }
-
+    
+    /**
+     * Clear out the whole index
+     */
     public void clear() {
         for (int i = 0; i < getSize(); i++) {
             clear(i);
@@ -434,14 +595,14 @@ public class WolfInventory extends TileEntityChest {
             int amount = (item[2] == null ? 0 : Integer.valueOf(item[2]));
        
             if (typeId < 1 || damage < 0 || amount < 1) {
-                super.setItem(i, null);
+            	setBukkitItem(i, new ItemStack(null));
             } else {
-                setItem(i, new ItemStack(typeId, amount, damage));
+            	setBukkitItem(i, new ItemStack(typeId, amount, damage));
             }
         }
     }
        
-    public String getItemStackString(ItemStack itemstack) {
+    public String getItemStackAsString(ItemStack itemstack) {
         String out = null;
        
         if (itemstack == null || itemstack.getAmount() < 1 || itemstack.getDurability() < 0 || itemstack.getTypeId() < 1) {
@@ -463,9 +624,9 @@ public class WolfInventory extends TileEntityChest {
             String stack = null;
             
             if ((i + 1) % 9 != 0) {
-                stack = getItemStackString(getBukkitItem(i)) + ";";
+                stack = getItemStackAsString(getBukkitItem(i)) + ";";
             } else {
-                stack = getItemStackString(getBukkitItem(i));
+                stack = getItemStackAsString(getBukkitItem(i));
             }
             
             if (i >= 0 && i <= 8) {
