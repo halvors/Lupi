@@ -301,8 +301,8 @@ public class LupiCommandExecutor implements CommandExecutor {
         player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
         if (!wolves.isEmpty()) {
-            for (com.halvors.lupi.wolf.Wolf wolf1 : wolves) {
-                player.sendMessage(ChatColor.YELLOW + wolf1.getName());
+            for (com.halvors.lupi.wolf.Wolf wolf : wolves) {
+                player.sendMessage(ChatColor.YELLOW + wolf.getName());
             }
         } else {
             player.sendMessage(ChatColor.RED + "You have no wolves.");
@@ -310,13 +310,13 @@ public class LupiCommandExecutor implements CommandExecutor {
     }
 
     private void showWolves(Player player) {
-        List<WolfTable> wolfTables = WolfManager.getWolfTables();
+        List<com.halvors.lupi.wolf.Wolf> wolves = WolfManager.getWolves(player.getWorld());
         
         player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         
-        if (!wolfTables.isEmpty()) {
-            for (WolfTable wolfTable : wolfTables) {
-                player.sendMessage(ChatColor.YELLOW + wolfTable.getName() + ChatColor.WHITE + " - " + wolfTable.getOwner());
+        if (!wolves.isEmpty()) {
+            for (com.halvors.lupi.wolf.Wolf wolf : wolves) {
+                player.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " - " + wolf.getOwner());
             }
         } else {
             player.sendMessage(ChatColor.RED + "There are no tamed wolves.");

@@ -70,14 +70,25 @@ public class WolfManager {
     }
     
     /**
-     * Get all owner WolfTable's.
+     * Get WolfTable's for world
      * 
-     * @param owner
+     * @param world
      * @return
      */
-    public static List<WolfTable> getWolfTables(Player owner) {
+    public static List<WolfTable> getWolfTables(World world) {
         return Lupi.getDB().find(WolfTable.class).where()
-            .ieq("owner", owner.getName()).findList();
+            .ieq("world", world.getName()).findList();
+    }
+    
+    /**
+     * Get WolfTable's for player.
+     * 
+     * @param player
+     * @return
+     */
+    public static List<WolfTable> getWolfTables(Player player) {
+        return Lupi.getDB().find(WolfTable.class).where()
+            .ieq("player", player.getName()).findList();
     }
     
     /**
@@ -389,25 +400,43 @@ public class WolfManager {
     }
     
     /**
-     * Get all wolves.
+     * Get wolves.
      * 
      * @return
      */
     public static List<Wolf> getWolves() {    
         return new ArrayList<Wolf>(wolves.values());
     }
-
+    
     /**
-     * Get owners wolves.
+     * Get wolves for world.
      * 
-     * @param owner
+     * @param world
      * @return
      */
-    public static List<Wolf> getWolves(Player owner) {
+    public static List<Wolf> getWolves(World world) {    
         List<Wolf> wolves = new ArrayList<Wolf>();
         
         for (Wolf wolf : getWolves()) {
-            if (wolf.getOwner().getName().equalsIgnoreCase(owner.getName())) {
+        	if (wolf.getWorld().equals(world)) {
+                wolves.add(wolf);
+            }
+        }
+        	
+        return wolves;
+    }
+    
+    /**
+     * Get wolves for player.
+     * 
+     * @param player
+     * @return
+     */
+    public static List<Wolf> getWolves(Player player) {
+        List<Wolf> wolves = new ArrayList<Wolf>();
+        
+        for (Wolf wolf : getWolves(player.getWorld())) {
+            if (wolf.getOwner().getName().equalsIgnoreCase(player.getName())) {
                 wolves.add(wolf);
             }
         }
