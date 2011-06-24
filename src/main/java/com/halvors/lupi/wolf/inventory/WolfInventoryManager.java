@@ -32,13 +32,7 @@ import com.halvors.lupi.Lupi;
  * @author halvors
  */
 public class WolfInventoryManager {
-    private Lupi plugin;
-    
-    private final HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
-    
-    public WolfInventoryManager(Lupi plugin) {
-        this.plugin = plugin;
-    }
+    private final static HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
     
     /**
      * Get a WolfInventoryTable
@@ -46,8 +40,8 @@ public class WolfInventoryManager {
      * @param uniqueId
      * @return WolfInventoryTable
      */
-    public WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
-        return plugin.getDatabase().find(WolfInventoryTable.class).where()
+    public static WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
+        return Lupi.getDb().find(WolfInventoryTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -56,14 +50,14 @@ public class WolfInventoryManager {
      * 
      * @return List<WolfInventoryTable>
      */
-    public List<WolfInventoryTable> getWolfInventoryTables() {
-        return plugin.getDatabase().find(WolfInventoryTable.class).where().findList();
+    public static List<WolfInventoryTable> getWolfInventoryTables() {
+        return Lupi.getDb().find(WolfInventoryTable.class).where().findList();
     }
     
     /**
      * Load inventorys from database
      */
-    public void load() {
+    public static void load() {
         List<WolfInventoryTable> wits = getWolfInventoryTables();
     
         for (WolfInventoryTable wit : wits) {
@@ -74,7 +68,7 @@ public class WolfInventoryManager {
     /**
      * Unload inventorys from database
      */
-    public void unload() {
+    public static void unload() {
         for (WolfInventory wi : wolfInventorys.values()) {
             WolfInventoryTable wit = getWolfInventoryTable(wi.getUniqueId());
             
@@ -82,19 +76,19 @@ public class WolfInventoryManager {
                 String[] rows = wi.prepareTableForDB();
                 wit.setChestRows(rows);
                 
-                plugin.getDatabase().update(wit);
+                Lupi.getDb().update(wit);
             } else {
                 wit = new WolfInventoryTable();
                 wit.setUniqueId(wi.getUniqueId().toString());
                 String[] rows = wi.prepareTableForDB();
                 wit.setChestRows(rows);
                 
-                plugin.getDatabase().save(wit);
+                Lupi.getDb().save(wit);
             }
         }
     }
     
-    public WolfInventory loadWolfInventory(WolfInventoryTable wit) {
+    public static WolfInventory loadWolfInventory(WolfInventoryTable wit) {
         WolfInventory wi = new WolfInventory(UUID.fromString(wit.getUniqueId()));
         wi.fillFromDBTable(wit.getChestRows());
         
@@ -107,7 +101,7 @@ public class WolfInventoryManager {
      * @param uniqueId
      * @param wi
      */
-    public void addWolfInventory(UUID uniqueId, WolfInventory wi) {
+    public static void addWolfInventory(UUID uniqueId, WolfInventory wi) {
         if (wolfInventorys.containsKey(uniqueId)) {
             wolfInventorys.remove(uniqueId);
         }
@@ -120,7 +114,7 @@ public class WolfInventoryManager {
      * 
      * @param uniqueId
      */
-    public void addWolfInventory(UUID uniqueId, String name) {
+    public static void addWolfInventory(UUID uniqueId, String name) {
         WolfInventory wi = new WolfInventory(uniqueId, name);
         
         addWolfInventory(uniqueId, wi);
@@ -131,7 +125,7 @@ public class WolfInventoryManager {
      * 
      * @param uniqueId
      */
-    public void removeWolfInventory(UUID uniqueId) {
+    public static void removeWolfInventory(UUID uniqueId) {
         if (wolfInventorys.containsKey(uniqueId)) {
             wolfInventorys.remove(uniqueId);
         }
@@ -143,7 +137,7 @@ public class WolfInventoryManager {
      * @param uniqueId
      * @return
      */
-    public boolean hasWolfInventory(UUID uniqueId) {
+    public static boolean hasWolfInventory(UUID uniqueId) {
         return wolfInventorys.containsKey(uniqueId);
     }
     
@@ -153,7 +147,7 @@ public class WolfInventoryManager {
      * @param uniqueId
      * @return
      */
-    public WolfInventory getWolfInventory(UUID uniqueId) {
+    public static WolfInventory getWolfInventory(UUID uniqueId) {
         return wolfInventorys.get(uniqueId);
     }
 }

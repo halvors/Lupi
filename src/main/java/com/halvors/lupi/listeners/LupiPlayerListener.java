@@ -46,12 +46,10 @@ public class LupiPlayerListener extends PlayerListener {
     private Lupi plugin;
     
     private final ConfigManager configManager;
-    private final WolfManager wolfManager;
 
     public LupiPlayerListener(Lupi plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
-        this.wolfManager = plugin.getWolfManager();
     }
     
     @Override
@@ -65,8 +63,8 @@ public class LupiPlayerListener extends PlayerListener {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
                 
-                if (wolf.isTamed() && wolf.getOwner().equals(player) && wolfManager.hasWolf(wolf)) {
-                    com.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                if (wolf.isTamed() && wolf.getOwner().equals(player) && WolfManager.hasWolf(wolf)) {
+                    com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
                     int item = player.getItemInHand().getTypeId();
                     
                     if (item == worldConfig.wolfItem) {

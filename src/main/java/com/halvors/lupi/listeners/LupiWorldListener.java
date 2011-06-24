@@ -39,11 +39,8 @@ import com.halvors.lupi.wolf.WolfManager;
 public class LupiWorldListener extends WorldListener {
 //    private Lupi plugin;
     
-    private final WolfManager wolfManager;
-    
     public LupiWorldListener(Lupi plugin) {
 //        this.plugin = plugin;
-        this.wolfManager = plugin.getWolfManager();
     }
     
     @Override
@@ -55,8 +52,8 @@ public class LupiWorldListener extends WorldListener {
     			Wolf wolf = (Wolf) entity;
     			
     			if (wolf.isTamed()) {
-                	if (!wolfManager.hasWolf(wolf)) {
-                        wolfManager.addWolf(wolf);
+                	if (!WolfManager.hasWolf(wolf)) {
+                        WolfManager.addWolf(wolf);
                     }
                 }
     		}
