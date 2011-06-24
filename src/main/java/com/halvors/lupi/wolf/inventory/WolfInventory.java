@@ -44,13 +44,13 @@ public class WolfInventory extends TileEntityChest {
     
     public WolfInventory(UUID uniqueId) {
         super();
-        this.uniqueId = uniqueId;
+        setUniqueId(uniqueId);
     }
     
     public WolfInventory(UUID uniqueId, String name) {
         super();
-        this.uniqueId = uniqueId;
-        this.name = name;
+        setUniqueId(uniqueId);
+        setName(name);
     }
     
     /**

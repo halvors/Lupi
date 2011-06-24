@@ -20,6 +20,7 @@
 
 package com.halvors.lupi.wolf.inventory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,7 @@ import java.util.UUID;
 import com.halvors.lupi.Lupi;
 
 /**
- * Handle WolfInventory's
+ * Handle WolfInventory's.
  * 
  * @author halvors
  */
@@ -35,7 +36,7 @@ public class WolfInventoryManager {
     private final static HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
     
     /**
-     * Get a WolfInventoryTable
+     * Get a WolfInventoryTable.
      * 
      * @param uniqueId
      * @return
@@ -46,7 +47,7 @@ public class WolfInventoryManager {
     }
     
     /**
-     * Get all WolfInventoryTable's
+     * Get all WolfInventoryTable's.
      * 
      * @return
      */
@@ -55,96 +56,90 @@ public class WolfInventoryManager {
     }
     
     /**
-     * Load WolfInventory's
-     */
-    public static void load() {
-        List<WolfInventoryTable> wits = getWolfInventoryTables();
-    
-        for (WolfInventoryTable wit : wits) {
-        	loadWolfInventory(UUID.fromString(wit.getUniqueId()));
-        } 
-    }
-    
-    /**
-     * Unload WolfInventory's
-     */
-    public static void unload() {
-        for (WolfInventory wi : wolfInventorys.values()) {
-        	unloadWolfInventory(wi.getUniqueId());
-        }
-    }
-    
-    /**
      * Load a WolfInventory.
      * 
      * @param uniqueId
+     * @return
      */
-    public static void loadWolfInventory(UUID uniqueId) {
-    	WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
+    public static boolean loadWolfInventory(UUID uniqueId) {
+    	if (!hasWolfInventory(uniqueId)) {
+	    	WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
+	    	
+	    	// Create the WolfInventoryTable.
+	        WolfInventory wi = new WolfInventory(uniqueId);
+	        wi.fillFromDBTable(wit.getChestRows());
+
+	        wolfInventorys.put(uniqueId, wi);
+	        
+	        return true;
+    	}
     	
-    	// Create the WolfInventoryTable.
-        WolfInventory wi = new WolfInventory(uniqueId);
-        wi.fillFromDBTable(wit.getChestRows());
-        
-        if (wolfInventorys.containsKey(uniqueId)) {
-            wolfInventorys.remove(uniqueId);
-        }
-        
-        wolfInventorys.put(uniqueId, wi);
+    	return false;
     }
     
     /**
-     * Unload a WolfInventoryTable
+     * Unload a WolfInventoryTable.
      * 
      * @param uniqueId
+     * @return
      */
-    public static void unloadWolfInventory(UUID uniqueId) {
-    	WolfInventory wi = getWolfInventory(uniqueId);
-    	WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
-        wit.setChestRows(wi.prepareTableForDB());
-        
-        Lupi.getDB().update(wit);
-    	
-        if (wolfInventorys.containsKey(uniqueId)) {
+    public static boolean unloadWolfInventory(UUID uniqueId) {
+    	if (hasWolfInventory(uniqueId)) {
+    		WolfInventory wi = getWolfInventory(uniqueId);
+    		WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
+    		wit.setChestRows(wi.prepareTableForDB());
+    		
+    		Lupi.getDB().update(wit);
+    		
             wolfInventorys.remove(uniqueId);
+            
+            return true;
         }
+    	
+    	return false;
     }
   
     /**
-     * Add a WolfInventory
+     * Add a WolfInventory.
      * 
      * @param uniqueId
      */
-    public static void addWolfInventory(UUID uniqueId, String name) {
-    	if (hasWolfInventory(uniqueId)) {
-    		return;
+    public static boolean addWolfInventory(UUID uniqueId, String name) {
+    	if (!hasWolfInventory(uniqueId)) {
+	    	// Create the WolfInventoryTable.
+	    	WolfInventoryTable wit = new WolfInventoryTable();
+	    	wit.setUniqueId(uniqueId.toString());
+	    	
+	    	// Save the WolfInventoryTable to database.
+	        Lupi.getDB().save(wit);
+	        
+	        wolfInventorys.put(uniqueId, new WolfInventory(uniqueId, name));
+	        
+	        return true;
     	}
-    	
-    	// Create the WolfInventoryTable.
-    	WolfInventoryTable wit = new WolfInventoryTable();
-    	wit.setUniqueId(uniqueId.toString());
-    	
-    	// Save the WolfInventoryTable to database.
-        Lupi.getDB().save(wit);
-        
-        wolfInventorys.put(uniqueId, new WolfInventory(uniqueId, name));
+	    
+    	return false;
     }
     
     /**
-     * Remove a WolfInventory
+     * Remove a WolfInventory.
      * 
      * @param uniqueId
      */
-    public static void removeWolfInventory(UUID uniqueId) {
-        if (wolfInventorys.containsKey(uniqueId)) {
+    public static boolean removeWolfInventory(UUID uniqueId) {
+        if (hasWolfInventory(uniqueId)) {
         	Lupi.getDB().delete(getWolfInventoryTable(uniqueId));
         	
             wolfInventorys.remove(uniqueId);
+            
+            return true;
         }
+        
+        return false;
     }
     
     /**
-     * Check if wolf has inventory
+     * Check if wolf has inventory.
      * 
      * @param uniqueId
      * @return
@@ -154,12 +149,21 @@ public class WolfInventoryManager {
     }
     
     /**
-     * Get wolf's inventory
+     * Get wolf's inventory.
      * 
      * @param uniqueId
      * @return
      */
     public static WolfInventory getWolfInventory(UUID uniqueId) {
         return wolfInventorys.get(uniqueId);
+    }
+    
+    /**
+     * Get all wolf inventorys.
+     * 
+     * @return
+     */
+    public static List<WolfInventory> getWolfInventorys() {
+        return new ArrayList<WolfInventory>(wolfInventorys.values());
     }
 }
