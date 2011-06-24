@@ -41,11 +41,10 @@ import com.halvors.lupi.Lupi;
 public class ConfigManager {
     private final Lupi plugin;
     
-    private HashMap<String, WorldConfig> worlds;
+    private HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>();
     
     public ConfigManager(Lupi plugin) {
         this.plugin = plugin;
-        this.worlds = new HashMap<String, WorldConfig>();
     }
 
     /**

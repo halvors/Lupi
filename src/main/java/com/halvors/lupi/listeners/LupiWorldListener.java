@@ -20,13 +20,13 @@
 
 package com.halvors.lupi.listeners;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.WorldListener;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.WolfManager;
@@ -39,26 +39,44 @@ import com.halvors.lupi.wolf.WolfManager;
 public class LupiWorldListener extends WorldListener {
 //    private Lupi plugin;
     
-    private final WolfManager wolfManager;
-    
     public LupiWorldListener(Lupi plugin) {
 //        this.plugin = plugin;
-        this.wolfManager = plugin.getWolfManager();
     }
     
     @Override
-    public void onChunkLoad(ChunkLoadEvent event) {
-    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
-
+    public void onWorldLoad(WorldLoadEvent event) {
+    	List<Entity> entities = event.getWorld().getEntities();
+    	
     	for (Entity entity : entities) {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
     			if (wolf.isTamed()) {
-                	if (!wolfManager.hasWolf(wolf)) {
-                        wolfManager.addWolf(wolf);
+                	if (WolfManager.hasWolf(wolf)) {
+                		WolfManager.loadWolf(wolf);
+                	} else {
+                        WolfManager.addWolf(wolf);
                     }
                 }
+    		}
+    	}
+    }
+    
+    @Override
+    public void onWorldUnload(WorldUnloadEvent event) {
+    	if (!event.isCancelled()) {
+    		List<Entity> entities = event.getWorld().getEntities();
+    		
+    		for (Entity entity : entities) {
+    			if (entity instanceof Wolf) {
+    				Wolf wolf = (Wolf) entity;
+    				
+    				if (wolf.isTamed()) {
+                    	if (WolfManager.hasWolf(wolf)) {
+                            WolfManager.unloadWolf(wolf);
+                        }
+                    }
+    			}
     		}
     	}
     }

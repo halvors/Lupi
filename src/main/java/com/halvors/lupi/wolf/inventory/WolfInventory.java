@@ -73,7 +73,7 @@ public class WolfInventory extends TileEntityChest {
         return new CraftItemStack(super.getItem(index));
     }
     
-    public void setBukkitItem(int index, ItemStack item) {
+    public void setItem(int index, ItemStack item) {
         super.setItem(index, (item == null ? null : new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability())));
     }
     
@@ -302,11 +302,11 @@ public class WolfInventory extends TileEntityChest {
                     } else {
                         // More than a single stack!
                         if (item.getAmount() > getMaxItemStack()) {
-                            setBukkitItem(firstFree, new CraftItemStack(item.getTypeId(), getMaxItemStack(), item.getDurability()));
+                            setItem(firstFree, new CraftItemStack(item.getTypeId(), getMaxItemStack(), item.getDurability()));
                             item.setAmount(item.getAmount() - getMaxItemStack());
                         } else {
                             // Just store it
-                            setBukkitItem(firstFree, item);
+                            setItem(firstFree, item);
                             break;
                         }
                     }
@@ -360,7 +360,7 @@ public class WolfInventory extends TileEntityChest {
                     } else {
                         // split the stack and store
                         itemStack.setAmount(amount - toDelete);
-                        setBukkitItem(first, itemStack);
+                        setItem(first, itemStack);
                         toDelete = 0;
                     }
                 }
@@ -434,10 +434,9 @@ public class WolfInventory extends TileEntityChest {
             int amount = (item[2] == null ? 0 : Integer.valueOf(item[2]));
        
             if (typeId < 1 || damage < 0 || amount < 1) {
-                setBukkitItem(i, new ItemStack(null));
-            } else {
-                setBukkitItem(i, new ItemStack(typeId,amount,damage));
                 super.setItem(i, null);
+            } else {
+                setItem(i, new ItemStack(typeId, amount, damage));
             }
         }
     }

@@ -34,6 +34,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.avaje.ebean.EbeanServer;
 import com.halvors.lupi.commands.LupiCommandExecutor;
 import com.halvors.lupi.listeners.LupiEntityListener;
 import com.halvors.lupi.listeners.LupiPlayerListener;
@@ -53,12 +54,12 @@ public class Lupi extends JavaPlugin {
     private PluginDescriptionFile desc;
 
     private final ConfigManager configManager = new ConfigManager(this);
-    private final WolfManager wolfManager = new WolfManager(this);
-    private final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager(this);
 
     private final LupiEntityListener entityListener = new LupiEntityListener(this);
     private final LupiPlayerListener playerListener = new LupiPlayerListener(this);
     private final LupiWorldListener worldListener = new LupiWorldListener(this);
+    
+    private static EbeanServer database;
     
     public static PermissionHandler Permissions;
     
@@ -78,7 +79,8 @@ public class Lupi extends JavaPlugin {
 
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
 
-        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
         
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
@@ -88,22 +90,12 @@ public class Lupi extends JavaPlugin {
         setupPermissions();
         setupDatabase();
         
-        // Load wolves from database.
-        wolfManager.load();
-        
-        // Load wolf inventorys from database.
-        wolfInventoryManager.load();
+        database = getDatabase();
     }
     
     public void onDisable() {
         // Save configuration.
         configManager.save();
-        
-        // Unload wolves from database.
-        wolfManager.unload();
-        
-        // Unload wolf inventorys from database.
-        wolfInventoryManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
@@ -159,15 +151,11 @@ public class Lupi extends JavaPlugin {
         return desc.getVersion();
     }
     
+    public static EbeanServer getDb() {
+    	return database;
+    }
+    
     public ConfigManager getConfigManager() {
         return configManager;
-    }
-    
-    public WolfManager getWolfManager() {
-        return wolfManager;
-    }
-    
-    public WolfInventoryManager getWolfInventoryManager() {
-        return wolfInventoryManager;
     }
 }

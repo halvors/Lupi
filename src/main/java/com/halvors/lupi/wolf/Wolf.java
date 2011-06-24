@@ -23,6 +23,7 @@ package com.halvors.lupi.wolf;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -38,31 +39,26 @@ import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
  * @author halvors
  */
 public class Wolf {
-    private Lupi plugin;
     private UUID uniqueId;
     
-    private final WolfInventoryManager wolfInventoryManager;
-    
-    public Wolf(Lupi plugin, UUID uniqueId) {
-        this.plugin = plugin;
+    public Wolf(UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.wolfInventoryManager = plugin.getWolfInventoryManager();
     }
     
     /**
      * Get WolfTable.
      * 
-     * @return WolfTable
+     * @return
      */
     public WolfTable getWolfTable() {
-        return plugin.getDatabase().find(WolfTable.class).where()
+        return Lupi.getDb().find(WolfTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
     /**
      * Get id.
      * 
-     * @return int
+     * @return
      */
     public int getId() {
         WolfTable wt = getWolfTable();
@@ -85,14 +81,14 @@ public class Wolf {
         if (wt != null) {
             wt.setId(id);
             
-            plugin.getDatabase().update(wt);
+            Lupi.getDb().update(wt);
         }
     }
     
     /**
      * Get uniqueId.
      * 
-     * @return UUID
+     * @return
      */
     public UUID getUniqueId() {
         WolfTable wt = getWolfTable();
@@ -107,7 +103,7 @@ public class Wolf {
     /**
      * Get name.
      * 
-     * @return String
+     * @return
      */
     public String getName() {
         WolfTable wt = getWolfTable();
@@ -130,7 +126,7 @@ public class Wolf {
         if (wt != null) {
             wt.setName(name);
             
-            plugin.getDatabase().update(wt);
+            Lupi.getDb().update(wt);
             
             if (hasInventory()) {
                 getInventory().setName(name + "'s inventory");
@@ -141,13 +137,13 @@ public class Wolf {
     /**
      * Get owner.
      * 
-     * @return Player
+     * @return
      */
     public Player getOwner() {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
-            for (Player player : plugin.getServer().getOnlinePlayers()) {
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 if (player.getName().equalsIgnoreCase(wt.getOwner())) {
                     return player;
                 }
@@ -170,20 +166,20 @@ public class Wolf {
             wt.setOwner(owner.getName());
             wolf.setOwner(owner);
             
-            plugin.getDatabase().update(wt);
+            Lupi.getDb().update(wt);
         }
     }
     
     /**
      * Get world.
      * 
-     * @return World
+     * @return
      */
     public World getWorld() {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
-            return plugin.getServer().getWorld(wt.getWorld());
+            return Bukkit.getServer().getWorld(wt.getWorld());
         }
         
         return null;
@@ -200,14 +196,14 @@ public class Wolf {
         if (wt != null) {
             wt.setWorld(world.getName());
             
-            plugin.getDatabase().update(wt);
+            Lupi.getDb().update(wt);
         }
     }
     
     /**
      * Check if inventory exists.
      * 
-     * @return boolean
+     * @return
      */
     public boolean hasInventory() {
         WolfTable wt = getWolfTable();
@@ -230,7 +226,7 @@ public class Wolf {
         if (wt != null) {
             wt.setInventory(inventory);
             
-            plugin.getDatabase().update(wt);
+            Lupi.getDb().update(wt);
         }
     }
     
@@ -239,7 +235,7 @@ public class Wolf {
      */
     public void addInventory() {
         setInventory(true);
-        wolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
+        WolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
     }
 
     /**
@@ -247,16 +243,16 @@ public class Wolf {
      */
     public void removeInventory() {
         setInventory(false);
-        wolfInventoryManager.removeWolfInventory(uniqueId);
+        WolfInventoryManager.removeWolfInventory(uniqueId);
     }
     
     /**
      * Get inventory.
      * 
-     * @return WolfInventory
+     * @return
      */
     public WolfInventory getInventory() {
-        return wolfInventoryManager.getWolfInventory(uniqueId);
+        return WolfInventoryManager.getWolfInventory(uniqueId);
     }
     
     /**
@@ -279,7 +275,7 @@ public class Wolf {
     /**
      * Get the wolf entity.
      * 
-     * @return Wolf
+     * @return
      */
     public org.bukkit.entity.Wolf getEntity() {
         List<Entity> entities = getWorld().getEntities();
