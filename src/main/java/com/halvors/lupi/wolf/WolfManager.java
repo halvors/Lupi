@@ -259,7 +259,13 @@ public class WolfManager {
      * @return
      */
     public static boolean removeWolf(UUID uniqueId) {
-        if (hasWolf(uniqueId)) {         
+        if (hasWolf(uniqueId)) {       
+        	Wolf wolf = getWolf(uniqueId);
+        	
+        	if (wolf.hasInventory()) {
+        		wolf.removeInventory();
+        	}
+        	
             Lupi.getDB().delete(getWolfTable(uniqueId));
             
             wolves.remove(uniqueId);
