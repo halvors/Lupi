@@ -203,25 +203,28 @@ public class WolfManager {
 	        Random random = new Random();
 	        List<String> usedNames = new ArrayList<String>();
 	        boolean nameIsUnique = false;
+		boolean needDynamic = false;
 	        
 	        // Check if a wolf with the same name already exists.
 	        for (WolfTable wt : getWolfTables(player)) {
 	            usedNames.add(wt.getName());
 	        }
 	        
-	        if (usedNames.size() == wolfNames.size()) {
-	            name = getRandomName() + random.nextInt(10);
-	        } else {
-	            name = getRandomName();
-	            
-	            do {
-	                if (usedNames.contains(name)) {
-	                    name = getRandomName();
-	                } else {
-	                    nameIsUnique = true;
-	                }
-	            } while (!nameIsUnique);
+	        if (usedNames.size() >= wolfNames.size()) {
+	            needDynamic = true;
 	        }
+
+                do {
+	            if (usedNames.contains(name)) {
+                        if (needDynamic) {
+                            name = getRandomName() + random.nextInt(10);
+                        } else {
+	                    name = getRandomName();
+                        }
+	            } else {
+	                nameIsUnique = true;
+	            }
+	        } while (!nameIsUnique);
 	        
 	        // Create the WolfTable.
 	        WolfTable wt = new WolfTable();
@@ -477,7 +480,7 @@ public class WolfManager {
     public static String getRandomName() {
         Random random = new Random();
         
-        return wolfNames.get(random.nextInt(wolfNames.size()));
+        return wolfNames.get(random.nextInt(wolfNames.size() - 1 ));
     }
     
     /**
