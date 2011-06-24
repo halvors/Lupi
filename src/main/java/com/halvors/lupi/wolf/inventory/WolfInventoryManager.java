@@ -41,7 +41,7 @@ public class WolfInventoryManager {
      * @return WolfInventoryTable
      */
     public static WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
-        return Lupi.getDb().find(WolfInventoryTable.class).where()
+        return Lupi.getDB().find(WolfInventoryTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -51,7 +51,7 @@ public class WolfInventoryManager {
      * @return List<WolfInventoryTable>
      */
     public static List<WolfInventoryTable> getWolfInventoryTables() {
-        return Lupi.getDb().find(WolfInventoryTable.class).where().findList();
+        return Lupi.getDB().find(WolfInventoryTable.class).where().findList();
     }
     
     /**
@@ -76,14 +76,14 @@ public class WolfInventoryManager {
                 String[] rows = wi.prepareTableForDB();
                 wit.setChestRows(rows);
                 
-                Lupi.getDb().update(wit);
+                Lupi.getDB().update(wit);
             } else {
                 wit = new WolfInventoryTable();
                 wit.setUniqueId(wi.getUniqueId().toString());
                 String[] rows = wi.prepareTableForDB();
                 wit.setChestRows(rows);
                 
-                Lupi.getDb().save(wit);
+                Lupi.getDB().save(wit);
             }
         }
     }
