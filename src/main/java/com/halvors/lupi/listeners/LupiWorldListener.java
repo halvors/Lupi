@@ -20,13 +20,12 @@
 
 package com.halvors.lupi.listeners;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.WorldListener;
+import org.bukkit.event.world.WorldLoadEvent;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.WolfManager;
@@ -44,9 +43,9 @@ public class LupiWorldListener extends WorldListener {
     }
     
     @Override
-    public void onChunkLoad(ChunkLoadEvent event) {
-    	List<Entity> entities = Arrays.asList(event.getChunk().getEntities());
-
+    public void onWorldLoad(WorldLoadEvent event) {
+    	List<Entity> entities = event.getWorld().getEntities();
+    	
     	for (Entity entity : entities) {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;

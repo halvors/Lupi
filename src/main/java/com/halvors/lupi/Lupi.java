@@ -79,7 +79,7 @@ public class Lupi extends JavaPlugin {
 
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
 
-        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
         
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));

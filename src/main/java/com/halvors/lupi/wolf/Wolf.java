@@ -48,7 +48,7 @@ public class Wolf {
     /**
      * Get WolfTable.
      * 
-     * @return WolfTable
+     * @return
      */
     public WolfTable getWolfTable() {
         return Lupi.getDb().find(WolfTable.class).where()
@@ -58,7 +58,7 @@ public class Wolf {
     /**
      * Get id.
      * 
-     * @return int
+     * @return
      */
     public int getId() {
         WolfTable wt = getWolfTable();
@@ -88,7 +88,7 @@ public class Wolf {
     /**
      * Get uniqueId.
      * 
-     * @return UUID
+     * @return
      */
     public UUID getUniqueId() {
         WolfTable wt = getWolfTable();
@@ -103,7 +103,7 @@ public class Wolf {
     /**
      * Get name.
      * 
-     * @return String
+     * @return
      */
     public String getName() {
         WolfTable wt = getWolfTable();
@@ -137,7 +137,7 @@ public class Wolf {
     /**
      * Get owner.
      * 
-     * @return Player
+     * @return
      */
     public Player getOwner() {
         WolfTable wt = getWolfTable();
@@ -173,7 +173,7 @@ public class Wolf {
     /**
      * Get world.
      * 
-     * @return World
+     * @return
      */
     public World getWorld() {
         WolfTable wt = getWolfTable();
@@ -203,7 +203,7 @@ public class Wolf {
     /**
      * Check if inventory exists.
      * 
-     * @return boolean
+     * @return
      */
     public boolean hasInventory() {
         WolfTable wt = getWolfTable();
@@ -249,7 +249,7 @@ public class Wolf {
     /**
      * Get inventory.
      * 
-     * @return WolfInventory
+     * @return
      */
     public WolfInventory getInventory() {
         return WolfInventoryManager.getWolfInventory(uniqueId);
@@ -275,7 +275,7 @@ public class Wolf {
     /**
      * Get the wolf entity.
      * 
-     * @return Wolf
+     * @return
      */
     public org.bukkit.entity.Wolf getEntity() {
         List<Entity> entities = getWorld().getEntities();
