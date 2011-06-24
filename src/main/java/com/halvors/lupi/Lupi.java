@@ -46,11 +46,17 @@ import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
+/**
+ * Lupi
+ * 
+ * @author halvors
+ */
 public class Lupi extends JavaPlugin {
     private final Logger log = Logger.getLogger("Minecraft");
     
     private PluginManager pm;
     private PluginDescriptionFile desc;
+    private static EbeanServer database;
 
     private final ConfigManager configManager = new ConfigManager(this);
 
@@ -58,18 +64,17 @@ public class Lupi extends JavaPlugin {
     private final LupiPlayerListener playerListener = new LupiPlayerListener(this);
     private final LupiWorldListener worldListener = new LupiWorldListener(this);
     
-    private static EbeanServer database;
-    
     public static PermissionHandler Permissions;
     
     public void onEnable() {
         pm = getServer().getPluginManager();
         desc = getDescription();
+        database = getDatabase();
         
         // Load configuration.
         configManager.load();
         
-        // Register our events Type.
+        // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
 //        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
@@ -88,19 +93,11 @@ public class Lupi extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
-        
-        database = getDatabase();
-        
-        // Load wolf inventorys from database.
-        WolfInventoryManager.load();
     }
     
     public void onDisable() {
         // Save configuration.
         configManager.save();
-        
-        // Unload wolf inventorys from database.
-        WolfInventoryManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
