@@ -26,7 +26,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
@@ -56,18 +55,18 @@ public class LupiEntityListener extends EntityListener {
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         if (!event.isCancelled()) {        	
             Entity entity = event.getEntity();
-        	SpawnReason reason = event.getSpawnReason();
+//            SpawnReason reason = event.getSpawnReason();
             World world = entity.getWorld();
             WorldConfig worldConfig = configManager.getWorldConfig(world);
             
             if (entity instanceof Wolf) {
 //            Wolf wolf = (Wolf) entity;
                 
-            	if (reason == SpawnReason.NATURAL) {
+//            	if (reason == SpawnReason.NATURAL) {
             		if (!worldConfig.wolfEnable) {
             			event.setCancelled(true);
             		}
-            	}
+//            	}
             }
         }
     }

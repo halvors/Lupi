@@ -45,7 +45,7 @@ public class WolfManager {
     private final static HashMap<UUID, Wolf> wolves = new HashMap<UUID, Wolf>();
     private final static List<String> wolfNames = new ArrayList<String>();
     
-    public WolfManager() {
+    static {
         initRandomNames();
     }
     
