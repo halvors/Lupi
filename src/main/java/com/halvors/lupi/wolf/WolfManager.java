@@ -203,7 +203,7 @@ public class WolfManager {
 	        Random random = new Random();
 	        List<String> usedNames = new ArrayList<String>();
 	        boolean nameIsUnique = false;
-		boolean needDynamic = false;
+	        boolean needDynamic = false;
 	        
 	        // Check if a wolf with the same name already exists.
 	        for (WolfTable wt : getWolfTables(player)) {
@@ -214,13 +214,13 @@ public class WolfManager {
 	            needDynamic = true;
 	        }
 
-                do {
-	            if (usedNames.contains(name)) {
-                        if (needDynamic) {
-                            name = getRandomName() + random.nextInt(10);
-                        } else {
+	        do {
+	        	if (usedNames.contains(name)) {
+	        		if (needDynamic) {
+	        			name = getRandomName() + random.nextInt(10);
+                    } else {
 	                    name = getRandomName();
-                        }
+                    }
 	            } else {
 	                nameIsUnique = true;
 	            }

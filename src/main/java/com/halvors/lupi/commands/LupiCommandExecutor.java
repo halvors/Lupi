@@ -316,7 +316,7 @@ public class LupiCommandExecutor implements CommandExecutor {
         
         if (!wolves.isEmpty()) {
             for (com.halvors.lupi.wolf.Wolf wolf : wolves) {
-                player.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " - " + wolf.getOwner());
+                player.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " - " + wolf.getOwner().getName());
             }
         } else {
             player.sendMessage(ChatColor.RED + "There are no tamed wolves.");
