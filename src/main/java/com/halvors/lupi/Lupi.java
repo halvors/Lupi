@@ -50,7 +50,7 @@ public class Lupi extends JavaPlugin {
     
     private PluginManager pm;
     private PluginDescriptionFile desc;
-    private static EbeanServer database;
+    private static EbeanServer db;
 
     private final ConfigManager configManager;
 
@@ -71,7 +71,7 @@ public class Lupi extends JavaPlugin {
     public void onEnable() {
         pm = getServer().getPluginManager();
         desc = getDescription();
-        database = getDatabase();
+        db = getDatabase();
         
         // Load configuration.
         configManager.load();
@@ -156,7 +156,7 @@ public class Lupi extends JavaPlugin {
     }
     
     public static EbeanServer getDB() {
-    	return database;
+    	return db;
     }
     
     public ConfigManager getConfigManager() {
