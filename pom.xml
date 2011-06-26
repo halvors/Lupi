@@ -7,9 +7,9 @@
   <description>Lupi is a wolf plugin for Bukkit.</description>
   <url>https://github.com/halvors/Lupi</url>
   <scm>
-  	<connection>scm:git:git://github.com/halvors/Lupi.git</connection>
-  	<developerConnection>scm:git:git@github.com:halvors/Lupi.git</developerConnection>
-  	<url>https://github.com/halvors/Lupi</url>
+    <connection>scm:git:git://github.com/halvors/Lupi.git</connection>
+    <developerConnection>scm:git:git@github.com:halvors/Lupi.git</developerConnection>
+    <url>https://github.com/halvors/Lupi</url>
   </scm>
   <repositories>
     <repository>
@@ -22,8 +22,6 @@
       <groupId>org.bukkit</groupId>
       <artifactId>craftbukkit</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-      <type>jar</type>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
   <modules>
