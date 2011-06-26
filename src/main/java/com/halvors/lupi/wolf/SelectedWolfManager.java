@@ -41,8 +41,8 @@ public class SelectedWolfManager {
      */
     public static void addSelectedWolf(Player player, Wolf wolf) {
         if (wolf.isTamed()) {
-        	String name = player.getName();
-        	
+            String name = player.getName();
+            
             if (selectedWolves.containsKey(name)) {
                 selectedWolves.remove(name);
             }
@@ -57,8 +57,8 @@ public class SelectedWolfManager {
      * @param player
      */
     public static void removeSelectedWolf(Player player) {
-    	String name = player.getName();
-    	
+        String name = player.getName();
+        
         if (selectedWolves.containsKey(name)) {
             selectedWolves.remove(name);
         }

@@ -201,7 +201,7 @@ public class Wolf {
     }
     
     /**
-     * Check if inventory exists.
+     * Check if wolf has inventory.
      * 
      * @return
      */
@@ -259,17 +259,17 @@ public class Wolf {
      * Drop inventory contents.
      */
     public void dropInventory() {
-    	if (hasInventory()) {
-    		WolfInventory wi = getInventory();
-    		World world = getWorld();
-    		org.bukkit.entity.Wolf wolf = getEntity();
-    		
-    		for (ItemStack item : wi.getBukkitContents()) {
-    			if (item != null && item.getAmount() > 0 && item.getDurability() > -1) {
+        if (hasInventory()) {
+            WolfInventory wi = getInventory();
+            World world = getWorld();
+            org.bukkit.entity.Wolf wolf = getEntity();
+            
+            for (ItemStack item : wi.getBukkitContents()) {
+                if (item != null && item.getAmount() > 0 && item.getDurability() > -1) {
                     world.dropItem(wolf.getLocation(), item);
                 }
-    		}
-    	}
+            }
+        }
     }
 
     /**
@@ -293,14 +293,14 @@ public class Wolf {
     
     /*
     public void eat(ItemStack item) {
-    	if (item.equals(Material.PORK) || item.equals(Material.GRILLED_PORK)) {
-    		org.bukkit.entity.Wolf wolf = getEntity();
-    		int health = wolf.getHealth() + 2;
-    		
-    		if (health < 20) {
-    			wolf.setHealth(health);
-    		}
-    	}
+        if (item.equals(Material.PORK) || item.equals(Material.GRILLED_PORK)) {
+            org.bukkit.entity.Wolf wolf = getEntity();
+            int health = wolf.getHealth() + 2;
+            
+            if (health < 20) {
+                wolf.setHealth(health);
+            }
+        }
     }
     */
 }

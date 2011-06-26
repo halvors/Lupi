@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import com.avaje.ebean.EbeanServer;
 import com.halvors.lupi.Lupi;
 
 /**
@@ -34,6 +35,7 @@ import com.halvors.lupi.Lupi;
  */
 public class WolfInventoryManager {
     private final static HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
+    private final static EbeanServer database = Lupi.getDB();
     
     /**
      * Get a WolfInventoryTable.
@@ -42,7 +44,7 @@ public class WolfInventoryManager {
      * @return
      */
     public static WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
-        return Lupi.getDB().find(WolfInventoryTable.class).where()
+        return database.find(WolfInventoryTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -52,7 +54,7 @@ public class WolfInventoryManager {
      * @return
      */
     public static List<WolfInventoryTable> getWolfInventoryTables() {
-        return Lupi.getDB().find(WolfInventoryTable.class).where().findList();
+        return database.find(WolfInventoryTable.class).where().findList();
     }
     
     /**
@@ -89,7 +91,7 @@ public class WolfInventoryManager {
     		WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
     		wit.setChestRows(wi.prepareTableForDB());
     		
-    		Lupi.getDB().update(wit);
+    		database.update(wit);
     		
             wolfInventorys.remove(uniqueId);
             
@@ -111,7 +113,7 @@ public class WolfInventoryManager {
 	    	wit.setUniqueId(uniqueId.toString());
 	    	
 	    	// Save the WolfInventoryTable to database.
-	        Lupi.getDB().save(wit);
+	        database.save(wit);
 	        
 	        wolfInventorys.put(uniqueId, new WolfInventory(uniqueId, name));
 	        
@@ -128,7 +130,7 @@ public class WolfInventoryManager {
      */
     public static boolean removeWolfInventory(UUID uniqueId) {
         if (hasWolfInventory(uniqueId)) {
-        	Lupi.getDB().delete(getWolfInventoryTable(uniqueId));
+        	database.delete(getWolfInventoryTable(uniqueId));
         	
             wolfInventorys.remove(uniqueId);
             

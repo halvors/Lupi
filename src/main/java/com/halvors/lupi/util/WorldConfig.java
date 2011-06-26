@@ -53,7 +53,7 @@ public class WorldConfig {
     public int inventoryItem;
     /* Configuration data end */
 
-    public WorldConfig(Lupi plugin, final String worldName) {
+    public WorldConfig(Lupi plugin, String worldName) {
 //        this.plugin = plugin;
     	this.configManager = plugin.getConfigManager();
         this.worldName = worldName;

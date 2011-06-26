@@ -39,7 +39,7 @@ import com.halvors.lupi.Lupi;
  * @author halvors
  */
 public class ConfigManager {
-    private final Lupi plugin;
+    private Lupi plugin;
     
     private HashMap<String, WorldConfig> worlds;
     

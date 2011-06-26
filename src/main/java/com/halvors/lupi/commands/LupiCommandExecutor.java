@@ -47,7 +47,7 @@ public class LupiCommandExecutor implements CommandExecutor {
 
     private final ConfigManager configManager;;
 
-    public LupiCommandExecutor(final Lupi plugin) {
+    public LupiCommandExecutor(Lupi plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
     }
@@ -57,26 +57,26 @@ public class LupiCommandExecutor implements CommandExecutor {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                if (plugin.hasPermissions(player, "Wolf.wolf.list")) {
+                if (plugin.hasPermissions(player, "Lupi.wolf.list")) {
                     showPlayerWolves(player);
                 }
             } else {
                 String subCommand = args[0];
 
                 if (subCommand.equalsIgnoreCase("help")) {
-                    if (plugin.hasPermissions(player, "Wolf.help")) {
+                    if (plugin.hasPermissions(player, "Lupi.help")) {
                         showHelp(player, label);
 
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("list")) {
-                       if (plugin.hasPermissions(player, "Wolf.list")) {
+                       if (plugin.hasPermissions(player, "Lupi.list")) {
                            showWolves(player);
                            
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("name")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.name")) {
+                       if (plugin.hasPermissions(player, "Lupi.wolf.name")) {
                            if (SelectedWolfManager.hasSelectedWolf(player)) {
                                Wolf wolf = SelectedWolfManager.getSelectedWolf(player);
 
@@ -90,7 +90,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("setname")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.setname")) {
+                       if (plugin.hasPermissions(player, "Lupi.wolf.setname")) {
                            Wolf wolf = null;
                            String owner = player.getName();
                            String name = null;
@@ -134,7 +134,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("call")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.call")) {
+                       if (plugin.hasPermissions(player, "Lupi.wolf.call")) {
                         if (args.length == 2) {
                             String name = args[1];
                             String owner = player.getName();
@@ -150,7 +150,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("stop")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.stop")) {
+                       if (plugin.hasPermissions(player, "Lupi.wolf.stop")) {
                            Wolf wolf = null;
                            String owner = player.getName();
 
@@ -181,7 +181,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("give")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.give")) {
+                       if (plugin.hasPermissions(player, "Lupi.wolf.give")) {
                            Wolf wolf = null;
                            String owner = player.getName();
                            Player receiver = null;
@@ -191,7 +191,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            if (args.length == 2) {
                                if (SelectedWolfManager.hasSelectedWolf(player)) {
                                    wolf = SelectedWolfManager.getSelectedWolf(player);
-                                   receiver = plugin.getServer().getPlayer(args[1]);
+                                   receiver = getPlayer(args[1]);
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
                                     
@@ -202,7 +202,7 @@ public class LupiCommandExecutor implements CommandExecutor {
 
                                if (WolfManager.hasWolf(name, owner)) {
                                    wolf = WolfManager.getWolf(name, owner).getEntity();
-                                   receiver = plugin.getServer().getPlayer(args[2]);
+                                   receiver = getPlayer(args[2]);;
                                } else {
                                    player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                                     
@@ -241,7 +241,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("release")) {
-                       if (plugin.hasPermissions(player, "Wolf.wolf.release")) {
+                       if (plugin.hasPermissions(player, "Lupi.wolf.release")) {
                            Wolf wolf = null;
                            String owner = player.getName();
 
@@ -360,5 +360,15 @@ public class LupiCommandExecutor implements CommandExecutor {
         if (plugin.hasPermissions(player, "Wolf.wolf.release")) {
             player.sendMessage(command + "release " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Release your wolf.");
         }
+    }
+    
+    /**
+     * Get the best matching player.
+     * 
+     * @param name
+     * @return
+     */
+    public Player getPlayer(String name) {
+    	return plugin.getServer().matchPlayer(name).get(0);
     }
 }
