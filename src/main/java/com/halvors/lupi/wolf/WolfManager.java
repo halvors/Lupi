@@ -45,7 +45,7 @@ import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 public class WolfManager {
     private final static HashMap<UUID, Wolf> wolves = new HashMap<UUID, Wolf>();
     private final static List<String> wolfNames = new ArrayList<String>();
-    private final static EbeanServer database = Lupi.getDB();
+    private final static EbeanServer db = Lupi.getDB();
     
     static {
         initRandomNames();
@@ -58,7 +58,7 @@ public class WolfManager {
      * @return
      */
     public static WolfTable getWolfTable(UUID uniqueId) {
-        return database.find(WolfTable.class).where()
+        return db.find(WolfTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -68,7 +68,7 @@ public class WolfManager {
      * @return
      */
     public static List<WolfTable> getWolfTables() {
-        return database.find(WolfTable.class).where().findList();
+        return db.find(WolfTable.class).where().findList();
     }
     
     /**
@@ -78,7 +78,7 @@ public class WolfManager {
      * @return
      */
     public static List<WolfTable> getWolfTables(World world) {
-        return database.find(WolfTable.class).where()
+        return db.find(WolfTable.class).where()
             .ieq("world", world.getName()).findList();
     }
     
@@ -89,7 +89,7 @@ public class WolfManager {
      * @return
      */
     public static List<WolfTable> getWolfTables(Player player) {
-        return database.find(WolfTable.class).where()
+        return db.find(WolfTable.class).where()
             .ieq("owner", player.getName()).findList();
     }
     
@@ -236,8 +236,8 @@ public class WolfManager {
             wt.setWorld(wolf.getWorld().getName());
             wt.setInventory(false);
                 
-            // Save the WolfTable to database.
-            database.save(wt);
+            // Save the WolfTable to db.
+            db.save(wt);
     
             wolves.put(uniqueId, new Wolf(uniqueId));
             
@@ -271,7 +271,7 @@ public class WolfManager {
                 wolf.removeInventory();
             }
             
-            database.delete(getWolfTable(uniqueId));
+            db.delete(getWolfTable(uniqueId));
             
             wolves.remove(uniqueId);
             
@@ -293,7 +293,7 @@ public class WolfManager {
     }
 
     /**
-     * Check if wolf exists in database.
+     * Check if wolf exists in db.
      * 
      * @param uniqueId
      * @return

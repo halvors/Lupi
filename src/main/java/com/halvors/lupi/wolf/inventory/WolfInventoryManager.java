@@ -35,7 +35,7 @@ import com.halvors.lupi.Lupi;
  */
 public class WolfInventoryManager {
     private final static HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
-    private final static EbeanServer database = Lupi.getDB();
+    private final static EbeanServer db = Lupi.getDB();
     
     /**
      * Get a WolfInventoryTable.
@@ -44,7 +44,7 @@ public class WolfInventoryManager {
      * @return
      */
     public static WolfInventoryTable getWolfInventoryTable(UUID uniqueId) {
-        return database.find(WolfInventoryTable.class).where()
+        return db.find(WolfInventoryTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -54,7 +54,7 @@ public class WolfInventoryManager {
      * @return
      */
     public static List<WolfInventoryTable> getWolfInventoryTables() {
-        return database.find(WolfInventoryTable.class).where().findList();
+        return db.find(WolfInventoryTable.class).where().findList();
     }
     
     /**
@@ -91,7 +91,7 @@ public class WolfInventoryManager {
     		WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
     		wit.setChestRows(wi.prepareTableForDB());
     		
-    		database.update(wit);
+    		db.update(wit);
     		
             wolfInventorys.remove(uniqueId);
             
@@ -112,8 +112,8 @@ public class WolfInventoryManager {
 	    	WolfInventoryTable wit = new WolfInventoryTable();
 	    	wit.setUniqueId(uniqueId.toString());
 	    	
-	    	// Save the WolfInventoryTable to database.
-	        database.save(wit);
+	    	// Save the WolfInventoryTable to db.
+	        db.save(wit);
 	        
 	        wolfInventorys.put(uniqueId, new WolfInventory(uniqueId, name));
 	        
@@ -130,7 +130,7 @@ public class WolfInventoryManager {
      */
     public static boolean removeWolfInventory(UUID uniqueId) {
         if (hasWolfInventory(uniqueId)) {
-        	database.delete(getWolfInventoryTable(uniqueId));
+        	db.delete(getWolfInventoryTable(uniqueId));
         	
             wolfInventorys.remove(uniqueId);
             
