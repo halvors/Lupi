@@ -2,7 +2,7 @@ Version 0.1
 	- Fix load and unload for database. When issue reload command Lupi are no longer able to get information from database.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
-    - Optimize database. Let commands load wolf if it's needed. Normal wolves are loaded when their world loads.
+    - Optimize commands, still throwing errors, maybe cause of database issues but will need to be checked.
     
 Version 0.2
     - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players. (Think we'll need an EntityMoveEvent or something)
