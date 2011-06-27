@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ import com.halvors.lupi.wolf.inventory.WolfInventory;
 import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 /**
- * Represents a wolf
+ * Represents a wolf.
  * 
  * @author halvors
  */
@@ -91,13 +92,16 @@ public class Wolf {
      * @return
      */
     public UUID getUniqueId() {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            return UUID.fromString(wt.getUniqueId());
-        }
-        
-        return null;
+    	return uniqueId;
+    }
+    
+    /**
+     * Set uniqueId.
+     * 
+     * @param uniqueId
+     */
+    public void setUniqueId(UUID uniqueId) {
+    	this.uniqueId = uniqueId;
     }
     
     /**
@@ -256,17 +260,17 @@ public class Wolf {
     }
     
     /**
-     * Drop inventory contents.
+     * Drop the inventory contents.
      */
     public void dropInventory() {
         if (hasInventory()) {
             WolfInventory wi = getInventory();
             World world = getWorld();
-            org.bukkit.entity.Wolf wolf = getEntity();
+            Location location = getEntity().getLocation();
             
             for (ItemStack item : wi.getBukkitContents()) {
                 if (item != null && item.getAmount() > 0 && item.getDurability() > -1) {
-                    world.dropItem(wolf.getLocation(), item);
+                    world.dropItem(location, item);
                 }
             }
         }

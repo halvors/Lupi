@@ -25,7 +25,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.WolfManager;
@@ -47,9 +46,6 @@ public class LupiWorldListener extends WorldListener {
     public void onWorldLoad(WorldLoadEvent event) {
     	World world = event.getWorld();
     	
-        // Load wolves from database.
-		WolfManager.load(world);
-		
 		// Add tamed wolves that not already exists in database.
     	for (Entity entity : world.getEntities()) {
     		if (entity instanceof Wolf) {
@@ -61,16 +57,6 @@ public class LupiWorldListener extends WorldListener {
                     }
                 }
     		}
-    	}
-    }
-    
-    @Override
-    public void onWorldUnload(WorldUnloadEvent event) {
-    	if (!event.isCancelled()) {
-    		World world = event.getWorld();
-    		
-            // Unload wolves from database.
-    		WolfManager.unload(world);
     	}
     }
 }

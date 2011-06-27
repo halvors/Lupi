@@ -38,7 +38,7 @@ import com.halvors.lupi.wolf.WolfManager;
 import com.halvors.lupi.wolf.WolfTable;
 
 /**
- * Represents a CommandExecutor
+ * Represents a CommandExecutor.
  * 
  * @author halvors
  */

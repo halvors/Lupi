@@ -38,7 +38,7 @@ import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 /**
- * Handle wolves
+ * Handle wolves.
  * 
  * @author halvors
  */
@@ -116,12 +116,30 @@ public class WolfManager {
     public static void unload(World world) {
         for (Wolf wolf : getWolves()) {
             if (wolf.getWorld().getName().equalsIgnoreCase(world.getName())) {
-                UUID uniqueId = wolf.getUniqueId();
-                
-                if (hasWolf(uniqueId)) {
-                    wolves.remove(uniqueId);
-                }
+                wolves.remove(wolf.getUniqueId());
             }
+        }
+    }
+    
+    /**
+     * Load wolves in world.
+     */
+    public static void load() {
+        for (WolfTable wt : getWolfTables()) {
+        	UUID uniqueId = UUID.fromString(wt.getUniqueId());
+                
+            if (!hasWolf(uniqueId)) {
+            	wolves.put(uniqueId, new Wolf(uniqueId));
+            }
+        }
+    }
+   
+    /**
+     * Unload wolves in world.
+     */
+    public static void unload() {
+        for (Wolf wolf : getWolves()) {
+            wolves.remove(wolf.getUniqueId());
         }
     }
     
@@ -236,7 +254,7 @@ public class WolfManager {
             wt.setWorld(wolf.getWorld().getName());
             wt.setInventory(false);
                 
-            // Save the WolfTable to db.
+            // Save the WolfTable to database.
             db.save(wt);
     
             wolves.put(uniqueId, new Wolf(uniqueId));

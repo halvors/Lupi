@@ -40,6 +40,7 @@ import com.halvors.lupi.listeners.LupiEntityListener;
 import com.halvors.lupi.listeners.LupiPlayerListener;
 import com.halvors.lupi.listeners.LupiWorldListener;
 import com.halvors.lupi.util.ConfigManager;
+import com.halvors.lupi.wolf.WolfManager;
 import com.halvors.lupi.wolf.WolfTable;
 import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
 import com.nijiko.permissions.PermissionHandler;
@@ -86,7 +87,6 @@ public class Lupi extends JavaPlugin {
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
 
         pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.WORLD_UNLOAD, worldListener, Event.Priority.Normal, this);
         
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
@@ -95,11 +95,17 @@ public class Lupi extends JavaPlugin {
         
         setupPermissions();
         setupDatabase();
+        
+        // Load wolves from database.
+		WolfManager.load();
     }
     
     public void onDisable() {
         // Save configuration.
         configManager.save();
+        
+        // Unload wolves from database.
+        WolfManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
