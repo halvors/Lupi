@@ -51,19 +51,17 @@ public class Lupi extends JavaPlugin {
     
     private PluginManager pm;
     private PluginDescriptionFile desc;
+    
     private static EbeanServer db;
-
+    private static PermissionHandler Permissions;
+    
     private final ConfigManager configManager;
-
     private final LupiEntityListener entityListener;
     private final LupiPlayerListener playerListener;
     private final LupiWorldListener worldListener;
     
-    public static PermissionHandler Permissions;
-    
     public Lupi() {
         this.configManager = new ConfigManager(this);
-        
         this.entityListener = new LupiEntityListener(this);
         this.playerListener = new LupiPlayerListener(this);
         this.worldListener = new LupiWorldListener(this);
