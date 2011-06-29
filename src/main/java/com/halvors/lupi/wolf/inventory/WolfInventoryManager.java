@@ -35,7 +35,7 @@ import com.halvors.lupi.Lupi;
  */
 public class WolfInventoryManager {
     private final static HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
-    private final static EbeanServer db = Lupi.getDB();
+    private final static EbeanServer db = Lupi.getDb();
     
     /**
      * Get a WolfInventoryTable.

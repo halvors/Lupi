@@ -30,6 +30,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.avaje.ebean.EbeanServer;
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.wolf.inventory.WolfInventory;
 import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
@@ -40,6 +41,8 @@ import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
  * @author halvors
  */
 public class Wolf {
+	private final static EbeanServer db = Lupi.getDb();
+	
     private UUID uniqueId;
     
     public Wolf(UUID uniqueId) {
@@ -52,7 +55,7 @@ public class Wolf {
      * @return
      */
     public WolfTable getWolfTable() {
-        return Lupi.getDB().find(WolfTable.class).where()
+        return db.find(WolfTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -82,7 +85,7 @@ public class Wolf {
         if (wt != null) {
             wt.setId(id);
             
-            Lupi.getDB().update(wt);
+            db.update(wt);
         }
     }
     
@@ -130,7 +133,7 @@ public class Wolf {
         if (wt != null) {
             wt.setName(name);
             
-            Lupi.getDB().update(wt);
+            db.update(wt);
             
             if (hasInventory()) {
                 getInventory().setName(name + "'s inventory");
@@ -170,7 +173,7 @@ public class Wolf {
             wt.setOwner(owner.getName());
             wolf.setOwner(owner);
             
-            Lupi.getDB().update(wt);
+            db.update(wt);
         }
     }
     
@@ -200,7 +203,7 @@ public class Wolf {
         if (wt != null) {
             wt.setWorld(world.getName());
             
-            Lupi.getDB().update(wt);
+            db.update(wt);
         }
     }
     
@@ -230,7 +233,7 @@ public class Wolf {
         if (wt != null) {
             wt.setInventory(inventory);
             
-            Lupi.getDB().update(wt);
+            db.update(wt);
         }
     }
     

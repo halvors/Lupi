@@ -43,12 +43,12 @@ import com.halvors.lupi.wolf.WolfManager;
  * @author halvors
  */
 public class LupiPlayerListener extends PlayerListener {
-    private Lupi plugin;
+//    private Lupi plugin;
     
     private final ConfigurationManager configManager;
 
     public LupiPlayerListener(Lupi plugin) {
-        this.plugin = plugin;
+//        this.plugin = plugin;
         this.configManager = plugin.getConfigurationManager();
     }
     
@@ -68,13 +68,13 @@ public class LupiPlayerListener extends PlayerListener {
                     int item = player.getItemInHand().getTypeId();
                     
                     if (item == worldConfig.wolfItem) {
-                        if (plugin.hasPermissions(player, "Wolf.wolf.select")) {
+                        if (Lupi.hasPermissions(player, "Wolf.wolf.select")) {
                             SelectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                         }
                     } else if (item == worldConfig.infoItem) {
-                    	if (plugin.hasPermissions(player, "Wolf.wolf.info")) {
+                    	if (Lupi.hasPermissions(player, "Wolf.wolf.info")) {
                     		int health = wolf.getHealth() / 2;
                             int maxHealth = 10;
                                 
@@ -82,7 +82,7 @@ public class LupiPlayerListener extends PlayerListener {
                             player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                         }
                     } else if (item == worldConfig.inventoryItem) {
-                        if (plugin.hasPermissions(player, "Wolf.wolf.inventory")) {
+                        if (Lupi.hasPermissions(player, "Wolf.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
                                 if (wolf1.hasInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();

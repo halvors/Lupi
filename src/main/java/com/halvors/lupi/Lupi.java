@@ -47,7 +47,7 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Lupi extends JavaPlugin {
-    private final Logger log = Logger.getLogger("Minecraft");
+    private final Logger logger = Logger.getLogger("Minecraft");
     
     private PluginManager pm;
     private PluginDescriptionFile desc;
@@ -55,13 +55,13 @@ public class Lupi extends JavaPlugin {
     private static EbeanServer db;
     private static PermissionHandler Permissions;
     
-    private final ConfigurationManager configManager;
+    private final ConfigurationManager configuration;
     private final LupiEntityListener entityListener;
     private final LupiPlayerListener playerListener;
     private final LupiWorldListener worldListener;
     
     public Lupi() {
-        this.configManager = new ConfigurationManager(this);
+        this.configuration = new ConfigurationManager(this);
         this.entityListener = new LupiEntityListener(this);
         this.playerListener = new LupiPlayerListener(this);
         this.worldListener = new LupiWorldListener(this);
@@ -73,7 +73,7 @@ public class Lupi extends JavaPlugin {
         db = getDatabase();
         
         // Load configuration.
-        configManager.load();
+        configuration.load();
         
         // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
@@ -94,15 +94,15 @@ public class Lupi extends JavaPlugin {
         setupPermissions();
         setupDatabase();
         
-        // Load wolves from database.
+        // Load wolves to WolfManager.
 		WolfManager.load();
     }
     
     public void onDisable() {
         // Save configuration.
-        configManager.unload();
+    	configuration.unload();
         
-        // Unload wolves from database.
+        // Unload wolves from WolfManager.
         WolfManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
@@ -139,7 +139,7 @@ public class Lupi extends JavaPlugin {
         return list;
     }
     
-    public boolean hasPermissions(Player player, String node) {
+    public static boolean hasPermissions(Player player, String node) {
         if (Permissions != null) {
             return Permissions.has(player, node);
         } else {
@@ -148,7 +148,7 @@ public class Lupi extends JavaPlugin {
     }
     
     public void log(Level level, String msg) {
-        this.log.log(level, "[" + getName() + "] " + msg);
+        logger.log(level, "[" + getName() + "] " + msg);
     }
     
     public String getName() {
@@ -159,11 +159,11 @@ public class Lupi extends JavaPlugin {
         return desc.getVersion();
     }
     
-    public static EbeanServer getDB() {
+    public static EbeanServer getDb() {
     	return db;
     }
     
     public ConfigurationManager getConfigurationManager() {
-        return configManager;
+        return configuration;
     }
 }

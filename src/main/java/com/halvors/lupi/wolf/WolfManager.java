@@ -45,7 +45,7 @@ import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 public class WolfManager {
     private final static HashMap<UUID, Wolf> wolves = new HashMap<UUID, Wolf>();
     private final static List<String> wolfNames = new ArrayList<String>();
-    private final static EbeanServer db = Lupi.getDB();
+    private final static EbeanServer db = Lupi.getDb();
     
     static {
         initRandomNames();
