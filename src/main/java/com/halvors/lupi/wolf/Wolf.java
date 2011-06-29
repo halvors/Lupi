@@ -246,6 +246,20 @@ public class Wolf {
     }
 
     /**
+     * Is inventory loaded
+     */
+    public boolean isInventoryLoaded() {
+        return WolfInventoryManager.hasWolfInventory(uniqueId);
+    }
+
+    /**
+     * Load Inventory.
+     */
+    public void loadInventory() {
+        WolfInventoryManager.loadWolfInventory(uniqueId);
+    } 
+
+    /**
      * Remove inventory.
      */
     public void removeInventory() {
