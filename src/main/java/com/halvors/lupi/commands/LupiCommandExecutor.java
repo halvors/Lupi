@@ -31,8 +31,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
 import com.halvors.lupi.Lupi;
-import com.halvors.lupi.util.ConfigManager;
-import com.halvors.lupi.util.WorldConfig;
+import com.halvors.lupi.util.ConfigurationManager;
+import com.halvors.lupi.util.WorldConfiguration;
 import com.halvors.lupi.wolf.SelectedWolfManager;
 import com.halvors.lupi.wolf.WolfManager;
 import com.halvors.lupi.wolf.WolfTable;
@@ -45,11 +45,11 @@ import com.halvors.lupi.wolf.WolfTable;
 public class LupiCommandExecutor implements CommandExecutor {
     private Lupi plugin;
 
-    private final ConfigManager configManager;;
+    private final ConfigurationManager configManager;;
 
     public LupiCommandExecutor(Lupi plugin) {
         this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
+        this.configManager = plugin.getConfigurationManager();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -186,7 +186,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            String owner = player.getName();
                            Player receiver = null;
                            World world = player.getWorld();
-                           WorldConfig worldConfig = configManager.getWorldConfig(world);
+                           WorldConfiguration worldConfig = configManager.get(world);
                            
                            if (args.length == 2) {
                                if (SelectedWolfManager.hasSelectedWolf(player)) {

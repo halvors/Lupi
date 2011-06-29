@@ -15,6 +15,12 @@
     <developerConnection>scm:git:git@github.com:halvors/Lupi.git</developerConnection>
     <url>https://github.com/halvors/Lupi</url>
   </scm>
+  <repositories>
+    <repository>
+      <id>bukkit-repo</id>
+      <url>http://repo.bukkit.org/artifactory/repo</url>
+    </repository>
+  </repositories>
   <build>
     <plugins>
   	  <plugin>
@@ -28,12 +34,6 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/artifactory/repo</url>
-    </repository>
-  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.bukkit</groupId>

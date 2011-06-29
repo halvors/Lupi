@@ -26,15 +26,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import com.halvors.lupi.Lupi;
-import com.halvors.lupi.util.ConfigManager;
-import com.halvors.lupi.util.WorldConfig;
+import com.halvors.lupi.util.ConfigurationManager;
+import com.halvors.lupi.util.WorldConfiguration;
 import com.halvors.lupi.wolf.WolfManager;
 
 /**
@@ -45,11 +45,11 @@ import com.halvors.lupi.wolf.WolfManager;
 public class LupiEntityListener extends EntityListener {
 //    private Lupi plugin;
     
-    private final ConfigManager configManager;
+    private final ConfigurationManager configManager;
 
     public LupiEntityListener(Lupi plugin) {
 //        this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
+        this.configManager = plugin.getConfigurationManager();
     }
     
     @Override
@@ -58,7 +58,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             SpawnReason reason = event.getSpawnReason();
             World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
 //            Wolf wolf = (Wolf) entity;
@@ -120,7 +120,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             Player player = (Player) event.getOwner();
             World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
@@ -156,7 +156,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             Entity target = event.getTarget();
             World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;

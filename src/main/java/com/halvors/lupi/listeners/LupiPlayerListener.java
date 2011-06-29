@@ -32,8 +32,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerListener;
 
 import com.halvors.lupi.Lupi;
-import com.halvors.lupi.util.ConfigManager;
-import com.halvors.lupi.util.WorldConfig;
+import com.halvors.lupi.util.ConfigurationManager;
+import com.halvors.lupi.util.WorldConfiguration;
 import com.halvors.lupi.wolf.SelectedWolfManager;
 import com.halvors.lupi.wolf.WolfManager;
 
@@ -45,11 +45,11 @@ import com.halvors.lupi.wolf.WolfManager;
 public class LupiPlayerListener extends PlayerListener {
     private Lupi plugin;
     
-    private final ConfigManager configManager;
+    private final ConfigurationManager configManager;
 
     public LupiPlayerListener(Lupi plugin) {
         this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
+        this.configManager = plugin.getConfigurationManager();
     }
     
     @Override
@@ -58,7 +58,7 @@ public class LupiPlayerListener extends PlayerListener {
             Player player = event.getPlayer();
             Entity entity = event.getRightClicked();
             World world = entity.getWorld();
-            WorldConfig worldConfig = configManager.getWorldConfig(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;

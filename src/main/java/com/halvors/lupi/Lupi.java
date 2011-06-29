@@ -39,7 +39,7 @@ import com.halvors.lupi.commands.LupiCommandExecutor;
 import com.halvors.lupi.listeners.LupiEntityListener;
 import com.halvors.lupi.listeners.LupiPlayerListener;
 import com.halvors.lupi.listeners.LupiWorldListener;
-import com.halvors.lupi.util.ConfigManager;
+import com.halvors.lupi.util.ConfigurationManager;
 import com.halvors.lupi.wolf.WolfManager;
 import com.halvors.lupi.wolf.WolfTable;
 import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
@@ -55,13 +55,13 @@ public class Lupi extends JavaPlugin {
     private static EbeanServer db;
     private static PermissionHandler Permissions;
     
-    private final ConfigManager configManager;
+    private final ConfigurationManager configManager;
     private final LupiEntityListener entityListener;
     private final LupiPlayerListener playerListener;
     private final LupiWorldListener worldListener;
     
     public Lupi() {
-        this.configManager = new ConfigManager(this);
+        this.configManager = new ConfigurationManager(this);
         this.entityListener = new LupiEntityListener(this);
         this.playerListener = new LupiPlayerListener(this);
         this.worldListener = new LupiWorldListener(this);
@@ -100,7 +100,7 @@ public class Lupi extends JavaPlugin {
     
     public void onDisable() {
         // Save configuration.
-        configManager.save();
+        configManager.unload();
         
         // Unload wolves from database.
         WolfManager.unload();
@@ -163,7 +163,7 @@ public class Lupi extends JavaPlugin {
     	return db;
     }
     
-    public ConfigManager getConfigManager() {
+    public ConfigurationManager getConfigurationManager() {
         return configManager;
     }
 }
