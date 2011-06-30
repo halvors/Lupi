@@ -48,7 +48,7 @@
       <systemPath>${basedir}/lib/Permissions.jar</systemPath>
     </dependency>
     <dependency>
-      <groupId>org.bukkitcontribt</groupId>
+      <groupId>org.bukkitcontrib</groupId>
       <artifactId>bukkitcontrib</artifactId>
       <version>0.0.8</version>
       <scope>system</scope>
