@@ -100,14 +100,10 @@ public class WolfManager {
      */
     public static void load(World world) {
         for (WolfTable wt : getWolfTables()) {
-            if (wt.getWorld().equalsIgnoreCase(world.getName())) {
+            if (wt.getWorld() == world.getName()) {
                 UUID uniqueId = UUID.fromString(wt.getUniqueId());
                 
-                if (hasWolf(uniqueId)) {
-                    wolves.remove(uniqueId);
-                }
-                
-                wolves.put(uniqueId, new Wolf(uniqueId));
+                loadWolf(uniqueId);
             }
         }
     }
@@ -117,8 +113,8 @@ public class WolfManager {
      */
     public static void unload(World world) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getWorld().getName().equalsIgnoreCase(world.getName())) {
-                wolves.remove(wolf.getUniqueId());
+            if (wolf.getWorld().getName() == world.getName()) {
+            	unloadWolf(wolf.getUniqueId());
             }
         }
     }
@@ -130,9 +126,7 @@ public class WolfManager {
         for (WolfTable wt : getWolfTables()) {
         	UUID uniqueId = UUID.fromString(wt.getUniqueId());
                 
-            if (!hasWolf(uniqueId)) {
-            	wolves.put(uniqueId, new Wolf(uniqueId));
-            }
+            loadWolf(uniqueId);
         }
     }
    
@@ -141,7 +135,7 @@ public class WolfManager {
      */
     public static void unload() {
         for (Wolf wolf : getWolves()) {
-            wolves.remove(wolf.getUniqueId());
+        	unloadWolf(wolf.getUniqueId());
         }
     }
     
@@ -153,8 +147,10 @@ public class WolfManager {
      */
     public static boolean loadWolf(UUID uniqueId) {
         if (!hasWolf(uniqueId)) {
+        	// Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
             
+            // Load inventory if wolf has.
             if (wolf.hasInventory()) {
                 WolfInventoryManager.loadWolfInventory(uniqueId);
             }
@@ -187,6 +183,7 @@ public class WolfManager {
         if (hasWolf(uniqueId)) {
             Wolf wolf = getWolf(uniqueId);
             
+            // Unload inventory if wolf has.
             if (wolf.hasInventory()) {
                 WolfInventoryManager.unloadWolfInventory(uniqueId);
             }    
@@ -255,11 +252,14 @@ public class WolfManager {
             wt.setOwner(player.getName());
             wt.setWorld(wolf.getWorld().getName());
             wt.setInventory(false);
-                
+            
             // Save the WolfTable to database.
             db.save(wt);
-    
-            wolves.put(uniqueId, new Wolf(uniqueId));
+            
+            // Create the Wolf.
+            Wolf wolf1 = new Wolf(uniqueId);
+            
+            wolves.put(uniqueId, wolf1);
             
             return true;
         }
@@ -313,7 +313,7 @@ public class WolfManager {
     }
 
     /**
-     * Check if wolf exists in db.
+     * Check if wolf exists in database.
      * 
      * @param uniqueId
      * @return
@@ -426,7 +426,7 @@ public class WolfManager {
      */
     public static Wolf getWolf(String name, String owner) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
+            if (wolf.getOwner().getName() == owner && wolf.getName() == name) {
                 return wolf;
             }
         }
@@ -471,7 +471,7 @@ public class WolfManager {
         List<Wolf> wolves = new ArrayList<Wolf>();
         
         for (Wolf wolf : getWolves(player.getWorld())) {
-            if (wolf.getOwner().getName().equalsIgnoreCase(player.getName())) {
+            if (wolf.getOwner().getName() == player.getName()) {
                 wolves.add(wolf);
             }
         }
@@ -488,7 +488,7 @@ public class WolfManager {
     	for (World world : Bukkit.getServer().getWorlds()) {
         	for (Entity entity : world.getEntities()) {
             	if (entity instanceof org.bukkit.entity.Wolf) {
-                	if (uniqueId.equals(entity.getUniqueId()))  {
+                	if (uniqueId == entity.getUniqueId()) {
                 		return (org.bukkit.entity.Wolf) entity;
                 	}
             	}

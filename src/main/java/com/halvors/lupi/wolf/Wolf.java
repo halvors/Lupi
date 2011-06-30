@@ -150,7 +150,7 @@ public class Wolf {
         
         if (wt != null) {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                if (player.getName().equalsIgnoreCase(wt.getOwner())) {
+                if (player.getName() == wt.getOwner()) {
                     return player;
                 }
             }
@@ -170,6 +170,8 @@ public class Wolf {
         
         if (wt != null) {
             wt.setOwner(owner.getName());
+            
+            // Set the wolf owner.
             wolf.setOwner(owner);
             
             db.update(wt);
@@ -242,16 +244,16 @@ public class Wolf {
      * Add inventory.
      */
     public void addInventory() {
-        setInventory(true);
         WolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
+        setInventory(true);
     }
 
     /**
      * Remove inventory.
      */
     public void removeInventory() {
-        setInventory(false);
         WolfInventoryManager.removeWolfInventory(uniqueId);
+        setInventory(false);
     }
     
     /**
@@ -292,7 +294,7 @@ public class Wolf {
     public org.bukkit.entity.Wolf getEntity() {
         for (Entity entity : getWorld().getEntities()) {
             if (entity instanceof org.bukkit.entity.Wolf) {
-                if (uniqueId.equals(entity.getUniqueId()))  {
+                if (uniqueId == entity.getUniqueId())  {
                     return (org.bukkit.entity.Wolf) entity;
                 }
             }

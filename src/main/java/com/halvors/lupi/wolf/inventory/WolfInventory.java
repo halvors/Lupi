@@ -38,7 +38,7 @@ import org.bukkit.inventory.ItemStack;
  * 
  * @author speeddemon92
  */
-public class WolfInventory extends TileEntityChest {
+public class WolfInventory extends TileEntityChest{
     private UUID uniqueId;
     private String name = "Wolf inventory";
     

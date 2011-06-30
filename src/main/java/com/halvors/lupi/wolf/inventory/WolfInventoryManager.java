@@ -69,9 +69,9 @@ public class WolfInventoryManager {
 	    	WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
 	    	
 	    	// Load the WolfInventory from database.
-	        WolfInventory wi = new WolfInventory(uniqueId);
+	        WolfInventory wi = new WolfInventory(uniqueId, WolfManager.getWolf(uniqueId).getName());
 	        wi.fillFromDBTable(wit.getChestRows());
-
+	        
 	        wolfInventorys.put(uniqueId, wi);
 	        
 	        return true;
@@ -115,10 +115,13 @@ public class WolfInventoryManager {
 	    	WolfInventoryTable wit = new WolfInventoryTable();
 	    	wit.setUniqueId(uniqueId.toString());
 	    	
-	    	// Save the WolfInventoryTable to db.
+	    	// Save the WolfInventoryTable to database.
 	        db.save(wit);
 	        
-	        wolfInventorys.put(uniqueId, new WolfInventory(uniqueId, name));
+	        //Create the WolfInventory.
+	        WolfInventory wi = new WolfInventory(uniqueId, name);
+	        
+	        wolfInventorys.put(uniqueId, wi);
 	        
 	        return true;
     	}

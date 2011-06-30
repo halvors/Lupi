@@ -52,8 +52,9 @@ public class Lupi extends JavaPlugin {
     private PluginManager pm;
     private PluginDescriptionFile desc;
     
+    private static Lupi instance;
     private static EbeanServer db;
-    private static PermissionHandler Permissions;
+    private static PermissionHandler permissions;
     
     private final ConfigurationManager configuration;
     private final LupiEntityListener entityListener;
@@ -61,12 +62,14 @@ public class Lupi extends JavaPlugin {
     private final LupiWorldListener worldListener;
     
     public Lupi() {
+    	Lupi.instance = this;
         this.configuration = new ConfigurationManager(this);
         this.entityListener = new LupiEntityListener(this);
         this.playerListener = new LupiPlayerListener(this);
         this.worldListener = new LupiWorldListener(this);
     }
     
+    @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
         desc = getDescription();
@@ -91,13 +94,14 @@ public class Lupi extends JavaPlugin {
         
         log(Level.INFO, "version " + getVersion() + " is enabled!");
         
-        setupPermissions();
         setupDatabase();
+        setupPermissions();
         
         // Load wolves to WolfManager.
 		WolfManager.load();
     }
     
+    @Override
     public void onDisable() {
         // Save configuration.
     	configuration.unload();
@@ -106,18 +110,6 @@ public class Lupi extends JavaPlugin {
         WolfManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
-    }
-    
-    private void setupPermissions() {
-        Plugin permissions = getServer().getPluginManager().getPlugin("Permissions");
-
-        if (Permissions == null) {
-            if (permissions != null) {
-                Permissions = ((Permissions) permissions).getHandler();
-            } else {
-                log(Level.INFO, "Permission system not detected, defaulting to OP");
-            }
-        }
     }
     
     private void setupDatabase() {
@@ -139,9 +131,21 @@ public class Lupi extends JavaPlugin {
         return list;
     }
     
+    private void setupPermissions() {
+        Plugin plugin = getServer().getPluginManager().getPlugin("Permissions");
+
+        if (permissions == null) {
+            if (plugin != null) {
+                permissions = ((Permissions) plugin).getHandler();
+            } else {
+                log(Level.INFO, "Permission system not detected, defaulting to OP");
+            }
+        }
+    }
+    
     public static boolean hasPermissions(Player player, String node) {
-        if (Permissions != null) {
-            return Permissions.has(player, node);
+        if (permissions != null) {
+            return permissions.has(player, node);
         } else {
             return player.isOp();
         }
@@ -157,6 +161,10 @@ public class Lupi extends JavaPlugin {
     
     public String getVersion() {
         return desc.getVersion();
+    }
+    
+    public Lupi getInstance() {
+    	return instance;
     }
     
     public static EbeanServer getDb() {
