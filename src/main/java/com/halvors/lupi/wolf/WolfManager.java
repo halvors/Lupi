@@ -149,6 +149,7 @@ public class WolfManager {
         if (!hasWolf(uniqueId)) {
         	// Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
+            wolf.setTitle(wolf.getName());
             
             // Load inventory if wolf has.
             if (wolf.hasInventory()) {
@@ -258,6 +259,7 @@ public class WolfManager {
             
             // Create the Wolf.
             Wolf wolf1 = new Wolf(uniqueId);
+            wolf1.setTitle(name);
             
             wolves.put(uniqueId, wolf1);
             
@@ -310,34 +312,6 @@ public class WolfManager {
      */
     public static boolean removeWolf(org.bukkit.entity.Wolf wolf) {
         return removeWolf(wolf.getUniqueId());
-    }
-
-    /**
-     * Check if wolf exists in database.
-     * 
-     * @param uniqueId
-     * @return
-     */
-    public static boolean hasWolfInDB(UUID uniqueId) {
-        List<WolfTable> wts = getWolfTables();
-        
-        for (WolfTable wt : wts) {
-            if (UUID.fromString(wt.getUniqueId()).equals(uniqueId)) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Check if wolf exists in database.
-     * 
-     * @param wolf
-     * @return
-     */
-    public static boolean hasWolfInDB(org.bukkit.entity.Wolf wolf) {
-        return hasWolfInDB(wolf.getUniqueId());
     }
     
     /**

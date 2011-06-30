@@ -28,6 +28,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkitcontrib.BukkitContrib;
 
 import com.avaje.ebean.EbeanServer;
 import com.halvors.lupi.Lupi;
@@ -134,10 +135,23 @@ public class Wolf {
             
             db.update(wt);
             
+            setTitle(name);
+            
             if (hasInventory()) {
                 getInventory().setName(name + "'s inventory");
             }
         }
+    }
+    
+    /**
+     * Set the title shown over wolf's head.
+     * 
+     * @param name
+     */
+    public void setTitle(String name) {
+    	if (Lupi.hasBukkitContrib()) {
+    		BukkitContrib.getAppearanceManager().setGlobalTitle(getEntity(), name);
+    	}
     }
     
     /**
@@ -302,17 +316,4 @@ public class Wolf {
         
         return null;
     }
-    
-    /*
-    public void eat(ItemStack item) {
-        if (item.equals(Material.PORK) || item.equals(Material.GRILLED_PORK)) {
-            org.bukkit.entity.Wolf wolf = getEntity();
-            int health = wolf.getHealth() + 2;
-            
-            if (health < 20) {
-                wolf.setHealth(health);
-            }
-        }
-    }
-    */
 }

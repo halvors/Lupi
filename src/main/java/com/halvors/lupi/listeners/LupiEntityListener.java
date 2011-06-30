@@ -21,6 +21,7 @@
 package com.halvors.lupi.listeners;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkitcontrib.player.ContribPlayer;
 
 import com.halvors.lupi.Lupi;
 import com.halvors.lupi.util.ConfigurationManager;
@@ -140,6 +142,12 @@ public class LupiEntityListener extends EntityListener {
                 // Add the wolf.
                 if (WolfManager.addWolf(wolf)) {
                     com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                    
+                    // Send a notification to player.
+                    if (Lupi.hasBukkitContrib()) {
+                    	ContribPlayer contribPlayer = (ContribPlayer) player; 
+                    	contribPlayer.sendNotification("Achievement get!", "Tamed a wolf", Material.BONE);
+                    }
                     
                     player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                     player.sendMessage("You can change name with /wolf setname <name>.");
