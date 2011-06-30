@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
@@ -150,16 +149,6 @@ public class Lupi extends JavaPlugin {
         } else {
             return player.isOp();
         }
-    }
-    
-    public static boolean hasBukkitContrib() {
-    	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BukkitContrib");
-    	
-        if (plugin != null) {
-            return true;
-        }
-        
-        return false;
     }
     
     public void log(Level level, String msg) {

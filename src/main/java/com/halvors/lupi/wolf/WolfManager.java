@@ -149,7 +149,6 @@ public class WolfManager {
         if (!hasWolf(uniqueId)) {
         	// Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
-            wolf.setTitle(wolf.getName());
             
             // Load inventory if wolf has.
             if (wolf.hasInventory()) {
@@ -259,7 +258,6 @@ public class WolfManager {
             
             // Create the Wolf.
             Wolf wolf1 = new Wolf(uniqueId);
-            wolf1.setTitle(name);
             
             wolves.put(uniqueId, wolf1);
             
