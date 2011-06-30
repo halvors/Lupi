@@ -84,7 +84,7 @@ public class LupiPlayerListener extends PlayerListener {
                     } else if (item == worldConfig.inventoryItem) {
                         if (Lupi.hasPermissions(player, "Wolf.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
-                            	if (wolf1.hasInventory()) {
+                            	if (wolf1.hasLoadedInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(wolf1.getInventory());
                                 } else {

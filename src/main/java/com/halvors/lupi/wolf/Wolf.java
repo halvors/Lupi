@@ -217,6 +217,16 @@ public class Wolf {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
+        	return wt.isInventory();
+        }
+        
+        return false;
+    }
+    
+    public boolean hasLoadedInventory() {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
             if (wt.isInventory() && WolfInventoryManager.hasWolfInventory(uniqueId)) {
             	return true;
             }
@@ -262,10 +272,6 @@ public class Wolf {
      * @return
      */
     public WolfInventory getInventory() {
-    	if (!hasInventory()) {
-    		addInventory();
-    	}
-    	
     	return WolfInventoryManager.getWolfInventory(uniqueId);
     }
     
@@ -273,7 +279,7 @@ public class Wolf {
      * Drop the inventory contents.
      */
     public void dropInventory() {
-        if (hasInventory()) {
+        if (hasLoadedInventory()) {
             WolfInventory wi = getInventory();
             World world = getWorld();
             Location location = getEntity().getLocation();

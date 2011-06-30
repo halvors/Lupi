@@ -184,7 +184,7 @@ public class WolfManager {
             Wolf wolf = getWolf(uniqueId);
             
             // Unload inventory if wolf has.
-            if (wolf.hasInventory()) {
+            if (wolf.hasLoadedInventory()) {
                 WolfInventoryManager.unloadWolfInventory(uniqueId);
             }    
             
@@ -425,7 +425,7 @@ public class WolfManager {
         List<Wolf> wolves = new ArrayList<Wolf>();
         
         for (Wolf wolf : getWolves()) {
-            if (wolf.getWorld().equals(world)) {
+            if (wolf.getWorld() == world) {
                 wolves.add(wolf);
             }
         }
@@ -534,7 +534,7 @@ public class WolfManager {
             Wolf wolf1 = getWolf(wolf);
             
             // Drop inventory contents id wolf have inventory.
-            if (wolf1.hasInventory()) {
+            if (wolf1.hasLoadedInventory()) {
                 wolf1.dropInventory();
             }
             
