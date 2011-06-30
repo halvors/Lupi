@@ -20,7 +20,6 @@
 
 package com.halvors.lupi.wolf;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -216,7 +215,9 @@ public class Wolf {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
-            return wt.isInventory();
+            if (wt.isInventory() && WolfInventoryManager.hasWolfInventory(uniqueId)) {
+            	return true;
+            }
         }
         
         return false;
@@ -246,20 +247,6 @@ public class Wolf {
     }
 
     /**
-     * Is inventory loaded
-     */
-    public boolean isInventoryLoaded() {
-        return WolfInventoryManager.hasWolfInventory(uniqueId);
-    }
-
-    /**
-     * Load Inventory.
-     */
-    public void loadInventory() {
-        WolfInventoryManager.loadWolfInventory(uniqueId);
-    } 
-
-    /**
      * Remove inventory.
      */
     public void removeInventory() {
@@ -273,7 +260,11 @@ public class Wolf {
      * @return
      */
     public WolfInventory getInventory() {
-        return WolfInventoryManager.getWolfInventory(uniqueId);
+    	if (!hasInventory()) {
+    		addInventory();
+    	}
+    	
+    	return WolfInventoryManager.getWolfInventory(uniqueId);
     }
     
     /**
@@ -299,12 +290,10 @@ public class Wolf {
      * @return
      */
     public org.bukkit.entity.Wolf getEntity() {
-        List<Entity> entities = getWorld().getEntities();
-        
-        for (Entity entity : entities) {
+        for (Entity entity : getWorld().getEntities()) {
             if (entity instanceof org.bukkit.entity.Wolf) {
                 if (uniqueId.equals(entity.getUniqueId()))  {
-                    return (org.bukkit.entity.Wolf)entity;
+                    return (org.bukkit.entity.Wolf) entity;
                 }
             }
         }

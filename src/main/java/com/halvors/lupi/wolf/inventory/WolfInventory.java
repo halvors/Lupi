@@ -579,6 +579,8 @@ public class WolfInventory extends TileEntityChest {
         String[] chestRow2 = rows[1].split(";");
         String[] chestRow3 = rows[2].split(";");
        
+        System.out.println("fillFromDBTable: " + uniqueId.toString());
+        
         for (int i = 0; i < getSize(); i++) {
             String[] item = null;
        
@@ -595,7 +597,7 @@ public class WolfInventory extends TileEntityChest {
             int amount = (item[2] == null ? 0 : Integer.valueOf(item[2]));
        
             if (typeId < 1 || damage < 0 || amount < 1) {
-            	setBukkitItem(i, new ItemStack(null));
+            	setBukkitItem(i, null); // TODO: Don't know what this should be.
             } else {
             	setBukkitItem(i, new ItemStack(typeId, amount, damage));
             }

@@ -45,11 +45,11 @@ import com.halvors.lupi.wolf.WolfTable;
 public class LupiCommandExecutor implements CommandExecutor {
     private Lupi plugin;
 
-    private final ConfigurationManager configManager;;
+    private final ConfigurationManager configuration;
 
     public LupiCommandExecutor(Lupi plugin) {
         this.plugin = plugin;
-        this.configManager = plugin.getConfigurationManager();
+        this.configuration = plugin.getConfigurationManager();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -186,7 +186,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            String owner = player.getName();
                            Player receiver = null;
                            World world = player.getWorld();
-                           WorldConfiguration worldConfig = configManager.get(world);
+                           WorldConfiguration worldConfig = configuration.get(world);
                            
                            if (args.length == 2) {
                                if (SelectedWolfManager.hasSelectedWolf(player)) {

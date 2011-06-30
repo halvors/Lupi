@@ -1,10 +1,11 @@
 Version 0.1
+	- Fix name duping bug for wolves.
 	- Fix load and unload for inventory.
 	- Fix load and unload for database. When issue reload command Lupi are no longer able to get information from database.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
     - Optimize commands, still throwing errors, maybe cause of database issues but will need to be checked.
-    
+
 Version 0.2
     - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players. (Think we'll need EntityMoveEvent)
     - Add ability for wolves to eat food (pork) from it's inventory when get damaged.
@@ -13,7 +14,7 @@ Version 0.2
     - Add support for tamed wolves to be teleported to other worlds if player use portal.
     - Add admin commands.
     - Set wolf sit when open inventory and set them stand up when close inventory. (Will need InventoryOpenEvent and InventoryCloseEvent).
-    
+
 Ideas:
     - Add command so owner of a wolf can add peace players that wolf not attack.
     - Add ability for wolves to become "supercharged" and deal twice as much damage for a given time after giving the wolf a special item.

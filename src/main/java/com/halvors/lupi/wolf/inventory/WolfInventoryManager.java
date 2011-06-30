@@ -27,6 +27,7 @@ import java.util.UUID;
 
 import com.avaje.ebean.EbeanServer;
 import com.halvors.lupi.Lupi;
+import com.halvors.lupi.wolf.WolfManager;
 
 /**
  * Handle WolfInventory's.
@@ -67,7 +68,7 @@ public class WolfInventoryManager {
     	if (!hasWolfInventory(uniqueId)) {
 	    	WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
 	    	
-	    	// Create the WolfInventoryTable.
+	    	// Load the WolfInventory from database.
 	        WolfInventory wi = new WolfInventory(uniqueId);
 	        wi.fillFromDBTable(wit.getChestRows());
 
@@ -88,6 +89,8 @@ public class WolfInventoryManager {
     public static boolean unloadWolfInventory(UUID uniqueId) {
     	if (hasWolfInventory(uniqueId)) {
     		WolfInventory wi = getWolfInventory(uniqueId);
+    		
+    		// Save the WolfInventory to database.
     		WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
     		wit.setChestRows(wi.prepareTableForDB());
     		
@@ -157,6 +160,10 @@ public class WolfInventoryManager {
      * @return
      */
     public static WolfInventory getWolfInventory(UUID uniqueId) {
+    	if (!hasWolfInventory(uniqueId)) {
+    		addWolfInventory(uniqueId, WolfManager.getWolf(uniqueId).getName());
+    	}
+    	
         return wolfInventorys.get(uniqueId);
     }
     

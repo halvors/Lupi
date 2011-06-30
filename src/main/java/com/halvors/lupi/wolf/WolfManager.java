@@ -28,9 +28,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.avaje.ebean.EbeanServer;
@@ -398,6 +400,10 @@ public class WolfManager {
      * @return
      */
     public static Wolf getWolf(UUID uniqueId) {
+    	if (!hasWolf(uniqueId)) {
+    		addWolf(getEntity(uniqueId));
+    	}
+    	
         return wolves.get(uniqueId);
     }
     
@@ -471,6 +477,26 @@ public class WolfManager {
         }
         
         return wolves;
+    }
+    
+    /**
+     * Get the wolf entity.
+     * 
+     * @return
+     */
+    public static org.bukkit.entity.Wolf getEntity(UUID uniqueId) {
+    	for (World world : Bukkit.getServer().getWorlds()) {
+        	for (Entity entity : world.getEntities()) {
+            	if (entity instanceof org.bukkit.entity.Wolf) {
+                	if (uniqueId.equals(entity.getUniqueId()))  {
+                		return (org.bukkit.entity.Wolf) entity;
+                	}
+            	}
+        	}
+        
+    	}
+    	
+        return null;
     }
     
     /**

@@ -45,11 +45,11 @@ import com.halvors.lupi.wolf.WolfManager;
 public class LupiPlayerListener extends PlayerListener {
 //    private Lupi plugin;
     
-    private final ConfigurationManager configManager;
+    private final ConfigurationManager configuration;
 
     public LupiPlayerListener(Lupi plugin) {
 //        this.plugin = plugin;
-        this.configManager = plugin.getConfigurationManager();
+        this.configuration = plugin.getConfigurationManager();
     }
     
     @Override
@@ -58,12 +58,12 @@ public class LupiPlayerListener extends PlayerListener {
             Player player = event.getPlayer();
             Entity entity = event.getRightClicked();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configManager.get(world);
+            WorldConfiguration worldConfig = configuration.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
                 
-                if (wolf.isTamed() && wolf.getOwner().equals(player) && WolfManager.hasWolf(wolf)) {
+                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
                     com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
                     int item = player.getItemInHand().getTypeId();
                     
@@ -84,10 +84,7 @@ public class LupiPlayerListener extends PlayerListener {
                     } else if (item == worldConfig.inventoryItem) {
                         if (Lupi.hasPermissions(player, "Wolf.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
-                                if (wolf1.hasInventory()) {
-                                    if (!wolf1.isInventoryLoaded()) {
-                                        wolf1.loadInventory();
-                                    }
+                            	if (wolf1.hasInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(wolf1.getInventory());
                                 } else {

@@ -45,11 +45,11 @@ import com.halvors.lupi.wolf.WolfManager;
 public class LupiEntityListener extends EntityListener {
 //    private Lupi plugin;
     
-    private final ConfigurationManager configManager;
+    private final ConfigurationManager configuration;
 
     public LupiEntityListener(Lupi plugin) {
 //        this.plugin = plugin;
-        this.configManager = plugin.getConfigurationManager();
+        this.configuration = plugin.getConfigurationManager();
     }
     
     @Override
@@ -58,7 +58,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             SpawnReason reason = event.getSpawnReason();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configManager.get(world);
+            WorldConfiguration worldConfig = configuration.get(world);
             
             if (entity instanceof Wolf) {
 //            Wolf wolf = (Wolf) entity;
@@ -102,7 +102,7 @@ public class LupiEntityListener extends EntityListener {
         if (entity instanceof Wolf) {
             Wolf wolf = (Wolf) entity;
             
-            if (wolf.isTamed() && WolfManager.hasWolf(wolf)) {
+            if (wolf.isTamed()) {
                 com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
 
                 if (wolf1.hasInventory()) {
@@ -120,7 +120,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             Player player = (Player) event.getOwner();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configManager.get(world);
+            WorldConfiguration worldConfig = configuration.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
@@ -156,7 +156,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             Entity target = event.getTarget();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configManager.get(world);
+            WorldConfiguration worldConfig = configuration.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
@@ -165,11 +165,9 @@ public class LupiEntityListener extends EntityListener {
                     Player player = (Player) target;
 
                     if (wolf.isTamed()) {
-                    	if (WolfManager.hasWolf(wolf)) {
-                    		if (!wolf.getOwner().equals(player)) {
-                    			if (worldConfig.wolfPvp && world.getPVP()) {
-                    				event.setCancelled(true);
-                    			}
+                    	if (WolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
+                    		if (worldConfig.wolfPvp && world.getPVP()) {
+                    			event.setCancelled(true);
                     		}
                     	}
                 	} else {
