@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -59,51 +60,12 @@ public class Wolf {
     }
     
     /**
-     * Get id.
-     * 
-     * @return
-     */
-    public int getId() {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            return wt.getId();
-        }
-        
-        return 0;
-    }
-    
-    /**
-     * Set id.
-     * 
-     * @param id
-     */
-    public void setId(int id) {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            wt.setId(id);
-            
-            db.update(wt);
-        }
-    }
-    
-    /**
      * Get uniqueId.
      * 
      * @return
      */
     public UUID getUniqueId() {
     	return uniqueId;
-    }
-    
-    /**
-     * Set uniqueId.
-     * 
-     * @param uniqueId
-     */
-    public void setUniqueId(UUID uniqueId) {
-    	this.uniqueId = uniqueId;
     }
     
     /**
@@ -134,7 +96,7 @@ public class Wolf {
             
             db.update(wt);
             
-            if (hasInventory()) {
+            if (hasLoadedInventory()) {
                 getInventory().setName(name + "'s inventory");
             }
         }
@@ -150,7 +112,7 @@ public class Wolf {
         
         if (wt != null) {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                if (player.getName() == wt.getOwner()) {
+                if (player.getName().equalsIgnoreCase(wt.getOwner())) {
                     return player;
                 }
             }
@@ -164,15 +126,15 @@ public class Wolf {
      * 
      * @param owner
      */
-    public void setOwner(Player owner) {
+    public void setOwner(Player player) {
         WolfTable wt = getWolfTable();
         org.bukkit.entity.Wolf wolf = getEntity();
         
         if (wt != null) {
-            wt.setOwner(owner.getName());
+            wt.setOwner(player.getName());
             
             // Set the wolf owner.
-            wolf.setOwner(owner);
+            wolf.setOwner(player);
             
             db.update(wt);
         }
@@ -202,6 +164,20 @@ public class Wolf {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
+            wt.setWorld(world.getName());
+            
+            db.update(wt);
+        }
+    }
+    
+    /**
+     * Update world to wolf's current world.
+     */
+    public void updateWorld() {
+    	WolfTable wt = getWolfTable();
+    	World world = getEntity().getWorld();
+    	
+    	if (wt != null && world.getName() != wt.getWorld()) {
             wt.setWorld(world.getName());
             
             db.update(wt);
@@ -254,15 +230,20 @@ public class Wolf {
      * Add inventory.
      */
     public void addInventory() {
-        WolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
-        setInventory(true);
+    	if (!hasInventory() || !hasLoadedInventory()) {
+    		WolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
+    		setInventory(true);
+    	}
     }
 
     /**
      * Remove inventory.
      */
     public void removeInventory() {
-        WolfInventoryManager.removeWolfInventory(uniqueId);
+    	if (hasLoadedInventory()) {
+    		WolfInventoryManager.removeWolfInventory(uniqueId);
+    	}
+    	
         setInventory(false);
     }
     
@@ -272,7 +253,11 @@ public class Wolf {
      * @return
      */
     public WolfInventory getInventory() {
-    	return WolfInventoryManager.getWolfInventory(uniqueId);
+    	if (hasLoadedInventory()) {
+    		return WolfInventoryManager.getWolfInventory(uniqueId);
+    	}
+    	
+    	return null;
     }
     
     /**
@@ -285,7 +270,7 @@ public class Wolf {
             Location location = getEntity().getLocation();
             
             for (ItemStack item : wi.getBukkitContents()) {
-                if (item != null && item.getAmount() > 0 && item.getDurability() > -1) {
+                if (item != null && item.getType() != Material.AIR && item.getAmount() > 0 && item.getDurability() > -1) {
                     world.dropItem(location, item);
                 }
             }
@@ -300,7 +285,7 @@ public class Wolf {
     public org.bukkit.entity.Wolf getEntity() {
         for (Entity entity : getWorld().getEntities()) {
             if (entity instanceof org.bukkit.entity.Wolf) {
-                if (uniqueId == entity.getUniqueId())  {
+                if (uniqueId.equals(entity.getUniqueId()))  {
                     return (org.bukkit.entity.Wolf) entity;
                 }
             }

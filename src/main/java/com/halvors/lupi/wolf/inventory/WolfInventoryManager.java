@@ -108,6 +108,7 @@ public class WolfInventoryManager {
      * Add a WolfInventory.
      * 
      * @param uniqueId
+     * @return
      */
     public static boolean addWolfInventory(UUID uniqueId, String name) {
     	if (!hasWolfInventory(uniqueId)) {
@@ -125,7 +126,7 @@ public class WolfInventoryManager {
 	        
 	        return true;
     	}
-	    
+    	
     	return false;
     }
     
@@ -133,6 +134,7 @@ public class WolfInventoryManager {
      * Remove a WolfInventory.
      * 
      * @param uniqueId
+     * @return
      */
     public static boolean removeWolfInventory(UUID uniqueId) {
         if (hasWolfInventory(uniqueId)) {
@@ -171,7 +173,7 @@ public class WolfInventoryManager {
     }
     
     /**
-     * Get all wolf inventorys.
+     * Get all WolfInventory's.
      * 
      * @return
      */

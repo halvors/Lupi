@@ -100,7 +100,7 @@ public class WolfManager {
      */
     public static void load(World world) {
         for (WolfTable wt : getWolfTables()) {
-            if (wt.getWorld() == world.getName()) {
+            if (wt.getWorld().equals(world.getName())) {
                 UUID uniqueId = UUID.fromString(wt.getUniqueId());
                 
                 loadWolf(uniqueId);
@@ -113,7 +113,7 @@ public class WolfManager {
      */
     public static void unload(World world) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getWorld().getName() == world.getName()) {
+            if (wolf.getWorld().getName().equalsIgnoreCase(world.getName())) {
             	unloadWolf(wolf.getUniqueId());
             }
         }
@@ -287,7 +287,7 @@ public class WolfManager {
         if (hasWolf(uniqueId)) {       
             Wolf wolf = getWolf(uniqueId);
             
-            if (wolf.hasInventory()) {
+            if (wolf.hasInventory() || wolf.hasLoadedInventory()) {
                 wolf.removeInventory();
             }
             
@@ -398,7 +398,7 @@ public class WolfManager {
      */
     public static Wolf getWolf(String name, String owner) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getOwner().getName() == owner && wolf.getName() == name) {
+            if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
                 return wolf;
             }
         }
@@ -425,7 +425,7 @@ public class WolfManager {
         List<Wolf> wolves = new ArrayList<Wolf>();
         
         for (Wolf wolf : getWolves()) {
-            if (wolf.getWorld() == world) {
+            if (wolf.getWorld().equals(world)) {
                 wolves.add(wolf);
             }
         }
@@ -443,7 +443,7 @@ public class WolfManager {
         List<Wolf> wolves = new ArrayList<Wolf>();
         
         for (Wolf wolf : getWolves(player.getWorld())) {
-            if (wolf.getOwner().getName() == player.getName()) {
+            if (wolf.getOwner().getName().equals(player.getName())) {
                 wolves.add(wolf);
             }
         }
@@ -460,7 +460,7 @@ public class WolfManager {
     	for (World world : Bukkit.getServer().getWorlds()) {
         	for (Entity entity : world.getEntities()) {
             	if (entity instanceof org.bukkit.entity.Wolf) {
-                	if (uniqueId == entity.getUniqueId()) {
+                	if (uniqueId.equals(entity.getUniqueId())) {
                 		return (org.bukkit.entity.Wolf) entity;
                 	}
             	}

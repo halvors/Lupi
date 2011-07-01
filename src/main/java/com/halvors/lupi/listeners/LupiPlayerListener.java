@@ -77,7 +77,8 @@ public class LupiPlayerListener extends PlayerListener {
                     	if (Lupi.hasPermissions(player, "Wolf.wolf.info")) {
                     		int health = wolf.getHealth() / 2;
                             int maxHealth = 10;
-                                
+                            
+                            // TODO: Improve information.
                             player.sendMessage("Name: " + ChatColor.YELLOW + wolf1.getName());
                             player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                         }

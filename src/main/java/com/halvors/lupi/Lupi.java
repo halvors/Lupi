@@ -163,7 +163,7 @@ public class Lupi extends JavaPlugin {
         return desc.getVersion();
     }
     
-    public Lupi getInstance() {
+    public static Lupi getInstance() {
     	return instance;
     }
     
