@@ -1,8 +1,8 @@
 Version 0.1
+	- Move all RandomName stuff into RandomName.java.
 	- Fix Wolf.getWolf() causes NullPointerException.
 	- Fix name duping bug for wolves.
 	- Fix load and unload for inventory.
-	- Fix load and unload for database. When issue reload command Lupi are no longer able to get information from database.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Optimize list commands. Add pages.
     - Optimize commands, still throwing errors, maybe cause of database issues but will need to be checked.
