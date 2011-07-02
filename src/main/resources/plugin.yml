@@ -1,6 +1,6 @@
 name: Lupi
 main: org.halvors.lupi.Lupi
-version: 0.1
+version: 0.0.1
 description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92, adamonline45]
 website: 
