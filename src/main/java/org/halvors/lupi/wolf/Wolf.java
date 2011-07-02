@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.wolf;
+package org.halvors.lupi.wolf;
 
 import java.util.UUID;
 
@@ -29,11 +29,11 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.halvors.lupi.Lupi;
+import org.halvors.lupi.wolf.inventory.WolfInventory;
+import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 import com.avaje.ebean.EbeanServer;
-import com.halvors.lupi.Lupi;
-import com.halvors.lupi.wolf.inventory.WolfInventory;
-import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 /**
  * Represents a wolf.

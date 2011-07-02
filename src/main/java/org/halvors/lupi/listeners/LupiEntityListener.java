@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.listeners;
+package org.halvors.lupi.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -31,11 +31,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.halvors.lupi.Lupi;
+import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.util.WorldConfiguration;
+import org.halvors.lupi.wolf.WolfManager;
 
-import com.halvors.lupi.Lupi;
-import com.halvors.lupi.util.ConfigurationManager;
-import com.halvors.lupi.util.WorldConfiguration;
-import com.halvors.lupi.wolf.WolfManager;
 
 /**
  * Handle events for all Entity related events.
@@ -103,7 +103,7 @@ public class LupiEntityListener extends EntityListener {
             Wolf wolf = (Wolf) entity;
             
             if (wolf.isTamed()) {
-                com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
 
                 if (wolf1.hasInventory()) {
                 	wolf1.dropInventory();
@@ -139,7 +139,7 @@ public class LupiEntityListener extends EntityListener {
                 
                 // Add the wolf.
                 if (WolfManager.addWolf(wolf)) {
-                    com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                    org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
                     
                     player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                     player.sendMessage("You can change name with /wolf setname <name>.");

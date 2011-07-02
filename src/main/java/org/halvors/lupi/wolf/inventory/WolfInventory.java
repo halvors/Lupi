@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.wolf.inventory;
+package org.halvors.lupi.wolf.inventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.util;
+package org.halvors.lupi.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,8 +29,8 @@ import java.util.logging.Level;
 
 import org.bukkit.World;
 import org.bukkit.util.config.Configuration;
+import org.halvors.lupi.Lupi;
 
-import com.halvors.lupi.Lupi;
 
 /**
  * Represents the global configuration and also delegates configuration

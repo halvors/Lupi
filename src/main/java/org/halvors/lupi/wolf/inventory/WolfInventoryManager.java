@@ -18,16 +18,17 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.wolf.inventory;
+package org.halvors.lupi.wolf.inventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.halvors.lupi.Lupi;
+import org.halvors.lupi.wolf.WolfManager;
+
 import com.avaje.ebean.EbeanServer;
-import com.halvors.lupi.Lupi;
-import com.halvors.lupi.wolf.WolfManager;
 
 /**
  * Handle WolfInventory's.

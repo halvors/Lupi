@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.wolf;
+package org.halvors.lupi.wolf;
 
 import java.util.HashMap;
 

@@ -18,16 +18,16 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.listeners;
+package org.halvors.lupi.listeners;
 
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
+import org.halvors.lupi.Lupi;
+import org.halvors.lupi.wolf.WolfManager;
 
-import com.halvors.lupi.Lupi;
-import com.halvors.lupi.wolf.WolfManager;
 
 
 /**
@@ -51,7 +51,7 @@ public class LupiWorldListener extends WorldListener {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
-    			if (wolf.isTamed()) { // TODO: Only do this if wolf is loaded.
+    			if (wolf.isTamed()) {
                 	if (!WolfManager.hasWolf(wolf)) {
                         WolfManager.addWolf(wolf);
                     }

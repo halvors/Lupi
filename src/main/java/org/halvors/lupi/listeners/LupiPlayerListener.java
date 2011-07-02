@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.listeners;
+package org.halvors.lupi.listeners;
 
 import net.minecraft.server.EntityPlayer;
 
@@ -30,12 +30,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.halvors.lupi.Lupi;
+import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.util.WorldConfiguration;
+import org.halvors.lupi.wolf.SelectedWolfManager;
+import org.halvors.lupi.wolf.WolfManager;
 
-import com.halvors.lupi.Lupi;
-import com.halvors.lupi.util.ConfigurationManager;
-import com.halvors.lupi.util.WorldConfiguration;
-import com.halvors.lupi.wolf.SelectedWolfManager;
-import com.halvors.lupi.wolf.WolfManager;
 
 /**
  * Handle events for all Player related events.
@@ -64,7 +64,7 @@ public class LupiPlayerListener extends PlayerListener {
                 Wolf wolf = (Wolf) entity;
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                    com.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                    org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
                     int item = player.getItemInHand().getTypeId();
                     
                     if (item == worldConfig.wolfItem) {

@@ -18,14 +18,14 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.util;
+package org.halvors.lupi.util;
 
 import java.io.File;
 import java.util.logging.Level;
 
 import org.bukkit.util.config.Configuration;
+import org.halvors.lupi.Lupi;
 
-import com.halvors.lupi.Lupi;
 
 /**
  * Holds the configuration for individual worlds.
@@ -59,13 +59,13 @@ public class WorldConfiguration {
         this.configManager = plugin.getConfigurationManager();
         this.worldName = worldName;
 
-        File baseFolder = new File(plugin.getDataFolder(), "worlds/" + worldName);
-        configFile = new File(baseFolder, "config.yml");
+        File baseFolder = new File(plugin.getDataFolder(), "worlds/");
+        configFile = new File(baseFolder, worldName + ".yml");
         
         configManager.createDefaultConfiguration(configFile, "config_world.yml");
-
-        config = new Configuration(this.configFile);
-        loadConfiguration();
+        config = new Configuration(configFile);
+        
+        load();
 
         plugin.log(Level.INFO, "Loaded configuration for world '" + worldName + '"');
     }
@@ -73,7 +73,7 @@ public class WorldConfiguration {
     /**
      * Load the configuration.
      */
-    private void loadConfiguration() {
+    private void load() {
         config.load();
 
         wolfEnable = config.getBoolean("wolf.enable", wolfEnable);

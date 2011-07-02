@@ -1,14 +1,14 @@
 name: Lupi
-main: com.halvors.lupi.Lupi
+main: org.halvors.lupi.Lupi
 version: 0.1
 description: Lupi is a wolf plugin for Bukkit.
-authors: [halvors, speeddemon92]
+authors: [halvors, speeddemon92, adamonline45]
 website: 
 database: true
 load: startup
 
 commands:
     wolf:
-        description: Command for Wolf.
+        description: Lupi commands.
         aliases: [lupi]
         usage:

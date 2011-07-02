@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi;
+package org.halvors.lupi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +33,18 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.halvors.lupi.commands.LupiCommandExecutor;
+import org.halvors.lupi.listeners.LupiEntityListener;
+import org.halvors.lupi.listeners.LupiPlayerListener;
+import org.halvors.lupi.listeners.LupiWorldListener;
+import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.wolf.SelectedWolfManager;
+import org.halvors.lupi.wolf.WolfManager;
+import org.halvors.lupi.wolf.WolfTable;
+import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
+import org.halvors.lupi.wolf.inventory.WolfInventoryTable;
 
 import com.avaje.ebean.EbeanServer;
-import com.halvors.lupi.commands.LupiCommandExecutor;
-import com.halvors.lupi.listeners.LupiEntityListener;
-import com.halvors.lupi.listeners.LupiPlayerListener;
-import com.halvors.lupi.listeners.LupiWorldListener;
-import com.halvors.lupi.util.ConfigurationManager;
-import com.halvors.lupi.wolf.WolfManager;
-import com.halvors.lupi.wolf.WolfTable;
-import com.halvors.lupi.wolf.inventory.WolfInventoryTable;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -52,15 +54,22 @@ public class Lupi extends JavaPlugin {
     private PluginManager pm;
     private PluginDescriptionFile desc;
     
-    private static Lupi instance;
-    private static EbeanServer db;
-    private static PermissionHandler permissions;
-    
     private final ConfigurationManager configuration;
     private final LupiEntityListener entityListener;
     private final LupiPlayerListener playerListener;
     private final LupiWorldListener worldListener;
     
+    private static Lupi instance;
+    private static EbeanServer db;
+    private static PermissionHandler permissions;
+    
+    private static final WolfManager wolfManager = new WolfManager();
+    private static final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager();
+    private static final SelectedWolfManager selectedWolfManager = new SelectedWolfManager();
+    
+    /**
+     * Lupi is a wolf plugin for Bukkit.
+     */
     public Lupi() {
     	Lupi.instance = this;
         this.configuration = new ConfigurationManager(this);
@@ -112,6 +121,9 @@ public class Lupi extends JavaPlugin {
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
     
+    /**
+     * Setup the database.
+     */
     private void setupDatabase() {
         try {
             getDatabase().find(WolfTable.class).findRowCount();
@@ -131,6 +143,9 @@ public class Lupi extends JavaPlugin {
         return list;
     }
     
+    /**
+     * Setup the Permissions plugin.
+     */
     private void setupPermissions() {
         Plugin plugin = getServer().getPluginManager().getPlugin("Permissions");
 
@@ -143,6 +158,13 @@ public class Lupi extends JavaPlugin {
         }
     }
     
+    /**
+     * Check if a player has the given permission.
+     * 
+     * @param player
+     * @param node
+     * @return
+     */
     public static boolean hasPermissions(Player player, String node) {
         if (permissions != null) {
             return permissions.has(player, node);
@@ -151,27 +173,85 @@ public class Lupi extends JavaPlugin {
         }
     }
     
+    /**
+     * Sends a console message.
+     * 
+     * @param level
+     * @param msg
+     */
     public void log(Level level, String msg) {
         logger.log(level, "[" + getName() + "] " + msg);
     }
     
+    /**
+     * Get the name.
+     * 
+     * @return
+     */
     public String getName() {
         return desc.getName();
     }
     
+    /**
+     * Get the version.
+     * 
+     * @return
+     */
     public String getVersion() {
         return desc.getVersion();
     }
     
+    /**
+     * Get the Lupi instance.
+     * 
+     * @return
+     */
     public static Lupi getInstance() {
     	return instance;
     }
     
+    /**
+     * Get the database.
+     * 
+     * @return
+     */
     public static EbeanServer getDb() {
     	return db;
     }
     
+    /**
+     * Get the ConfigurationManager.
+     * 
+     * @return
+     */
     public ConfigurationManager getConfigurationManager() {
         return configuration;
+    }
+    
+    /**
+     * Get the WolfManager.
+     * 
+     * @return
+     */
+    public WolfManager getWolfManager() {
+    	return wolfManager;
+    }
+    
+    /**
+     * Get the WolfInventoryManager.
+     * 
+     * @return
+     */
+    public WolfInventoryManager getWolfInventoryManager() {
+    	return wolfInventoryManager;
+    }
+    
+    /**
+     * Get the SelectedWolfManager.
+     * 
+     * @return
+     */
+    public SelectedWolfManager getSelectedWolfManager() {
+    	return selectedWolfManager;
     }
 }

@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.wolf;
+package org.halvors.lupi.wolf;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,7 +29,7 @@ import java.util.Random;
 public class RandomName {
 	private final static List<String> names = new ArrayList<String>();
 	
-	static {
+	public RandomName() {
 		initRandomNames();
 	}
 	
@@ -38,7 +38,7 @@ public class RandomName {
      */
     private static void initRandomNames() {  
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfNames.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomName.class.getResourceAsStream("names.txt")));
            
             while (true) {
                 String s1;

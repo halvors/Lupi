@@ -18,7 +18,7 @@
  * along with Lupi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.halvors.lupi.wolf;
+package org.halvors.lupi.wolf;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,10 +34,10 @@ import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.halvors.lupi.Lupi;
+import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 import com.avaje.ebean.EbeanServer;
-import com.halvors.lupi.Lupi;
-import com.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 /**
  * Handle wolves.
@@ -49,8 +49,8 @@ public class WolfManager {
     private final static List<String> wolfNames = new ArrayList<String>();
     private final static EbeanServer db = Lupi.getDb();
     
-    static {
-        initRandomNames();
+    public WolfManager() {
+    	initRandomNames();
     }
     
     /**
@@ -313,17 +313,23 @@ public class WolfManager {
     }
     
     /**
-     * Check if loaded wolf exists.
+     * Check if wolf exists in database.
      * 
      * @param uniqueId
      * @return
      */
     public static boolean hasWolf(UUID uniqueId) {
-        return wolves.containsKey(uniqueId);
+    	WolfTable wt = getWolfTable(uniqueId);
+    	
+    	if (wt != null) {
+    		return true;
+    	}
+    	
+    	return false;
     }
     
     /**
-     * Check if loaded wolf exists.
+     * Check if wolf exists in database.
      * 
      * @param wolf
      * @return
@@ -333,13 +339,33 @@ public class WolfManager {
     }
     
     /**
+     * Check if loaded wolf exists.
+     * 
+     * @param uniqueId
+     * @return
+     */
+    public static boolean hasLoadedWolf(UUID uniqueId) {
+        return wolves.containsKey(uniqueId);
+    }
+    
+    /**
+     * Check if loaded wolf exists.
+     * 
+     * @param wolf
+     * @return
+     */
+    public static boolean hasLoadedWolf(org.bukkit.entity.Wolf wolf) {
+        return hasLoadedWolf(wolf.getUniqueId());
+    }
+    
+    /**
      * Check if owner has specific named loaded wolf.
      * 
      * @param name
      * @param owner
      * @return
      */
-    public static boolean hasWolf(String name, String owner) {
+    public static boolean hasLoadedWolf(String name, String owner) {
         for (Wolf wolf : getWolves()) {
             if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
                 return true;
@@ -355,7 +381,7 @@ public class WolfManager {
      * @param owner
      * @return
      */
-    public static boolean hasWolf(String owner) {
+    public static boolean hasLoadedWolf(String owner) {
         for (Wolf wolf : getWolves()) {
             if (wolf.getOwner().getName().equalsIgnoreCase(owner)) {
                 return true;
@@ -372,7 +398,7 @@ public class WolfManager {
      * @return
      */
     public static Wolf getWolf(UUID uniqueId) {
-    	if (!hasWolf(uniqueId)) {
+    	if (!hasLoadedWolf(uniqueId)) {
     		addWolf(getEntity(uniqueId));
     	}
     	
@@ -541,8 +567,8 @@ public class WolfManager {
             removeWolf(wolf);
         }
         
+        // Set wolf to wild.
         wolf.setTamed(false);
-        wolf.setOwner(null);
         
         // TODO: Set wild wolf health.
     }
