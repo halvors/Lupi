@@ -37,7 +37,6 @@ import org.halvors.lupi.wolf.SelectedWolfManager;
 import org.halvors.lupi.wolf.WolfManager;
 import org.halvors.lupi.wolf.WolfTable;
 
-
 /**
  * Represents a CommandExecutor.
  * 
@@ -58,26 +57,26 @@ public class LupiCommandExecutor implements CommandExecutor {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                if (Lupi.hasPermissions(player, "Lupi.wolf.list")) {
+                if (player.hasPermission("lupi.wolf")) {
                     showPlayerWolves(player);
                 }
             } else {
                 String subCommand = args[0];
 
                 if (subCommand.equalsIgnoreCase("help")) {
-                    if (Lupi.hasPermissions(player, "Lupi.help")) {
+                    if (player.hasPermission("lupi.help")) {
                         showHelp(player, label);
 
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("list")) {
-                       if (Lupi.hasPermissions(player, "Lupi.list")) {
+                       if (player.hasPermission("lupi.list")) {
                            showWolves(player);
                            
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("name")) {
-                       if (Lupi.hasPermissions(player, "Lupi.wolf.name")) {
+                       if (player.hasPermission("lupi.wolf.name")) {
                            if (SelectedWolfManager.hasSelectedWolf(player)) {
                                Wolf wolf = SelectedWolfManager.getSelectedWolf(player);
 
@@ -91,7 +90,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("setname")) {
-                       if (Lupi.hasPermissions(player, "Lupi.wolf.setname")) {
+                       if (player.hasPermission("lupi.wolf.setname")) {
                            Wolf wolf = null;
                            String owner = player.getName();
                            String name = null;
@@ -135,23 +134,23 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("call")) {
-                       if (Lupi.hasPermissions(player, "Lupi.wolf.call")) {
-                        if (args.length == 2) {
-                            String name = args[1];
-                            String owner = player.getName();
+                	   if (player.hasPermission("lupi.wolf.call")) {
+                		   if (args.length == 2) {
+                			   String name = args[1];
+                			   String owner = player.getName();
+                			   
+                            	if (WolfManager.hasLoadedWolf(name, owner)) {
+                            		Wolf wolf = WolfManager.getWolf(name, owner).getEntity();
+                            		wolf.teleport(player);
 
-                            if (WolfManager.hasLoadedWolf(name, owner)) {
-                                Wolf wolf = WolfManager.getWolf(name, owner).getEntity();
-                                wolf.teleport(player);
-
-                                player.sendMessage(ChatColor.GREEN + "Your wolf is on its way.");
-                            }
+                            		player.sendMessage(ChatColor.GREEN + "Your wolf is on its way.");
+                            	}
                            }
-                            
+                           
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("stop")) {
-                       if (Lupi.hasPermissions(player, "Lupi.wolf.stop")) {
+                       if (player.hasPermission("lupi.wolf.stop")) {
                            Wolf wolf = null;
                            String owner = player.getName();
 
@@ -182,7 +181,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("give")) {
-                       if (Lupi.hasPermissions(player, "Lupi.wolf.give")) {
+                       if (player.hasPermission("lupi.wolf.give")) {
                            Wolf wolf = null;
                            String owner = player.getName();
                            Player receiver = null;
@@ -242,7 +241,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else if (subCommand.equalsIgnoreCase("release")) {
-                       if (Lupi.hasPermissions(player, "Lupi.wolf.release")) {
+                       if (player.hasPermission("lupi.wolf.release")) {
                            Wolf wolf = null;
                            String owner = player.getName();
 
@@ -282,7 +281,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            return true;
                        }
                    } else {
-                        if (Lupi.hasPermissions(player, "Wolf.help")) {
+                        if (player.hasPermission("lupi.help")) {
                             showHelp(player, label);
 
                             return true;
@@ -332,36 +331,40 @@ public class LupiCommandExecutor implements CommandExecutor {
         
         player.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         player.sendMessage(ChatColor.RED + "[]" + ChatColor.WHITE + " Required, " + ChatColor.GREEN + "<>" + ChatColor.WHITE + " Optional.");
-
-        if (Lupi.hasPermissions(player, "Wolf.help")) {
+        
+        if (player.hasPermission("lupi.wolf")) {
+        	player.sendMessage(command + ChatColor.YELLOW + " - Show your wolves.");
+        }
+        
+        if (player.hasPermission("lupi.help")) {
             player.sendMessage(command + "help" + ChatColor.YELLOW + " - Show help.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.list")) {
+        if (player.hasPermission("lupi.list")) {
             player.sendMessage(command + "list" + ChatColor.YELLOW + " - Show a list of tamed wolves.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.wolf.name")) {
+        if (player.hasPermission("lupi.wolf.name")) {
             player.sendMessage(command + "name " + ChatColor.YELLOW + " - Show your wolf's name.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.wolf.setname")) {
+        if (player.hasPermission("lupi.wolf.setname")) {
             player.sendMessage(command + "setname " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Set your wolf's name.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.wolf.call")) {
+        if (player.hasPermission("lupi.wolf.call")) {
             player.sendMessage(command + "call " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Call your wolf.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.wolf.stop")) {
+        if (player.hasPermission("lupi.wolf.stop")) {
             player.sendMessage(command + "stop " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name"  + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Stop your wolf from attacking.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.wolf.give")) {
+        if (player.hasPermission("lupi.wolf.give")) {
             player.sendMessage(command + "give " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + "> [" + ChatColor.WHITE + "player" + ChatColor.GREEN + "]" + ChatColor.YELLOW + " - Release your wolf.");
         }
         
-        if (Lupi.hasPermissions(player, "Wolf.wolf.release")) {
+        if (player.hasPermission("lupi.wolf.release")) {
             player.sendMessage(command + "release " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Release your wolf.");
         }
     }

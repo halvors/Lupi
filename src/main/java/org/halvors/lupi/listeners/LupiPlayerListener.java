@@ -37,7 +37,6 @@ import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.SelectedWolfManager;
 import org.halvors.lupi.wolf.WolfManager;
 
-
 /**
  * Handle events for all Player related events.
  * 
@@ -69,13 +68,13 @@ public class LupiPlayerListener extends PlayerListener {
                     int item = player.getItemInHand().getTypeId();
                     
                     if (item == worldConfig.wolfItem) {
-                        if (Lupi.hasPermissions(player, "Wolf.wolf.select")) {
+                        if (player.hasPermission("lupi.wolf.select")) {
                             SelectedWolfManager.addSelectedWolf(player, wolf);
                                 
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                         }
                     } else if (item == worldConfig.infoItem) {
-                    	if (Lupi.hasPermissions(player, "Wolf.wolf.info")) {
+                    	if (player.hasPermission("lupi.wolf.info")) {
                     		int health = wolf.getHealth() / 2;
                             int maxHealth = 10;
                             
@@ -84,7 +83,7 @@ public class LupiPlayerListener extends PlayerListener {
                             player.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
                         }
                     } else if (item == worldConfig.inventoryItem) {
-                        if (Lupi.hasPermissions(player, "Wolf.wolf.inventory")) {
+                        if (player.hasPermission("lupi.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
                             	if (wolf1.hasLoadedInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();

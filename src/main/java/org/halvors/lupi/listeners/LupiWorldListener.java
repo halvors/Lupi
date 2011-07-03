@@ -29,8 +29,6 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.wolf.WolfManager;
 
-
-
 /**
  * Handle events for all World related events.
  * 

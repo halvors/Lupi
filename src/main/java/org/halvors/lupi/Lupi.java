@@ -28,9 +28,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,8 +44,6 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 import org.halvors.lupi.wolf.inventory.WolfInventoryTable;
 
 import com.avaje.ebean.EbeanServer;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Lupi extends JavaPlugin {
     private final Logger logger = Logger.getLogger("Minecraft");
@@ -62,7 +58,6 @@ public class Lupi extends JavaPlugin {
     
     private static Lupi instance;
     private static EbeanServer db;
-    private static PermissionHandler permissions;
     
     private static final WolfManager wolfManager = new WolfManager();
     private static final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager();
@@ -105,7 +100,6 @@ public class Lupi extends JavaPlugin {
         log(Level.INFO, "version " + getVersion() + " is enabled!");
         
         setupDatabase();
-        setupPermissions();
         
         // Load wolves to WolfManager.
 		WolfManager.load();
@@ -142,36 +136,6 @@ public class Lupi extends JavaPlugin {
         list.add(WolfInventoryTable.class);
         
         return list;
-    }
-    
-    /**
-     * Setup the Permissions plugin.
-     */
-    private void setupPermissions() {
-        Plugin plugin = getServer().getPluginManager().getPlugin("Permissions");
-
-        if (permissions == null) {
-            if (plugin != null) {
-                permissions = ((Permissions) plugin).getHandler();
-            } else {
-                log(Level.INFO, "Permission system not detected, defaulting to OP");
-            }
-        }
-    }
-    
-    /**
-     * Check if a player has the given permission.
-     * 
-     * @param player
-     * @param node
-     * @return
-     */
-    public static boolean hasPermissions(Player player, String node) {
-        if (permissions != null) {
-            return permissions.has(player, node);
-        } else {
-            return player.isOp();
-        }
     }
     
     /**
