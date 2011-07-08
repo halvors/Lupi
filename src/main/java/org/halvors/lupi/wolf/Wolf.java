@@ -272,7 +272,8 @@ public class Wolf {
             
             for (ItemStack item : wi.getBukkitContents()) {
                 if (item != null && item.getType() != Material.AIR && item.getAmount() > 0 && item.getDurability() > -1) {
-                    world.dropItem(location, item);
+//                    world.dropItem(location, item);
+                    world.dropItemNaturally(location, item);
                 }
             }
         }
@@ -284,7 +285,9 @@ public class Wolf {
      * @return
      */
     public org.bukkit.entity.Wolf getEntity() {
-        for (Entity entity : getWorld().getEntities()) {
+    	World world = getWorld();
+    	
+        for (Entity entity : world.getEntities()) {
             if (entity instanceof org.bukkit.entity.Wolf) {
                 if (uniqueId.equals(entity.getUniqueId()))  {
                     return (org.bukkit.entity.Wolf) entity;

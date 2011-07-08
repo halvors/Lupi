@@ -29,15 +29,16 @@ import java.util.Random;
 
 public class RandomName {
 	private final static List<String> names = new ArrayList<String>();
+	private final static Random random = new Random();
 	
 	public RandomName() {
-		initRandomNames();
+		initialize();
 	}
 	
     /**
      * Generate the table of premade wolf names.
      */
-    private static void initRandomNames() {  
+    private static void initialize() {  
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomName.class.getResourceAsStream("names.txt")));
            
@@ -60,13 +61,11 @@ public class RandomName {
     }
     
     /**
-     * Generate a random name.
+     * Get a random name.
      * 
      * @return String
      */
     public static String getRandomName() {
-        Random random = new Random();
-        
         return names.get(random.nextInt(names.size() - 1 ));
     }
 }
