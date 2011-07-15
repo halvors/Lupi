@@ -44,7 +44,7 @@ import org.halvors.lupi.wolf.WolfManager;
  * @author halvors
  */
 public class LupiEntityListener extends EntityListener {
-//    private Lupi plugin;
+//    private final Lupi plugin;
     
     private final ConfigurationManager configuration;
 
