@@ -78,7 +78,6 @@ public class Lupi extends JavaPlugin {
     public void onEnable() {
         pm = getServer().getPluginManager();
         desc = getDescription();
-        db = getDatabase();
         
         // Load configuration.
         configuration.load();
@@ -99,7 +98,9 @@ public class Lupi extends JavaPlugin {
         
         log(Level.INFO, "version " + getVersion() + " is enabled!");
         
+        // Setup database.
         setupDatabase();
+        db = getDatabase();
         
         // Load wolves to WolfManager.
 		WolfManager.load();
@@ -198,7 +199,7 @@ public class Lupi extends JavaPlugin {
      * 
      * @return
      */
-    public WolfManager getWolfManager() {
+    public static WolfManager getWolfManager() {
     	return wolfManager;
     }
     
@@ -207,7 +208,7 @@ public class Lupi extends JavaPlugin {
      * 
      * @return
      */
-    public WolfInventoryManager getWolfInventoryManager() {
+    public static WolfInventoryManager getWolfInventoryManager() {
     	return wolfInventoryManager;
     }
     
@@ -216,7 +217,7 @@ public class Lupi extends JavaPlugin {
      * 
      * @return
      */
-    public SelectedWolfManager getSelectedWolfManager() {
+    public static SelectedWolfManager getSelectedWolfManager() {
     	return selectedWolfManager;
     }
 }

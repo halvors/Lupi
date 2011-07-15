@@ -31,7 +31,7 @@ import javax.persistence.Table;
  * @author halvors
  */
 @Entity()
-@Table(name = "wolf_wolf")
+@Table(name = "lupi_wolf")
 public class WolfTable {
     @Id
     private int id;

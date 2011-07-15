@@ -43,7 +43,7 @@ import org.halvors.lupi.wolf.WolfTable;
  * @author halvors
  */
 public class LupiCommandExecutor implements CommandExecutor {
-    private Lupi plugin;
+    private final Lupi plugin;
 
     private final ConfigurationManager configuration;
 
