@@ -270,7 +270,7 @@ public class LupiCommandExecutor implements CommandExecutor {
     					return true;
                 	}
     			} else {
-    	    		sender.sendMessage("Sorry but these commands are for in-game players only.");
+    	    		sender.sendMessage(ChatColor.RED + "Sorry but these commands are for in-game players only.");
     	    	}
     		}
     	}
