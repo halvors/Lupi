@@ -9,6 +9,15 @@ load: startup
 
 commands:
     wolf:
+	aliases: [lupi]
         description: Lupi commands.
-        aliases: [lupi]
-        usage:
+        usage: |
+            /<command> help - Show help.
+			/<command> list - List all tamed wolves.
+			/<command> name - View the selected wolf's name.
+			/<command> setname <name> - Set the selected wolf's name.
+            /<command> call <wolf> - Call your wolf.
+			/<command> stop <wolf> - Stop your wolf from attacking.
+            /<command> give <wolf> <player> - Give your wolf to an other player.
+            /<command> release <wolf> - Release your wolf. 
+            
