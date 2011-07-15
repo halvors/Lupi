@@ -87,6 +87,10 @@ public class Lupi extends JavaPlugin {
         // Load configuration.
         configuration.load();
         
+        // Setup database.
+        setupDatabase();
+        db = getDatabase();
+        
         // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
 //        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
@@ -102,10 +106,6 @@ public class Lupi extends JavaPlugin {
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
         
         log(Level.INFO, "version " + getVersion() + " is enabled!");
-        
-        // Setup database.
-        setupDatabase();
-        db = getDatabase();
         
         setupPermissions();
         

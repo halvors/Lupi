@@ -37,7 +37,7 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 import com.avaje.ebean.EbeanServer;
 
 /**
- * Represents a tamed wolf.
+ * Represents a wolf.
  * 
  * @author halvors
  */
@@ -47,7 +47,7 @@ public class Wolf {
     private UUID uniqueId;
     
     public Wolf(UUID uniqueId) {
-        this.uniqueId = uniqueId;
+        setUniqueId(uniqueId);
     }
     
     /**
@@ -70,9 +70,18 @@ public class Wolf {
     }
     
     /**
+     * Set uniqueId.
+     * 
+     * @param uniqueId
+     */
+    public void setUniqueId(UUID uniqueId) {
+    	this.uniqueId = uniqueId;
+    }
+    
+    /**
      * Get name.
      * 
-     * @return
+     * @return the wolf's name
      */
     public String getName() {
         WolfTable wt = getWolfTable();
@@ -106,7 +115,7 @@ public class Wolf {
     /**
      * Get owner.
      * 
-     * @return
+     * @return the Player that is the owner.
      */
     public Player getOwner() {
         WolfTable wt = getWolfTable();
@@ -125,7 +134,7 @@ public class Wolf {
     /**
      * Set owner.
      * 
-     * @param owner
+     * @param player
      */
     public void setOwner(Player player) {
         WolfTable wt = getWolfTable();
@@ -144,7 +153,7 @@ public class Wolf {
     /**
      * Get world.
      * 
-     * @return
+     * @return the World
      */
     public World getWorld() {
         WolfTable wt = getWolfTable();
@@ -188,7 +197,7 @@ public class Wolf {
     /**
      * Check if wolf has inventory.
      * 
-     * @return
+     * @return true if wolf has inventory.
      */
     public boolean hasInventory() {
         WolfTable wt = getWolfTable();
@@ -200,6 +209,11 @@ public class Wolf {
         return false;
     }
     
+    /**
+     * Check if wolf has loaded inventory.
+     * 
+     * @return true if has inventory and it's loaded.
+     */
     public boolean hasLoadedInventory() {
         WolfTable wt = getWolfTable();
         
@@ -231,7 +245,7 @@ public class Wolf {
      * Add inventory.
      */
     public void addInventory() {
-    	if (!hasInventory() || !hasLoadedInventory()) {
+    	if (!hasInventory()) {
     		WolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
     		setInventory(true);
     	}
@@ -241,7 +255,11 @@ public class Wolf {
      * Remove inventory.
      */
     public void removeInventory() {
-    	if (hasLoadedInventory()) {
+    	if (hasInventory()) {
+    		if (hasLoadedInventory()) {
+    			dropInventory();
+    		}
+    		
     		WolfInventoryManager.removeWolfInventory(uniqueId);
     	}
     	
@@ -251,7 +269,7 @@ public class Wolf {
     /**
      * Get inventory.
      * 
-     * @return
+     * @return the WolfInventory
      */
     public WolfInventory getInventory() {
     	if (hasLoadedInventory()) {
@@ -272,8 +290,7 @@ public class Wolf {
             
             for (ItemStack item : wi.getBukkitContents()) {
                 if (item != null && item.getType() != Material.AIR && item.getAmount() > 0 && item.getDurability() > -1) {
-//                    world.dropItem(location, item);
-                    world.dropItemNaturally(location, item);
+                    world.dropItem(location, item);
                 }
             }
         }
@@ -282,12 +299,12 @@ public class Wolf {
     /**
      * Get the wolf entity.
      * 
-     * @return
+     * @return the Entity
      */
     public org.bukkit.entity.Wolf getEntity() {
     	World world = getWorld();
     	
-        for (Entity entity : world.getEntities()) {
+        for (Entity entity : world.getLivingEntities()) {
             if (entity instanceof org.bukkit.entity.Wolf) {
                 if (uniqueId.equals(entity.getUniqueId()))  {
                     return (org.bukkit.entity.Wolf) entity;

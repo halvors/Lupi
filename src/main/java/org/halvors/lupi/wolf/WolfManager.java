@@ -485,7 +485,7 @@ public class WolfManager {
      */
     public static org.bukkit.entity.Wolf getEntity(UUID uniqueId) {
     	for (World world : Bukkit.getServer().getWorlds()) {
-        	for (Entity entity : world.getEntities()) {
+        	for (Entity entity : world.getLivingEntities()) {
             	if (entity instanceof org.bukkit.entity.Wolf) {
                 	if (uniqueId.equals(entity.getUniqueId())) {
                 		return (org.bukkit.entity.Wolf) entity;
