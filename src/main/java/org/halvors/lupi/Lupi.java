@@ -105,12 +105,12 @@ public class Lupi extends JavaPlugin {
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
         
-        log(Level.INFO, "version " + getVersion() + " is enabled!");
-        
         setupPermissions();
         
         // Load wolves to WolfManager.
 		WolfManager.load();
+        
+        log(Level.INFO, "version " + getVersion() + " is enabled!");
     }
     
     @Override
