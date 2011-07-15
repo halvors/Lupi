@@ -39,4 +39,9 @@ permissions:
         description: Allows you to view info about a wolf.
     lupi.wolf.inventory:
         description: Allows use of wolf inventory.
-
+    lupi.wolf.admin.*
+        description: Allows use of all /wolf admin commands.
+        childern:
+            lupi.wolf.admin.take: true
+    lupi.wolf.admin.take:
+        description: Allows use of /wolf admin take.
