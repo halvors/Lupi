@@ -82,6 +82,10 @@ public class Lupi extends JavaPlugin {
         // Load configuration.
         configuration.load();
         
+        // Setup database.
+        setupDatabase();
+        db = getDatabase();
+        
         // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
 //        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
@@ -96,14 +100,10 @@ public class Lupi extends JavaPlugin {
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
         
-        log(Level.INFO, "version " + getVersion() + " is enabled!");
-        
-        // Setup database.
-        setupDatabase();
-        db = getDatabase();
-        
         // Load wolves to WolfManager.
 		WolfManager.load();
+        
+        log(Level.INFO, "version " + getVersion() + " is enabled!");
     }
     
     @Override
@@ -125,7 +125,7 @@ public class Lupi extends JavaPlugin {
             getDatabase().find(WolfTable.class).findRowCount();
             getDatabase().find(WolfInventoryTable.class).findRowCount();
         } catch (PersistenceException ex) {
-            log(Level.INFO, "Installing database for " + getDescription().getName() + " due to first time usage");
+            log(Level.INFO, "Installing database for " + getName() + " due to first time usage");
             installDDL();
         }
     }

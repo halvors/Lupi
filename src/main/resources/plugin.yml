@@ -3,38 +3,40 @@ main: org.halvors.lupi.Lupi
 version: 0.0.1
 description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92, adamonline45]
-website: 
+website:
 database: true
 load: startup
-
 commands:
     wolf:
-	aliases: [lupi]
+        aliases: [lupi]
         description: Lupi commands.
         usage: |
-            /<command> - reload the configuration from disk.
-            /<command> help - check if a player has a permission (any plugin).
-            /<command> list - list group-related commands.
-            /<command> group list - list all groups.
-            /<command> group players <group> - list players in a group.
-            /<command> group addperm <group> <node> - add a permission to a group.
-            /<command> group removeperm <group> <node> - remove a permission from a group.
-            /<command> player - list player-related commands.
-            /<command> player groups <player> - list groups a player is in.
-            /<command> player addgroup <player> - add a player to a group.
-            /<command> player removegroup <player> - remove a player from a group.
-            /<command> player addperm <player> <node> - add a permission to a player.
-            /<command> player removeperm <player> <node> - remove a permission from a player.
-
+            /<command> help - Show help.
+            /<command> list - List all tamed wolves.
+            /<command> name - View the selected wolf's name.
+            /<command> setname <name> - Set the selected wolf's name.
+            /<command> call <wolf> - Call your wolf.
+            /<command> stop <wolf> - Stop your wolf from attacking.
+            /<command> give <wolf> <player> - Give your wolf to an other player.
+            /<command> release <wolf> - Release your wolf.
 permissions:
-    lupi.*:
-        children:
-            lupi.help: true
-            lupi.list: true
-            lupi.wolf.*: true
-
     lupi.wolf.*:
+        default: op
+        description: Allows use of all /wolf commands.
         children:
+            lupi.wolf.help: true
+            lupi.wolf.list: true
             lupi.wolf.select: true
             lupi.wolf.info: true
             lupi.wolf.inventory: true
+    lupi.wolf.help:
+        description: Allows viewing of usage for /wolf.
+    lupi.wolf.list:
+        description: Allows use of /wolf list.
+    lupi.wolf.select:
+        description: Allows you to select a wolf.
+    lupi.wolf.info:
+        description: Allows you to view info about a wolf.
+    lupi.wolf.inventory:
+        description: Allows use of wolf inventory.
+

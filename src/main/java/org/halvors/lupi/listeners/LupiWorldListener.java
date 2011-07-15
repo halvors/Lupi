@@ -46,14 +46,12 @@ public class LupiWorldListener extends WorldListener {
     	World world = event.getWorld();
     	
 		// Add tamed wolves that not already exists in database.
-    	for (Entity entity : world.getEntities()) {
+    	for (Entity entity : world.getLivingEntities()) {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
-    			if (wolf.isTamed()) {
-                	if (!WolfManager.hasWolf(wolf)) {
-                        WolfManager.addWolf(wolf);
-                    }
+    			if (wolf.isTamed() && !WolfManager.hasWolf(wolf)) {
+    				WolfManager.addWolf(wolf);
                 }
     		}
     	}
