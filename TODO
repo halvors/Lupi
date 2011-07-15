@@ -1,14 +1,15 @@
 Version 0.1
-	- Move all RandomName stuff into RandomName.java.
-	- Fix Wolf.getWolf() causes NullPointerException.
-	- Fix name duping bug for wolves.
-	- Fix load and unload for inventory.
+    - Move all RandomName stuff into RandomName.java.
+    - Fix Wolf.getWolf() causes NullPointerException.
+    - Fix name duping bug for wolves.
+    - Fix load and unload for inventory.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Add pages support for list and help commands
     - Optimize commands, still throwing errors, maybe cause of database issues but will need to be checked.
 
 Version 0.2
-	- Add wolf age. Will be minecraft days/years from it's tamed.
+    - Add events, call event when a wolf is added / deleted in Lupi.
+    - Add wolf age. Will be minecraft days/years from it's tamed.
     - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players. (Think we'll need EntityMoveEvent)
     - Add ability for wolves to eat food (pork) from it's inventory when get damaged.
     - Add ability for tamed wolves to have some kind of armor. Like a diamond block in it's inventory.
