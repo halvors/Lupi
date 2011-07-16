@@ -48,6 +48,7 @@ public class WorldConfiguration {
     public boolean wolfFriendly;
     public boolean wolfPvp;
     public int wolfLimit;
+    public boolean wolfKeepChunksLoaded;
     
     public int infoItem;
     

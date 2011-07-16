@@ -72,6 +72,10 @@ public class LupiCommandExecutor implements CommandExecutor {
                        }
                    } else if (subCommand.equalsIgnoreCase("list")) {
                        if (Lupi.hasPermissions(player, "Lupi.list")) {
+                    	   if (args.length == 1) {
+                    		   player = getPlayer(args[1]);
+                    	   }
+                    	   
                            showWolves(player);
                            
                            return true;
