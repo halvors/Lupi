@@ -83,6 +83,7 @@ public class LupiWorldListener extends WorldListener {
     				if (wolf.isTamed() && WolfManager.hasWolf(wolf)) {
     					if (worldConfig.wolfKeepChunksLoaded) {
     						event.setCancelled(true);
+    						return;
     					}
     				}
     			}

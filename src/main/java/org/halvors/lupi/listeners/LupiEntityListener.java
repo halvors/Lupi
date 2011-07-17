@@ -68,6 +68,7 @@ public class LupiEntityListener extends EntityListener {
             	if (reason == SpawnReason.NATURAL) {
             		if (!worldConfig.wolfEnable) {
             			event.setCancelled(true);
+            			return;
             		}
             	}
             }
@@ -178,11 +179,13 @@ public class LupiEntityListener extends EntityListener {
                     	if (WolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
                     		if (worldConfig.wolfPvp && world.getPVP()) {
                     			event.setCancelled(true);
+                    			return;
                     		}
                     	}
                 	} else {
                 		if (worldConfig.wolfFriendly) {
                 			event.setCancelled(true);
+                			return;
                 		}
                 	}
                 }
