@@ -32,11 +32,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.util.LupiUtil;
 import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.SelectedWolfManager;
 import org.halvors.lupi.wolf.WolfManager;
 import org.halvors.lupi.wolf.WolfTable;
-
 
 /**
  * Represents a CommandExecutor.
@@ -73,7 +73,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                    } else if (subCommand.equalsIgnoreCase("list")) {
                        if (Lupi.hasPermissions(player, "Lupi.list")) {
                     	   if (args.length == 1) {
-                    		   player = getPlayer(args[1]);
+                    		   player = LupiUtil.getPlayer(args[1]);
                     	   }
                     	   
                            showWolves(player);
@@ -196,7 +196,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                            if (args.length == 2) {
                                if (SelectedWolfManager.hasSelectedWolf(player)) {
                                    wolf = SelectedWolfManager.getSelectedWolf(player);
-                                   receiver = getPlayer(args[1]);
+                                   receiver = LupiUtil.getPlayer(args[1]);
                                } else {
                                    player.sendMessage(ChatColor.RED + "No wolf selected.");
                                     
@@ -207,7 +207,7 @@ public class LupiCommandExecutor implements CommandExecutor {
 
                                if (WolfManager.hasLoadedWolf(name, owner)) {
                                    wolf = WolfManager.getWolf(name, owner).getEntity();
-                                   receiver = getPlayer(args[2]);;
+                                   receiver = LupiUtil.getPlayer(args[2]);;
                                } else {
                                    player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                                     
@@ -368,15 +368,5 @@ public class LupiCommandExecutor implements CommandExecutor {
         if (Lupi.hasPermissions(player, "Wolf.wolf.release")) {
             player.sendMessage(command + "release " + ChatColor.GREEN + "<" + ChatColor.WHITE + "name" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Release your wolf.");
         }
-    }
-    
-    /**
-     * Get the best matching player.
-     * 
-     * @param name
-     * @return
-     */
-    public Player getPlayer(String name) {
-    	return plugin.getServer().matchPlayer(name).get(0);
     }
 }
