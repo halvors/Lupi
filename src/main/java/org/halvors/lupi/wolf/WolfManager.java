@@ -29,13 +29,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
 import com.avaje.ebean.EbeanServer;
@@ -48,7 +47,7 @@ import com.avaje.ebean.EbeanServer;
 public class WolfManager {
     private final static HashMap<UUID, Wolf> wolves = new HashMap<UUID, Wolf>();
     private final static List<String> wolfNames = new ArrayList<String>();
-    private final static EbeanServer db = Lupi.getDb();
+    private final static EbeanServer db = Lupi.getDB();
     
     public WolfManager() {
     	initRandomNames();
@@ -400,7 +399,7 @@ public class WolfManager {
      */
     public static Wolf getWolf(UUID uniqueId) {
     	if (!hasLoadedWolf(uniqueId)) {
-    		addWolf(getEntity(uniqueId));
+    		addWolf(WolfUtil.getBukkitWolf(uniqueId));
     	}
     	
         return wolves.get(uniqueId);
@@ -476,26 +475,6 @@ public class WolfManager {
         }
         
         return wolves;
-    }
-    
-    /**
-     * Get the wolf entity.
-     * 
-     * @return
-     */
-    public static org.bukkit.entity.Wolf getEntity(UUID uniqueId) {
-    	for (World world : Bukkit.getServer().getWorlds()) {
-        	for (Entity entity : world.getLivingEntities()) {
-            	if (entity instanceof org.bukkit.entity.Wolf) {
-                	if (uniqueId.equals(entity.getUniqueId())) {
-                		return (org.bukkit.entity.Wolf) entity;
-                	}
-            	}
-        	}
-        
-    	}
-    	
-        return null;
     }
     
     /**

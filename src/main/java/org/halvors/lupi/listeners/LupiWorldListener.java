@@ -21,12 +21,16 @@
 
 package org.halvors.lupi.listeners;
 
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.WolfManager;
 
 /**
@@ -36,9 +40,53 @@ import org.halvors.lupi.wolf.WolfManager;
  */
 public class LupiWorldListener extends WorldListener {
 //    private final Lupi plugin;
+	
+	private final ConfigurationManager configManager;
     
     public LupiWorldListener(Lupi plugin) {
 //        this.plugin = plugin;
+    	this.configManager = plugin.getConfigurationManager();
+    }
+    
+    /*
+    @Override
+    public void onChunkLoad(ChunkLoadEvent event) {
+    	Chunk chunk = event.getChunk();
+    	
+    	// Add tamed wolves that not already exists in database.
+    	for (Entity entity : chunk.getEntities()) {
+    		if (entity instanceof Wolf) {
+    			Wolf wolf = (Wolf) entity;
+    			
+    			if (wolf.isTamed() && !WolfManager.hasWolf(wolf)) {
+    				WolfManager.addWolf(wolf);
+    			}
+    		}
+    	}
+    }
+    */
+    
+    @Override
+    public void onChunkUnload(ChunkUnloadEvent event) {
+    	if (!event.isCancelled()) {
+    		Chunk chunk = event.getChunk();
+    		World world = event.getWorld();
+    		WorldConfiguration worldConfig = configManager.get(world);
+    	
+    		// Prevent chunk with a tamed wolf in from unload here.
+    		for (Entity entity : chunk.getEntities()) {
+    			if (entity instanceof Wolf) {
+    				Wolf wolf = (Wolf) entity;
+    			
+    				if (wolf.isTamed() && WolfManager.hasWolf(wolf)) {
+    					if (worldConfig.wolfKeepChunksLoaded) {
+    						event.setCancelled(true);
+    						return;
+    					}
+    				}
+    			}
+    		}
+    	}
     }
     
     @Override

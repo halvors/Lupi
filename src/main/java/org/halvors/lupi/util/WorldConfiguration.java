@@ -47,6 +47,7 @@ public class WorldConfiguration {
     public boolean wolfFriendly;
     public boolean wolfPvp;
     public int wolfLimit;
+    public boolean wolfKeepChunksLoaded;
     
     public int infoItem;
     
@@ -81,6 +82,7 @@ public class WorldConfiguration {
         wolfFriendly = config.getBoolean("wolf.friendly", wolfFriendly);
         wolfPvp = config.getBoolean("wolf.pvp", wolfPvp);
         wolfLimit = config.getInt("wolf.limit", wolfLimit);
+        wolfKeepChunksLoaded = config.getBoolean("wolf.keepchunksloaded", wolfKeepChunksLoaded);
         
         infoItem = config.getInt("info.item", infoItem);
         
@@ -91,6 +93,6 @@ public class WorldConfiguration {
     }
     
     public String getWorldName() {
-        return this.worldName;
+        return worldName;
     }
 }

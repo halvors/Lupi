@@ -34,16 +34,12 @@ import org.halvors.lupi.Lupi;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
 import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
-import com.avaje.ebean.EbeanServer;
-
 /**
  * Represents a wolf.
  * 
  * @author halvors
  */
 public class Wolf {
-	private final static EbeanServer db = Lupi.getDb();
-	
     private UUID uniqueId;
     
     public Wolf(UUID uniqueId) {
@@ -56,7 +52,7 @@ public class Wolf {
      * @return
      */
     public WolfTable getWolfTable() {
-        return db.find(WolfTable.class).where()
+        return Lupi.getDB().find(WolfTable.class).where()
             .ieq("uniqueId", uniqueId.toString()).findUnique();
     }
     
@@ -99,12 +95,12 @@ public class Wolf {
      * @param name
      */
     public void setName(String name) {
-        WolfTable wt = getWolfTable();
+    	WolfTable wt = getWolfTable();
         
         if (wt != null) {
             wt.setName(name);
             
-            db.update(wt);
+            Lupi.getDB().update(wt);
             
             if (hasLoadedInventory()) {
                 getInventory().setName(name + "'s inventory");
@@ -146,23 +142,8 @@ public class Wolf {
             // Set the wolf owner.
             wolf.setOwner(player);
             
-            db.update(wt);
+            Lupi.getDB().update(wt);
         }
-    }
-    
-    /**
-     * Get world.
-     * 
-     * @return the World
-     */
-    public World getWorld() {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            return Bukkit.getServer().getWorld(wt.getWorld());
-        }
-        
-        return null;
     }
     
     /**
@@ -176,7 +157,7 @@ public class Wolf {
         if (wt != null) {
             wt.setWorld(world.getName());
             
-            db.update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
@@ -190,11 +171,26 @@ public class Wolf {
     	if (wt != null && world.getName() != wt.getWorld()) {
             wt.setWorld(world.getName());
             
-            db.update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
     /**
+	 * Get world.
+	 * 
+	 * @return the World
+	 */
+	public World getWorld() {
+	    WolfTable wt = getWolfTable();
+	    
+	    if (wt != null) {
+	        return Bukkit.getServer().getWorld(wt.getWorld());
+	    }
+	    
+	    return null;
+	}
+
+	/**
      * Check if wolf has inventory.
      * 
      * @return true if wolf has inventory.
@@ -237,7 +233,7 @@ public class Wolf {
         if (wt != null) {
             wt.setInventory(inventory);
             
-            db.update(wt);
+            Lupi.getDB().update(wt);
         }
     }
     
@@ -295,7 +291,32 @@ public class Wolf {
             }
         }
     }
-
+    
+    /**
+     * Check if wolf has armor.
+     * 
+     * @return true if wolf has armor
+     */
+    public boolean hasArmor() {
+    	WolfInventory wi = getInventory();
+    	
+    	return wi.contains(Material.DIAMOND_BLOCK) || wi.contains(Material.IRON_BLOCK) || wi.contains(Material.GOLD_BLOCK);
+    }
+    
+    public int getArmor() {
+    	WolfInventory wi = getInventory();
+    	
+    	if (wi.contains(Material.DIAMOND_BLOCK)) {
+    		return 3;
+    	} else if (wi.contains(Material.IRON_BLOCK)) {
+    		return 2;
+    	} else if (wi.contains(Material.GOLD_BLOCK)) {
+    		return 1;
+    	}
+    	
+    	return 0;
+    }
+    
     /**
      * Get the wolf entity.
      * 

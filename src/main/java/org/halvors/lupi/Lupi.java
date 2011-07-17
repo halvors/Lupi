@@ -86,22 +86,24 @@ public class Lupi extends JavaPlugin {
         setupDatabase();
         db = getDatabase();
         
+        // Load wolves to WolfManager.
+		WolfManager.load();
+        
         // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
-//        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TAME, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
 
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
-
+        
+//        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
         
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
-        
-        // Load wolves to WolfManager.
-		WolfManager.load();
         
         log(Level.INFO, "version " + getVersion() + " is enabled!");
     }
@@ -152,7 +154,7 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the name.
      * 
-     * @return
+     * @return the plugin name
      */
     public String getName() {
         return desc.getName();
@@ -161,7 +163,7 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the version.
      * 
-     * @return
+     * @return the plugin version
      */
     public String getVersion() {
         return desc.getVersion();
@@ -170,7 +172,7 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the Lupi instance.
      * 
-     * @return
+     * @return the Lupi instance
      */
     public static Lupi getInstance() {
     	return instance;
@@ -179,16 +181,16 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the database.
      * 
-     * @return
+     * @return the EbeanServer
      */
-    public static EbeanServer getDb() {
+    public static EbeanServer getDB() {
     	return db;
     }
     
     /**
      * Get the ConfigurationManager.
      * 
-     * @return
+     * @return the ConfigurationManager
      */
     public ConfigurationManager getConfigurationManager() {
         return configuration;
@@ -197,7 +199,7 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the WolfManager.
      * 
-     * @return
+     * @return the WolfManager
      */
     public static WolfManager getWolfManager() {
     	return wolfManager;
@@ -206,7 +208,7 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the WolfInventoryManager.
      * 
-     * @return
+     * @return the WolfInventoryManager
      */
     public static WolfInventoryManager getWolfInventoryManager() {
     	return wolfInventoryManager;
@@ -215,7 +217,7 @@ public class Lupi extends JavaPlugin {
     /**
      * Get the SelectedWolfManager.
      * 
-     * @return
+     * @return the SelectedWolfManager
      */
     public static SelectedWolfManager getSelectedWolfManager() {
     	return selectedWolfManager;

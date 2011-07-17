@@ -37,7 +37,7 @@ import com.avaje.ebean.EbeanServer;
  */
 public class WolfInventoryManager {
     private final static HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
-    private final static EbeanServer db = Lupi.getDb();
+    private final static EbeanServer db = Lupi.getDB();
     
     /**
      * Get a WolfInventoryTable.

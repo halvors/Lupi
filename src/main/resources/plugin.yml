@@ -12,7 +12,7 @@ commands:
         description: Lupi commands.
         usage: |
             /<command> help - Show help.
-            /<command> list - List all tamed wolves.
+            /<command> list <player> - List all tamed wolves.
             /<command> name - View the selected wolf's name.
             /<command> setname <name> - Set the selected wolf's name.
             /<command> call <wolf> - Call your wolf.

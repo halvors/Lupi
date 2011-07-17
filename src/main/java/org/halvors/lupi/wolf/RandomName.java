@@ -66,6 +66,6 @@ public class RandomName {
      * @return String
      */
     public static String getRandomName() {
-        return names.get(random.nextInt(names.size() - 1 ));
+        return names.get(random.nextInt(names.size() - 1));
     }
 }

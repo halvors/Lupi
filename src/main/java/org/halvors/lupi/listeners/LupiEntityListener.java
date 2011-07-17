@@ -27,11 +27,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.WorldConfiguration;
@@ -66,13 +67,13 @@ public class LupiEntityListener extends EntityListener {
             	if (reason == SpawnReason.NATURAL) {
             		if (!worldConfig.wolfEnable) {
             			event.setCancelled(true);
+            			return;
             		}
             	}
             }
         }
     }
     
-    /*
     @Override
     public void onEntityDamage(EntityDamageEvent event) {
     	if (!event.isCancelled()) {
@@ -81,19 +82,28 @@ public class LupiEntityListener extends EntityListener {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
-    			if (wolfManager.hasWolf(wolf)) {
-    				com.halvors.wolf.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    			if (wolf.isTamed()) {
+    				org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
     				
-    				if (wolf1.hasInventory()) {
+    				// Check if wolf has armor.
+    				if (wolf1.hasArmor()) {
+    					int damage = event.getDamage() - wolf1.getArmor();
+    					
+    					event.setDamage(damage);
+    				}
+    				
+    				/*
+    				// Check if wolf has loaded inventory.
+    				if (wolf1.hasLoadedInventory()) {
     					WolfInventory wi = wolf1.getInventory();
     					
     					// TODO: Make wolf eat food from inventory here.
     				}
+    				*/
     			}
     		}
     	}
     }
-    */
     
     @Override
     public void onEntityDeath(EntityDeathEvent event) {
@@ -168,11 +178,13 @@ public class LupiEntityListener extends EntityListener {
                     	if (WolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
                     		if (worldConfig.wolfPvp && world.getPVP()) {
                     			event.setCancelled(true);
+                    			return;
                     		}
                     	}
                 	} else {
                 		if (worldConfig.wolfFriendly) {
                 			event.setCancelled(true);
+                			return;
                 		}
                 	}
                 }
