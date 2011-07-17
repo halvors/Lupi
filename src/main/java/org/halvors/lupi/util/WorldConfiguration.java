@@ -94,6 +94,6 @@ public class WorldConfiguration {
     }
     
     public String getWorldName() {
-        return this.worldName;
+        return worldName;
     }
 }

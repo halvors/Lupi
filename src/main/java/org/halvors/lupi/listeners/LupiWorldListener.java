@@ -81,7 +81,7 @@ public class LupiWorldListener extends WorldListener {
     				Wolf wolf = (Wolf) entity;
     			
     				if (wolf.isTamed() && WolfManager.hasWolf(wolf)) {
-    					if (worldConfig.wolfKeepChunksLoaded) { // TODO: Implement config option wolfKeepChunksLoaded
+    					if (worldConfig.wolfKeepChunksLoaded) {
     						event.setCancelled(true);
     					}
     				}
