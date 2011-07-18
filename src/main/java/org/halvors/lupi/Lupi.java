@@ -28,9 +28,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,8 +44,6 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 import org.halvors.lupi.wolf.inventory.WolfInventoryTable;
 
 import com.avaje.ebean.EbeanServer;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Lupi extends JavaPlugin {
     private final Logger logger = Logger.getLogger("Minecraft");
@@ -62,7 +58,6 @@ public class Lupi extends JavaPlugin {
     
     private static Lupi instance;
     private static EbeanServer db;
-    private static PermissionHandler permissions;
     
     private static final WolfManager wolfManager = new WolfManager();
     private static final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager();
@@ -110,8 +105,6 @@ public class Lupi extends JavaPlugin {
         // Register our commands.
         getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
         
-        setupPermissions();
-        
         log(Level.INFO, "version " + getVersion() + " is enabled!");
     }
     
@@ -134,7 +127,7 @@ public class Lupi extends JavaPlugin {
             getDatabase().find(WolfTable.class).findRowCount();
             getDatabase().find(WolfInventoryTable.class).findRowCount();
         } catch (PersistenceException ex) {
-            log(Level.INFO, "Installing database for " + getDescription().getName() + " due to first time usage");
+            log(Level.INFO, "Installing database for " + getName() + " due to first time usage");
             installDDL();
         }
     }
@@ -146,36 +139,6 @@ public class Lupi extends JavaPlugin {
         list.add(WolfInventoryTable.class);
         
         return list;
-    }
-    
-    /**
-     * Setup the Permissions plugin.
-     */
-    private void setupPermissions() {
-        Plugin plugin = getServer().getPluginManager().getPlugin("Permissions");
-
-        if (permissions == null) {
-            if (plugin != null) {
-                permissions = ((Permissions) plugin).getHandler();
-            } else {
-                log(Level.INFO, "Permission system not detected, defaulting to OP");
-            }
-        }
-    }
-    
-    /**
-     * Check if a player has the given permission.
-     * 
-     * @param player
-     * @param node
-     * @return true if player has the given permission
-     */
-    public static boolean hasPermissions(Player player, String node) {
-        if (permissions != null) {
-            return permissions.has(player, node);
-        } else {
-            return player.isOp();
-        }
     }
     
     /**

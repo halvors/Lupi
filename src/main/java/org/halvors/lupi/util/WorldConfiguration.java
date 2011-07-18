@@ -27,7 +27,6 @@ import java.util.logging.Level;
 import org.bukkit.util.config.Configuration;
 import org.halvors.lupi.Lupi;
 
-
 /**
  * Holds the configuration for individual worlds.
  * 

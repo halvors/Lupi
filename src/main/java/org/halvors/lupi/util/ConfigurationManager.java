@@ -32,7 +32,6 @@ import org.bukkit.World;
 import org.bukkit.util.config.Configuration;
 import org.halvors.lupi.Lupi;
 
-
 /**
  * Represents the global configuration and also delegates configuration
  * for individual worlds.

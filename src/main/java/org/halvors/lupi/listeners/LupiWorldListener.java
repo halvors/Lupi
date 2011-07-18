@@ -33,8 +33,6 @@ import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.WolfManager;
 
-
-
 /**
  * Handle events for all World related events.
  * 

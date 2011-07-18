@@ -1,12 +1,11 @@
 name: Lupi
 main: org.halvors.lupi.Lupi
-version: "${project.version}"
+version: 0.0.1
 description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92, adamonline45]
 website:
 database: true
 load: startup
-
 commands:
     wolf:
         aliases: [lupi]
@@ -20,3 +19,23 @@ commands:
             /<command> stop <wolf> - Stop your wolf from attacking.
             /<command> give <wolf> <player> - Give your wolf to an other player.
             /<command> release <wolf> - Release your wolf.
+permissions:
+    lupi.wolf.*:
+        default: op
+        description: Allows use of all /wolf commands.
+        children:
+            lupi.wolf.help: true
+            lupi.wolf.list: true
+            lupi.wolf.select: true
+            lupi.wolf.info: true
+            lupi.wolf.inventory: true
+    lupi.wolf.help:
+        description: Allows viewing of usage for /wolf.
+    lupi.wolf.list:
+        description: Allows use of /wolf list.
+    lupi.wolf.select:
+        description: Allows you to select a wolf.
+    lupi.wolf.info:
+        description: Allows you to view info about a wolf.
+    lupi.wolf.inventory:
+        description: Allows use of wolf inventory.
