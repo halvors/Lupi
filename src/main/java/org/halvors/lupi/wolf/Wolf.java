@@ -322,6 +322,23 @@ public class Wolf {
         }
     }
     
+    public boolean hasFood() {
+    	WolfInventory wi = getInventory();
+    	
+    	return wi.contains(Material.PORK) ||
+    		wi.contains(Material.GRILLED_PORK);
+    }
+    
+    public int getFood() {
+    	int food = 2; // One heart.
+    	
+    	if (hasFood()) {
+    		return food;
+    	}
+    	
+    	return 0;
+    }
+    
     /**
      * Check if wolf has armor.
      * 
@@ -330,18 +347,19 @@ public class Wolf {
     public boolean hasArmor() {
     	WolfInventory wi = getInventory();
     	
-    	return wi.contains(Material.DIAMOND_BLOCK) || wi.contains(Material.IRON_BLOCK) || wi.contains(Material.GOLD_BLOCK);
+    	return wi.contains(Material.DIAMOND_BLOCK);
     }
     
+    /**
+     * Get the armorHealth.
+     * 
+     * @return
+     */
     public int getArmor() {
-    	WolfInventory wi = getInventory();
+    	int armor = 5;
     	
-    	if (wi.contains(Material.DIAMOND_BLOCK)) {
-    		return 3;
-    	} else if (wi.contains(Material.IRON_BLOCK)) {
-    		return 2;
-    	} else if (wi.contains(Material.GOLD_BLOCK)) {
-    		return 1;
+    	if (hasArmor()) {
+    		return armor;
     	}
     	
     	return 0;

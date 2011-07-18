@@ -92,14 +92,15 @@ public class LupiEntityListener extends EntityListener {
     					event.setDamage(damage);
     				}
     				
-    				/*
     				// Check if wolf has loaded inventory.
     				if (wolf1.hasLoadedInventory()) {
-    					WolfInventory wi = wolf1.getInventory();
-    					
-    					// TODO: Make wolf eat food from inventory here.
+    					// Check if wolf has food in it's inventory.
+    					if (wolf1.hasFood()) {
+    						int damage = event.getDamage() - wolf1.getFood();
+        					
+        					event.setDamage(damage);
+    					}
     				}
-    				*/
     			}
     		}
     	}

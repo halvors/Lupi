@@ -1,7 +1,6 @@
 Version 0.1
     - Fix these general crazy NPE's, probatly caused database may be null.
-    - Fix NPE in getRandomName().
-    - Move all RandomName stuff in WolfManager into RandomName.java.
+    - Rewrite RandomName and move all that stuff to RandomName.java
     - Fix name duping bug for wolves.
     - Fix load and unload for inventory.
     - Add configuration nodes. And be sure it's flexible for future changes.
@@ -11,8 +10,9 @@ Version 0.1
     - Add ability for tamed wolves to have some kind of armor. Like a diamond block in it's inventory.
 
 Version 0.2
-    - Add events, call event when a wolf is added / deleted in Lupi.
+    - Add events.
     - Add wolf age. Will be minecraft days/years from it's tamed.
+    - Add guard wolf's if you make wolf sit with a sword, wolf will attack any entity that is 5 blocks away.
     - Wolf home. By default set it where the wolf was tamed?
     - Add support for tamed wolves to be teleported to other worlds if player use portal.
     - Set wolf sit when open inventory and set them stand up when close inventory. (Will need InventoryOpenEvent and InventoryCloseEvent).

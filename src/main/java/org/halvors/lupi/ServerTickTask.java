@@ -11,6 +11,10 @@ import org.halvors.lupi.wolf.inventory.WolfInventory;
 public class ServerTickTask implements Runnable {
 	@Override
 	public void run() {
+		checkNearbyEntities();
+	}
+	
+	private void checkNearbyEntities() {
 		// Make wolf pickup items.
 		for (World world : Bukkit.getServer().getWorlds()) {
 			for (Entity entity : world.getEntities()) {
