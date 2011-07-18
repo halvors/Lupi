@@ -460,7 +460,7 @@ public class WolfInventory extends TileEntityChest {
         
         return leftover;
     }
-    
+
     /**
      * Removes the given ItemStacks from the inventory.
      *
