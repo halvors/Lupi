@@ -109,6 +109,36 @@ public class Wolf {
     }
     
     /**
+     * Get age.
+     * 
+     * @return the wolf's age
+     */
+    public int getAge() {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            return wt.getAge();
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * Set age.
+     * 
+     * @param age
+     */
+    public void setAge(int age) {
+    	WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setAge(age);
+            
+            Lupi.getDB().update(wt);
+        }
+    }
+    
+    /**
      * Get owner.
      * 
      * @return the Player that is the owner.

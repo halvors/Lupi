@@ -13,7 +13,6 @@ Version 0.1
 Version 0.2
     - Add events, call event when a wolf is added / deleted in Lupi.
     - Add wolf age. Will be minecraft days/years from it's tamed.
-    - Make wolf's pickup items that are not dropped in 1 block from them. Also pickup item when they move, like normal players. (Think we'll need EntityMoveEvent)
     - Wolf home. By default set it where the wolf was tamed?
     - Add support for tamed wolves to be teleported to other worlds if player use portal.
     - Set wolf sit when open inventory and set them stand up when close inventory. (Will need InventoryOpenEvent and InventoryCloseEvent).

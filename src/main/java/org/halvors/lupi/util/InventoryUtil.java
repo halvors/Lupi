@@ -3,13 +3,25 @@ package org.halvors.lupi.util;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtil {
+	/**
+	 * Convert to ItemStack.
+	 * 
+	 * @param items
+	 * @return
+	 */
 	/*
-	public static ItemStack toItemStack(net.minecraft.server.ItemStack item) {
-		return new CraftItemStack(1, item.getItem());
+	public static ItemStack toItemStack(net.minecraft.server.ItemStack items) {
+		return new CraftItemStack(items.getItem());
 	}
 	*/
 	
-	public static net.minecraft.server.ItemStack fromItemStack(ItemStack item) {
-		return new net.minecraft.server.ItemStack(item.getTypeId(), item.getAmount(), item.getDurability());
+	/**
+	 * Convert from ItemStack.
+	 * 
+	 * @param items
+	 * @return
+	 */
+	public static net.minecraft.server.ItemStack fromItemStack(ItemStack items) {
+		return new net.minecraft.server.ItemStack(items.getTypeId(), items.getAmount(), items.getDurability());
 	}
 }
