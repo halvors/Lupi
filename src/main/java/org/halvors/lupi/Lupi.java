@@ -52,7 +52,10 @@ public class Lupi extends JavaPlugin {
     private PluginManager pm;
     private PluginDescriptionFile desc;
     
-    private final ConfigurationManager configuration;
+    private final ConfigurationManager configManager;
+    private final WolfManager wolfManager;
+    private final WolfInventoryManager wolfInventoryManager;
+    
     private final LupiEntityListener entityListener;
     private final LupiPlayerListener playerListener;
     private final LupiWorldListener worldListener;
@@ -60,8 +63,6 @@ public class Lupi extends JavaPlugin {
     private static Lupi instance;
     private static EbeanServer db;
     
-    private static final WolfManager wolfManager = new WolfManager();
-    private static final WolfInventoryManager wolfInventoryManager = new WolfInventoryManager();
     private static final SelectedWolfManager selectedWolfManager = new SelectedWolfManager();
     
     /**
@@ -69,7 +70,11 @@ public class Lupi extends JavaPlugin {
      */
     public Lupi() {
     	Lupi.instance = this;
-        this.configuration = new ConfigurationManager(this);
+    	
+        this.configManager = new ConfigurationManager(this);
+        this.wolfManager = new WolfManager(this);
+        this.wolfInventoryManager = new WolfInventoryManager(this);
+        
         this.entityListener = new LupiEntityListener(this);
         this.playerListener = new LupiPlayerListener(this);
         this.worldListener = new LupiWorldListener(this);
@@ -81,14 +86,14 @@ public class Lupi extends JavaPlugin {
         desc = getDescription();
         
         // Load configuration.
-        configuration.load();
+        configManager.load();
         
         // Setup database.
         setupDatabase();
         db = getDatabase();
         
         // Load wolves to WolfManager.
-		WolfManager.load();
+		wolfManager.load();
         
         // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
@@ -115,10 +120,10 @@ public class Lupi extends JavaPlugin {
     @Override
     public void onDisable() {
         // Save configuration.
-    	configuration.unload();
+    	configManager.unload();
         
         // Unload wolves from WolfManager.
-        WolfManager.unload();
+        wolfManager.unload();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
@@ -197,7 +202,7 @@ public class Lupi extends JavaPlugin {
      * @return the ConfigurationManager
      */
     public ConfigurationManager getConfigurationManager() {
-        return configuration;
+        return configManager;
     }
     
     /**
@@ -205,7 +210,7 @@ public class Lupi extends JavaPlugin {
      * 
      * @return the WolfManager
      */
-    public static WolfManager getWolfManager() {
+    public WolfManager getWolfManager() {
     	return wolfManager;
     }
     
@@ -214,7 +219,7 @@ public class Lupi extends JavaPlugin {
      * 
      * @return the WolfInventoryManager
      */
-    public static WolfInventoryManager getWolfInventoryManager() {
+    public WolfInventoryManager getWolfInventoryManager() {
     	return wolfInventoryManager;
     }
     

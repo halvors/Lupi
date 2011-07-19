@@ -46,11 +46,13 @@ import org.halvors.lupi.wolf.WolfManager;
 public class LupiEntityListener extends EntityListener {
 //    private final Lupi plugin;
     
-    private final ConfigurationManager configuration;
-
+    private final ConfigurationManager configManager;
+    private final WolfManager wolfManager;
+    
     public LupiEntityListener(Lupi plugin) {
 //        this.plugin = plugin;
-        this.configuration = plugin.getConfigurationManager();
+        this.configManager = plugin.getConfigurationManager();
+        this.wolfManager = plugin.getWolfManager();
     }
     
     @Override
@@ -59,7 +61,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             SpawnReason reason = event.getSpawnReason();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configuration.get(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
 //            Wolf wolf = (Wolf) entity;
@@ -83,22 +85,21 @@ public class LupiEntityListener extends EntityListener {
     			Wolf wolf = (Wolf) entity;
     			
     			if (wolf.isTamed()) {
-    				org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
-    				
-    				// Check if wolf has armor.
-    				if (wolf1.hasArmor()) {
-    					int damage = event.getDamage() - wolf1.getArmor();
-    					
-    					event.setDamage(damage);
-    				}
+    				org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
     				
     				// Check if wolf has loaded inventory.
     				if (wolf1.hasLoadedInventory()) {
-    					// Check if wolf has food in it's inventory.
-    					if (wolf1.hasFood()) {
-    						int damage = event.getDamage() - wolf1.getFood();
-        					
-        					event.setDamage(damage);
+    					int damage = 0;
+    					
+    					// Check if wolf has armor or food.
+    					if (wolf1.hasArmor()) {
+    						damage = event.getDamage() - wolf1.getArmor();
+    					} else if (wolf1.hasFood()) {
+    						damage = event.getDamage() - wolf1.getFood();
+    					}
+    					
+    					if (damage <= 20) {
+    						event.setDamage(damage);
     					}
     				}
     			}
@@ -114,13 +115,13 @@ public class LupiEntityListener extends EntityListener {
             Wolf wolf = (Wolf) entity;
             
             if (wolf.isTamed()) {
-                org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
                 if (wolf1.hasInventory()) {
                 	wolf1.dropInventory();
                 }
                 
-                WolfManager.removeWolf(wolf);
+                wolfManager.removeWolf(wolf);
             }
         }
     }
@@ -131,7 +132,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             Player player = (Player) event.getOwner();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configuration.get(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
@@ -140,7 +141,7 @@ public class LupiEntityListener extends EntityListener {
                 int limit = worldConfig.wolfLimit;
                 
                 if (limit > 0) {
-                    if (limit <= WolfManager.getWolves(player).size()) {
+                    if (limit <= wolfManager.getWolves(player).size()) {
                         player.sendMessage("You can't tame more wolves, the limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
                         
                         event.setCancelled(true);
@@ -149,8 +150,8 @@ public class LupiEntityListener extends EntityListener {
                 }
                 
                 // Add the wolf.
-                if (WolfManager.addWolf(wolf)) {
-                    org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                if (wolfManager.addWolf(wolf)) {
+                    org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     
                     player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                     player.sendMessage("You can change name with /wolf setname <name>.");
@@ -167,7 +168,7 @@ public class LupiEntityListener extends EntityListener {
             Entity entity = event.getEntity();
             Entity target = event.getTarget();
             World world = entity.getWorld();
-            WorldConfiguration worldConfig = configuration.get(world);
+            WorldConfiguration worldConfig = configManager.get(world);
             
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
@@ -176,7 +177,7 @@ public class LupiEntityListener extends EntityListener {
                     Player player = (Player) target;
 
                     if (wolf.isTamed()) {
-                    	if (WolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
+                    	if (wolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
                     		if (worldConfig.wolfPvp && world.getPVP()) {
                     			event.setCancelled(true);
                     			return;

@@ -11,6 +11,7 @@ Version 0.1
 
 Version 0.2
     - Add events.
+    - Change world in database when wolf switch world.
     - Add wolf age. Will be minecraft days/years from it's tamed.
     - Add guard wolf's if you make wolf sit with a sword, wolf will attack any entity that is 5 blocks away.
     - Wolf home. By default set it where the wolf was tamed?

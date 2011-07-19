@@ -37,7 +37,6 @@ public class WolfTable {
     private int id;
     private String uniqueId;
     private String name;
-    private int age;
     private String owner;
     private String world;
     private boolean inventory;
@@ -64,14 +63,6 @@ public class WolfTable {
 
     public void setName(String name) {
         this.name = name;
-    }
-    
-    public int getAge() {
-    	return age;
-    }
-    
-    public void setAge(int age) {
-    	this.age = age;
     }
     
     public String getOwner() {

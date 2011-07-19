@@ -46,11 +46,13 @@ import org.halvors.lupi.wolf.WolfTable;
 public class LupiCommandExecutor implements CommandExecutor {
     private final Lupi plugin;
 
-    private final ConfigurationManager configuration;
+    private final ConfigurationManager configManager;
+    private final WolfManager wolfManager;
 
     public LupiCommandExecutor(Lupi plugin) {
         this.plugin = plugin;
-        this.configuration = plugin.getConfigurationManager();
+        this.configManager = plugin.getConfigurationManager();
+        this.wolfManager = plugin.getWolfManager();
     }
 
     @Override
@@ -90,8 +92,8 @@ public class LupiCommandExecutor implements CommandExecutor {
     				    if (SelectedWolfManager.hasSelectedWolf(player)) {
                             Wolf wolf = SelectedWolfManager.getSelectedWolf(player);
                             
-                        	if (WolfManager.hasWolf(wolf)) {
-                            	org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                        	if (wolfManager.hasWolf(wolf)) {
+                            	org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                             	
                                 player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                             }
@@ -117,8 +119,8 @@ public class LupiCommandExecutor implements CommandExecutor {
                         } else if (args.length == 3){
                         	String oldName = args[1];
                                
-                            if (WolfManager.hasLoadedWolf(oldName, owner)) {
-                            	wolf = WolfManager.getWolf(oldName, owner).getEntity();
+                            if (wolfManager.hasLoadedWolf(oldName, owner)) {
+                            	wolf = wolfManager.getWolf(oldName, owner).getEntity();
                                 name = args[2];
                                 grammar = "that";
                             } else {
@@ -128,8 +130,8 @@ public class LupiCommandExecutor implements CommandExecutor {
                         	player.sendMessage(ChatColor.RED + "Too many arguments.");
                         }
 
-                        if (WolfManager.hasWolf(wolf) && wolf != null && name != null) {
-                        	org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                        if (wolfManager.hasWolf(wolf) && wolf != null && name != null) {
+                        	org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                        		wolf1.setName(name);
                                
                             player.sendMessage("The name of " + grammar + " wolf has been set to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
@@ -143,8 +145,8 @@ public class LupiCommandExecutor implements CommandExecutor {
     						String name = args[1];
                 			String owner = player.getName();
                 			   
-                			if (WolfManager.hasLoadedWolf(name, owner)) {
-                				Wolf wolf = WolfManager.getWolf(name, owner).getEntity();
+                			if (wolfManager.hasLoadedWolf(name, owner)) {
+                				Wolf wolf = wolfManager.getWolf(name, owner).getEntity();
                             	wolf.teleport(player);
 
                             	player.sendMessage(ChatColor.GREEN + "Your wolf is on its way.");
@@ -167,15 +169,15 @@ public class LupiCommandExecutor implements CommandExecutor {
                         } else {
                         	String name = args[1];
 
-                        	if (WolfManager.hasLoadedWolf(name, owner)) {
-                        		wolf = WolfManager.getWolf(name, owner).getEntity();
+                        	if (wolfManager.hasLoadedWolf(name, owner)) {
+                        		wolf = wolfManager.getWolf(name, owner).getEntity();
                         	} else {
                         		player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                         	}
                         }
 
-                        if (WolfManager.hasWolf(wolf) && wolf != null) {
-                        	org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                        if (wolfManager.hasWolf(wolf) && wolf != null) {
+                        	org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
                         	wolf.setTarget(null);
 
@@ -190,7 +192,7 @@ public class LupiCommandExecutor implements CommandExecutor {
     					String owner = player.getName();
     					Player receiver = null;
     					World world = player.getWorld();
-    					WorldConfiguration worldConfig = configuration.get(world);
+    					WorldConfiguration worldConfig = configManager.get(world);
                            
     					if (args.length == 2) {
     						if (SelectedWolfManager.hasSelectedWolf(player)) {
@@ -202,8 +204,8 @@ public class LupiCommandExecutor implements CommandExecutor {
     					} else if (args.length == 3) {
     						String name = args[1];
 
-    						if (WolfManager.hasLoadedWolf(name, owner)) {
-    							wolf = WolfManager.getWolf(name, owner).getEntity();
+    						if (wolfManager.hasLoadedWolf(name, owner)) {
+    							wolf = wolfManager.getWolf(name, owner).getEntity();
     							receiver = getPlayer(args[2]);;
                             } else {
                             	player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
@@ -212,14 +214,14 @@ public class LupiCommandExecutor implements CommandExecutor {
     						player.sendMessage(ChatColor.RED + "Too many arguments.");
     					}
 
-                    	if (WolfManager.hasWolf(wolf) && wolf != null && receiver != null) {
-                    		org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+                    	if (wolfManager.hasWolf(wolf) && wolf != null && receiver != null) {
+                    		org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     		String name = wolf1.getName();
                     		String to = receiver.getName();
                     		int limit = worldConfig.wolfLimit;
                                
                     		if (limit > 0) {
-                    			List<WolfTable> wts = WolfManager.getWolfTables(player);
+                    			List<WolfTable> wts = wolfManager.getWolfTables(player);
                                    
                     			if (limit <= wts.size()) {
                     				player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
@@ -250,8 +252,8 @@ public class LupiCommandExecutor implements CommandExecutor {
     					} else if (args.length == 2){
     						String name = args[1];
 
-    						if (WolfManager.hasLoadedWolf(name, owner)) {
-    							wolf = WolfManager.getWolf(name, owner).getEntity();
+    						if (wolfManager.hasLoadedWolf(name, owner)) {
+    							wolf = wolfManager.getWolf(name, owner).getEntity();
     						} else {
     							player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
     						}
@@ -259,12 +261,12 @@ public class LupiCommandExecutor implements CommandExecutor {
     						player.sendMessage(ChatColor.RED + "Too many arguments.");
     					}
 
-    					if (WolfManager.hasWolf(wolf) && wolf != null) {
-    						org.halvors.lupi.wolf.Wolf wolf1 = WolfManager.getWolf(wolf);
+    					if (wolfManager.hasWolf(wolf) && wolf != null) {
+    						org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
     						player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has been released.");
                                 
-    						WolfManager.releaseWolf(wolf);
+    						wolfManager.releaseWolf(wolf);
     					}
 
     					return true;
@@ -284,7 +286,7 @@ public class LupiCommandExecutor implements CommandExecutor {
      * @param player
      */
     private void showPlayerWolves(Player player) {
-        List<org.halvors.lupi.wolf.Wolf> wolves = WolfManager.getWolves(player);
+        List<org.halvors.lupi.wolf.Wolf> wolves = wolfManager.getWolves(player);
         
         if (!wolves.isEmpty()) {
         	int size = wolves.size();
@@ -311,9 +313,9 @@ public class LupiCommandExecutor implements CommandExecutor {
     	if (sender instanceof Player) {
     		Player player = (Player) sender;
     		
-    		wolves = WolfManager.getWolves(player.getWorld());
+    		wolves = wolfManager.getWolves(player.getWorld());
     	} else {
-    		wolves = WolfManager.getWolves();
+    		wolves = wolfManager.getWolves();
     	}
         
         if (!wolves.isEmpty()) {

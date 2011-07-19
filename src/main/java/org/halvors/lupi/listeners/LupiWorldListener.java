@@ -40,12 +40,13 @@ import org.halvors.lupi.wolf.WolfManager;
  */
 public class LupiWorldListener extends WorldListener {
 //    private final Lupi plugin;
-	
 	private final ConfigurationManager configManager;
-    
+    private final WolfManager wolfManager;
+	
     public LupiWorldListener(Lupi plugin) {
 //        this.plugin = plugin;
     	this.configManager = plugin.getConfigurationManager();
+    	this.wolfManager = plugin.getWolfManager();
     }
     
     /*
@@ -78,7 +79,7 @@ public class LupiWorldListener extends WorldListener {
     			if (entity instanceof Wolf) {
     				Wolf wolf = (Wolf) entity;
     			
-    				if (wolf.isTamed() && WolfManager.hasWolf(wolf)) {
+    				if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
     					if (worldConfig.wolfKeepChunksLoaded) {
     						event.setCancelled(true);
     						return;
@@ -98,8 +99,8 @@ public class LupiWorldListener extends WorldListener {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
-    			if (wolf.isTamed() && !WolfManager.hasWolf(wolf)) {
-    				WolfManager.addWolf(wolf);
+    			if (wolf.isTamed() && !wolfManager.hasWolf(wolf)) {
+    				wolfManager.addWolf(wolf);
                 }
     		}
     	}

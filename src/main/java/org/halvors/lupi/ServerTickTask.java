@@ -9,6 +9,8 @@ import org.halvors.lupi.wolf.WolfManager;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
 
 public class ServerTickTask implements Runnable {
+	private final WolfManager wolfManager = WolfManager.getInstance();
+	
 	@Override
 	public void run() {
 		checkNearbyEntities();
@@ -22,7 +24,7 @@ public class ServerTickTask implements Runnable {
 					org.bukkit.entity.Wolf bukkitWolf = (org.bukkit.entity.Wolf) entity;
 					
 					if (bukkitWolf.isTamed()) {
-						Wolf wolf = WolfManager.getWolf(bukkitWolf);
+						Wolf wolf = wolfManager.getWolf(bukkitWolf);
 						
 						for (Entity entityItem : bukkitWolf.getNearbyEntities(1, 1, 1)) {
 							if (entityItem instanceof Item) {

@@ -39,7 +39,9 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
  * 
  * @author halvors
  */
-public class Wolf {
+public class Wolf {    
+    private final WolfInventoryManager wolfInventoryManager = WolfInventoryManager.getInstance();
+    
     private UUID uniqueId;
     
     public Wolf(UUID uniqueId) {
@@ -105,36 +107,6 @@ public class Wolf {
             if (hasLoadedInventory()) {
                 getInventory().setName(name + "'s inventory");
             }
-        }
-    }
-    
-    /**
-     * Get age.
-     * 
-     * @return the wolf's age
-     */
-    public int getAge() {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            return wt.getAge();
-        }
-        
-        return 0;
-    }
-    
-    /**
-     * Set age.
-     * 
-     * @param age
-     */
-    public void setAge(int age) {
-    	WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            wt.setAge(age);
-            
-            Lupi.getDB().update(wt);
         }
     }
     
@@ -244,7 +216,7 @@ public class Wolf {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
-            if (wt.isInventory() && WolfInventoryManager.hasWolfInventory(uniqueId)) {
+            if (wt.isInventory() && wolfInventoryManager.hasWolfInventory(uniqueId)) {
             	return true;
             }
         }
@@ -272,7 +244,7 @@ public class Wolf {
      */
     public void addInventory() {
     	if (!hasInventory()) {
-    		WolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
+    		wolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
     		setInventory(true);
     	}
     }
@@ -286,7 +258,7 @@ public class Wolf {
     			dropInventory();
     		}
     		
-    		WolfInventoryManager.removeWolfInventory(uniqueId);
+    		wolfInventoryManager.removeWolfInventory(uniqueId);
     	}
     	
         setInventory(false);
@@ -299,7 +271,7 @@ public class Wolf {
      */
     public WolfInventory getInventory() {
     	if (hasLoadedInventory()) {
-    		return WolfInventoryManager.getWolfInventory(uniqueId);
+    		return wolfInventoryManager.getWolfInventory(uniqueId);
     	}
     	
     	return null;
