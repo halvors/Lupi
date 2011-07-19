@@ -33,10 +33,10 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.halvors.lupi.commands.LupiCommandExecutor;
-import org.halvors.lupi.listeners.LupiEntityListener;
-import org.halvors.lupi.listeners.LupiPlayerListener;
-import org.halvors.lupi.listeners.LupiWorldListener;
+import org.halvors.lupi.command.LupiCommandExecutor;
+import org.halvors.lupi.listener.LupiEntityListener;
+import org.halvors.lupi.listener.LupiPlayerListener;
+import org.halvors.lupi.listener.LupiWorldListener;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.wolf.SelectedWolfManager;
 import org.halvors.lupi.wolf.WolfManager;
@@ -55,6 +55,7 @@ public class Lupi extends JavaPlugin {
     private final ConfigurationManager configManager;
     private final WolfManager wolfManager;
     private final WolfInventoryManager wolfInventoryManager;
+    private final SelectedWolfManager selectedWolfManager;
     
     private final LupiEntityListener entityListener;
     private final LupiPlayerListener playerListener;
@@ -62,8 +63,6 @@ public class Lupi extends JavaPlugin {
     
     private static Lupi instance;
     private static EbeanServer db;
-    
-    private static final SelectedWolfManager selectedWolfManager = new SelectedWolfManager();
     
     /**
      * Lupi is a wolf plugin for Bukkit.
@@ -74,6 +73,7 @@ public class Lupi extends JavaPlugin {
         this.configManager = new ConfigurationManager(this);
         this.wolfManager = new WolfManager(this);
         this.wolfInventoryManager = new WolfInventoryManager(this);
+        this.selectedWolfManager = new SelectedWolfManager(this);
         
         this.entityListener = new LupiEntityListener(this);
         this.playerListener = new LupiPlayerListener(this);
@@ -228,7 +228,7 @@ public class Lupi extends JavaPlugin {
      * 
      * @return the SelectedWolfManager
      */
-    public static SelectedWolfManager getSelectedWolfManager() {
+    public SelectedWolfManager getSelectedWolfManager() {
     	return selectedWolfManager;
     }
 }

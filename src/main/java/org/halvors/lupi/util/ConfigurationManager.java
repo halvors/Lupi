@@ -132,6 +132,7 @@ public class ConfigurationManager {
             			input.close();
                     }
                 } catch (IOException e) {
+                	
                 }
 
                 try {
@@ -139,6 +140,7 @@ public class ConfigurationManager {
                 		output.close();
                     }
                 } catch (IOException e) {
+                	
                 }
             }
         }

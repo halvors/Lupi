@@ -1,13 +1,12 @@
 Version 0.1
-    - Fix these general crazy NPE's, probatly caused database may be null.
-    - Rewrite RandomName and move all that stuff to RandomName.java
+    - Rewrite the random name functions and move all that stuff to RandomNameManager.java - speeddemon92: May you fix this?
     - Fix name duping bug for wolves.
-    - Fix load and unload for inventory.
+    - Fix load and unload for inventory. - Confirm that it's fixed.
     - Add configuration nodes. And be sure it's flexible for future changes.
-    - Add pages support for list and help commands
+    - Add pages support for list and help commands - adminonline45
     - Add admin commands.
-    - Add ability for wolves to eat food (pork) from it's inventory when get damaged.
-    - Add ability for tamed wolves to have some kind of armor. Like a diamond block in it's inventory.
+    - Add ability for wolves to eat food (pork) from it's inventory when get damaged. - Needs to be looked over and improved.
+    - Add ability for tamed wolves to have some kind of armor. Like a diamond block in it's inventory. - Needs to be looked over and improved.
 
 Version 0.2
     - Add events.

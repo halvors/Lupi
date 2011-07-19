@@ -46,6 +46,7 @@ public class WolfManager {
 	private final Lupi plugin;
 //	private final EbeanServer database;
 	private final WolfInventoryManager wolfInventoryManager;
+	private final RandomNameManager randomNameManager;
 	
     private final HashMap<UUID, Wolf> wolves;
     private final List<String> wolfNames;
@@ -56,6 +57,7 @@ public class WolfManager {
     	this.plugin = plugin;
 //    	this.database = plugin.getDatabase();
     	this.wolfInventoryManager = plugin.getWolfInventoryManager();
+    	this.randomNameManager = new RandomNameManager(plugin);
     	
     	this.wolves = new HashMap<UUID, Wolf>();
     	this.wolfNames = new ArrayList<String>();
