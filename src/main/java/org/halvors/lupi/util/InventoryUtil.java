@@ -21,6 +21,6 @@ public class InventoryUtil {
 	 * @return
 	 */
 	public static net.minecraft.server.ItemStack fromBukkitItemStack(ItemStack items) {
-		return new net.minecraft.server.ItemStack(items.getTypeId(), items.getAmount(), items.getDurability());
-	}
+        return new net.minecraft.server.ItemStack(items.getTypeId(), items.getAmount(), items.getDurability());
+    }
 }

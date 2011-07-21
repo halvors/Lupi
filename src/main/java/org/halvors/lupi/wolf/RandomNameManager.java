@@ -30,22 +30,22 @@ import java.util.Random;
 import org.halvors.lupi.Lupi;
 
 public class RandomNameManager {
-//	private final Lupi plugin;
-	
-	private final List<String> names;
-	private final Random random;
-	
-	public RandomNameManager(Lupi plugin) {
-//		this.plugin = plugin;
-		this.names = new ArrayList<String>();
-		this.random = new Random();
-		
-		// Create the default configuration file
+//    private final Lupi plugin;
+    
+    private final List<String> names;
+    private final Random random;
+    
+    public RandomNameManager(Lupi plugin) {
+//        this.plugin = plugin;
+        this.names = new ArrayList<String>();
+        this.random = new Random();
+        
+        // Create the default configuration file
 //        createDefaultFile(new File(plugin.getDataFolder(), "wolfNames.txt"), "wolfNames.txt");
-		
-		initialize();
-	}
-	
+        
+        initialize();
+    }
+    
     /**
      * Generate the table of premade wolf names.
      */
@@ -73,49 +73,49 @@ public class RandomNameManager {
     
     /*
     public void createDefaultFile(File actual, String defaultName) {
-    	// Make parent directories
+        // Make parent directories
         File parent = actual.getParentFile();
         
         if (!parent.exists()) {
-        	parent.mkdirs();
+            parent.mkdirs();
         }
         
         if (actual.exists()) {
-        	return;
+            return;
         }
         
         InputStream input = RandomNameManager.class.getResourceAsStream("/" + defaultName);
         
         if (input != null) {
-        	FileOutputStream output = null;
+            FileOutputStream output = null;
 
             try {
-            	output = new FileOutputStream(actual);
+                output = new FileOutputStream(actual);
                 byte[] buf = new byte[8192];
                 int length = 0;
                 
                 while ((length = input.read(buf)) > 0) {
-                	output.write(buf, 0, length);
+                    output.write(buf, 0, length);
                 }
                 
 //                plugin.log(Level.INFO, "Default configuration file written: " + actual.getAbsolutePath());
             } catch (IOException e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             } finally {
-            	try {
-            		if (input != null) {
-            			input.close();
+                try {
+                    if (input != null) {
+                        input.close();
                     }
                 } catch (IOException e) {
-                	
+                    
                 }
 
                 try {
-                	if (output != null) {
-                		output.close();
+                    if (output != null) {
+                        output.close();
                     }
                 } catch (IOException e) {
-                	
+                    
                 }
             }
         }

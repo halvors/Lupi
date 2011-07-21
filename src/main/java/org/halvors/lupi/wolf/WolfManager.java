@@ -45,30 +45,30 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 public class WolfManager {
 	private final Lupi plugin;
 //	private final EbeanServer database;
-	private final WolfInventoryManager wolfInventoryManager;
-//	private final RandomNameManager randomNameManager;
-	
+    private final WolfInventoryManager wolfInventoryManager;
+//    private final RandomNameManager randomNameManager;
+    
     private final HashMap<UUID, Wolf> wolves;
     private final List<String> wolfNames;
     
     private static WolfManager instance;
     
     public WolfManager(Lupi plugin) {
-    	this.plugin = plugin;
-//    	this.database = plugin.getDatabase();
-    	this.wolfInventoryManager = plugin.getWolfInventoryManager();
-//    	this.randomNameManager = new RandomNameManager(plugin);
-    	
-    	this.wolves = new HashMap<UUID, Wolf>();
-    	this.wolfNames = new ArrayList<String>();
-    	
-    	WolfManager.instance = this;
-    	
-    	initRandomNames();
+        this.plugin = plugin;
+//        this.database = plugin.getDatabase();
+        this.wolfInventoryManager = plugin.getWolfInventoryManager();
+//        this.randomNameManager = new RandomNameManager(plugin);
+        
+        this.wolves = new HashMap<UUID, Wolf>();
+        this.wolfNames = new ArrayList<String>();
+        
+        WolfManager.instance = this;
+        
+        initRandomNames();
     }
     
     public static WolfManager getInstance() {
-    	return instance;
+        return instance;
     }
     
     /**
@@ -118,7 +118,7 @@ public class WolfManager {
      */
     public void load() {
         for (WolfTable wt : getWolfTables()) {
-        	UUID uniqueId = UUID.fromString(wt.getUniqueId());
+            UUID uniqueId = UUID.fromString(wt.getUniqueId());
                 
             loadWolf(uniqueId);
         }
@@ -129,7 +129,7 @@ public class WolfManager {
      */
     public void unload() {
         for (Wolf wolf : getWolves()) {
-        	unloadWolf(wolf.getUniqueId());
+            unloadWolf(wolf.getUniqueId());
         }
     }
     
@@ -152,7 +152,7 @@ public class WolfManager {
     public void unload(World world) {
         for (Wolf wolf : getWolves()) {
             if (wolf.getWorld().getName().equalsIgnoreCase(world.getName())) {
-            	unloadWolf(wolf.getUniqueId());
+                unloadWolf(wolf.getUniqueId());
             }
         }
     }
@@ -165,7 +165,7 @@ public class WolfManager {
      */
     public boolean loadWolf(UUID uniqueId) {
         if (!hasWolf(uniqueId)) {
-        	// Create the Wolf.
+            // Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
             
             // Load inventory if wolf has.
@@ -336,13 +336,13 @@ public class WolfManager {
      * @return
      */
     public boolean hasWolfInDB(UUID uniqueId) {
-    	WolfTable wt = getWolfTable(uniqueId);
-    	
-    	if (wt != null) {
-    		return true;
-    	}
-    	
-    	return false;
+        WolfTable wt = getWolfTable(uniqueId);
+        
+        if (wt != null) {
+            return true;
+        }
+        
+        return false;
     }
     
     /**
@@ -412,10 +412,10 @@ public class WolfManager {
      * @return
      */
     public Wolf getWolf(UUID uniqueId) {
-    	if (!hasWolf(uniqueId)) {
-    		addWolf(WolfUtil.getBukkitWolf(uniqueId));
-    	}
-    	
+        if (!hasWolf(uniqueId)) {
+            addWolf(WolfUtil.getBukkitWolf(uniqueId));
+        }
+        
         return wolves.get(uniqueId);
     }
     

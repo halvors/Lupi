@@ -229,6 +229,6 @@ public class Lupi extends JavaPlugin {
      * @return the SelectedWolfManager
      */
     public SelectedWolfManager getSelectedWolfManager() {
-    	return selectedWolfManager;
+        return selectedWolfManager;
     }
 }

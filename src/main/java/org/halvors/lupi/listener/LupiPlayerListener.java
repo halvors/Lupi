@@ -84,7 +84,7 @@ public class LupiPlayerListener extends PlayerListener {
                     } else if (item == worldConfig.inventoryItem) {
                         if (player.hasPermission("lupi.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
-                            	if (wolf1.hasLoadedInventory()) {
+                                if (wolf1.hasLoadedInventory()) {
                                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                                     entityPlayer.a(wolf1.getInventory());
                                 } else {
@@ -97,7 +97,7 @@ public class LupiPlayerListener extends PlayerListener {
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
                             } else {
-                            	player.sendMessage(ChatColor.RED + "Wolf inventory is not enabled.");
+                                player.sendMessage(ChatColor.RED + "Wolf inventory is not enabled.");
                             }
                         }
                     }

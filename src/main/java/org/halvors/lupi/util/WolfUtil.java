@@ -65,8 +65,8 @@ public class WolfUtil {
         sender.sendMessage("Name: " + ChatColor.YELLOW + wolf.getName());
         sender.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
 	}
-	
-	public static void doNearbyEntityCheck() {
+    
+    public static void doNearbyEntityCheck() {
 		for (World world : Bukkit.getServer().getWorlds()) {
 			for (Entity entity : world.getEntities()) {
 				if (entity instanceof org.bukkit.entity.Wolf) {

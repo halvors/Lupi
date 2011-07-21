@@ -11,6 +11,6 @@ public class LupiUtil {
      * @return the Player
      */
     public static Player getPlayer(String name) {
-    	return Bukkit.getServer().matchPlayer(name).get(0);
+        return Bukkit.getServer().matchPlayer(name).get(0);
     }
 }

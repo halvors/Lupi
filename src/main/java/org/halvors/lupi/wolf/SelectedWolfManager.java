@@ -33,13 +33,13 @@ import org.halvors.lupi.Lupi;
  * @author halvors
  */
 public class SelectedWolfManager {
-//	private final Lupi plugin;
-	
+//    private final Lupi plugin;
+    
     private final HashMap<String, Wolf> selectedWolves;
     
     public SelectedWolfManager(Lupi plugin) {
-//    	this.plugin = plugin;
-    	this.selectedWolves = new HashMap<String, Wolf>();
+//        this.plugin = plugin;
+        this.selectedWolves = new HashMap<String, Wolf>();
     }
     
     /**
