@@ -22,7 +22,7 @@ public class ServerTickTask implements Runnable {
 				if (entity instanceof org.bukkit.entity.Wolf) {
 					org.bukkit.entity.Wolf bukkitWolf = (org.bukkit.entity.Wolf) entity;
 					
-					if (bukkitWolf.isTamed() && wolfManager.hasLoadedWolf(bukkitWolf)) {
+					if (bukkitWolf.isTamed() && wolfManager.hasWolf(bukkitWolf)) {
 						Wolf wolf = wolfManager.getWolf(bukkitWolf);
 						
 						for (Entity entityItem : bukkitWolf.getNearbyEntities(1, 1, 1)) {

@@ -46,7 +46,7 @@ public class WolfManager {
 	private final Lupi plugin;
 //	private final EbeanServer database;
 	private final WolfInventoryManager wolfInventoryManager;
-	private final RandomNameManager randomNameManager;
+//	private final RandomNameManager randomNameManager;
 	
     private final HashMap<UUID, Wolf> wolves;
     private final List<String> wolfNames;
@@ -57,7 +57,7 @@ public class WolfManager {
     	this.plugin = plugin;
 //    	this.database = plugin.getDatabase();
     	this.wolfInventoryManager = plugin.getWolfInventoryManager();
-    	this.randomNameManager = new RandomNameManager(plugin);
+//    	this.randomNameManager = new RandomNameManager(plugin);
     	
     	this.wolves = new HashMap<UUID, Wolf>();
     	this.wolfNames = new ArrayList<String>();
@@ -201,7 +201,7 @@ public class WolfManager {
         if (hasWolf(uniqueId)) {
             Wolf wolf = getWolf(uniqueId);
             
-            // Unload inventory if wolf has.
+            // Unload inventory if it exists and is loaded.
             if (wolf.hasLoadedInventory()) {
                 wolfInventoryManager.unloadWolfInventory(uniqueId);
             }    
@@ -275,9 +275,9 @@ public class WolfManager {
             plugin.getDatabase().save(wt);
             
             // Create the Wolf.
-            Wolf wolf1 = new Wolf(uniqueId);
+            Wolf wolf = new Wolf(uniqueId);
             
-            wolves.put(uniqueId, wolf1);
+            wolves.put(uniqueId, wolf);
             
             return true;
         }
@@ -309,9 +309,8 @@ public class WolfManager {
                 wolf.removeInventory();
             }
             
-            plugin.getDatabase().delete(getWolfTable(uniqueId));
-            
             wolves.remove(uniqueId);
+            plugin.getDatabase().delete(getWolfTable(uniqueId));
             
             return true;
         }
@@ -336,7 +335,7 @@ public class WolfManager {
      * @param uniqueId
      * @return
      */
-    public boolean hasWolf(UUID uniqueId) {
+    public boolean hasWolfInDB(UUID uniqueId) {
     	WolfTable wt = getWolfTable(uniqueId);
     	
     	if (wt != null) {
@@ -353,8 +352,8 @@ public class WolfManager {
      * @return 
      * @return
      */
-    public boolean hasWolf(org.bukkit.entity.Wolf wolf) {
-        return hasWolf(wolf.getUniqueId());
+    public boolean hasWolfInDB(org.bukkit.entity.Wolf wolf) {
+        return hasWolfInDB(wolf.getUniqueId());
     }
     
     /**
@@ -363,7 +362,7 @@ public class WolfManager {
      * @param uniqueId
      * @return
      */
-    public boolean hasLoadedWolf(UUID uniqueId) {
+    public boolean hasWolf(UUID uniqueId) {
         return wolves.containsKey(uniqueId);
     }
     
@@ -373,8 +372,8 @@ public class WolfManager {
      * @param wolf
      * @return
      */
-    public boolean hasLoadedWolf(org.bukkit.entity.Wolf wolf) {
-        return hasLoadedWolf(wolf.getUniqueId());
+    public boolean hasWolf(org.bukkit.entity.Wolf wolf) {
+        return hasWolf(wolf.getUniqueId());
     }
     
     /**
@@ -384,11 +383,9 @@ public class WolfManager {
      * @param owner
      * @return
      */
-    public boolean hasLoadedWolf(String name, String owner) {
+    public boolean hasWolf(String name, String owner) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
-                return true;
-            }
+            return wolf.getName().equalsIgnoreCase(name) && wolf.getOwner().getName().equalsIgnoreCase(owner);
         }
         
         return false;
@@ -400,11 +397,9 @@ public class WolfManager {
      * @param owner
      * @return
      */
-    public boolean hasLoadedWolf(String owner) {
+    public boolean hasWolf(Player player) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getOwner().getName().equalsIgnoreCase(owner)) {
-                return true;
-            }
+            return wolf.getOwner().getName().equalsIgnoreCase(player.getName());
         }
         
         return false;
@@ -417,7 +412,7 @@ public class WolfManager {
      * @return
      */
     public Wolf getWolf(UUID uniqueId) {
-    	if (!hasLoadedWolf(uniqueId)) {
+    	if (!hasWolf(uniqueId)) {
     		addWolf(WolfUtil.getBukkitWolf(uniqueId));
     	}
     	
@@ -443,7 +438,7 @@ public class WolfManager {
      */
     public Wolf getWolf(String name, String owner) {
         for (Wolf wolf : getWolves()) {
-            if (wolf.getOwner().getName().equalsIgnoreCase(owner) && wolf.getName().equalsIgnoreCase(name)) {
+            if (hasWolf(wolf.getUniqueId())) {
                 return wolf;
             }
         }

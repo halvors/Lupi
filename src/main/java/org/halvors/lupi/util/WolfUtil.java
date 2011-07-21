@@ -44,6 +44,12 @@ public class WolfUtil {
 		return null;
 	}
 	
+	/**
+	 * Show info about the wolf.
+	 * 
+	 * @param sender
+	 * @param wolf
+	 */
 	public static void showInfo(CommandSender sender, Wolf wolf) {
 		org.bukkit.entity.Wolf bukkitWolf = wolf.getEntity();
 		
@@ -53,5 +59,9 @@ public class WolfUtil {
         // TODO: Improve information.
         sender.sendMessage("Name: " + ChatColor.YELLOW + wolf.getName());
         sender.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
+	}
+	
+	public static void doNearbyEntityCheck() {
+		
 	}
 }
