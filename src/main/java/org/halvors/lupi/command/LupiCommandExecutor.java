@@ -37,7 +37,6 @@ import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.SelectedWolfManager;
 import org.halvors.lupi.wolf.WolfManager;
-import org.halvors.lupi.wolf.WolfTable;
 
 /**
  * Represents a CommandExecutor.
@@ -251,21 +250,21 @@ public class LupiCommandExecutor implements CommandExecutor {
                             String name = wolf1.getName();
                             String to = receiver.getName();
                             int limit = worldConfig.wolfLimit;
-                               
+                            
                             if (limit > 0) {
-                                List<WolfTable> wts = wolfManager.getWolfTables(player);
-                                   
-                                if (limit <= wts.size()) {
+                                if (limit <= wolfManager.getWolves(player).size()) {
                                     player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
                                     receiver.sendMessage(owner + " tried to give you " + ChatColor.YELLOW + name + ChatColor.WHITE + " but you can't receive the wolf because the limit is " + ChatColor.YELLOW + Integer.toString(limit)  + ChatColor.WHITE + " wolves.");
+                                    
+                                    return false;
                                 }
                             }
                                
-                               wolf1.setOwner(receiver);
-                               wolf.teleport(receiver);
+                            wolf1.setOwner(receiver);
+                            wolf.teleport(receiver);
                                
-                               player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
-                               receiver.sendMessage("You have received " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
+                            player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
+                            receiver.sendMessage("You have received " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
                         }
 
                         return true;

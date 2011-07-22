@@ -8,6 +8,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.halvors.lupi.event.EventFactory;
+import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
 import org.halvors.lupi.wolf.Wolf;
 import org.halvors.lupi.wolf.WolfManager;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
@@ -75,14 +77,19 @@ public class WolfUtil {
 					if (bukkitWolf.isTamed() && wolfManager.hasWolf(bukkitWolf)) {
 						Wolf wolf = wolfManager.getWolf(bukkitWolf);
 							
-						for (Entity entityItem : bukkitWolf.getNearbyEntities(1, 1, 1)) {
+						for (Entity nearbyEntity : bukkitWolf.getNearbyEntities(1, 1, 1)) {
 							// Make wolf pickup item, remove the dropped item and add it to wolf's inventory.
-							if (entityItem instanceof Item) {
+							if (nearbyEntity instanceof Item) {
 								WolfInventory wi = wolf.getInventory();
-								Item item = (Item) entityItem;
-									
-								wi.addItem(item.getItemStack());
-								item.remove();
+								
+								LupiWolfPickupItemEvent event = EventFactory.callLupiWolfPickupItemEvent(wolf, wi);
+								
+								if (!event.isCancelled()) {
+									Item item = (Item) nearbyEntity;
+								
+									wi.addItem(item.getItemStack());
+									item.remove();
+								}
 							}
 						}
 					}

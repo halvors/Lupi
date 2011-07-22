@@ -39,13 +39,20 @@ import org.halvors.lupi.Lupi;
  * @author halvors
  */
 public class ConfigurationManager {
-    private Lupi plugin;
+    private final Lupi plugin;
+    private final HashMap<String, WorldConfiguration> worlds;
     
-    private HashMap<String, WorldConfiguration> worlds;
+    private static ConfigurationManager instance;
     
     public ConfigurationManager(Lupi plugin) {
         this.plugin = plugin;
         this.worlds = new HashMap<String, WorldConfiguration>();
+        
+        ConfigurationManager.instance = this;
+    }
+    
+    public static ConfigurationManager getInstance() {
+    	return instance;
     }
     
     /**

@@ -33,7 +33,7 @@ import org.halvors.lupi.Lupi;
  * @author halvors
  */
 public class WorldConfiguration {
-//    private Lupi plugin;
+//    private final Lupi plugin;
     
     private final ConfigurationManager configManager;
     
