@@ -24,9 +24,11 @@ package org.halvors.lupi.listener;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
@@ -107,6 +109,28 @@ public class LupiEntityListener extends EntityListener {
     				*/
     			}
     		}
+    		
+    		if (event instanceof EntityDamageByEntityEvent) {
+    			EntityDamageByEntityEvent dbeEvent = (EntityDamageByEntityEvent) event;
+    			Entity damager = dbeEvent.getDamager();
+    			
+    			if (entity instanceof Wolf && damager instanceof LivingEntity) {
+    				Wolf wolf = (Wolf) entity;
+    				
+        			if (wolf.isTamed()) {
+        				org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+        				
+        				if (wolf1.hasParent()) {
+        					for (org.halvors.lupi.wolf.Wolf parentWolf : wolf1.getParents()) {
+            					// TODO: Check distance here. Maybe only do in a specific range.
+        						
+        						// Make parents protect children.
+        						parentWolf.getEntity().setTarget((LivingEntity) damager);
+        					}
+        				}
+        			}
+    			}
+    		}
     	}
     }
     
@@ -119,7 +143,36 @@ public class LupiEntityListener extends EntityListener {
             
             if (wolf.isTamed()) {
                 org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-
+                Player player = (Player) wolf.getOwner();
+                
+                // TODO: Not show this if wolf have owner is the same?
+                
+                if (wolf1.hasParent()) {
+                	for (org.halvors.lupi.wolf.Wolf parentWolf : wolf1.getParents()) {
+                		Player parentOwner = (Player) parentWolf.getOwner();
+                		
+                		// Remove this child from parents.
+                		parentWolf.removeChild(wolf1);
+                		
+                		// TODO: Look over and fix grammar.
+                		parentOwner.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + "'s child died.");
+                	}
+                }
+                
+                if (wolf1.hasChildren()) {
+                	for (org.halvors.lupi.wolf.Wolf childWolf : wolf1.getChildren()) {
+                		Player childOwner = (Player) childWolf.getOwner();
+                		
+                		// Remove this parent from children.
+                		childWolf.removeParent(wolf1);
+                		
+                		// TODO: Look over and fix grammar.
+                		childOwner.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + "'s parent died.");
+                	}
+                }
+                
+                player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " died.");
+                
                 if (wolf1.hasInventory()) {
                 	wolf1.dropInventory();
                 }

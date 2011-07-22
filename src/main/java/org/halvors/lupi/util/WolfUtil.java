@@ -1,13 +1,18 @@
 package org.halvors.lupi.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.halvors.lupi.wolf.Wolf;
 import org.halvors.lupi.wolf.WolfManager;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
@@ -90,4 +95,64 @@ public class WolfUtil {
 			}
 		}
 	}
+    
+    public static void doArmorCheck(Wolf wolf, EntityDamageEvent event) {
+    	int damage = event.getDamage();
+    	
+    	if (wolf.hasArmor()) {
+    		ItemStack armor = findArmor(wolf);
+    		int newDamage = damage + 5;
+    		short newDurability = (short) ((384 / 100) * damage); // 384 is the full durability. See: http://www.minecraftwiki.net/wiki/Item_Durability
+    		
+    		if (newDamage <= 20) {
+    			event.setDamage(newDamage);
+    			armor.setDurability(newDurability);
+    		}
+    	}
+    }
+    
+    public static ItemStack findArmor(Wolf wolf) {
+    	WolfInventory wi = wolf.getInventory();
+    	
+    	for (ItemStack itemStack : wi.getBukkitContents()) {
+    		Material type = itemStack.getType();
+    		
+    		if (type.equals(Material.DIAMOND_CHESTPLATE)) {
+    			return itemStack;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public static boolean isArmor(Material type) {
+    	return type.equals(Material.DIAMOND_CHESTPLATE);
+    }
+    
+    public static List<Wolf> toWolves(List<String> wolfStrings) {
+    	List<Wolf> parents = new ArrayList<Wolf>();
+		
+		for (String uniqueIdString : wolfStrings) {
+			UUID uniqueId = UUID.fromString(uniqueIdString);
+			Wolf wolf = wolfManager.getWolf(uniqueId);
+			
+			parents.add(wolf);
+			
+			return parents;
+		}
+		
+		return null;
+    }
+    
+    public static List<String> fromWolves(List<Wolf> wolves) {
+    	List<String> wolfUniqueIds = new ArrayList<String>();
+		
+		for (Wolf wolf : wolves) {
+			String uniqueId = wolf.getUniqueId().toString();
+			
+			wolfUniqueIds.add(uniqueId);
+		}
+		
+		return wolfUniqueIds;
+    }
 }

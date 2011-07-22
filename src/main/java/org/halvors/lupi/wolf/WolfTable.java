@@ -21,6 +21,8 @@
 
 package org.halvors.lupi.wolf;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -39,6 +41,8 @@ public class WolfTable {
     private String name;
     private String owner;
     private String world;
+    private List<String> parents;
+    private List<String> children;
     private boolean inventory;
     
     public int getId() {
@@ -79,6 +83,22 @@ public class WolfTable {
     
     public void setWorld(String world) {
         this.world = world;
+    }
+    
+    public List<String> getParents() {
+    	return parents;
+    }
+    
+    public void setParents(List<String> parents) {
+    	this.parents = parents;
+    }
+    
+    public List<String> getChildren() {
+    	return children;
+    }
+    
+    public void setChildren(List<String> children) {
+    	this.children = children;
     }
     
     public boolean isInventory() {

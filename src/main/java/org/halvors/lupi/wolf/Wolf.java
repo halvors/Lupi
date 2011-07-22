@@ -21,6 +21,7 @@
 
 package org.halvors.lupi.wolf;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -31,6 +32,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
 import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
@@ -39,7 +41,7 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
  * 
  * @author halvors
  */
-public class Wolf {    
+public class Wolf {
     private final WolfInventoryManager wolfInventoryManager = WolfInventoryManager.getInstance();
     
     private UUID uniqueId;
@@ -149,6 +151,21 @@ public class Wolf {
     }
     
     /**
+	 * Get world.
+	 * 
+	 * @return the World
+	 */
+	public World getWorld() {
+	    WolfTable wt = getWolfTable();
+	    
+	    if (wt != null) {
+	        return Bukkit.getServer().getWorld(wt.getWorld());
+	    }
+	    
+	    return null;
+	}
+    
+    /**
      * Set world.
      * 
      * @param world
@@ -177,20 +194,65 @@ public class Wolf {
         }
     }
     
-    /**
-	 * Get world.
-	 * 
-	 * @return the World
-	 */
-	public World getWorld() {
-	    WolfTable wt = getWolfTable();
-	    
-	    if (wt != null) {
-	        return Bukkit.getServer().getWorld(wt.getWorld());
-	    }
-	    
-	    return null;
-	}
+    public boolean hasParent() {
+    	return getParents() != null;
+    }
+    
+    public List<Wolf> getParents() {
+    	WolfTable wt = getWolfTable();
+    	
+    	if (wt != null) {
+    		return WolfUtil.toWolves(wt.getParents());
+    	}
+    	
+    	return null;
+    }
+    
+    public void setParents(List<Wolf> parents) {
+    	WolfTable wt = getWolfTable();
+    	
+    	if (wt != null) {
+    		wt.setChildren(WolfUtil.fromWolves(parents));
+    	}
+    }
+    
+    public void addParent(Wolf wolf) {
+    	getParents().add(wolf);
+    }
+    
+    public void removeParent(Wolf wolf) {
+    	getParents().remove(wolf);
+    }
+    
+    public boolean hasChildren() {
+    	return getChildren() != null;
+    }
+    
+    public List<Wolf> getChildren() {
+    	WolfTable wt = getWolfTable();
+    	
+    	if (wt != null) {
+    		return WolfUtil.toWolves(wt.getChildren());
+    	}
+    	
+    	return null;
+    }
+    
+    public void setChildren(List<Wolf> children) {
+    	WolfTable wt = getWolfTable();
+    	
+    	if (wt != null) {
+    		wt.setChildren(WolfUtil.fromWolves(children));
+    	}
+    }
+    
+    public void addChild(Wolf wolf) {
+    	getChildren().add(wolf);
+    }
+    
+    public void removeChild(Wolf wolf) {
+    	getChildren().remove(wolf);
+    }
 
 	/**
      * Check if wolf has inventory.
@@ -317,9 +379,11 @@ public class Wolf {
      * @return true if wolf has armor
      */
     public boolean hasArmor() {
-    	WolfInventory wi = getInventory();
+    	if (WolfUtil.findArmor(this) != null) {
+    		return true;
+    	}
     	
-    	return wi.contains(Material.DIAMOND_BLOCK);
+    	return false;
     }
     
     /**
