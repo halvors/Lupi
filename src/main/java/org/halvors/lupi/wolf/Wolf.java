@@ -31,6 +31,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.event.EventFactory;
+import org.halvors.lupi.event.wolf.inventory.LupiWolfDropItemEvent;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
 import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
@@ -149,6 +151,21 @@ public class Wolf {
     }
     
     /**
+	 * Get world.
+	 * 
+	 * @return the World
+	 */
+	public World getWorld() {
+	    WolfTable wt = getWolfTable();
+	    
+	    if (wt != null) {
+	        return Bukkit.getServer().getWorld(wt.getWorld());
+	    }
+	    
+	    return null;
+	}
+    
+    /**
      * Set world.
      * 
      * @param world
@@ -176,21 +193,6 @@ public class Wolf {
             Lupi.getDB().update(wt);
         }
     }
-    
-    /**
-	 * Get world.
-	 * 
-	 * @return the World
-	 */
-	public World getWorld() {
-	    WolfTable wt = getWolfTable();
-	    
-	    if (wt != null) {
-	        return Bukkit.getServer().getWorld(wt.getWorld());
-	    }
-	    
-	    return null;
-	}
 
 	/**
      * Check if wolf has inventory.
@@ -288,23 +290,27 @@ public class Wolf {
             
             for (ItemStack item : wi.getBukkitContents()) {
                 if (item != null && item.getType() != Material.AIR && item.getAmount() > 0 && item.getDurability() > -1) {
-                    world.dropItem(location, item);
+                	LupiWolfDropItemEvent event = EventFactory.callLupiWolfDropItemEvent(this, getInventory());
+                	
+                	if (!event.isCancelled()) {
+                		world.dropItem(location, item);
+                	}
                 }
             }
         }
     }
     
-    public boolean hasFood() {
+    public boolean hasInventoryFood() {
     	WolfInventory wi = getInventory();
     	
     	return wi.contains(Material.PORK) ||
     		wi.contains(Material.GRILLED_PORK);
     }
     
-    public int getFood() {
+    public int getInventoryFood() {
     	int food = 2; // One heart.
     	
-    	if (hasFood()) {
+    	if (hasInventoryFood()) {
     		return food;
     	}
     	

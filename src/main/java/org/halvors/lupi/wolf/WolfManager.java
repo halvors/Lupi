@@ -553,7 +553,7 @@ public class WolfManager {
         if (hasWolf(wolf)) {
             Wolf wolf1 = getWolf(wolf);
             
-            // Drop inventory contents id wolf have inventory.
+            // Drop wolf's inventory contents.
             if (wolf1.hasLoadedInventory()) {
                 wolf1.dropInventory();
             }
@@ -565,5 +565,25 @@ public class WolfManager {
         wolf.setTamed(false);
         
         // TODO: Set wild wolf health.
+    }
+    
+    /**
+     * Kill a wolf.
+     * 
+     * @param wolf
+     */
+    public void killWolf(org.bukkit.entity.Wolf wolf) {
+    	if (hasWolf(wolf)) {
+    		Wolf wolf1 = getWolf(wolf);
+    		
+    		// Drop wolf's inventory contents.
+    		if (wolf1.hasLoadedInventory()) {
+    			wolf1.dropInventory();
+    		}
+    		
+    		removeWolf(wolf);
+    	}
+    	
+		wolf.remove();
     }
 }

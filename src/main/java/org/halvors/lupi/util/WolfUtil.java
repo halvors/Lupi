@@ -8,6 +8,9 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.halvors.lupi.event.EventFactory;
+import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
 import org.halvors.lupi.wolf.Wolf;
 import org.halvors.lupi.wolf.WolfManager;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
@@ -75,14 +78,21 @@ public class WolfUtil {
 					if (bukkitWolf.isTamed() && wolfManager.hasWolf(bukkitWolf)) {
 						Wolf wolf = wolfManager.getWolf(bukkitWolf);
 							
-						for (Entity entityItem : bukkitWolf.getNearbyEntities(1, 1, 1)) {
+						for (Entity nearbyEntity : bukkitWolf.getNearbyEntities(1, 1, 1)) {
 							// Make wolf pickup item, remove the dropped item and add it to wolf's inventory.
-							if (entityItem instanceof Item) {
-								WolfInventory wi = wolf.getInventory();
-								Item item = (Item) entityItem;
+							if (nearbyEntity instanceof Item) {
+								if (wolf.hasLoadedInventory()) {
+									WolfInventory wi = wolf.getInventory();
 									
-								wi.addItem(item.getItemStack());
-								item.remove();
+									LupiWolfPickupItemEvent event = EventFactory.callLupiWolfPickupItemEvent(wolf, wi);
+									
+									if (!event.isCancelled()) {
+										Item item = (Item) nearbyEntity;
+										
+										wi.addItem(item.getItemStack());
+										item.remove();
+									}
+								}
 							}
 						}
 					}
@@ -90,4 +100,31 @@ public class WolfUtil {
 			}
 		}
 	}
+    
+    public static void doArmorCheck(Wolf wolf, EntityDamageEvent event) {
+    	int damage = event.getDamage();
+    	
+    	if (wolf.hasArmor()) {
+    		int newDamage = damage + 5;
+    		short newDurability = 0;
+    		
+    		if (newDamage <= 20 && newDurability <= 384) {
+    			// Set armor durability here.
+    			event.setDamage(newDamage);
+    		}
+    	}
+    }
+    
+    public static void doInventoryFoodCheck(Wolf wolf, EntityDamageEvent event) {
+    	int damage = event.getDamage();
+    	
+    	if (wolf.hasInventoryFood()) {
+    		int newDamage = damage + 2;
+    		
+    		if (newDamage <= 20) {
+    			// Remove food from inventory here.
+    			event.setDamage(newDamage);
+    		}
+    	}
+    }
 }
