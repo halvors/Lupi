@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.halvors.lupi.event.EventFactory;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
 import org.halvors.lupi.wolf.Wolf;
@@ -34,36 +35,20 @@ public class WolfUtil {
 	}
 	
 	/**
-	 * Get Entity by uniqueId.
-	 * 
-	 * @param uniqueId
-	 * @return the Entity or null if not found
-	 */
-	public static Entity getBukkitEntity(UUID uniqueId) {
-		for (World world : Bukkit.getServer().getWorlds()) {
-			for (Entity entity : world.getEntities()) {
-				if (entity.getUniqueId().equals(uniqueId)) {
-					return entity;
-				}
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
 	 * Get Wolf by uniqueId.
 	 * 
 	 * @param uniqueId
 	 * @return the Wolf or null if not found
 	 */
 	public static org.bukkit.entity.Wolf getBukkitWolf(UUID uniqueId) {
-		Entity entity = getBukkitEntity(uniqueId);
-		
-		if (entity instanceof Wolf) {
-			return (org.bukkit.entity.Wolf) entity;
+		for (World world : Bukkit.getServer().getWorlds()) {
+			for (Entity entity : world.getEntities()) {
+				if (entity.getUniqueId().equals(uniqueId)) {
+					return (org.bukkit.entity.Wolf) entity;
+				}
+			}
 		}
-		
+			
 		return null;
 	}
     
@@ -96,4 +81,22 @@ public class WolfUtil {
 			}
 		}
 	}
+    
+    public static void doArmorCheck(Wolf wolf, EntityDamageEvent event) {
+    	int damage = event.getDamage();
+    	
+    	if (wolf.hasArmor()) {
+    		int newDamage = damage + 5;
+    		short newDurability = (short)((384 / 100) - damage);
+    		
+    		if (newDamage <= 20 && newDurability <= 384) {
+    			event.setDamage(newDamage);
+    			// TODO: Set durability here.
+    		}
+    	}
+    }
+    
+    public static void doInventoryFoodCheck(Wolf wolf, EntityDamageEvent event) {
+    	
+    }
 }

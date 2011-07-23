@@ -66,7 +66,7 @@ public class RandomNameUtil {
         }
         
         if (names.size() == 0) {
-        	logger.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
+        	logger.log(Level.SEVERE, "ERROR: wolfNames.txt either was empty or did not end with a new line!");
         	names.add("Wolf");
         }
     }

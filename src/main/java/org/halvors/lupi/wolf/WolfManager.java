@@ -27,9 +27,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.RandomNameUtil;
@@ -484,46 +486,24 @@ public class WolfManager {
         
         return wolves;
     }
- 
-    /*
-    *//**
-     * Generate the table of premade wolf names.
-     *//*
-    private void initRandomNames() {  
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfNames.txt")));
-           
-            while (true) {
-                String s1;
-                
-                if ((s1 = bufferedReader.readLine()) == null) {
-                    break;
-                }
-                
-                s1 = s1.trim();
-                
-                if (s1.length() > 0) {
-                    wolfNames.add(s1);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     
-    *//**
-     * Generate a random name.
-     * 
-     * @return String
-     *//*
-    public String getRandomName() {
-//        Random random = new Random();
-        
-//        return wolfNames.get(random.nextInt(wolfNames.size() - 1));
-    	
-    	return "Wolf";
-    }
-    */
+	/**
+	 * Get Wolf by uniqueId.
+	 * 
+	 * @param uniqueId
+	 * @return the Wolf or null if not found
+	 */
+	public static org.bukkit.entity.Wolf getBukkitWolf(UUID uniqueId) {
+		for (World world : Bukkit.getServer().getWorlds()) {
+			for (Entity entity : world.getEntities()) {
+				if (entity.getUniqueId().equals(uniqueId)) {
+					return (org.bukkit.entity.Wolf) entity;
+				}
+			}
+		}
+			
+		return null;
+	}
     
     /**
      * Spawn a wolf.
