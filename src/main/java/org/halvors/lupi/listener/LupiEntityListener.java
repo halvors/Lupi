@@ -82,14 +82,14 @@ public class LupiEntityListener extends EntityListener {
     	if (!event.isCancelled()) {
     		Entity entity = event.getEntity();
     		
-    		if (entity instanceof org.bukkit.entity.Wolf) {
-    			org.bukkit.entity.Wolf bukkitWolf = (org.bukkit.entity.Wolf) entity;
+    		if (entity instanceof Wolf) {
+    			Wolf wolf = (Wolf) entity;
     			
-    			if (bukkitWolf.isTamed()) {
-    				Wolf wolf = wolfManager.getWolf(bukkitWolf);
+    			if (wolf.isTamed()) {
+    				org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
     				
-    				if (wolf.hasLoadedInventory()) {
-    					WolfUtil.doArmorCheck(wolf, event);
+    				if (wolf1.hasLoadedInventory()) {
+    					WolfUtil.doArmorCheck(wolf1, event);
     				}
     			}
     		}

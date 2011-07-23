@@ -45,6 +45,13 @@
             <artifactId>craftbukkit</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.bukkitcontrib</groupId>
+            <artifactId>bukkitcontrib</artifactId>
+            <version>0.1.7</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/BukkitContrib.jar</systemPath>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

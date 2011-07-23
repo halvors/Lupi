@@ -29,6 +29,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkitcontrib.BukkitContrib;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.event.EventFactory;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfDropItemEvent;
@@ -48,6 +49,7 @@ public class Wolf {
     
     public Wolf(UUID uniqueId) {
         setUniqueId(uniqueId);
+        setTitle(getName());
     }
     
     /**
@@ -109,6 +111,8 @@ public class Wolf {
             if (hasLoadedInventory()) {
                 getInventory().setName(name + "'s inventory");
             }
+            
+            setTitle(name);
         }
     }
     
@@ -308,6 +312,17 @@ public class Wolf {
     	}
     	
     	return null;
+    }
+    
+    /**
+     * Set wolf's overhead title.
+     * 
+     * @param name
+     */
+    public void setTitle(String name) {
+    	if (Lupi.hasBukkitContrib()) {
+        	BukkitContrib.getAppearanceManager().setGlobalTitle(getEntity(), name);
+        }
     }
     
     /**

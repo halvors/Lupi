@@ -28,7 +28,9 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -192,6 +194,17 @@ public class Lupi extends JavaPlugin {
      */
     public static EbeanServer getDB() {
     	return db;
+    }
+    
+    /**
+     * Check if BukkitContrib exists.
+     * 
+     * @return true if BukkitContrib exists
+     */
+    public static boolean hasBukkitContrib() {
+    	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BukkitContrib");
+    	
+    	return plugin != null;
     }
     
     /**

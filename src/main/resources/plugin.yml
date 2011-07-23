@@ -5,6 +5,7 @@ description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92, adamonline45]
 website: https://github.com/halvors/Lupi
 database: true
+soft-depend: [BukkitContrib]
 commands:
     wolf:
         aliases: [lupi]
