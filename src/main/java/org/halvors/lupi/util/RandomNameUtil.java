@@ -11,17 +11,18 @@ import java.util.logging.Logger;
 import org.halvors.lupi.Lupi;
 
 public class RandomNameUtil {
-	private final Lupi plugin;
+//	private final Lupi plugin;
 	private final Random random;
 	private final List<String> names;
 	
-//    private final Logger logger = Logger.getLogger("Minecraft");
+    private final Logger logger = Logger.getLogger("Minecraft");
 	
 	public RandomNameUtil(Lupi plugin) {
-		this.plugin = plugin;
+//		this.plugin = plugin;
 		this.random = new Random();
 		this.names = new ArrayList<String>();
 		initRandomNames();
+	}
 
 	public void reload() {
 		names.clear();
