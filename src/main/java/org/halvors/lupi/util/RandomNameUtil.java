@@ -1,26 +1,28 @@
 package org.halvors.lupi.util;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
 import org.halvors.lupi.Lupi;
-import org.halvors.lupi.wolf.WolfManager;
 
 public class RandomNameUtil {
-	
+	private final Lupi plugin;
+	private final Random random;
 	private final List<String> wolfNames;
-	private final Lupi instance;
 	
-	public RandomNameUtil(Lupi instance) {
+	public RandomNameUtil(Lupi plugin) {
+		this.plugin = plugin;
+		this.random = new Random();
 		this.wolfNames = new ArrayList<String>();
 		initRandomNames();
-		this.instance = instance;
+
 	}
 	
-	public void reloadNames() {
+	public void reload() {
 		wolfNames.clear();
 		initRandomNames();
 	}
@@ -30,7 +32,7 @@ public class RandomNameUtil {
      */
     private void initRandomNames() {  
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomNameUtil.class.getResourceAsStream("wolfnames.txt")));
            
             while (true) {
                 String s1;
@@ -50,7 +52,7 @@ public class RandomNameUtil {
         }
         
         if(wolfNames.size() == 0) {
-        	instance.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
+        	plugin.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
         	wolfNames.add("Wolf");
         }
     }
@@ -61,8 +63,6 @@ public class RandomNameUtil {
      * @return String
      */
     public String getRandomName() {
-        Random random = new Random();
-        
         return wolfNames.get(random.nextInt(wolfNames.size()));
     }
 }

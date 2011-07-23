@@ -132,13 +132,11 @@ public class LupiCommandExecutor implements CommandExecutor {
                         Wolf wolf = null;
                         String owner = player.getName();
                         String name = null;
-                        String grammar = null;
                         
                         if (args.length == 2) {
                             if (selectedWolfManager.hasSelectedWolf(player)) {
                                 wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                                 name = args[1];
-                                grammar = "this";
                             } else {
                                 player.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
@@ -148,7 +146,6 @@ public class LupiCommandExecutor implements CommandExecutor {
                             if (wolfManager.hasWolf(oldName, owner)) {
                                 wolf = wolfManager.getWolf(oldName, owner);
                                 name = args[2];
-                                grammar = "that";
                             } else {
                                 player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
