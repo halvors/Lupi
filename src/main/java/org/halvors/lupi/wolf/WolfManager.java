@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Location;
@@ -64,7 +63,7 @@ public class WolfManager {
         
         WolfManager.instance = this;
         
-        initRandomNames();
+//        initRandomNames();
     }
     
     public static WolfManager getInstance() {
@@ -237,6 +236,7 @@ public class WolfManager {
         if (!hasWolf(uniqueId)) {
             Player player = (Player) bukkitWolf.getOwner();
         
+            /*
             Random random = new Random();
             List<String> usedNames = new ArrayList<String>();
             boolean nameIsUnique = false;
@@ -262,6 +262,7 @@ public class WolfManager {
                     nameIsUnique = true;
                 }
             } while (!nameIsUnique);
+            */
             
             // Create the WolfTable.
             WolfTable wt = new WolfTable();
@@ -317,7 +318,6 @@ public class WolfManager {
         
         return false;
     }
-    
     
     /**
      * Remove a wolf.
@@ -522,9 +522,11 @@ public class WolfManager {
      * @return String
      */
     public String getRandomName() {
-        Random random = new Random();
+//        Random random = new Random();
         
-        return wolfNames.get(random.nextInt(wolfNames.size() - 1 ));
+//        return wolfNames.get(random.nextInt(wolfNames.size() - 1));
+    	
+    	return "Wolf";
     }
     
     /**

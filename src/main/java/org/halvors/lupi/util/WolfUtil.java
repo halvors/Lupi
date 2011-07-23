@@ -18,6 +18,22 @@ public class WolfUtil {
 	private static WolfManager wolfManager = WolfManager.getInstance();
 	
 	/**
+	 * Show info about the wolf.
+	 * 
+	 * @param sender
+	 * @param wolf
+	 */
+	public static void showInfo(CommandSender sender, Wolf wolf) {
+		org.bukkit.entity.Wolf bukkitWolf = wolf.getEntity();
+		int health = bukkitWolf.getHealth();
+		int maxHealth = 20;
+        
+        // TODO: Improve information.
+        sender.sendMessage("Name: " + ChatColor.YELLOW + wolf.getName());
+        sender.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
+	}
+	
+	/**
 	 * Get Entity by uniqueId.
 	 * 
 	 * @param uniqueId
@@ -49,23 +65,6 @@ public class WolfUtil {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Show info about the wolf.
-	 * 
-	 * @param sender
-	 * @param wolf
-	 */
-	public static void showInfo(CommandSender sender, Wolf wolf) {
-		org.bukkit.entity.Wolf bukkitWolf = wolf.getEntity();
-		
-		int health = bukkitWolf.getHealth() / 2;
-        int maxHealth = 10;
-        
-        // TODO: Improve information.
-        sender.sendMessage("Name: " + ChatColor.YELLOW + wolf.getName());
-        sender.sendMessage("Health: " + ChatColor.YELLOW + Integer.toString(health) + "/" + Integer.toString(maxHealth));
 	}
     
     public static void doNearbyEntityCheck() {

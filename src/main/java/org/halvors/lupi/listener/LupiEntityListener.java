@@ -120,7 +120,7 @@ public class LupiEntityListener extends EntityListener {
             if (wolf.isTamed()) {
                 org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
 
-                if (wolf1.hasInventory()) {
+                if (wolf1.hasLoadedInventory()) {
                 	wolf1.dropInventory();
                 }
                 

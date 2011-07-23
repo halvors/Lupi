@@ -3,16 +3,17 @@ main: org.halvors.lupi.Lupi
 version: 0.0.1
 description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92, adamonline45]
-website:
+website: https://github.com/halvors/Lupi
 database: true
-load: startup
 commands:
     wolf:
         aliases: [lupi]
         description: Lupi commands.
         usage: |
+            /<command> - Show a list of your wolves.
             /<command> help - Show help.
             /<command> list <player> - List all tamed wolves.
+            /<command> info <wolf> - Show info about the wolf.
             /<command> name - View the selected wolf's name.
             /<command> setname <name> - Set the selected wolf's name.
             /<command> call <wolf> - Call your wolf.
@@ -26,16 +27,36 @@ permissions:
         children:
             lupi.wolf.help: true
             lupi.wolf.list: true
-            lupi.wolf.select: true
             lupi.wolf.info: true
+            lupi.wolf.name: true
+            lupi.wolf.setname: true
+            lupi.wolf.call: true
+            lupi.wolf.stop: true
+            lupi.wolf.give: true
+            lupi.wolf.release: true
+            lupi.wolf.select: true
             lupi.wolf.inventory: true
+    lupi.wolf:
+        description:
     lupi.wolf.help:
         description: Allows viewing of usage for /wolf.
     lupi.wolf.list:
         description: Allows use of /wolf list.
-    lupi.wolf.select:
-        description: Allows you to select a wolf.
     lupi.wolf.info:
         description: Allows you to view info about a wolf.
+    lupi.wolf.name:
+        description: 
+    lupi.wolf.setname:
+        description: 
+    lupi.wolf.call:
+        description: 
+    lupi.wolf.stop:
+        description: 
+    lupi.wolf.give:
+        description: 
+    lupi.wolf.release:
+        description:
+    lupi.wolf.select:
+        description: Allows you to select a wolf.
     lupi.wolf.inventory:
         description: Allows use of wolf inventory.
