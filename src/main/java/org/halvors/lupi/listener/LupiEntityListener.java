@@ -35,6 +35,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.WolfManager;
 
@@ -81,30 +82,15 @@ public class LupiEntityListener extends EntityListener {
     	if (!event.isCancelled()) {
     		Entity entity = event.getEntity();
     		
-    		if (entity instanceof Wolf) {
-    			Wolf wolf = (Wolf) entity;
+    		if (entity instanceof org.bukkit.entity.Wolf) {
+    			org.bukkit.entity.Wolf bukkitWolf = (org.bukkit.entity.Wolf) entity;
     			
-    			if (wolf.isTamed()) {
-//    				org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    			if (bukkitWolf.isTamed()) {
+    				Wolf wolf = wolfManager.getWolf(bukkitWolf);
     				
-    				// TODO: Maybe something wrong here.
-    				/*
-    				// Check if wolf has loaded inventory.
-    				if (wolf1.hasLoadedInventory()) {
-    					int damage = 0;
-    					
-    					// Check if wolf has armor or food.
-    					if (wolf1.hasArmor()) {
-    						damage = event.getDamage() - wolf1.getArmor();
-    					} else if (wolf1.hasFood()) {
-    						damage = event.getDamage() - wolf1.getFood();
-    					}
-    					
-    					if (damage <= 20) {
-    						event.setDamage(damage);
-    					}
+    				if (wolf.hasLoadedInventory()) {
+    					WolfUtil.doArmorCheck(wolf, event);
     				}
-    				*/
     			}
     		}
     	}

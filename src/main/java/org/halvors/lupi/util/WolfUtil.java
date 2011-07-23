@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.halvors.lupi.event.EventFactory;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
 import org.halvors.lupi.wolf.Wolf;
@@ -52,6 +53,9 @@ public class WolfUtil {
 		return null;
 	}
     
+	/**
+	 * Do the nearby entity check.
+	 */
     public static void doNearbyEntityCheck() {
 		for (World world : Bukkit.getServer().getWorlds()) {
 			for (Entity entity : world.getEntities()) {
@@ -82,21 +86,24 @@ public class WolfUtil {
 		}
 	}
     
+    /**
+     * Do the armor check.
+     * 
+     * @param wolf
+     * @param event
+     */
     public static void doArmorCheck(Wolf wolf, EntityDamageEvent event) {
     	int damage = event.getDamage();
     	
     	if (wolf.hasArmor()) {
+    		ItemStack itemStack = wolf.findArmor();
     		int newDamage = damage + 5;
     		short newDurability = (short)((384 / 100) - damage);
     		
     		if (newDamage <= 20 && newDurability <= 384) {
+    			itemStack.setDurability(newDurability);
     			event.setDamage(newDamage);
-    			// TODO: Set durability here.
     		}
     	}
-    }
-    
-    public static void doInventoryFoodCheck(Wolf wolf, EntityDamageEvent event) {
-    	
     }
 }
