@@ -33,6 +33,7 @@ import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.util.RandomNameUtil;
 import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
 
@@ -46,6 +47,7 @@ public class WolfManager {
 //	private final EbeanServer database;
     private final WolfInventoryManager wolfInventoryManager;
 //    private final RandomNameManager randomNameManager;
+    private final RandomNameUtil rnu;
     
     private final HashMap<UUID, Wolf> wolves;
     private final List<String> wolfNames;
@@ -57,11 +59,12 @@ public class WolfManager {
 //        this.database = plugin.getDatabase();
         this.wolfInventoryManager = plugin.getWolfInventoryManager();
 //        this.randomNameManager = new RandomNameManager(plugin);
-        
+        this.rnu = new RandomNameUtil(plugin);
         this.wolves = new HashMap<UUID, Wolf>();
         this.wolfNames = new ArrayList<String>();
         
         WolfManager.instance = this;
+        
         
 //        initRandomNames();
     }
@@ -293,7 +296,7 @@ public class WolfManager {
      * @return
      */
     public boolean addWolf(org.bukkit.entity.Wolf wolf) {
-        return addWolf(wolf, getRandomName());
+        return addWolf(wolf, rnu.getRandomName());
     }
     
     /**
