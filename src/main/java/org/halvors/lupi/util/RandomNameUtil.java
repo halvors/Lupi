@@ -1,29 +1,34 @@
 package org.halvors.lupi.util;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.halvors.lupi.Lupi;
 
 public class RandomNameUtil {
+//	private final Lupi plugin;
+	private final Random random;
+	private final List<String> names;
 	
-	private final List<String> wolfNames;
-
     private final Logger logger = Logger.getLogger("Minecraft");
 	
-	public RandomNameUtil() {
-		this.wolfNames = new ArrayList<String>();
+	public RandomNameUtil(Lupi plugin) {
+//		this.plugin = plugin;
+		this.random = new Random();
+		this.names = new ArrayList<String>();
 		initRandomNames();
 	}
 	
 	/**
 	 * Reload name list
-	 */
-	public void reloadNames() {
-		wolfNames.clear();
+	 */	
+    public void reload() {
+		names.clear();
 		initRandomNames();
 	}
 	
@@ -31,9 +36,9 @@ public class RandomNameUtil {
 	 * Get the size of the name list
 	 * @return list size
 	 */
-	public int getListSize()
+	public int getSize()
 	{
-		return wolfNames.size();
+		return names.size();
 	}
 	
 	 /**
@@ -41,7 +46,7 @@ public class RandomNameUtil {
      */
     private void initRandomNames() {  
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomNameUtil.class.getResourceAsStream("wolfnames.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomNameUtil.class.getResourceAsStream("wolfNames.txt")));
            
             while (true) {
                 String s1;
@@ -53,16 +58,16 @@ public class RandomNameUtil {
                 s1 = s1.trim();
                 
                 if (s1.length() > 0) {
-                    wolfNames.add(s1);
+                    names.add(s1);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        if(wolfNames.size() == 0) {
+        if (names.size() == 0) {
         	logger.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
-        	wolfNames.add("Wolf");
+        	names.add("Wolf");
         }
     }
     
@@ -72,8 +77,6 @@ public class RandomNameUtil {
      * @return String
      */
     public String getRandomName() {
-        Random random = new Random();
-        
-        return wolfNames.get(random.nextInt(wolfNames.size()));
+        return names.get(random.nextInt(names.size()));
     }
 }

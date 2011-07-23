@@ -21,8 +21,6 @@
 
 package org.halvors.lupi.wolf;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,27 +45,20 @@ public class WolfManager {
 	private final Lupi plugin;
 //	private final EbeanServer database;
     private final WolfInventoryManager wolfInventoryManager;
-//    private final RandomNameManager randomNameManager;
     private final RandomNameUtil rnu;
-    
     private final HashMap<UUID, Wolf> wolves;
 //    private final List<String> wolfNames;
-    
     private static WolfManager instance;
     
     public WolfManager(Lupi plugin) {
         this.plugin = plugin;
 //        this.database = plugin.getDatabase();
         this.wolfInventoryManager = plugin.getWolfInventoryManager();
-//        this.randomNameManager = new RandomNameManager(plugin);
-        this.rnu = new RandomNameUtil();
+        this.rnu = new RandomNameUtil(plugin);
         this.wolves = new HashMap<UUID, Wolf>();
 //        this.wolfNames = new ArrayList<String>();
         
         WolfManager.instance = this;
-        
-        
-//        initRandomNames();
     }
     
     public static WolfManager getInstance() {
@@ -251,7 +242,7 @@ public class WolfManager {
                 usedNames.add(wt.getName());
             }
             
-            if (usedNames.size() >= rnu.getListSize()) {
+            if (usedNames.size() >= rnu.getSize()) {
                 needDynamic = true;
             }
 
@@ -281,7 +272,6 @@ public class WolfManager {
             
             // Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
-            
             wolves.put(uniqueId, wolf);
             
             return true;
