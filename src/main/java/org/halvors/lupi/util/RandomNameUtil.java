@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.halvors.lupi.Lupi;
 
@@ -14,14 +15,14 @@ public class RandomNameUtil {
 	private final Random random;
 	private final List<String> names;
 	
+//    private final Logger logger = Logger.getLogger("Minecraft");
+	
 	public RandomNameUtil(Lupi plugin) {
 		this.plugin = plugin;
 		this.random = new Random();
 		this.names = new ArrayList<String>();
 		initRandomNames();
 
-	}
-	
 	public void reload() {
 		names.clear();
 		initRandomNames();
@@ -52,7 +53,7 @@ public class RandomNameUtil {
         }
         
         if (names.size() == 0) {
-        	plugin.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
+        	logger.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
         	names.add("Wolf");
         }
     }
