@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.halvors.lupi.Lupi;
 import org.halvors.lupi.wolf.WolfManager;
 
 public class RandomNameUtil {
 	
 	private final List<String> wolfNames;
-	private final Lupi instance;
+
+    private final Logger logger = Logger.getLogger("Minecraft");
 	
-	public RandomNameUtil(Lupi instance) {
+	public RandomNameUtil() {
 		this.wolfNames = new ArrayList<String>();
 		initRandomNames();
-		this.instance = instance;
 	}
 	
 	public void reloadNames() {
@@ -50,7 +50,7 @@ public class RandomNameUtil {
         }
         
         if(wolfNames.size() == 0) {
-        	instance.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
+        	logger.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
         	wolfNames.add("Wolf");
         }
     }

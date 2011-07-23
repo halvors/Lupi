@@ -59,7 +59,7 @@ public class WolfManager {
 //        this.database = plugin.getDatabase();
         this.wolfInventoryManager = plugin.getWolfInventoryManager();
 //        this.randomNameManager = new RandomNameManager(plugin);
-        this.rnu = new RandomNameUtil(plugin);
+        this.rnu = new RandomNameUtil();
         this.wolves = new HashMap<UUID, Wolf>();
         this.wolfNames = new ArrayList<String>();
         
