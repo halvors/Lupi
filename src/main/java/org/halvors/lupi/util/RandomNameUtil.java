@@ -12,18 +12,18 @@ import org.halvors.lupi.Lupi;
 public class RandomNameUtil {
 	private final Lupi plugin;
 	private final Random random;
-	private final List<String> wolfNames;
+	private final List<String> names;
 	
 	public RandomNameUtil(Lupi plugin) {
 		this.plugin = plugin;
 		this.random = new Random();
-		this.wolfNames = new ArrayList<String>();
+		this.names = new ArrayList<String>();
 		initRandomNames();
 
 	}
 	
 	public void reload() {
-		wolfNames.clear();
+		names.clear();
 		initRandomNames();
 	}
 	
@@ -32,7 +32,7 @@ public class RandomNameUtil {
      */
     private void initRandomNames() {  
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomNameUtil.class.getResourceAsStream("wolfnames.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomNameUtil.class.getResourceAsStream("wolfNames.txt")));
            
             while (true) {
                 String s1;
@@ -44,16 +44,16 @@ public class RandomNameUtil {
                 s1 = s1.trim();
                 
                 if (s1.length() > 0) {
-                    wolfNames.add(s1);
+                    names.add(s1);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        if(wolfNames.size() == 0) {
+        if (names.size() == 0) {
         	plugin.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
-        	wolfNames.add("Wolf");
+        	names.add("Wolf");
         }
     }
     
@@ -63,6 +63,6 @@ public class RandomNameUtil {
      * @return String
      */
     public String getRandomName() {
-        return wolfNames.get(random.nextInt(wolfNames.size()));
+        return names.get(random.nextInt(names.size()));
     }
 }

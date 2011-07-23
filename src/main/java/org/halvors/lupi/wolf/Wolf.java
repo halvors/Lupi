@@ -174,7 +174,7 @@ public class Wolf {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
-            wt.setWorld(world.getName());
+            wt.setWorld(world.getUID().toString());
             
             Lupi.getDB().update(wt);
         }
@@ -187,8 +187,8 @@ public class Wolf {
     	WolfTable wt = getWolfTable();
     	World world = getEntity().getWorld();
     	
-    	if (wt != null && world.getName() != wt.getWorld()) {
-            wt.setWorld(world.getName());
+    	if (wt != null && wt.getWorld() != world.getName()) {
+            wt.setWorld(world.getUID().toString());
             
             Lupi.getDB().update(wt);
         }
