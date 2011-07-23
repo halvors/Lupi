@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Location;
@@ -50,7 +51,7 @@ public class WolfManager {
     private final RandomNameUtil rnu;
     
     private final HashMap<UUID, Wolf> wolves;
-    private final List<String> wolfNames;
+//    private final List<String> wolfNames;
     
     private static WolfManager instance;
     
@@ -61,7 +62,7 @@ public class WolfManager {
 //        this.randomNameManager = new RandomNameManager(plugin);
         this.rnu = new RandomNameUtil();
         this.wolves = new HashMap<UUID, Wolf>();
-        this.wolfNames = new ArrayList<String>();
+//        this.wolfNames = new ArrayList<String>();
         
         WolfManager.instance = this;
         
@@ -239,7 +240,7 @@ public class WolfManager {
         if (!hasWolf(uniqueId)) {
             Player player = (Player) bukkitWolf.getOwner();
         
-            /*
+            
             Random random = new Random();
             List<String> usedNames = new ArrayList<String>();
             boolean nameIsUnique = false;
@@ -250,22 +251,22 @@ public class WolfManager {
                 usedNames.add(wt.getName());
             }
             
-            if (usedNames.size() >= wolfNames.size()) {
+            if (usedNames.size() >= rnu.getListSize()) {
                 needDynamic = true;
             }
 
             do {
                 if (usedNames.contains(name)) {
                     if (needDynamic) {
-                        name = getRandomName() + random.nextInt(10);
+                        name = rnu.getRandomName() + random.nextInt(10);
                     } else {
-                        name = getRandomName();
+                        name = rnu.getRandomName();
                     }
                 } else {
                     nameIsUnique = true;
                 }
             } while (!nameIsUnique);
-            */
+            
             
             // Create the WolfTable.
             WolfTable wt = new WolfTable();
@@ -493,10 +494,11 @@ public class WolfManager {
         
         return wolves;
     }
-    
-    /**
+ 
+    /*
+    *//**
      * Generate the table of premade wolf names.
-     */
+     *//*
     private void initRandomNames() {  
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfNames.txt")));
@@ -519,11 +521,11 @@ public class WolfManager {
         }
     }
     
-    /**
+    *//**
      * Generate a random name.
      * 
      * @return String
-     */
+     *//*
     public String getRandomName() {
 //        Random random = new Random();
         
@@ -531,6 +533,7 @@ public class WolfManager {
     	
     	return "Wolf";
     }
+    */
     
     /**
      * Spawn a wolf.

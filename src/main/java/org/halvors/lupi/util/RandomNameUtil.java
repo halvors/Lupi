@@ -19,9 +19,21 @@ public class RandomNameUtil {
 		initRandomNames();
 	}
 	
+	/**
+	 * Reload name list
+	 */
 	public void reloadNames() {
 		wolfNames.clear();
 		initRandomNames();
+	}
+	
+	/**
+	 * Get the size of the name list
+	 * @return list size
+	 */
+	public int getListSize()
+	{
+		return wolfNames.size();
 	}
 	
 	 /**
