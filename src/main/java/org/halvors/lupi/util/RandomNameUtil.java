@@ -51,6 +51,7 @@ public class RandomNameUtil {
         
         if(wolfNames.size() == 0) {
         	instance.log(Level.SEVERE, "ERROR: wolfnames.txt either was empty or did not end with a new line!");
+        	wolfNames.add("Wolf");
         }
     }
     
