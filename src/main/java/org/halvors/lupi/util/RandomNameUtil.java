@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.halvors.lupi.wolf.WolfManager;
 
 public class RandomNameUtil {
 	
@@ -30,7 +29,7 @@ public class RandomNameUtil {
      */
     private void initRandomNames() {  
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(WolfManager.class.getResourceAsStream("wolfnames.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(RandomNameUtil.class.getResourceAsStream("wolfnames.txt")));
            
             while (true) {
                 String s1;
