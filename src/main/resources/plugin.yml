@@ -21,11 +21,21 @@ commands:
             /<command> stop <wolf> - Stop your wolf from attacking.
             /<command> give <wolf> <player> - Give your wolf to an other player.
             /<command> release <wolf> - Release your wolf.
+            
 permissions:
-    lupi.wolf.*:
+	lupi.*
         default: op
+        description: Allows use of all Lupi functions..
+        children:
+            lupi.wolf.*: true
+            
+    lupi.wolf.*:
         description: Allows use of all /wolf commands.
         children:
+            lupi.wolf.select: true
+            lupi.wolf.inventory: true
+            lupi.wolf.armor: true
+        
             lupi.wolf.help: true
             lupi.wolf.list: true
             lupi.wolf.info: true
@@ -35,10 +45,14 @@ permissions:
             lupi.wolf.stop: true
             lupi.wolf.give: true
             lupi.wolf.release: true
-            lupi.wolf.select: true
-            lupi.wolf.inventory: true
-    lupi.wolf:
-        description:
+            
+    lupi.wolf.select:
+        description: Allows you to select a wolf.
+    lupi.wolf.inventory:
+        description: Allows use of wolf inventory.
+    lupi.wolf.armor:
+        description: Allows use of wolf armor.  
+            
     lupi.wolf.help:
         description: Allows viewing of usage for /wolf.
     lupi.wolf.list:
@@ -46,18 +60,14 @@ permissions:
     lupi.wolf.info:
         description: Allows you to view info about a wolf.
     lupi.wolf.name:
-        description: 
+        description: Allows use of /wolf name.
     lupi.wolf.setname:
-        description: 
+        description: Allows use of /wolf setname.
     lupi.wolf.call:
-        description: 
+        description: Allows use of /wolf call.
     lupi.wolf.stop:
-        description: 
+        description: Allows use of /wolf stop.
     lupi.wolf.give:
-        description: 
+        description: Allows use of /wolf give.
     lupi.wolf.release:
-        description:
-    lupi.wolf.select:
-        description: Allows you to select a wolf.
-    lupi.wolf.inventory:
-        description: Allows use of wolf inventory.
+        description: Allows use of /wolf release.

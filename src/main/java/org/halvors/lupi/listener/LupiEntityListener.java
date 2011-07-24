@@ -87,9 +87,13 @@ public class LupiEntityListener extends EntityListener {
     			
     			if (wolf.isTamed()) {
     				org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+    				Player player = (Player) wolf.getOwner();
     				
     				if (wolf1.hasLoadedInventory()) {
-    					WolfUtil.doArmorCheck(wolf1, event);
+    					// Check for armor in inventory.
+    					if (player.hasPermission("lupi.wolf.armor")) {
+    						WolfUtil.doArmorCheck(wolf1, event);
+    					}
     				}
     			}
     		}
