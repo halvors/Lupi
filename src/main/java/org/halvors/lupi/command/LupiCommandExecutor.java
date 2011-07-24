@@ -108,8 +108,8 @@ public class LupiCommandExecutor implements CommandExecutor {
                                 sender.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Too many arguments.");
-                        }   
+                        	sender.sendMessage(ChatColor.RED + "Too many arguments.");
+                        }
                         
                         if (wolf != null) {
                             WolfUtil.showInfo(sender, wolf);
@@ -118,17 +118,17 @@ public class LupiCommandExecutor implements CommandExecutor {
                     
                     return true;
                 } else if (subCommand.equalsIgnoreCase("name")) {
-                    if (player.hasPermission("lupi.wolf.name")) {
+                    if (sender.hasPermission("lupi.wolf.name")) {
                         if (selectedWolfManager.hasSelectedWolf(player)) {
                         	Wolf wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                                 
-                            player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + ".");
+                        	sender.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + ".");
                         }
                     }
                     
                     return true;
                 } else if (subCommand.equalsIgnoreCase("setname")) {
-                    if (player.hasPermission("lupi.wolf.setname")) {
+                    if (sender.hasPermission("lupi.wolf.setname")) {
                         Wolf wolf = null;
                         String owner = player.getName();
                         String name = null;
@@ -138,7 +138,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                                 wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                                 name = args[1];
                             } else {
-                                player.sendMessage(ChatColor.RED + "No wolf selected.");
+                            	sender.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
                         } else if (args.length == 3){
                             String oldName = args[1];
@@ -147,21 +147,21 @@ public class LupiCommandExecutor implements CommandExecutor {
                                 wolf = wolfManager.getWolf(oldName, owner);
                                 name = args[2];
                             } else {
-                                player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
+                            	sender.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Too many arguments.");
+                        	sender.sendMessage(ChatColor.RED + "Too many arguments.");
                         }
 
                         if (wolf != null && name != null) {
-                            player.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has changed name to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
+                        	sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has changed name to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
                             wolf.setName(name);
                         }
                     }
                     
                     return true;
                 } else if (subCommand.equalsIgnoreCase("call")) {
-                    if (player.hasPermission("lupi.wolf.call")) {
+                    if (sender.hasPermission("lupi.wolf.call")) {
                     	Wolf wolf = null;
                         String owner = player.getName();
                     	
@@ -169,7 +169,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                     		if (selectedWolfManager.hasSelectedWolf(player)) {
                     			wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                             } else {
-                                player.sendMessage(ChatColor.RED + "No wolf selected.");
+                            	sender.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
                     	} else if (args.length == 2) {
                     		String name = args[1];
@@ -177,38 +177,42 @@ public class LupiCommandExecutor implements CommandExecutor {
                     		if (wolfManager.hasWolf(name, owner)) {
                                 wolf = wolfManager.getWolf(name, owner);
                             } else {
-                                player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
+                            	sender.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
+                    	} else {
+                    		sender.sendMessage(ChatColor.RED + "Too many arguments.");
                         }
                     	
                     	if (wolf != null) {
                             org.bukkit.entity.Wolf bukkitWolf = wolf.getEntity();
                             bukkitWolf.teleport(player);
 
-                            player.sendMessage(ChatColor.GREEN + "Your wolf is on it's way.");
+                            sender.sendMessage(ChatColor.GREEN + "Your wolf is on it's way.");
                     	}
                     }
                     
                     return true;
                 } else if (subCommand.equalsIgnoreCase("stop")) {
-                    if (player.hasPermission("lupi.wolf.stop")) {
+                    if (sender.hasPermission("lupi.wolf.stop")) {
                         Wolf wolf = null;
                         String owner = player.getName();
 
-                        if (args.length <= 1) {
+                        if (args.length == 1) {
                             if (selectedWolfManager.hasSelectedWolf(player)) {
                                 wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                             } else {
-                                player.sendMessage(ChatColor.RED + "No wolf selected.");
+                            	sender.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
-                        } else {
+                        } else if (args.length == 2){
                             String name = args[1];
 
                             if (wolfManager.hasWolf(name, owner)) {
                                 wolf = wolfManager.getWolf(name, owner);
                             } else {
-                                player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
+                            	sender.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
+                        } else {
+                        	sender.sendMessage(ChatColor.RED + "Too many arguments.");
                         }
 
                         if (wolf != null) {
@@ -216,13 +220,13 @@ public class LupiCommandExecutor implements CommandExecutor {
 
                             bukkitWolf.setTarget(null);
 
-                            player.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has stopped attacking.");
+                            sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has stopped attacking.");
                         }
 
                         return true;
                     }
                 } else if (subCommand.equalsIgnoreCase("give")) {
-                    if (player.hasPermission("lupi.wolf.give")) {
+                    if (sender.hasPermission("lupi.wolf.give")) {
                         Wolf wolf = null;
                         Player receiver = null;
                         World world = player.getWorld();
@@ -234,7 +238,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                                 wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                                 receiver = LupiUtil.getPlayer(args[1]);
                             } else {
-                                player.sendMessage(ChatColor.RED + "No wolf selected.");
+                            	sender.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
                         } else if (args.length == 3) {
                             String name = args[1];
@@ -243,10 +247,10 @@ public class LupiCommandExecutor implements CommandExecutor {
                                 wolf = wolfManager.getWolf(name, owner);
                                 receiver = LupiUtil.getPlayer(args[2]);
                             } else {
-                                player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
+                            	sender.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Too many arguments.");
+                        	sender.sendMessage(ChatColor.RED + "Too many arguments.");
                         }
 
                         if (wolf != null && receiver != null) {
@@ -257,7 +261,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                             
                             if (limit > 0) {
                                 if (limit <= wolfManager.getWolves(player).size()) {
-                                    player.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
+                                	sender.sendMessage("You can't give " + ChatColor.YELLOW + name + ChatColor.WHITE + " to " + ChatColor.YELLOW + to + ChatColor.WHITE + " because he has reached the limit, limit is " + ChatColor.YELLOW + Integer.toString(limit) + ChatColor.WHITE + " wolves.");
                                     receiver.sendMessage(owner + " tried to give you " + ChatColor.YELLOW + name + ChatColor.WHITE + " but you can't receive the wolf because the limit is " + ChatColor.YELLOW + Integer.toString(limit)  + ChatColor.WHITE + " wolves.");
                                     
                                     return false;
@@ -267,14 +271,14 @@ public class LupiCommandExecutor implements CommandExecutor {
                             wolf.setOwner(receiver);
                             bukkitWolf.teleport(receiver);
                                
-                            player.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
+                            sender.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
                             receiver.sendMessage("You have received " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
                         }
 
                         return true;
                     }
                 } else if (subCommand.equalsIgnoreCase("release")) {
-                    if (player.hasPermission("lupi.wolf.release")) {
+                    if (sender.hasPermission("lupi.wolf.release")) {
                         Wolf wolf = null;
                         String owner = player.getName();
 
@@ -282,7 +286,7 @@ public class LupiCommandExecutor implements CommandExecutor {
                             if (selectedWolfManager.hasSelectedWolf(player)) {
                                 wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
                             } else {
-                                player.sendMessage(ChatColor.RED + "No wolf selected.");
+                            	sender.sendMessage(ChatColor.RED + "No wolf selected.");
                             }
                         } else if (args.length == 2){
                             String name = args[1];
@@ -290,14 +294,14 @@ public class LupiCommandExecutor implements CommandExecutor {
                             if (wolfManager.hasWolf(name, owner)) {
                                 wolf = wolfManager.getWolf(name, owner);
                             } else {
-                                player.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
+                            	sender.sendMessage(ChatColor.RED + "That wolf doesn't exists.");
                             }
                         } else {
                             player.sendMessage(ChatColor.RED + "Too many arguments.");
                         }
 
                         if (wolf != null) {
-                            player.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has been released.");
+                        	sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has been released.");
                                 
                             wolfManager.releaseWolf(wolf.getEntity());
                         }
@@ -324,7 +328,6 @@ public class LupiCommandExecutor implements CommandExecutor {
         if (!wolves.isEmpty()) {
             int size = wolves.size();
             
-            // TODO: Add pages support here.
             player.sendMessage(ChatColor.YELLOW + "Your wolves (" + ChatColor.WHITE + size + ChatColor.YELLOW + ")");
             
             for (org.halvors.lupi.wolf.Wolf wolf : wolves) {
@@ -373,10 +376,6 @@ public class LupiCommandExecutor implements CommandExecutor {
         
         sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GREEN + " (" + ChatColor.WHITE + plugin.getVersion() + ChatColor.GREEN + ")");
         sender.sendMessage(ChatColor.RED + "[]" + ChatColor.WHITE + " Required, " + ChatColor.GREEN + "<>" + ChatColor.WHITE + " Optional.");
-        
-        if (sender.hasPermission("lupi.wolf")) {
-            sender.sendMessage(command + ChatColor.YELLOW + " - Show your wolves.");
-        }
         
         if (sender.hasPermission("lupi.wolf.help")) {
             sender.sendMessage(command + "help" + ChatColor.YELLOW + " - Show help.");

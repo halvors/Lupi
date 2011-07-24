@@ -21,18 +21,17 @@
 
 package org.halvors.lupi.listener;
 
-import net.minecraft.server.EntityPlayer;
-
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.inventory.Inventory;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
+import org.halvors.lupi.util.InventoryUtil;
 import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.util.WorldConfiguration;
 import org.halvors.lupi.wolf.SelectedWolfManager;
@@ -84,9 +83,8 @@ public class LupiPlayerListener extends PlayerListener {
                     } else if (item == worldConfig.inventoryItem) {
                         if (player.hasPermission("lupi.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
-                                if (wolf1.hasLoadedInventory()) {
-                                    EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                                    entityPlayer.a(wolf1.getInventory());
+                            	if (wolf1.hasLoadedInventory()) {
+                                    InventoryUtil.openInventory(player, (Inventory) wolf1.getInventory());
                                 } else {
                                     // Add inventory.
                                     wolf1.addInventory();

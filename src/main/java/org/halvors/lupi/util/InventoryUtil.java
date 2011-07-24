@@ -1,9 +1,21 @@
 package org.halvors.lupi.util;
 
+import net.minecraft.server.EntityPlayer;
+import net.minecraft.server.IInventory;
+
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtil {
+	public static void openInventory(Player player, Inventory inventory) {
+		IInventory iInventory = (IInventory) inventory;
+		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+    	entityPlayer.a(iInventory);
+	}
+	
 	/**
 	 * Convert to ItemStack.
 	 * 
