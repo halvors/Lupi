@@ -2,10 +2,11 @@ package org.halvors.lupi.event.wolf;
 
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfDropItemEvent;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
 
-public class LupiWolfListener extends CustomEventListener {
+public class LupiWolfListener extends CustomEventListener implements Listener {
 	public LupiWolfListener() {
 		
 	}

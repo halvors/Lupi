@@ -7,6 +7,13 @@ import org.halvors.lupi.wolf.Wolf;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
 
 public class EventFactory {
+	public static LupiServerTickEvent callLupiServerTickEvent() {
+		LupiServerTickEvent event = new LupiServerTickEvent();
+		Bukkit.getServer().getPluginManager().callEvent(event);
+		
+		return event;
+	}
+	
 	public static LupiWolfDropItemEvent callLupiWolfDropItemEvent(Wolf wolf, WolfInventory wi) {
 		LupiWolfDropItemEvent event = new LupiWolfDropItemEvent(wolf, wi);
 		Bukkit.getServer().getPluginManager().callEvent(event);
