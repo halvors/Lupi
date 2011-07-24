@@ -81,6 +81,8 @@ public class LupiEntityListener extends EntityListener {
     public void onEntityDamage(EntityDamageEvent event) {
     	if (!event.isCancelled()) {
     		Entity entity = event.getEntity();
+    		World world = entity.getWorld();
+    		WorldConfiguration worldConfig = configManager.get(world);
     		
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
@@ -92,7 +94,11 @@ public class LupiEntityListener extends EntityListener {
     				if (wolf1.hasLoadedInventory()) {
     					// Check for armor in inventory.
     					if (player.hasPermission("lupi.wolf.armor")) {
-    						WolfUtil.doArmorCheck(wolf1, event);
+    						if (worldConfig.inventoryArmor) {
+    							WolfUtil.doArmorCheck(wolf1, event);
+    						} else {
+    							player.sendMessage(ChatColor.RED + "Wolf armor is disabled.");
+    						}
     					}
     				}
     			}

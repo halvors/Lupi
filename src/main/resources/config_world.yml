@@ -4,7 +4,7 @@
 # corresponding world.
 
 wolf:
-    enable: true # Allow wolves to spawn.
+    enable: true # Allow wolves to spawn naturally.
     item: 352 # Item to select a tamed wolf.
     friendly: false # Make wild wolves friendly. Wolves can still attack player when they are tame.
     pvp: false # Set wolf to not attack players when pvp is off.
@@ -17,3 +17,4 @@ info:
 inventory:
     enable: true # Use wolf inventory?
     item: 54 # Item for open/add wolf inventory.
+    armor: true # Enable wolf armor.	

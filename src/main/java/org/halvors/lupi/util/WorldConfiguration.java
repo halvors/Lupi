@@ -53,6 +53,7 @@ public class WorldConfiguration {
     
     public boolean inventoryEnable;
     public int inventoryItem;
+    public boolean inventoryArmor;
     /* Configuration data end */
     
     public WorldConfiguration(Lupi plugin, String worldName) {
@@ -88,6 +89,7 @@ public class WorldConfiguration {
         
         inventoryEnable = config.getBoolean("inventory.enable", inventoryEnable);
         inventoryItem = config.getInt("inventory.item", inventoryItem);
+        inventoryArmor = config.getBoolean("inventory.armor", inventoryArmor);
         
         config.save();
     }
