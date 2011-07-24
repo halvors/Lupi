@@ -97,10 +97,34 @@ public class WolfUtil {
     	
     	if (wolf.hasArmor()) {
     		ItemStack itemStack = wolf.findArmor();
-    		int newDamage = damage + 5;
-    		short newDurability = (short)((384 / 100) - damage);
+    		int newDamage = damage - 2;
+    		int armorPoint = 0;
     		
-    		if (newDamage <= 20 && newDurability <= 384) {
+    		switch (itemStack.getType()) {
+    		case LEATHER_CHESTPLATE:
+    			armorPoint = 49;
+    			break;
+    			
+    		case GOLD_CHESTPLATE:
+    			armorPoint = 96;
+    			break;
+    			
+    		case CHAINMAIL_CHESTPLATE:
+    			armorPoint = 96;
+    			break;
+    			
+    		case IRON_CHESTPLATE:
+    			armorPoint = 192;
+    			break;
+    			
+    		case DIAMOND_CHESTPLATE:
+    			armorPoint = 384;
+    			break;
+    		}
+    		
+    		short newDurability = (short)(armorPoint * (itemStack.getDurability() / 384));
+    		
+    		if (itemStack != null && newDamage <= 20 && newDurability <= 384) {
     			itemStack.setDurability(newDurability);
     			event.setDamage(newDamage);
     		}

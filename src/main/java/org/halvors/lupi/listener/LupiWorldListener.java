@@ -25,9 +25,9 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.WorldConfiguration;
@@ -47,22 +47,6 @@ public class LupiWorldListener extends WorldListener {
 //        this.plugin = plugin;
     	this.configManager = plugin.getConfigurationManager();
     	this.wolfManager = plugin.getWolfManager();
-    }
-    
-    @Override
-    public void onChunkLoad(ChunkLoadEvent event) {
-    	Chunk chunk = event.getChunk();
-    	
-    	// Add tamed wolves that not already exists in database.
-    	for (Entity entity : chunk.getEntities()) {
-    		if (entity instanceof Wolf) {
-    			Wolf wolf = (Wolf) entity;
-    			
-    			if (wolf.isTamed() && !wolfManager.hasWolfInDB(wolf)) {
-    				wolfManager.addWolf(wolf);
-    			}
-    		}
-    	}
     }
     
     @Override
@@ -88,7 +72,6 @@ public class LupiWorldListener extends WorldListener {
     	}
     }
     
-    /*
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
     	World world = event.getWorld();
@@ -98,11 +81,10 @@ public class LupiWorldListener extends WorldListener {
     		if (entity instanceof Wolf) {
     			Wolf wolf = (Wolf) entity;
     			
-    			if (wolf.isTamed() && !wolfManager.hasWolf(wolf)) {
+    			if (wolf.isTamed() && !wolfManager.hasWolfInDB(wolf)) {
     				wolfManager.addWolf(wolf);
                 }
     		}
     	}
     }
-    */
 }

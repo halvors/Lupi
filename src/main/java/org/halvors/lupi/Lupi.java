@@ -35,9 +35,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.halvors.lupi.command.WolfCommand;
-import org.halvors.lupi.event.LupiListener;
-import org.halvors.lupi.event.wolf.LupiWolfListener;
 import org.halvors.lupi.listener.LupiEntityListener;
+import org.halvors.lupi.listener.LupiListener;
 import org.halvors.lupi.listener.LupiPlayerListener;
 import org.halvors.lupi.listener.LupiWorldListener;
 import org.halvors.lupi.util.ConfigurationManager;
@@ -61,11 +60,9 @@ public class Lupi extends JavaPlugin {
     private final SelectedWolfManager selectedWolfManager;
     
     private final LupiEntityListener entityListener;
+    private final LupiListener lupiListener;
     private final LupiPlayerListener playerListener;
     private final LupiWorldListener worldListener;
-    
-    private final LupiListener lupiListener;
-    private final LupiWolfListener lupiWolfListener;
     
     private static Lupi instance;
     private static EbeanServer db;
@@ -82,11 +79,9 @@ public class Lupi extends JavaPlugin {
         this.selectedWolfManager = new SelectedWolfManager(this);
         
         this.entityListener = new LupiEntityListener(this);
+        this.lupiListener = new LupiListener(this);
         this.playerListener = new LupiPlayerListener(this);
         this.worldListener = new LupiWorldListener(this);
-        
-        this.lupiListener = new LupiListener();
-        this.lupiWolfListener = new LupiWolfListener();
     }
     
     @Override
@@ -113,13 +108,10 @@ public class Lupi extends JavaPlugin {
 
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
         
-        pm.registerEvent(Event.Type.CHUNK_LOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
-//        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
         
-        // Register custom event for listeners.
         pm.registerEvent(Event.Type.CUSTOM_EVENT, lupiListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.CUSTOM_EVENT, lupiWolfListener, Event.Priority.Normal, this);
         
         // Handle server ticks.
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new ServerTickTask(), 0, 1);

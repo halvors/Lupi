@@ -28,7 +28,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.inventory.Inventory;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.InventoryUtil;
@@ -66,6 +65,10 @@ public class LupiPlayerListener extends PlayerListener {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
                 
+                if (!wolfManager.hasWolf(wolf)) {
+                	wolfManager.addWolf(wolf);
+                }
+                
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
                     org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     int item = player.getItemInHand().getTypeId();
@@ -84,7 +87,7 @@ public class LupiPlayerListener extends PlayerListener {
                         if (player.hasPermission("lupi.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
                             	if (wolf1.hasLoadedInventory()) {
-                                    InventoryUtil.openInventory(player, (Inventory) wolf1.getInventory());
+                                    InventoryUtil.openInventory(player, wolf1.getInventory());
                                 } else {
                                     // Add inventory.
                                     wolf1.addInventory();
@@ -95,7 +98,7 @@ public class LupiPlayerListener extends PlayerListener {
                                     player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + " has now inventory. Right click with a chest to open it.");
                                 }
                             } else {
-                                player.sendMessage(ChatColor.RED + "Wolf inventory is not enabled.");
+                                player.sendMessage(ChatColor.RED + "Wolf inventory is disabled.");
                             }
                         }
                     }

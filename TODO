@@ -1,15 +1,11 @@
 Version 0.1
-    - Rewrite the random name functions and move all that stuff to RandomNameManager.java - speeddemon92: May you fix this?
-    - Fix name duping bug for wolves.
+    - Fic NPE when reload server. Possibly something with inventory.
     - Fix load and unload for inventory. - Confirm that it's fixed.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Add pages support for list and help commands - adminonline45
-    - Add admin commands.
-    - Add ability for wolves to eat food (pork) from it's inventory when get damaged. - Needs to be looked over and improved.
     - Add ability for tamed wolves to have some kind of armor. Like a diamond block in it's inventory. - Needs to be looked over and improved.
 
 Version 0.2
-    - Add events.
     - Change world in database when wolf switch world.
     - Add wolf age. Will be minecraft days/years from it's tamed.
     - Add guard wolf's if you make wolf sit with a sword, wolf will attack any entity that is 5 blocks away.
@@ -18,6 +14,7 @@ Version 0.2
     - Set wolf sit when open inventory and set them stand up when close inventory. (Will need InventoryOpenEvent and InventoryCloseEvent).
 
 Ideas:
+    - Add ability for wolves to eat food (pork) from it's inventory when get damaged.
     - Add command so owner of a wolf can add peace players that wolf not attack.
     - Add ability for wolves to become "supercharged" and deal twice as much damage for a given time after giving the wolf a special item.
     - Add ability to feed wolves either gunpowder or TNT and create a "kamikazi" effect when that wolf attacks.
@@ -25,7 +22,6 @@ Ideas:
     - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
     - Economy support. Maybe use the Register API.
     - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
-    - Add BukkitContrib as a soft dependcy. So users can choose to use it.
     - Add ability to set wolf sitting, or enter other minecart when player enter minecart or other vehicle.
     
     compgurusteve:

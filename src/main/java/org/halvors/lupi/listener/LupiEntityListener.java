@@ -115,7 +115,10 @@ public class LupiEntityListener extends EntityListener {
             
             if (wolf.isTamed()) {
                 org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-
+                Player player = (Player) wolf.getOwner();
+                
+                player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + "died.");
+                
                 if (wolf1.hasLoadedInventory()) {
                 	wolf1.dropInventory();
                 }

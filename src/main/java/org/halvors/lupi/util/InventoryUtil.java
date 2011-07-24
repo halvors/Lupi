@@ -1,13 +1,12 @@
 package org.halvors.lupi.util;
 
 import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.IInventory;
 
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.halvors.lupi.wolf.inventory.WolfInventory;
 
 public class InventoryUtil {
 	/**
@@ -16,9 +15,9 @@ public class InventoryUtil {
 	 * @param player
 	 * @param inventory
 	 */
-	public static void openInventory(Player player, Inventory inventory) {
+	public static void openInventory(Player player, WolfInventory inventory) {
 		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-    	entityPlayer.a((IInventory) inventory);
+    	entityPlayer.a(inventory);
 	}
 	
 	/**

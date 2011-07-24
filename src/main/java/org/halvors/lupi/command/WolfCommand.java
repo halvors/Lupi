@@ -59,7 +59,7 @@ public class WolfCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     	if (args.length == 0) {
-    		if (sender.hasPermission("lupi.wolf")) {
+    		if (sender.hasPermission("lupi.wolf.list")) {
     			if (sender instanceof Player) {
     				showPlayerWolves((Player) sender);
     			} else {
@@ -121,18 +121,6 @@ public class WolfCommand implements CommandExecutor {
                         
                         if (wolf != null) {
                             WolfUtil.showInfo(sender, wolf);
-                        } else {
-                        	sender.sendMessage(ChatColor.RED + "Wolf not found.");
-                        }
-                    }
-                    
-                    return true;
-                } else if (subCommand.equalsIgnoreCase("name")) {
-                    if (sender.hasPermission("lupi.wolf.name")) {
-                        if (selectedWolfManager.hasSelectedWolf(player)) {
-                        	Wolf wolf = wolfManager.getWolf(selectedWolfManager.getSelectedWolf(player));
-                                
-                        	sender.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + ".");
                         }
                     }
                     
@@ -166,8 +154,6 @@ public class WolfCommand implements CommandExecutor {
                         if (wolf != null && name != null) {
                         	sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has changed name to " + ChatColor.YELLOW + name + ChatColor.WHITE + ".");
                             wolf.setName(name);
-                        } else {
-                        	sender.sendMessage(ChatColor.RED + "Wolf not found.");
                         }
                     }
                     
@@ -200,9 +186,7 @@ public class WolfCommand implements CommandExecutor {
                             bukkitWolf.teleport(player);
 
                             sender.sendMessage(ChatColor.GREEN + "Your wolf is on it's way.");
-                    	} else {
-                        	sender.sendMessage(ChatColor.RED + "Wolf not found.");
-                        }
+                    	}
                     }
                     
                     return true;
@@ -235,8 +219,6 @@ public class WolfCommand implements CommandExecutor {
                             bukkitWolf.setTarget(null);
 
                             sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has stopped attacking.");
-                        } else {
-                        	sender.sendMessage(ChatColor.RED + "Wolf not found.");
                         }
                     }
                     
@@ -289,8 +271,6 @@ public class WolfCommand implements CommandExecutor {
                                
                             sender.sendMessage(ChatColor.YELLOW + name + ChatColor.WHITE + " was given to " + ChatColor.YELLOW + to + ChatColor.WHITE + ".");
                             receiver.sendMessage("You have received " + ChatColor.YELLOW + name + ChatColor.WHITE + " from " + ChatColor.YELLOW + owner + ChatColor.WHITE + ".");
-                        } else {
-                        	sender.sendMessage(ChatColor.RED + "Wolf not found.");
                         }
                     }
                     
@@ -322,8 +302,6 @@ public class WolfCommand implements CommandExecutor {
                         	sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " has been released.");
                                 
                             wolfManager.releaseWolf(wolf.getEntity());
-                        } else {
-                        	sender.sendMessage(ChatColor.RED + "Wolf not found.");
                         }
                     }
                     
@@ -346,9 +324,7 @@ public class WolfCommand implements CommandExecutor {
         List<org.halvors.lupi.wolf.Wolf> wolves = wolfManager.getWolves(player);
         
         if (!wolves.isEmpty()) {
-            int size = wolves.size();
-            
-            player.sendMessage(ChatColor.YELLOW + "Your wolves (" + ChatColor.WHITE + size + ChatColor.YELLOW + ")");
+            player.sendMessage("Your wolves " + ChatColor.YELLOW + "(" + ChatColor.WHITE + wolves.size() + ChatColor.YELLOW + ")");
             
             for (org.halvors.lupi.wolf.Wolf wolf : wolves) {
                 player.sendMessage(ChatColor.YELLOW + wolf.getName());
@@ -375,7 +351,7 @@ public class WolfCommand implements CommandExecutor {
         }
         
         if (!wolves.isEmpty()) {
-            sender.sendMessage(ChatColor.YELLOW + "Wolves (" + ChatColor.WHITE + wolves.size() + ChatColor.YELLOW + ")");
+            sender.sendMessage("Wolves " + ChatColor.YELLOW + "(" + ChatColor.WHITE + wolves.size() + ChatColor.YELLOW + ")");
             
             for (org.halvors.lupi.wolf.Wolf wolf : wolves) {
                 sender.sendMessage(ChatColor.YELLOW + wolf.getName() + ChatColor.WHITE + " - " + wolf.getOwner().getName());
@@ -407,10 +383,6 @@ public class WolfCommand implements CommandExecutor {
         
         if (sender.hasPermission("lupi.wolf.info")) {
         	sender.sendMessage(command + "info " + ChatColor.GREEN + "<" + ChatColor.WHITE + "wolf" + ChatColor.GREEN + ">" + ChatColor.YELLOW + " - Show info about the wolf.");
-        }
-        
-        if (sender.hasPermission("lupi.wolf.name")) {
-            sender.sendMessage(command + "name " + ChatColor.YELLOW + " - Show your wolf's name.");
         }
         
         if (sender.hasPermission("lupi.wolf.setname")) {

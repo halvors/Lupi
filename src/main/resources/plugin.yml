@@ -5,6 +5,7 @@ description: Lupi is a wolf plugin for Bukkit.
 authors: [halvors, speeddemon92, adamonline45]
 website: https://github.com/halvors/Lupi
 database: true
+load: startup
 soft-depend: [BukkitContrib]
 commands:
     wolf:
@@ -15,7 +16,6 @@ commands:
             /<command> help - Show help.
             /<command> list <player> - List all tamed wolves.
             /<command> info <wolf> - Show info about the wolf.
-            /<command> name - View the selected wolf's name.
             /<command> setname <name> - Set the selected wolf's name.
             /<command> call <wolf> - Call your wolf.
             /<command> stop <wolf> - Stop your wolf from attacking.
@@ -68,8 +68,6 @@ permissions:
         description: Allows use of /wolf list.
     lupi.wolf.info:
         description: Allows you to view info about a wolf.
-    lupi.wolf.name:
-        description: Allows use of /wolf name.
     lupi.wolf.setname:
         description: Allows use of /wolf setname.
     lupi.wolf.call:

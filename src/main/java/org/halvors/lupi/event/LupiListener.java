@@ -13,6 +13,7 @@ public class LupiListener extends CustomEventListener implements Listener {
 		
 	}
 	
+	@Override
 	public void onCustomEvent(Event event) {
 		if (event instanceof LupiServerTickEvent) {
 			onLupiServerTick((LupiServerTickEvent) event);

@@ -37,7 +37,7 @@ public class WolfInventoryManager {
 	private final Lupi plugin;
 //	private final EbeanServer database;
 	private final WolfManager wolfManager;
-    private final HashMap<UUID, WolfInventory> wolfInventorys = new HashMap<UUID, WolfInventory>();
+    private final HashMap<UUID, WolfInventory> wolfInventorys;
     
 	private static WolfInventoryManager instance;
     
@@ -45,6 +45,7 @@ public class WolfInventoryManager {
     	this.plugin = plugin;
 //    	this.database = plugin.getDatabase();
     	this.wolfManager = plugin.getWolfManager();
+    	this.wolfInventorys = new HashMap<UUID, WolfInventory>();
     	
     	WolfInventoryManager.instance = this;
     }
@@ -85,7 +86,10 @@ public class WolfInventoryManager {
             
             // Load the WolfInventory from plugin.getDatabase().
             WolfInventory wi = new WolfInventory(uniqueId, wolfManager.getWolf(uniqueId).getName());
-            wi.fillFromDBTable(wit.getChestRows());
+            
+            if (wit != null) {
+            	wi.fillFromDBTable(wit.getChestRows());
+            }
             
             wolfInventorys.put(uniqueId, wi);
             
@@ -107,7 +111,10 @@ public class WolfInventoryManager {
             
             // Save the WolfInventory to plugin.getDatabase().
             WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
-            wit.setChestRows(wi.prepareTableForDB());
+            
+            if (wit != null) {
+            	wit.setChestRows(wi.prepareTableForDB());
+            }
             
             plugin.getDatabase().update(wit);
             
@@ -131,10 +138,10 @@ public class WolfInventoryManager {
             WolfInventoryTable wit = new WolfInventoryTable();
             wit.setUniqueId(uniqueId.toString());
             
-            // Save the WolfInventoryTable to plugin.getDatabase().
+            // Save the WolfInventoryTable to database.
             plugin.getDatabase().save(wit);
             
-            //Create the WolfInventory.
+            // Create the WolfInventory.
             WolfInventory wi = new WolfInventory(uniqueId, name);
             
             wolfInventorys.put(uniqueId, wi);

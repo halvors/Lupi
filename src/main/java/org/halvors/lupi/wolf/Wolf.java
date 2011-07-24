@@ -297,7 +297,11 @@ public class Wolf {
     }
     
     public boolean hasArmor() {
-    	return findArmor() != null;
+    	if (findArmor() != null) {
+    		return true;
+    	}
+    	
+    	return false;
     }
     
     public ItemStack findArmor() {
