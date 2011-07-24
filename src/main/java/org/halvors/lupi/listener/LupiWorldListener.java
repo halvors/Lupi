@@ -40,51 +40,51 @@ import org.halvors.lupi.wolf.WolfManager;
  */
 public class LupiWorldListener extends WorldListener {
 //    private final Lupi plugin;
-	private final ConfigurationManager configManager;
+    private final ConfigurationManager configManager;
     private final WolfManager wolfManager;
-	
+    
     public LupiWorldListener(Lupi plugin) {
 //        this.plugin = plugin;
-    	this.configManager = plugin.getConfigurationManager();
-    	this.wolfManager = plugin.getWolfManager();
+        this.configManager = plugin.getConfigurationManager();
+        this.wolfManager = plugin.getWolfManager();
     }
     
     @Override
     public void onChunkUnload(ChunkUnloadEvent event) {
-    	if (!event.isCancelled()) {
-    		Chunk chunk = event.getChunk();
-    		World world = event.getWorld();
-    		WorldConfiguration worldConfig = configManager.get(world);
-    	
-    		// Prevent chunk with a tamed wolf in from unload here.
-    		for (Entity entity : chunk.getEntities()) {
-    			if (entity instanceof Wolf) {
-    				Wolf wolf = (Wolf) entity;
-    			
-    				if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
-    					if (worldConfig.wolfKeepChunksLoaded) {
-    						event.setCancelled(true);
-    						return;
-    					}
-    				}
-    			}
-    		}
-    	}
+        if (!event.isCancelled()) {
+            Chunk chunk = event.getChunk();
+            World world = event.getWorld();
+            WorldConfiguration worldConfig = configManager.get(world);
+        
+            // Prevent chunk with a tamed wolf in from unload here.
+            for (Entity entity : chunk.getEntities()) {
+                if (entity instanceof Wolf) {
+                    Wolf wolf = (Wolf) entity;
+                
+                    if (wolf.isTamed() && wolfManager.hasWolf(wolf)) {
+                        if (worldConfig.wolfKeepChunksLoaded) {
+                            event.setCancelled(true);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @Override
     public void onWorldLoad(WorldLoadEvent event) {
-    	World world = event.getWorld();
-    	
-		// Add tamed wolves that not already exists in database.
-    	for (Entity entity : world.getLivingEntities()) {
-    		if (entity instanceof Wolf) {
-    			Wolf wolf = (Wolf) entity;
-    			
-    			if (wolf.isTamed() && !wolfManager.hasWolfInDB(wolf)) {
-    				wolfManager.addWolf(wolf);
+        World world = event.getWorld();
+        
+        // Add tamed wolves that not already exists in database.
+        for (Entity entity : world.getLivingEntities()) {
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                if (wolf.isTamed() && !wolfManager.hasWolfInDB(wolf)) {
+                    wolfManager.addWolf(wolf);
                 }
-    		}
-    	}
+            }
+        }
     }
 }

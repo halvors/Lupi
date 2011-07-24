@@ -68,7 +68,7 @@ public class Wolf {
      * @return
      */
     public UUID getUniqueId() {
-    	return uniqueId;
+        return uniqueId;
     }
     
     /**
@@ -77,7 +77,7 @@ public class Wolf {
      * @param uniqueId
      */
     public void setUniqueId(UUID uniqueId) {
-    	this.uniqueId = uniqueId;
+        this.uniqueId = uniqueId;
     }
     
     /**
@@ -101,7 +101,7 @@ public class Wolf {
      * @param name
      */
     public void setName(String name) {
-    	WolfTable wt = getWolfTable();
+        WolfTable wt = getWolfTable();
         
         if (wt != null) {
             wt.setName(name);
@@ -155,19 +155,19 @@ public class Wolf {
     }
     
     /**
-	 * Get world.
-	 * 
-	 * @return the World
-	 */
-	public World getWorld() {
-	    WolfTable wt = getWolfTable();
-	    
-	    if (wt != null) {
-	        return Bukkit.getServer().getWorld(wt.getWorld());
-	    }
-	    
-	    return null;
-	}
+     * Get world.
+     * 
+     * @return the World
+     */
+    public World getWorld() {
+        WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            return Bukkit.getServer().getWorld(wt.getWorld());
+        }
+        
+        return null;
+    }
     
     /**
      * Set world.
@@ -188,17 +188,17 @@ public class Wolf {
      * Update world to wolf's current world.
      */
     public void updateWorld() {
-    	WolfTable wt = getWolfTable();
-    	World world = getEntity().getWorld();
-    	
-    	if (wt != null && wt.getWorld() != world.getName()) {
+        WolfTable wt = getWolfTable();
+        World world = getEntity().getWorld();
+        
+        if (wt != null && wt.getWorld() != world.getName()) {
             wt.setWorld(world.getUID().toString());
             
             Lupi.getDB().update(wt);
         }
     }
 
-	/**
+    /**
      * Check if wolf has inventory.
      * 
      * @return true if wolf has inventory.
@@ -207,7 +207,7 @@ public class Wolf {
         WolfTable wt = getWolfTable();
         
         if (wt != null) {
-        	return wt.isInventory();
+            return wt.isInventory();
         }
         
         return false;
@@ -219,7 +219,7 @@ public class Wolf {
      * @return true if has inventory and it's loaded.
      */
     public boolean hasLoadedInventory() {
-    	return hasInventory() && wolfInventoryManager.hasWolfInventory(uniqueId);
+        return hasInventory() && wolfInventoryManager.hasWolfInventory(uniqueId);
     }
     
     /**
@@ -241,24 +241,24 @@ public class Wolf {
      * Add inventory.
      */
     public void addInventory() {
-    	if (!hasInventory()) {
-    		wolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
-    		setInventory(true);
-    	}
+        if (!hasInventory()) {
+            wolfInventoryManager.addWolfInventory(uniqueId, getName() + "'s inventory");
+            setInventory(true);
+        }
     }
 
     /**
      * Remove inventory.
      */
     public void removeInventory() {
-    	if (hasInventory()) {
-    		if (hasLoadedInventory()) {
-    			dropInventory();
-    		}
-    		
-    		wolfInventoryManager.removeWolfInventory(uniqueId);
-    	}
-    	
+        if (hasInventory()) {
+            if (hasLoadedInventory()) {
+                dropInventory();
+            }
+            
+            wolfInventoryManager.removeWolfInventory(uniqueId);
+        }
+        
         setInventory(false);
     }
     
@@ -268,11 +268,11 @@ public class Wolf {
      * @return the WolfInventory
      */
     public WolfInventory getInventory() {
-    	if (hasLoadedInventory()) {
-    		return wolfInventoryManager.getWolfInventory(uniqueId);
-    	}
-    	
-    	return null;
+        if (hasLoadedInventory()) {
+            return wolfInventoryManager.getWolfInventory(uniqueId);
+        }
+        
+        return null;
     }
     
     /**
@@ -286,36 +286,36 @@ public class Wolf {
             
             for (ItemStack item : wi.getBukkitContents()) {
                 if (item != null && item.getType() != Material.AIR && item.getAmount() > 0 && item.getDurability() > -1) {
-                	LupiWolfDropItemEvent event = EventFactory.callLupiWolfDropItemEvent(this, getInventory());
-                	
-                	if (!event.isCancelled()) {
-                		world.dropItem(location, item);
-                	}
+                    LupiWolfDropItemEvent event = EventFactory.callLupiWolfDropItemEvent(this, getInventory());
+                    
+                    if (!event.isCancelled()) {
+                        world.dropItem(location, item);
+                    }
                 }
             }
         }
     }
     
     public boolean hasArmor() {
-    	if (findArmor() != null) {
-    		return true;
-    	}
-    	
-    	return false;
+        if (findArmor() != null) {
+            return true;
+        }
+        
+        return false;
     }
     
     public ItemStack findArmor() {
-    	WolfInventory wi = getInventory();
-    	
-    	for (ItemStack itemStack : wi.getBukkitContents()) {
-    		Material type = itemStack.getType();
-    		
-    		if (type.equals(Material.DIAMOND_CHESTPLATE)) {
-    			return itemStack;
-    		}
-    	}
-    	
-    	return null;
+        WolfInventory wi = getInventory();
+        
+        for (ItemStack itemStack : wi.getBukkitContents()) {
+            Material type = itemStack.getType();
+            
+            if (type.equals(Material.DIAMOND_CHESTPLATE)) {
+                return itemStack;
+            }
+        }
+        
+        return null;
     }
     
     /**
@@ -324,8 +324,8 @@ public class Wolf {
      * @param name
      */
     public void setTitle(String name) {
-    	if (Lupi.hasBukkitContrib()) {
-        	BukkitContrib.getAppearanceManager().setGlobalTitle(getEntity(), name);
+        if (Lupi.hasBukkitContrib()) {
+            BukkitContrib.getAppearanceManager().setGlobalTitle(getEntity(), name);
         }
     }
     
@@ -335,6 +335,6 @@ public class Wolf {
      * @return the Wolf
      */
     public org.bukkit.entity.Wolf getEntity() {
-    	return WolfUtil.getBukkitWolf(uniqueId);
+        return WolfUtil.getBukkitWolf(uniqueId);
     }
 }

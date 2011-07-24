@@ -39,7 +39,7 @@ import org.halvors.lupi.wolf.Wolf;
 import org.halvors.lupi.wolf.WolfManager;
 
 /**
- * Represents a CommandExecutor.
+ * WolfCommand.
  * 
  * @author halvors
  */

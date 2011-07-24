@@ -34,24 +34,24 @@ import org.halvors.lupi.wolf.WolfManager;
  * @author halvors
  */
 public class WolfInventoryManager {
-	private final Lupi plugin;
-//	private final EbeanServer database;
-	private final WolfManager wolfManager;
+    private final Lupi plugin;
+//    private final EbeanServer database;
+    private final WolfManager wolfManager;
     private final HashMap<UUID, WolfInventory> wolfInventorys;
     
-	private static WolfInventoryManager instance;
+    private static WolfInventoryManager instance;
     
     public WolfInventoryManager(Lupi plugin) {
-    	this.plugin = plugin;
-//    	this.database = plugin.getDatabase();
-    	this.wolfManager = plugin.getWolfManager();
-    	this.wolfInventorys = new HashMap<UUID, WolfInventory>();
-    	
-    	WolfInventoryManager.instance = this;
+        this.plugin = plugin;
+//        this.database = plugin.getDatabase();
+        this.wolfManager = plugin.getWolfManager();
+        this.wolfInventorys = new HashMap<UUID, WolfInventory>();
+        
+        WolfInventoryManager.instance = this;
     }
     
     public static WolfInventoryManager getInstance() {
-    	return instance;
+        return instance;
     }
     
     /**
@@ -88,7 +88,7 @@ public class WolfInventoryManager {
             WolfInventory wi = new WolfInventory(uniqueId, wolfManager.getWolf(uniqueId).getName());
             
             if (wit != null) {
-            	wi.fillFromDBTable(wit.getChestRows());
+                wi.fillFromDBTable(wit.getChestRows());
             }
             
             wolfInventorys.put(uniqueId, wi);
@@ -113,7 +113,7 @@ public class WolfInventoryManager {
             WolfInventoryTable wit = getWolfInventoryTable(uniqueId);
             
             if (wit != null) {
-            	wit.setChestRows(wi.prepareTableForDB());
+                wit.setChestRows(wi.prepareTableForDB());
             }
             
             plugin.getDatabase().update(wit);

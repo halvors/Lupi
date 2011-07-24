@@ -39,7 +39,7 @@ import org.bukkit.inventory.ItemStack;
  * @author speeddemon92
  */
 public class WolfInventory extends TileEntityChest {
-	private String name;
+    private String name;
     private UUID uniqueId;
     
     public WolfInventory(UUID uniqueId, String name) {
@@ -427,8 +427,8 @@ public class WolfInventory extends TileEntityChest {
                             item.setAmount(item.getAmount() - getMaxItemStack());
                         } else {
                             // Just store it
-                        	setBukkitItem(firstFree, item);
-                        	
+                            setBukkitItem(firstFree, item);
+                            
                             break;
                         }
                     }
@@ -592,9 +592,9 @@ public class WolfInventory extends TileEntityChest {
             // TODO: Improve this.
 //            if (typeId > 1 || amount > 1 || damage > 0) { 
             if (typeId != 0 || amount > 0 || damage > -1) {
-            	setBukkitItem(i, new ItemStack(typeId, amount, damage));
-            } else {            	
-              	setBukkitItem(i, new ItemStack(null)); //
+                setBukkitItem(i, new ItemStack(typeId, amount, damage));
+            } else {                
+                  setBukkitItem(i, new ItemStack(null)); //
             }
         }
     }

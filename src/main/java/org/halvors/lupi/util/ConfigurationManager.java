@@ -52,7 +52,7 @@ public class ConfigurationManager {
     }
     
     public static ConfigurationManager getInstance() {
-    	return instance;
+        return instance;
     }
     
     /**
@@ -84,8 +84,8 @@ public class ConfigurationManager {
      * Reload the configuration.
      */
     public void reload() {
-    	unload();
-    	load();
+        unload();
+        load();
     }
 
     /**

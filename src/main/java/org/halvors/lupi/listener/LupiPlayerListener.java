@@ -66,7 +66,7 @@ public class LupiPlayerListener extends PlayerListener {
                 Wolf wolf = (Wolf) entity;
                 
                 if (!wolfManager.hasWolf(wolf)) {
-                	wolfManager.addWolf(wolf);
+                    wolfManager.addWolf(wolf);
                 }
                 
                 if (wolf.isTamed() && wolf.getOwner().equals(player)) {
@@ -80,13 +80,13 @@ public class LupiPlayerListener extends PlayerListener {
                             player.sendMessage(ChatColor.GREEN + "Wolf selected.");
                         }
                     } else if (item == worldConfig.infoItem) {
-                    	if (player.hasPermission("lupi.wolf.info")) {
-                    		WolfUtil.showInfo(player, wolf1);
+                        if (player.hasPermission("lupi.wolf.info")) {
+                            WolfUtil.showInfo(player, wolf1);
                         }
                     } else if (item == worldConfig.inventoryItem) {
                         if (player.hasPermission("lupi.wolf.inventory")) {
                             if (worldConfig.inventoryEnable) {
-                            	if (wolf1.hasLoadedInventory()) {
+                                if (wolf1.hasLoadedInventory()) {
                                     InventoryUtil.openInventory(player, wolf1.getInventory());
                                 } else {
                                     // Add inventory.

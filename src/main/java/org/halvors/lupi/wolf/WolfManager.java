@@ -44,8 +44,8 @@ import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
  * @author halvors
  */
 public class WolfManager {
-	private final Lupi plugin;
-//	private final EbeanServer database;
+    private final Lupi plugin;
+//    private final EbeanServer database;
     private final WolfInventoryManager wolfInventoryManager;
     private final RandomNameUtil rnu;
     private final HashMap<UUID, Wolf> wolves;
@@ -487,23 +487,23 @@ public class WolfManager {
         return wolves;
     }
     
-	/**
-	 * Get Wolf by uniqueId.
-	 * 
-	 * @param uniqueId
-	 * @return the Wolf or null if not found
-	 */
-	public static org.bukkit.entity.Wolf getBukkitWolf(UUID uniqueId) {
-		for (World world : Bukkit.getServer().getWorlds()) {
-			for (Entity entity : world.getEntities()) {
-				if (entity.getUniqueId().equals(uniqueId)) {
-					return (org.bukkit.entity.Wolf) entity;
-				}
-			}
-		}
-			
-		return null;
-	}
+    /**
+     * Get Wolf by uniqueId.
+     * 
+     * @param uniqueId
+     * @return the Wolf or null if not found
+     */
+    public static org.bukkit.entity.Wolf getBukkitWolf(UUID uniqueId) {
+        for (World world : Bukkit.getServer().getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                if (entity.getUniqueId().equals(uniqueId)) {
+                    return (org.bukkit.entity.Wolf) entity;
+                }
+            }
+        }
+            
+        return null;
+    }
     
     /**
      * Spawn a wolf.

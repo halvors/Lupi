@@ -58,7 +58,7 @@ public class LupiEntityListener extends EntityListener {
     
     @Override
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (!event.isCancelled()) {        	
+        if (!event.isCancelled()) {            
             Entity entity = event.getEntity();
             SpawnReason reason = event.getSpawnReason();
             World world = entity.getWorld();
@@ -67,43 +67,43 @@ public class LupiEntityListener extends EntityListener {
             if (entity instanceof Wolf) {
 //            Wolf wolf = (Wolf) entity;
                 
-            	if (reason == SpawnReason.NATURAL) {
-            		if (!worldConfig.wolfEnable) {
-            			event.setCancelled(true);
-            			return;
-            		}
-            	}
+                if (reason == SpawnReason.NATURAL) {
+                    if (!worldConfig.wolfEnable) {
+                        event.setCancelled(true);
+                        return;
+                    }
+                }
             }
         }
     }
     
     @Override
     public void onEntityDamage(EntityDamageEvent event) {
-    	if (!event.isCancelled()) {
-    		Entity entity = event.getEntity();
-    		World world = entity.getWorld();
-    		WorldConfiguration worldConfig = configManager.get(world);
-    		
-    		if (entity instanceof Wolf) {
-    			Wolf wolf = (Wolf) entity;
-    			
-    			if (wolf.isTamed()) {
-    				org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
-    				Player player = (Player) wolf.getOwner();
-    				
-    				if (wolf1.hasLoadedInventory()) {
-    					// Check for armor in inventory.
-    					if (player.hasPermission("lupi.wolf.armor")) {
-    						if (worldConfig.inventoryArmor) {
-    							WolfUtil.doArmorCheck(wolf1, event);
-    						} else {
-    							player.sendMessage(ChatColor.RED + "Wolf armor is disabled.");
-    						}
-    					}
-    				}
-    			}
-    		}
-    	}
+        if (!event.isCancelled()) {
+            Entity entity = event.getEntity();
+            World world = entity.getWorld();
+            WorldConfiguration worldConfig = configManager.get(world);
+            
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+                
+                if (wolf.isTamed()) {
+                    org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
+                    Player player = (Player) wolf.getOwner();
+                    
+                    if (wolf1.hasLoadedInventory()) {
+                        // Check for armor in inventory.
+                        if (player.hasPermission("lupi.wolf.armor")) {
+                            if (worldConfig.inventoryArmor) {
+                                WolfUtil.doArmorCheck(wolf1, event);
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Wolf armor is disabled.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @Override
@@ -120,7 +120,7 @@ public class LupiEntityListener extends EntityListener {
                 player.sendMessage(ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + "died.");
                 
                 if (wolf1.hasLoadedInventory()) {
-                	wolf1.dropInventory();
+                    wolf1.dropInventory();
                 }
                 
                 wolfManager.removeWolf(wolf);
@@ -158,7 +158,7 @@ public class LupiEntityListener extends EntityListener {
                     player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
                     player.sendMessage("You can change name with /wolf setname <name>.");
                 } else {
-                	// TODO: Display some kind of error message here.
+                    // TODO: Display some kind of error message here.
                 }
             }
         }
@@ -179,18 +179,18 @@ public class LupiEntityListener extends EntityListener {
                     Player player = (Player) target;
 
                     if (wolf.isTamed()) {
-                    	if (wolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
-                    		if (worldConfig.wolfPvp && world.getPVP()) {
-                    			event.setCancelled(true);
-                    			return;
-                    		}
-                    	}
-                	} else {
-                		if (worldConfig.wolfFriendly) {
-                			event.setCancelled(true);
-                			return;
-                		}
-                	}
+                        if (wolfManager.hasWolf(wolf) && !wolf.getOwner().equals(player)) {
+                            if (worldConfig.wolfPvp && world.getPVP()) {
+                                event.setCancelled(true);
+                                return;
+                            }
+                        }
+                    } else {
+                        if (worldConfig.wolfFriendly) {
+                            event.setCancelled(true);
+                            return;
+                        }
+                    }
                 }
             }
         }

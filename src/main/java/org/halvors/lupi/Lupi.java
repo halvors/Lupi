@@ -125,7 +125,7 @@ public class Lupi extends JavaPlugin {
     @Override
     public void onDisable() {
         // Save configuration.
-    	configManager.unload();
+        configManager.unload();
         
         // Unload wolves from WolfManager.
         wolfManager.unload();
@@ -189,7 +189,7 @@ public class Lupi extends JavaPlugin {
      * @return the Lupi instance
      */
     public static Lupi getInstance() {
-    	return instance;
+        return instance;
     }
     
     /**
@@ -198,7 +198,7 @@ public class Lupi extends JavaPlugin {
      * @return the EbeanServer
      */
     public static EbeanServer getDB() {
-    	return db;
+        return db;
     }
     
     /**
@@ -207,9 +207,9 @@ public class Lupi extends JavaPlugin {
      * @return true if BukkitContrib exists
      */
     public static boolean hasBukkitContrib() {
-    	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BukkitContrib");
-    	
-    	return plugin != null;
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BukkitContrib");
+        
+        return plugin != null;
     }
     
     /**
@@ -227,7 +227,7 @@ public class Lupi extends JavaPlugin {
      * @return the WolfManager
      */
     public WolfManager getWolfManager() {
-    	return wolfManager;
+        return wolfManager;
     }
     
     /**
@@ -236,7 +236,7 @@ public class Lupi extends JavaPlugin {
      * @return the WolfInventoryManager
      */
     public WolfInventoryManager getWolfInventoryManager() {
-    	return wolfInventoryManager;
+        return wolfInventoryManager;
     }
     
     /**
