@@ -10,10 +10,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtil {
+	/**
+	 * Open a virtual inventory.
+	 * 
+	 * @param player
+	 * @param inventory
+	 */
 	public static void openInventory(Player player, Inventory inventory) {
-		IInventory iInventory = (IInventory) inventory;
 		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-    	entityPlayer.a(iInventory);
+    	entityPlayer.a((IInventory) inventory);
 	}
 	
 	/**

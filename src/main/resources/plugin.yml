@@ -23,19 +23,28 @@ commands:
             /<command> release <wolf> - Release your wolf.
             
 permissions:
-	lupi.*
+    lupi.*
         default: op
-        description: Allows use of all Lupi functions..
+        description: Allows use of all Lupi features.
         children:
+            lupi.admin.*: true
             lupi.wolf.*: true
-            
+    
+    lupi.admin.*:
+        description: Allows use of Lupi admin features.
+        children:
+    		lupi.admin.reload: true
+    		
+    lupi.admin.reload:
+    	description: Allows use of /wolf reload.
+    
     lupi.wolf.*:
-        description: Allows use of all /wolf commands.
+        description: Allows use of Lupi wolf features.
         children:
             lupi.wolf.select: true
             lupi.wolf.inventory: true
             lupi.wolf.armor: true
-        
+            
             lupi.wolf.help: true
             lupi.wolf.list: true
             lupi.wolf.info: true
@@ -52,7 +61,7 @@ permissions:
         description: Allows use of wolf inventory.
     lupi.wolf.armor:
         description: Allows use of wolf armor.  
-            
+        
     lupi.wolf.help:
         description: Allows viewing of usage for /wolf.
     lupi.wolf.list:

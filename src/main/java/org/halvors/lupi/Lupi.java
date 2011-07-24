@@ -34,7 +34,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.halvors.lupi.command.LupiCommandExecutor;
+import org.halvors.lupi.command.WolfCommand;
 import org.halvors.lupi.event.LupiListener;
 import org.halvors.lupi.event.wolf.LupiWolfListener;
 import org.halvors.lupi.listener.LupiEntityListener;
@@ -125,7 +125,7 @@ public class Lupi extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new ServerTickTask(), 0, 1);
         
         // Register our commands.
-        getCommand("wolf").setExecutor(new LupiCommandExecutor(this));
+        getCommand("wolf").setExecutor(new WolfCommand(this));
         
         log(Level.INFO, "version " + getVersion() + " is enabled!");
     }

@@ -79,6 +79,14 @@ public class ConfigurationManager {
     public void unload() {
         worlds.clear();
     }
+    
+    /**
+     * Reload the configuration.
+     */
+    public void reload() {
+    	unload();
+    	load();
+    }
 
     /**
      * Get the configuration for a world.
