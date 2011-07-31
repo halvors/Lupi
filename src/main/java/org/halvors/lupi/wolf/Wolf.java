@@ -160,42 +160,7 @@ public class Wolf {
      * @return the World
      */
     public World getWorld() {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            return Bukkit.getServer().getWorld(wt.getWorld());
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Set world.
-     * 
-     * @param world
-     */
-    public void setWorld(World world) {
-        WolfTable wt = getWolfTable();
-        
-        if (wt != null) {
-            wt.setWorld(world.getUID().toString());
-            
-            Lupi.getDB().update(wt);
-        }
-    }
-    
-    /**
-     * Update world to wolf's current world.
-     */
-    public void updateWorld() {
-        WolfTable wt = getWolfTable();
-        World world = getEntity().getWorld();
-        
-        if (wt != null && wt.getWorld() != world.getName()) {
-            wt.setWorld(world.getUID().toString());
-            
-            Lupi.getDB().update(wt);
-        }
+        return getEntity().getWorld();
     }
 
     /**
