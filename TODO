@@ -1,5 +1,5 @@
 Version 0.1
-    - Fic NPE when reload server. Possibly something with inventory.
+    - Fix NPE when reload server. Possibly something with inventory.
     - Fix load and unload for inventory. - Confirm that it's fixed.
     - Add configuration nodes. And be sure it's flexible for future changes.
     - Add pages support for list and help commands - adminonline45
