@@ -14,15 +14,13 @@ Version 0.2
     - Set wolf sit when open inventory and set them stand up when close inventory. (Will need InventoryOpenEvent and InventoryCloseEvent).
 
 Ideas:
+    - Add parent system so new wolves appear (New wolves spawn wildlife at parent).
     - Add ability for wolves to eat food (pork) from it's inventory when get damaged.
-    - Add command so owner of a wolf can add peace players that wolf not attack.
-    - Add ability for wolves to become "supercharged" and deal twice as much damage for a given time after giving the wolf a special item.
-    - Add ability to feed wolves either gunpowder or TNT and create a "kamikazi" effect when that wolf attacks.
-    - Add possible alternative to above where wolf drops live TNT and runs away to leave enemy to take damage.
-    - When an item is dropped near a wolf. Target that item so wolf will pick it up, if not already have a target.
+    - Add ability for owner of a wolf to add friendly playera that wolf don't attack.
+    - Add feature to let player put items in wolf's inventory that it can dispense. Eventually at target.
     - Economy support. Maybe use the Register API.
-    - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, it's owner changes to the buyer.
-    - Add ability to set wolf sitting, or enter other minecart when player enter minecart or other vehicle.
+    - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, wolf's owner should change to the buyer.
+    - Add ability to set wolf sitting, or enter other minecart when player enter minecart or other vehicles.
     
     compgurusteve:
     Would anyone want to try to tackle this? I was thinking mainly having a set "pen" the player makes with fences and have it spawn a new 'untamed' wolf only if there were 2 wolves lured inside created pen. Anything additional thoughts?
