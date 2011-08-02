@@ -22,12 +22,20 @@
 package org.halvors.lupi.event;
 
 import org.bukkit.Bukkit;
+import org.halvors.lupi.event.wolf.LupiWolfLoadEvent;
+import org.halvors.lupi.event.wolf.LupiWolfUnloadEvent;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfDropItemEvent;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
 import org.halvors.lupi.wolf.Wolf;
 import org.halvors.lupi.wolf.inventory.WolfInventory;
 
 public class EventFactory {
+	
+	/**
+	 * LupiServerTickEvent
+	 * 
+	 * @return
+	 */
     public static LupiServerTickEvent callLupiServerTickEvent() {
         LupiServerTickEvent event = new LupiServerTickEvent();
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -35,6 +43,39 @@ public class EventFactory {
         return event;
     }
     
+    /**
+     * LupiWolfLoadEvent
+     * 
+     * @param wolf
+     * @return
+     */
+    public static LupiWolfLoadEvent callLupiWolfLoadEvent(Wolf wolf) {
+    	LupiWolfLoadEvent event = new LupiWolfLoadEvent(wolf);
+    	Bukkit.getServer().getPluginManager().callEvent(event);
+    	
+    	return event;
+    }
+    
+    /**
+     * LupiWolfUnloadEvent
+     * 
+     * @param wolf
+     * @return
+     */
+    public static LupiWolfUnloadEvent callLupiWolfUnloadEvent(Wolf wolf) {
+    	LupiWolfUnloadEvent event = new LupiWolfUnloadEvent(wolf);
+    	Bukkit.getServer().getPluginManager().callEvent(event);
+    	
+    	return event;
+    }
+    
+    /**
+     * LupiWolfDropItemEvent
+     * 
+     * @param wolf
+     * @param wi
+     * @return
+     */
     public static LupiWolfDropItemEvent callLupiWolfDropItemEvent(Wolf wolf, WolfInventory wi) {
         LupiWolfDropItemEvent event = new LupiWolfDropItemEvent(wolf, wi);
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -42,6 +83,13 @@ public class EventFactory {
         return event;
     }
     
+    /**
+     * LupiWolfPickupEvent
+     * 
+     * @param wolf
+     * @param wi
+     * @return
+     */
     public static LupiWolfPickupItemEvent callLupiWolfPickupItemEvent(Wolf wolf, WolfInventory wi) {
         LupiWolfPickupItemEvent event = new LupiWolfPickupItemEvent(wolf, wi);
         Bukkit.getServer().getPluginManager().callEvent(event);

@@ -34,6 +34,7 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.event.EventFactory;
 import org.halvors.lupi.util.RandomNameUtil;
 import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.wolf.inventory.WolfInventoryManager;
@@ -134,7 +135,7 @@ public class WolfManager {
      */
     public void load(World world) {
         for (WolfTable wt : getWolfTables()) {
-            if (wt.getWorld().equals(world.getName())) {
+            if (UUID.fromString(wt.getWorld()).equals(world.getUID())) {
                 UUID uniqueId = UUID.fromString(wt.getUniqueId());
                 
                 loadWolf(uniqueId);
@@ -160,9 +161,12 @@ public class WolfManager {
      * @return
      */
     public boolean loadWolf(UUID uniqueId) {
-        if (!hasWolf(uniqueId)) {
+        if (!hasWolf(uniqueId)) {        	
             // Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
+            
+            // Call LupiWolfLoadEvent
+        	EventFactory.callLupiWolfLoadEvent(wolf);
             
             // Load inventory if wolf has.
             if (wolf.hasInventory()) {
@@ -196,6 +200,9 @@ public class WolfManager {
     public boolean unloadWolf(UUID uniqueId) {
         if (hasWolf(uniqueId)) {
             Wolf wolf = getWolf(uniqueId);
+            
+            // Call LupiWolfUnloadEvent
+            EventFactory.callLupiWolfUnloadEvent(wolf);
             
             // Unload inventory if it exists and is loaded.
             if (wolf.hasLoadedInventory()) {

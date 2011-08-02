@@ -32,6 +32,14 @@ public class LupiWolfListener extends CustomEventListener implements Listener {
         
     }
     
+    public void onLupiWolfLoad(LupiWolfLoadEvent event) {
+    	
+    }
+    
+    public void onLupiWolfUnload(LupiWolfUnloadEvent event) {
+    	
+    }
+    
     public void onLupiWolfDropItem(LupiWolfDropItemEvent event) {
         
     }
@@ -42,7 +50,11 @@ public class LupiWolfListener extends CustomEventListener implements Listener {
     
     @Override
     public void onCustomEvent(Event event) {
-        if (event instanceof LupiWolfDropItemEvent) {
+    	if (event instanceof LupiWolfLoadEvent) {
+         	onLupiWolfLoad((LupiWolfLoadEvent) event);
+    	} else if (event instanceof LupiWolfUnloadEvent) {
+    		onLupiWolfUnload((LupiWolfUnloadEvent) event);
+    	} else if (event instanceof LupiWolfDropItemEvent) {
             onLupiWolfDropItem((LupiWolfDropItemEvent) event);
         } else if (event instanceof LupiWolfPickupItemEvent) {
             onLupiWolfPickupItem((LupiWolfPickupItemEvent) event);
