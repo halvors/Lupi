@@ -97,7 +97,7 @@ public class Lupi extends JavaPlugin {
         db = getDatabase();
         
         // Load wolves to WolfManager.
-		wolfManager.load();
+		wolfManager.loadWolves();
         
         // Register our events.
         pm.registerEvent(Event.Type.CREATURE_SPAWN, entityListener, Event.Priority.Normal, this);
@@ -128,7 +128,7 @@ public class Lupi extends JavaPlugin {
         configManager.unload();
         
         // Unload wolves from WolfManager.
-        wolfManager.unload();
+        wolfManager.unloadWolves();
         
         log(Level.INFO, "version " + getVersion() + " is disabled!");
     }
