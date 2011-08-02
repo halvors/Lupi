@@ -22,7 +22,9 @@
 package org.halvors.lupi.event;
 
 import org.bukkit.Bukkit;
+import org.halvors.lupi.event.wolf.LupiWolfAddEvent;
 import org.halvors.lupi.event.wolf.LupiWolfLoadEvent;
+import org.halvors.lupi.event.wolf.LupiWolfRemoveEvent;
 import org.halvors.lupi.event.wolf.LupiWolfUnloadEvent;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfDropItemEvent;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfPickupItemEvent;
@@ -64,6 +66,32 @@ public class EventFactory {
      */
     public static LupiWolfUnloadEvent callLupiWolfUnloadEvent(Wolf wolf) {
     	LupiWolfUnloadEvent event = new LupiWolfUnloadEvent(wolf);
+    	Bukkit.getServer().getPluginManager().callEvent(event);
+    	
+    	return event;
+    }
+    
+    /**
+     * LupiWolfAddEvent
+     * 
+     * @param wolf
+     * @return
+     */
+    public static LupiWolfAddEvent callLupiWolfAddEvent(Wolf wolf) {
+    	LupiWolfAddEvent event = new LupiWolfAddEvent(wolf);
+    	Bukkit.getServer().getPluginManager().callEvent(event);
+    	
+    	return event;
+    }
+    
+    /**
+     * LupiWolfRemoveEvent
+     * 
+     * @param wolf
+     * @return
+     */
+    public static LupiWolfRemoveEvent callLupiWolfRemoveEvent(Wolf wolf) {
+    	LupiWolfRemoveEvent event = new LupiWolfRemoveEvent(wolf);
     	Bukkit.getServer().getPluginManager().callEvent(event);
     	
     	return event;

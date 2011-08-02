@@ -299,6 +299,10 @@ public class WolfManager {
             
             // Create the Wolf.
             Wolf wolf = new Wolf(uniqueId);
+            
+            // Call LupiWolfAddEvent
+            EventFactory.callLupiWolfAddEvent(wolf);
+            
             wolves.put(uniqueId, wolf);
             
             return true;
@@ -327,7 +331,11 @@ public class WolfManager {
         if (hasWolf(uniqueId)) {       
             Wolf wolf = getWolf(uniqueId);
             
-            if (wolf.hasInventory() || wolf.hasLoadedInventory()) {
+            // Call LupiWolfRemoveEvent
+            EventFactory.callLupiWolfRemoveEvent(wolf);
+            
+            // Remove inventory.
+            if (wolf.hasInventory()) {
                 wolf.removeInventory();
             }
             
