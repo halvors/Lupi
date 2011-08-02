@@ -39,6 +39,7 @@ public class WolfTable {
     private String name;
     private String owner;
     private boolean inventory;
+    private String world;
     
     public int getId() {
         return id;
@@ -78,5 +79,13 @@ public class WolfTable {
     
     public void setInventory(boolean inventory) {
         this.inventory = inventory;
+    }
+    
+    public String getWorld() {
+    	return world;
+    }
+    
+    public void setWorld(String world) {
+    	this.world = world;
     }
 }

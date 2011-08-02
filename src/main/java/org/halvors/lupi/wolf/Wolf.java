@@ -160,7 +160,37 @@ public class Wolf {
      * @return the World
      */
     public World getWorld() {
-        return getEntity().getWorld();
+    	WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            return Bukkit.getServer().getWorld(UUID.fromString(wt.getWorld()));
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Set world.
+     * 
+     * @param world
+     */
+    public void setWorld(World world) {
+    	WolfTable wt = getWolfTable();
+        
+        if (wt != null) {
+            wt.setWorld(world.getUID().toString());
+        }
+    }
+    
+    /**
+     * Update world in database with the entity's current world.
+     */
+    public void updateWorld() {
+    	World world = getEntity().getWorld();
+    	
+    	if (!world.equals(getWorld())) {
+    		setWorld(world);
+    	}
     }
 
     /**
