@@ -15,13 +15,19 @@
 		<developerConnection>scm:git:git@github.com:halvors/Lupi.git</developerConnection>
 		<url>https://github.com/halvors/Lupi</url>
 	</scm>
+	<!-- Repository locations -->
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/artifactory/repo</url>
 		</repository>
+		<repository>
+            <id>spout-repo</id>
+            <url>http://repo.getspout.org</url>
+        </repository>
 	</repositories>
 	<build>
+		<!-- Plugins -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -34,23 +40,19 @@
 			</plugin>
         </plugins>
     </build>
+    <!-- Dependencies -->
     <dependencies>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+    	<!-- CraftBukkit -->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.bukkitcontrib</groupId>
-            <artifactId>bukkitcontrib</artifactId>
-            <version>0.1.7</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/BukkitContrib.jar</systemPath>
+        <!-- SpoutAPI -->
+		<dependency>
+            <groupId>org.getspout</groupId>
+            <artifactId>spoutapi</artifactId>
+            <version>dev-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <properties>

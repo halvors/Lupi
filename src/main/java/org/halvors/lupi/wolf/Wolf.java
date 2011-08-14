@@ -29,7 +29,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkitcontrib.BukkitContrib;
+import org.getspout.spoutapi.SpoutManager;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.event.EventFactory;
 import org.halvors.lupi.event.wolf.inventory.LupiWolfDropItemEvent;
@@ -319,8 +319,8 @@ public class Wolf {
      * @param name
      */
     public void setTitle(String name) {
-        if (Lupi.hasBukkitContrib()) {
-            BukkitContrib.getAppearanceManager().setGlobalTitle(getEntity(), name);
+        if (Lupi.hasSpout()) {
+        	SpoutManager.getAppearanceManager().setGlobalTitle(getEntity(), name);
         }
     }
     

@@ -62,6 +62,7 @@ public class Lupi extends JavaPlugin {
     private final LupiEntityListener entityListener;
     private final LupiListener lupiListener;
     private final LupiPlayerListener playerListener;
+//    private final LupiServerListener serverListener;
     private final LupiWorldListener worldListener;
     
     private static Lupi instance;
@@ -81,6 +82,7 @@ public class Lupi extends JavaPlugin {
         this.entityListener = new LupiEntityListener(this);
         this.lupiListener = new LupiListener(this);
         this.playerListener = new LupiPlayerListener(this);
+//        this.serverListener = new LupiServerListener(this);
         this.worldListener = new LupiWorldListener(this);
     }
     
@@ -202,12 +204,12 @@ public class Lupi extends JavaPlugin {
     }
     
     /**
-     * Check if BukkitContrib exists.
+     * Check if Spout exists.
      * 
-     * @return true if BukkitContrib exists
+     * @return true if Spout exists
      */
-    public static boolean hasBukkitContrib() {
-        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BukkitContrib");
+    public static boolean hasSpout() {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("Spout");
         
         return plugin != null;
     }
