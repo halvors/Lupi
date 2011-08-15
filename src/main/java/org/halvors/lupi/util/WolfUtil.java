@@ -21,6 +21,8 @@
 
 package org.halvors.lupi.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -72,6 +74,22 @@ public class WolfUtil {
         }
             
         return null;
+    }
+    
+    /**
+     * Convert Lupi wolves to Bukkit wolves.
+     * 
+     * @param wolves
+     * @return
+     */
+    public static List<org.bukkit.entity.Wolf> getBukkitWolves(List<Wolf> wolves) {
+    	List<org.bukkit.entity.Wolf> bukkitWolves = new ArrayList<org.bukkit.entity.Wolf>();
+    	
+    	for (Wolf wolf : wolves) {
+    		bukkitWolves.add((org.bukkit.entity.Wolf) wolf.getEntity());
+    	}
+    	
+    	return bukkitWolves;
     }
     
     /**

@@ -521,6 +521,35 @@ public class WolfManager {
     }
     
     /**
+     * Get Bukkit wolves.
+     * 
+     * @return
+     */
+    public List<org.bukkit.entity.Wolf> getBukkitWolves() {    
+    	return WolfUtil.getBukkitWolves(getWolves());
+    }
+    
+    /**
+     * Get Bukkit wolves for player.
+     * 
+     * @param player
+     * @return
+     */
+    public List<org.bukkit.entity.Wolf> getBukkitWolves(Player player) {
+        return WolfUtil.getBukkitWolves(getWolves(player));
+    }
+    
+    /**
+     * Get Bukkit wolves for world.
+     * 
+     * @param world
+     * @return
+     */
+    public List<org.bukkit.entity.Wolf> getBukkitWolves(World world) { 
+    	return WolfUtil.getBukkitWolves(getWolves(world));
+    }
+    
+    /**
      * Spawn a wolf.
      * 
      * @param location
