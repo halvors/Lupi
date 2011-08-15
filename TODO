@@ -6,6 +6,7 @@ Version 0.1
     - Add ability for tamed wolves to have some kind of armor. Like a diamond block in it's inventory. - Needs to be looked over and improved.
 
 Version 0.2
+	- Implement wolf cursors on maps. And make it possible to display information in maps.
     - Change world in database when wolf switch world.
     - Add wolf age. Will be minecraft days/years from it's tamed.
     - Add guard wolf's if you make wolf sit with a sword, wolf will attack any entity that is 5 blocks away.
@@ -16,7 +17,7 @@ Version 0.2
 Ideas:
     - Add parent system so new wolves appear (New wolves spawn wildlife at parent).
     - Add ability for wolves to eat food (pork) from it's inventory when get damaged.
-    - Add ability for owner of a wolf to add friendly playera that wolf don't attack.
+    - Add ability for owner of a wolf to add friendly players that wolf don't attack.
     - Add feature to let player put items in wolf's inventory that it can dispense. Eventually at target.
     - Economy support. Maybe use the Register API.
     - Add wolf shops, so a player can setup a sign and sell one of the tamed wolves. When a player buy a wolf, wolf's owner should change to the buyer.

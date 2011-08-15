@@ -1,6 +1,8 @@
 package org.halvors.lupi.listener;
 
+import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.event.server.ServerListener;
+import org.bukkit.map.MapView;
 import org.halvors.lupi.Lupi;
 
 public class LupiServerListener extends ServerListener {
@@ -10,9 +12,7 @@ public class LupiServerListener extends ServerListener {
 //		this.plugin = plugin;
 	}
 	
-	/*
 	public void MapInitialize(MapInitializeEvent event) {
-		MapView map = event.getMap();
+		MapView mapView = event.getMap();
 	}
-	*/
 }
