@@ -26,7 +26,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
@@ -38,12 +37,12 @@ import org.halvors.lupi.wolf.WolfManager;
  * 
  * @author speeddemon92
  */
-public class LupiWorldListener extends WorldListener {
+public class WorldListener extends org.bukkit.event.world.WorldListener {
 //    private final Lupi plugin;
     private final ConfigurationManager configManager;
     private final WolfManager wolfManager;
     
-    public LupiWorldListener(Lupi plugin) {
+    public WorldListener(Lupi plugin) {
 //        this.plugin = plugin;
         this.configManager = plugin.getConfigurationManager();
         this.wolfManager = plugin.getWolfManager();

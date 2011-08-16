@@ -27,7 +27,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerListener;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.InventoryUtil;
@@ -41,13 +40,13 @@ import org.halvors.lupi.wolf.WolfManager;
  * 
  * @author halvors
  */
-public class LupiPlayerListener extends PlayerListener {
+public class PlayerListener extends org.bukkit.event.player.PlayerListener {
 //    private final Lupi plugin;
     private final ConfigurationManager configManager;
     private final WolfManager wolfManager;
     private final SelectedWolfManager selectedWolfManager;
     
-    public LupiPlayerListener(Lupi plugin) {
+    public PlayerListener(Lupi plugin) {
 //        this.plugin = plugin;
         this.configManager = plugin.getConfigurationManager();
         this.wolfManager = plugin.getWolfManager();

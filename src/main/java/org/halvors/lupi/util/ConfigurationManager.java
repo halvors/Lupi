@@ -52,7 +52,7 @@ public class ConfigurationManager {
     }
     
     public static ConfigurationManager getInstance() {
-        return instance;
+    	return instance;
     }
     
     /**

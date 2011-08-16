@@ -29,7 +29,6 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -44,13 +43,13 @@ import org.halvors.lupi.wolf.WolfManager;
  * 
  * @author halvors
  */
-public class LupiEntityListener extends EntityListener {
+public class EntityListener extends org.bukkit.event.entity.EntityListener {
 //    private final Lupi plugin;
     
     private final ConfigurationManager configManager;
     private final WolfManager wolfManager;
     
-    public LupiEntityListener(Lupi plugin) {
+    public EntityListener(Lupi plugin) {
 //        this.plugin = plugin;
         this.configManager = plugin.getConfigurationManager();
         this.wolfManager = plugin.getWolfManager();

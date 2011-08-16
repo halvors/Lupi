@@ -35,11 +35,10 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.halvors.lupi.command.WolfCommand;
-import org.halvors.lupi.listener.LupiEntityListener;
+import org.halvors.lupi.listener.EntityListener;
 import org.halvors.lupi.listener.LupiListener;
-import org.halvors.lupi.listener.LupiPlayerListener;
-import org.halvors.lupi.listener.LupiServerListener;
-import org.halvors.lupi.listener.LupiWorldListener;
+import org.halvors.lupi.listener.PlayerListener;
+import org.halvors.lupi.listener.WorldListener;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.wolf.SelectedWolfManager;
 import org.halvors.lupi.wolf.WolfManager;
@@ -60,11 +59,10 @@ public class Lupi extends JavaPlugin {
     private final WolfInventoryManager wolfInventoryManager;
     private final SelectedWolfManager selectedWolfManager;
     
-    private final LupiEntityListener entityListener;
+    private final EntityListener entityListener;
     private final LupiListener lupiListener;
-    private final LupiPlayerListener playerListener;
-    private final LupiServerListener serverListener;
-    private final LupiWorldListener worldListener;
+    private final PlayerListener playerListener;
+    private final WorldListener worldListener;
     
     private static Lupi instance;
     private static EbeanServer db;
@@ -80,11 +78,10 @@ public class Lupi extends JavaPlugin {
         this.wolfInventoryManager = new WolfInventoryManager(this);
         this.selectedWolfManager = new SelectedWolfManager(this);
         
-        this.entityListener = new LupiEntityListener(this);
+        this.entityListener = new EntityListener(this);
         this.lupiListener = new LupiListener(this);
-        this.playerListener = new LupiPlayerListener(this);
-        this.serverListener = new LupiServerListener(this);
-        this.worldListener = new LupiWorldListener(this);
+        this.playerListener = new PlayerListener(this);
+        this.worldListener = new WorldListener(this);
     }
     
     @Override
@@ -110,8 +107,6 @@ public class Lupi extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_TARGET, entityListener, Event.Priority.Normal, this);
 
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
-
-        pm.registerEvent(Event.Type.MAP_INITIALIZE , serverListener, Event.Priority.Normal, this);
         
         pm.registerEvent(Event.Type.CHUNK_UNLOAD, worldListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
