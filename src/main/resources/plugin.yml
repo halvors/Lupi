@@ -6,7 +6,7 @@ authors: [halvors, speeddemon92, adamonline45]
 website: https://github.com/halvors/Lupi
 database: true
 load: startup
-soft-depend: [BukkitContrib]
+soft-depend: [Spout]
 commands:
     wolf:
         aliases: [lupi]

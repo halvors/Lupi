@@ -32,6 +32,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.getspout.spoutapi.gui.GenericPopup;
+import org.getspout.spoutapi.player.SpoutPlayer;
 import org.halvors.lupi.Lupi;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.WolfUtil;
@@ -44,13 +46,13 @@ import org.halvors.lupi.wolf.WolfManager;
  * @author halvors
  */
 public class EntityListener extends org.bukkit.event.entity.EntityListener {
-//    private final Lupi plugin;
+    private final Lupi plugin;
     
     private final ConfigurationManager configManager;
     private final WolfManager wolfManager;
     
     public EntityListener(Lupi plugin) {
-//        this.plugin = plugin;
+        this.plugin = plugin;
         this.configManager = plugin.getConfigurationManager();
         this.wolfManager = plugin.getWolfManager();
     }
@@ -154,8 +156,15 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                 if (wolfManager.addWolf(wolf)) {
                     org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     
-                    player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
-                    player.sendMessage("You can change name with /wolf setname <name>.");
+                    if (Lupi.hasSpout()) {
+                    	SpoutPlayer sp = (SpoutPlayer) player;
+
+                    	GenericPopup popup = new GenericPopup();
+                    	sp.getMainScreen().attachPopupScreen(popup);
+                    } else {
+                    	player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
+                    	player.sendMessage("You can change name with /wolf setname <name>.");
+                    }
                 } else {
                     // TODO: Display some kind of error message here.
                 }
