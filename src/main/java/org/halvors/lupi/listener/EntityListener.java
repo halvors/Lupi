@@ -32,6 +32,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.GenericPopup;
 import org.getspout.spoutapi.player.SpoutPlayer;
 import org.halvors.lupi.Lupi;
@@ -158,8 +159,9 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     
                     if (Lupi.hasSpout()) {
                     	SpoutPlayer sp = (SpoutPlayer) player;
-
+                    	
                     	GenericPopup popup = new GenericPopup();
+                    	popup.attachWidget(plugin, new GenericLabel());
                     	sp.getMainScreen().attachPopupScreen(popup);
                     } else {
                     	player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
