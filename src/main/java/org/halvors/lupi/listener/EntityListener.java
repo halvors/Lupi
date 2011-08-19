@@ -157,16 +157,24 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                 if (wolfManager.addWolf(wolf)) {
                     org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     
-                    if (Lupi.hasSpout()) {
+//                    if (Lupi.hasSpout()) {
                     	SpoutPlayer sp = (SpoutPlayer) player;
                     	
                     	GenericPopup popup = new GenericPopup();
-                    	popup.attachWidget(plugin, new GenericLabel());
+                    	popup.setVisible(true);
+                    	popup.setDirty(true);
+                    	
+                    	GenericLabel label = new GenericLabel();
+                    	label.setText("Enter name:");
+                    	label.setVisible(true);
+                    	label.setDirty(true);
+                    	
+                    	popup.attachWidget(plugin, label);
                     	sp.getMainScreen().attachPopupScreen(popup);
-                    } else {
-                    	player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
-                    	player.sendMessage("You can change name with /wolf setname <name>.");
-                    }
+//                    } else {
+//                    	player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
+//                    	player.sendMessage("You can change name with /wolf setname <name>.");
+//                    }
                 } else {
                     // TODO: Display some kind of error message here.
                 }
