@@ -27,15 +27,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.getspout.spoutapi.gui.GenericLabel;
-import org.getspout.spoutapi.gui.GenericPopup;
 import org.getspout.spoutapi.player.SpoutPlayer;
 import org.halvors.lupi.Lupi;
+import org.halvors.lupi.gui.GuiWolfName;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.util.WolfUtil;
 import org.halvors.lupi.util.WorldConfiguration;
@@ -157,24 +156,15 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                 if (wolfManager.addWolf(wolf)) {
                     org.halvors.lupi.wolf.Wolf wolf1 = wolfManager.getWolf(wolf);
                     
-//                    if (Lupi.hasSpout()) {
+                    if (Lupi.hasSpout() && ((SpoutPlayer) player).isSpoutCraftEnabled()) {
                     	SpoutPlayer sp = (SpoutPlayer) player;
                     	
-                    	GenericPopup popup = new GenericPopup();
-                    	popup.setVisible(true);
-                    	popup.setDirty(true);
-                    	
-                    	GenericLabel label = new GenericLabel();
-                    	label.setText("Enter name:");
-                    	label.setVisible(true);
-                    	label.setDirty(true);
-                    	
-                    	popup.attachWidget(plugin, label);
-                    	sp.getMainScreen().attachPopupScreen(popup);
-//                    } else {
-//                    	player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
-//                    	player.sendMessage("You can change name with /wolf setname <name>.");
-//                    }
+                    	// Create the popup window.
+                    	sp.getMainScreen().attachPopupScreen(new GuiWolfName(plugin));
+                    } else {
+                        player.sendMessage("This wolf's name is " + ChatColor.YELLOW + wolf1.getName() + ChatColor.WHITE + ".");
+                        player.sendMessage("You can change name with /wolf setname <name>.");
+                    }
                 } else {
                     // TODO: Display some kind of error message here.
                 }

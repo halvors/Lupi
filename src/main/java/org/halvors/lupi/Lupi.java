@@ -38,6 +38,7 @@ import org.halvors.lupi.command.WolfCommand;
 import org.halvors.lupi.listener.EntityListener;
 import org.halvors.lupi.listener.LupiListener;
 import org.halvors.lupi.listener.PlayerListener;
+import org.halvors.lupi.listener.ScreenListener;
 import org.halvors.lupi.listener.WorldListener;
 import org.halvors.lupi.util.ConfigurationManager;
 import org.halvors.lupi.wolf.SelectedWolfManager;
@@ -64,6 +65,8 @@ public class Lupi extends JavaPlugin {
     private final PlayerListener playerListener;
     private final WorldListener worldListener;
     
+    private final ScreenListener screenListener;
+    
     private static Lupi instance;
     private static EbeanServer db;
     
@@ -82,6 +85,8 @@ public class Lupi extends JavaPlugin {
         this.lupiListener = new LupiListener(this);
         this.playerListener = new PlayerListener(this);
         this.worldListener = new WorldListener(this);
+        
+        this.screenListener = new ScreenListener(this);
     }
     
     @Override
@@ -112,6 +117,11 @@ public class Lupi extends JavaPlugin {
         pm.registerEvent(Event.Type.WORLD_LOAD, worldListener, Event.Priority.Normal, this);
         
         pm.registerEvent(Event.Type.CUSTOM_EVENT, lupiListener, Event.Priority.Normal, this);
+        
+        // Register our Spout events if exists.
+        if (Lupi.hasSpout()) {
+        	pm.registerEvent(Event.Type.CUSTOM_EVENT, screenListener, Event.Priority.Normal, this);
+        }
         
         // Handle server ticks.
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new ServerTickTask(), 0, 1);
@@ -166,6 +176,19 @@ public class Lupi extends JavaPlugin {
     }
     
     /**
+     * Get the Lupi instance.
+     * 
+     * @return the Lupi instance
+     */
+    public static Lupi getInstance() {
+    	if (instance == null) {
+			instance = new Lupi();
+		}
+    	
+        return instance;
+    }
+    
+    /**
      * Get the name.
      * 
      * @return the plugin name
@@ -181,15 +204,6 @@ public class Lupi extends JavaPlugin {
      */
     public String getVersion() {
         return desc.getVersion();
-    }
-    
-    /**
-     * Get the Lupi instance.
-     * 
-     * @return the Lupi instance
-     */
-    public static Lupi getInstance() {
-        return instance;
     }
     
     /**
